@@ -1,0 +1,19 @@
+{
+  "name": "compass",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/athulkrishnama/Compass#readme",
+  "bugs": {
+    "url": "https://github.com/athulkrishnama/Compass/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/athulkrishnama/Compass.git"
+  },
+  "license": "ISC",
+  "author": "athulkrishnama",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
