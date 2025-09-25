@@ -5,6 +5,8 @@ import { Messages } from "./infrastructure/validationSchemas/constants/messages"
 import morgan from "morgan";
 import { createRotatingFileStream } from "./utils/rotatingFileStream";
 import path from "path";
+import cors from "cors";
+
 export class Server {
   private _app: Express;
 
@@ -17,6 +19,12 @@ export class Server {
   private _setMiddlewares() {
     this._app.use(express.json());
     this._app.use(express.urlencoded());
+    this._app.use(
+      cors({
+        origin: env.ORIGIN_URL,
+        credentials: true,
+      }),
+    );
   }
 
   private _setLoggingMiddleware() {

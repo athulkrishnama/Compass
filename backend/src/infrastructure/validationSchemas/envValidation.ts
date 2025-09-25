@@ -12,4 +12,5 @@ export const envSchema = z.object({
   NODE_ENV: z
     .enum(environment, { error: Errors.ENV_NODE_ENV_ERROR })
     .default("DEVELOPMENT"),
+  ORIGIN_URL: z.url(),
 });
