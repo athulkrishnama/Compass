@@ -1,11 +1,12 @@
 import express, { Express, Request, Response } from "express";
 import { env } from "./config/envConfig";
-import { Errors } from "./infrastructure/validationSchemas/constants/Error";
-import { Messages } from "./infrastructure/validationSchemas/constants/messages";
+import { Errors } from "@infrastructure/constants/Error";
+import { Messages } from "@infrastructure/constants/messages";
 import morgan from "morgan";
-import { createRotatingFileStream } from "./utils/rotatingFileStream";
+import { createRotatingFileStream } from "./utils/rfs";
 import path from "path";
 import cors from "cors";
+import { Routes } from "@infrastructure/constants/routes/baseRoutes";
 
 export class Server {
   private _app: Express;
@@ -14,6 +15,11 @@ export class Server {
     this._app = express();
     this._setLoggingMiddleware();
     this._setMiddlewares();
+    this._setAuthRouter();
+  }
+
+  private _setAuthRouter() {
+    this._app.use(Routes.AUTH);
   }
 
   private _setMiddlewares() {

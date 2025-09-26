@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import path from "path";
+import "module-alias/register";
 
 const envPath = path.join(
   __dirname,

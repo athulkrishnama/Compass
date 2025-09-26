@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.18.2",
     "morgan": "^1.10.1",
     "rotating-file-stream": "^3.2.7",
@@ -44,5 +45,10 @@
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.44.1"
+  },
+  "_moduleAliases": {
+    "@infrastructure": "dist/infrastructure",
+    "@utils": "dist/utils",
+    "@interfaceAdapters": "dist/interfaceAdapters"
   }
 }

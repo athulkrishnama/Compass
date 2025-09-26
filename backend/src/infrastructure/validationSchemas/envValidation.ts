@@ -1,6 +1,6 @@
 import z from "zod";
-import { Errors } from "./constants/Error";
-import { environment } from "./constants/environment";
+import { Errors } from "../constants/Error";
+import { environment } from "../constants/environment";
 
 export const envSchema = z.object({
   PORT: z.coerce
