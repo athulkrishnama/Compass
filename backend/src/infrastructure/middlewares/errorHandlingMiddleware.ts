@@ -14,7 +14,7 @@ export const errorHandlingMiddleware = (
       .status(StatusCode.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: Errors.INTERNAL_SERVER_ERROR });
 
-    console.log(err);
+    console.log(err instanceof Error ? err.message : err);
   } catch (error) {
     console.log(error);
   }
