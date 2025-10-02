@@ -14,7 +14,8 @@
   "author": "athulkrishnama",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=DEVELOPMENT nodemon --exec ts-node src/index.ts",
+    "dev": "NODE_ENV=DEVELOPMENT nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "preview": "NODE_ENV=DEVELOPMENT nodemon dist/index.js",
     "production": "NODE_ENV=PRODUCTION node dist/index.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,31 +25,34 @@
     "prettier:fix": "prettier --write src"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "mongoose": "^8.18.2",
     "morgan": "^1.10.1",
+    "nodemailer": "^7.0.6",
     "rotating-file-stream": "^3.2.7",
     "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.6.1",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.44.1"
-  },
-  "_moduleAliases": {
-    "@infrastructure": "dist/infrastructure",
-    "@utils": "dist/utils",
-    "@interfaceAdapters": "dist/interfaceAdapters"
   }
 }
