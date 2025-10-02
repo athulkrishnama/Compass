@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCode } from "../constants/statusCodes";
 import { Errors } from "../constants/Error";
+import { HTTPResponseBuilder } from "@utils/httpResponseBuilder";
 
 export const errorHandlingMiddleware = (
   err: Error,
@@ -10,9 +11,11 @@ export const errorHandlingMiddleware = (
 ) => {
   void next;
   try {
-    res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .json({ success: false, message: Errors.INTERNAL_SERVER_ERROR });
+    const errorResponse = HTTPResponseBuilder.buildErrorResponse(
+      StatusCode.INTERNAL_SERVER_ERROR,
+      err instanceof Error ? err.message : Errors.INTERNAL_SERVER_ERROR,
+    );
+    res.status(StatusCode.INTERNAL_SERVER_ERROR).json(errorResponse);
 
     console.log(err instanceof Error ? err.message : err);
   } catch (error) {
