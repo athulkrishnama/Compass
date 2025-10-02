@@ -4,4 +4,5 @@ export enum AuthError {
   NO_FULLNAME = "You should provide a fullname",
   INVALID_ROLE = "Provided role is invalid",
   ADMIN_SIGNUP_ERROR = "Admin signup is not supported",
+  NO_OTP = "OTP not provided",
 }
