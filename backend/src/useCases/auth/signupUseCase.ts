@@ -3,10 +3,12 @@ import { IUserRepo } from "@domain/interfaces/repository/users/user.repo.interfa
 import { ICacheService } from "@domain/interfaces/service/cacheService.interface";
 import { IEmailService } from "@domain/interfaces/service/emailService.interface";
 import { IEmailTemplateGenerator } from "@domain/interfaces/service/emailTemplateGenerator.interface";
+import { IHashService } from "@domain/interfaces/service/hashService.interface";
 import { IOtpService } from "@domain/interfaces/service/otpService.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
 import { EmailSubjects } from "@infrastructure/constants/emailConstants";
+import { UserMapper } from "@mappers/user.mapper";
 import { AuthError } from "@useCases/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
@@ -19,6 +21,7 @@ export class SignupUseCase implements ISignupUseCase {
     @inject("ICacheService") private _cacheService: ICacheService,
     @inject("IOtpMailService")
     private _emailTemplateGenerator: IEmailTemplateGenerator,
+    @inject("IHashService") private _hashService: IHashService,
   ) {}
 
   async signup(userData: ICreateUserRequestDTO): Promise<void> {
@@ -40,6 +43,13 @@ export class SignupUseCase implements ISignupUseCase {
 
     await this._emailService.sendMail(emailPayload);
 
-    this._cacheService.setWithExpiry(`user:${userData.email}`, OTP, 60 * 5);
+    userData.password = await this._hashService.hash(userData.password);
+
+    this._cacheService.setWithExpiry(
+      `SIGNUPDATA:${userData.email}`,
+      UserMapper.toStringfromCreateUserDTO(userData),
+      60 * 5,
+    );
+    this._cacheService.setWithExpiry(`OTP:${userData.email}`, OTP, 60 * 5);
   }
 }
