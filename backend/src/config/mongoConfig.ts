@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { env } from "./envConfig";
-import { Messages } from "../infrastructure/constants/messages";
+import { env } from "@config/envConfig";
+import { Messages } from "@infrastructure/constants/messages";
 
 export class MongodbConfig {
   public static connect() {
