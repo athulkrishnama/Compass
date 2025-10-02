@@ -1,6 +1,7 @@
+import "module-alias/register";
+import "reflect-metadata";
 import dotenv from "dotenv";
 import path from "path";
-import "module-alias/register";
 
 const envPath = path.join(
   __dirname,
@@ -12,7 +13,7 @@ const envPath = path.join(
 dotenv.config({ path: envPath });
 
 import { Server } from "./server";
-import { MongodbConfig } from "./config/mongoConfig";
+import { MongodbConfig } from "@config/mongoConfig";
 
 async function start() {
   try {
@@ -22,6 +23,7 @@ async function start() {
   } catch (error) {
     if (error instanceof Error) {
       console.log(error);
+      process.exit(1);
     }
   }
 }
