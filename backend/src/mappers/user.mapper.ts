@@ -25,7 +25,7 @@ export class UserMapper {
     return JSON.stringify(dto);
   }
 
-  static toEntityFromDTO(cachedData: string): UserEntity {
+  static toEntityFromString(cachedData: string): UserEntity {
     const { email, full_name, role, password } = JSON.parse(cachedData);
     if (!(email && full_name && role && password)) {
       throw new Error(Errors.REDIS_DATA_MISSING_ERROR);
