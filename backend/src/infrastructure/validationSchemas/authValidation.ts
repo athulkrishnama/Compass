@@ -15,3 +15,8 @@ export const userRegistrationSchema = z.object({
       path: ["role"],
     }),
 });
+
+export const userRegistrationVerifyOtpSchema = z.object({
+  email: z.email({ error: AuthError.INVALID_EMAIL }),
+  otp: z.string({ error: AuthError.NO_OTP }),
+});
