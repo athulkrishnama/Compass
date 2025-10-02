@@ -17,6 +17,13 @@ export class AuthRouter {
         authController.handleUserRegistration(req, res, next);
       },
     );
+
+    this._router.post(
+      AuthRoutes.VERIFY,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleUserRegistrationVerifyOtp(req, res, next);
+      },
+    );
   }
 
   public get_router() {
