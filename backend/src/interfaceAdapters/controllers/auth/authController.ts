@@ -20,7 +20,7 @@ export class AuthController {
     try {
       const data = userRegistrationSchema.safeParse(req.body);
       if (data.error) {
-        throw new Error(data.error.message);
+        throw new Error(data.error.issues[0].message);
       }
       await this._signupUseCase.signup(data.data);
 
