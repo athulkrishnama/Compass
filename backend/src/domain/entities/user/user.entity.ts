@@ -28,16 +28,16 @@ export interface CabDetails {
 }
 
 export interface UserEntity {
-  _id: string;
+  _id?: string;
   email: string;
   role: ROLES;
   full_name: string;
   password: string;
   mobile?: string;
   is_blocked: boolean;
-  travelerDetails: TravelerDetails;
-  hotelDetails: HotelDetails;
-  cabDetails: CabDetails;
-  createdAt: Date;
-  lastLogin: Date;
+  travelerDetails?: TravelerDetails;
+  hotelDetails?: HotelDetails;
+  cabDetails?: CabDetails;
+  createdAt?: Date;
+  lastLogin?: Date;
 }
