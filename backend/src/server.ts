@@ -1,12 +1,14 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Response, Request } from "express";
 import { env } from "./config/envConfig";
-import { Errors } from "@infrastructure/constants/Error";
-import { Messages } from "@infrastructure/constants/messages";
-import morgan from "morgan";
-import { createRotatingFileStream } from "./utils/rfs";
-import path from "path";
+import { Errors } from "./infrastructure/constants/Error";
+import { Messages } from "./infrastructure/constants/messages";
 import cors from "cors";
-import { Routes } from "@infrastructure/constants/routes/baseRoutes";
+import { Routes } from "./infrastructure/constants/routes/baseRoutes";
+import { setErrorHandlingMiddleware } from "./infrastructure/middlewares/loggingMiddleware";
+import { corsOptions } from "./infrastructure/constants/corsOptions";
+import { AuthRouter } from "./infrastructure/routes/auth/authRouter";
+import { errorHandlingMiddleware } from "./infrastructure/middlewares/errorHandlingMiddleware";
+import { NextFunction } from "express-serve-static-core";
 
 export class Server {
   private _app: Express;
@@ -16,46 +18,30 @@ export class Server {
     this._setLoggingMiddleware();
     this._setMiddlewares();
     this._setAuthRouter();
+    this._setErrorHandlingMiddleware();
   }
 
   private _setAuthRouter() {
-    this._app.use(Routes.AUTH);
+    const authRouter = new AuthRouter();
+    this._app.use(Routes.AUTH, authRouter.get_router());
   }
 
   private _setMiddlewares() {
     this._app.use(express.json());
     this._app.use(express.urlencoded());
+    this._app.use(cors(corsOptions));
+  }
+
+  private _setErrorHandlingMiddleware() {
     this._app.use(
-      cors({
-        origin: env.ORIGIN_URL,
-        credentials: true,
-      }),
+      (err: Error, req: Request, res: Response, next: NextFunction) => {
+        errorHandlingMiddleware(err, req, res, next);
+      },
     );
   }
 
   private _setLoggingMiddleware() {
-    if (env.NODE_ENV === "DEVELOPMENT") {
-      this._app.use(morgan("combined"));
-    } else {
-      const accessLogStream = createRotatingFileStream(
-        "1d",
-        7,
-        path.join(__dirname, "..", "logs", "accessLogs"),
-      );
-      const errorLogStream = createRotatingFileStream(
-        "1d",
-        7,
-        path.join(__dirname, "..", "logs", "errorLogs"),
-      );
-
-      this._app.use(morgan("combined", { stream: accessLogStream }));
-      this._app.use(
-        morgan("combined", {
-          stream: errorLogStream,
-          skip: (req: Request, res: Response) => res.statusCode < 400,
-        }),
-      );
-    }
+    setErrorHandlingMiddleware(this._app);
   }
 
   public listen() {
