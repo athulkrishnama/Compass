@@ -29,3 +29,14 @@ export const loginValidationSchema = z.object({
   email: z.email({ error: AuthError.INVALID_EMAIL }),
   password: z.string({ error: AuthError.INVALID_PASSWORD }),
 });
+
+export const forgetPasswordVerifyOtpSchema = z.object({
+  email: z.email({ error: AuthError.INVALID_EMAIL }),
+  otp: z.string({ error: AuthError.NO_OTP }),
+});
+
+export const forgetPasswordResetPasswordSchema = z.object({
+  email: z.email({ error: AuthError.INVALID_EMAIL }),
+  password: z.string({ error: AuthError.INVALID_PASSWORD }),
+  token: z.string({ error: AuthError.TOKEN_DATA_MISSING }),
+});
