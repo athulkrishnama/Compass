@@ -21,4 +21,11 @@ export class UserRepository
     if (user) return UserMapper.toEntityfromMongooseDocument(user);
     return null;
   }
+
+  async findByIdAndUpdatePassword(
+    email: string,
+    password: string,
+  ): Promise<void> {
+    await this._model.updateOne({ email }, { $set: { password } });
+  }
 }

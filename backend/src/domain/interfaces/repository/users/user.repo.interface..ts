@@ -4,4 +4,5 @@ import { IUserDocument } from "@infrastructure/repository/database configs/schem
 
 export interface IUserRepo extends IBaseRepository<UserEntity, IUserDocument> {
   findByEmail(email: string): Promise<UserEntity | null>;
+  findByIdAndUpdatePassword(email: string, password: string): Promise<void>;
 }
