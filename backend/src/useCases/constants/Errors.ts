@@ -6,4 +6,6 @@ export enum AuthError {
   USER_NOT_FOUND = "User not found with this email",
   USER_IS_BLOCKED = "User is blocked",
   PASSWORD_NOT_MATCHING = "Password not matching",
+  TOKEN_EXPIRED = "Token expired",
+  TOKEN_NOT_MATCHING = "Token not matching",
 }
