@@ -1,14 +1,19 @@
+import { env } from "@config/envConfig";
 import { HTTP_STATUS_CODE } from "@domain/constants/statusCodes";
+import { IJwtService } from "@domain/interfaces/service/jwtService.interface";
+import { ILoginUseCase } from "@domain/interfaces/useCase/auth/loginUseCase.interface";
 import { ISignupResendOtpUsecase } from "@domain/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
 import { IVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import {
   emailValidationSchema,
+  loginValidationSchema,
   userRegistrationSchema,
   userRegistrationVerifyOtpSchema,
 } from "@infrastructure/validationSchemas/authValidation";
 import { HttpResponseMessages } from "@interfaceAdapters/constants/httpResponseMessages";
 import { HTTPResponseBuilder } from "@utils/httpResponseBuilder";
+import { setCookie } from "@utils/setCookie";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 
@@ -19,6 +24,8 @@ export class AuthController {
     @inject("IVerifyOtpUseCase") private _verifyOtpUseCase: IVerifyOtpUseCase,
     @inject("ISignupResendOtpUsecase")
     private _resendOtpUseCase: ISignupResendOtpUsecase,
+    @inject("ILoginUseCase") private _loginUseCase: ILoginUseCase,
+    @inject("IJwtService") private _jwtService: IJwtService,
   ) {}
 
   async handleUserRegistration(
@@ -85,6 +92,44 @@ export class AuthController {
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
         HttpResponseMessages.OTP_RESEND_SUCCESSFULLY,
+      );
+
+      res.status(HTTP_STATUS_CODE.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleUserLogin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = loginValidationSchema.safeParse(req.body);
+
+      if (data.error) {
+        throw new Error(data.error.issues[0].message);
+      }
+
+      const responseDto = await this._loginUseCase.login(data.data);
+
+      const accessToken = await this._jwtService.createAccessToken({
+        id: responseDto.id,
+        role: responseDto.role,
+      });
+
+      const refreshToken = await this._jwtService.createRefreshToken({
+        id: responseDto.id,
+        role: responseDto.role,
+      });
+
+      setCookie(res, "refreshToken", refreshToken, {
+        maxAge: env.REFRESH_TOKEN_EXPIRATION_TIME * 1000,
+        httpOnly: true,
+        secure: true,
+      });
+
+      const response = HTTPResponseBuilder.buildSuccessResponse(
+        HTTP_STATUS_CODE.OK,
+        HttpResponseMessages.USER_LOGIN_SUCCESSFULL,
+        { userData: responseDto, accessToken },
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
