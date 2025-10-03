@@ -24,3 +24,8 @@ export const userRegistrationVerifyOtpSchema = z.object({
 export const emailValidationSchema = z.email({
   error: AuthError.INVALID_EMAIL,
 });
+
+export const loginValidationSchema = z.object({
+  email: z.email({ error: AuthError.INVALID_EMAIL }),
+  password: z.string({ error: AuthError.INVALID_PASSWORD }),
+});
