@@ -1,6 +1,8 @@
+import { ILoginUseCase } from "@domain/interfaces/useCase/auth/loginUseCase.interface";
 import { ISignupResendOtpUsecase } from "@domain/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
 import { IVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/verifyOtpUseCase.interface";
+import { LoginUseCase } from "@useCases/auth/loginUseCase";
 import { SignupResendOtpUseCase } from "@useCases/auth/signupResendOtpUseCase";
 import { SignupUseCase } from "@useCases/auth/signupUseCase";
 import { SignupVerifyOtpUseCase } from "@useCases/auth/signupVerifyOtpUseCase";
@@ -16,4 +18,5 @@ export function registerUsecases() {
     "ISignupResendOtpUsecase",
     SignupResendOtpUseCase,
   );
+  container.registerSingleton<ILoginUseCase>("ILoginUseCase", LoginUseCase);
 }
