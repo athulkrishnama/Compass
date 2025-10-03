@@ -2,6 +2,7 @@ import { IUserDocument } from "@infrastructure/repository/database configs/schem
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { ICreateUserRequestDTO } from "@domain/dtos/auth/createUser.dto";
 import { Errors } from "./Errors";
+import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -37,6 +38,17 @@ export class UserMapper {
       role,
       password,
       is_blocked: false,
+    };
+  }
+
+  static toLoginUserResponseDTOfromEntity(
+    user: UserEntity,
+  ): IUserLoginResponseDTO {
+    return {
+      email: user.email,
+      full_name: user.full_name,
+      id: user._id!,
+      role: user.role,
     };
   }
 }
