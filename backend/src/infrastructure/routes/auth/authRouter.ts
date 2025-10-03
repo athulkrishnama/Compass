@@ -31,6 +31,13 @@ export class AuthRouter {
         authController.handleUserRegistrationResendOtp(req, res, next);
       },
     );
+
+    this._router.post(
+      AuthRoutes.LOGIN,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleUserLogin(req, res, next);
+      },
+    );
   }
 
   public get_router() {
