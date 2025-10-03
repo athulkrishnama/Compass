@@ -38,6 +38,27 @@ export class AuthRouter {
         authController.handleUserLogin(req, res, next);
       },
     );
+
+    this._router.post(
+      AuthRoutes.FORGET_PASSWORD,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleForgetPasswordSendOtp(req, res, next);
+      },
+    );
+
+    this._router.post(
+      AuthRoutes.FORGET_PASSWORD_VERIFY_OTP,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleForgetPasswordVerifyOtp(req, res, next);
+      },
+    );
+
+    this._router.post(
+      AuthRoutes.FORGET_PASSWORD_RESET,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleForgetpasswordPasswordReset(req, res, next);
+      },
+    );
   }
 
   public get_router() {
