@@ -5,6 +5,7 @@ import { IForgetPasswordResetPasswordUseCase } from "@domain/interfaces/useCase/
 import { IForgetPasswordSendOtpUseCase } from "@domain/interfaces/useCase/auth/forgetPasswordSendOtpUseCase.interface";
 import { IForgetPasswordVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/forgetPasswordVerifyOtpUseCase.interface";
 import { ILoginUseCase } from "@domain/interfaces/useCase/auth/loginUseCase.interface";
+import { IRefreshTokenUseCase } from "@domain/interfaces/useCase/auth/refreshTokenUseCase.interface";
 import { ISignupResendOtpUsecase } from "@domain/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
 import { IVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/verifyOtpUseCase.interface";
@@ -37,6 +38,8 @@ export class AuthController {
     private _forgetPasswordVerifyOtpUseCase: IForgetPasswordVerifyOtpUseCase,
     @inject("IForgetPasswordResetPasswordUseCase")
     private _forgetPassawordResetPasswordUseCase: IForgetPasswordResetPasswordUseCase,
+    @inject("IRefreshTokenUseCase")
+    private _tokenRefreshUseCase: IRefreshTokenUseCase,
   ) {}
 
   async handleUserRegistration(
@@ -220,6 +223,22 @@ export class AuthController {
         HttpResponseMessages.PASSWORD_RESET_SUCCESSFUL,
       );
 
+      res.status(HTTP_STATUS_CODE.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleTokenRefresh(req: Request, res: Response, next: NextFunction) {
+    try {
+      const refreshToken = req.cookies.refreshToken;
+      const accessToken = await this._tokenRefreshUseCase.refresh(refreshToken);
+
+      const response = HTTPResponseBuilder.buildSuccessResponse(
+        HTTP_STATUS_CODE.OK,
+        HttpResponseMessages.REFRESH_SUCCESSFUL,
+        { accessToken },
+      );
       res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);

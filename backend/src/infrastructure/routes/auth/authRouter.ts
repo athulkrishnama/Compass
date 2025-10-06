@@ -59,6 +59,13 @@ export class AuthRouter {
         authController.handleForgetpasswordPasswordReset(req, res, next);
       },
     );
+
+    this._router.post(
+      AuthRoutes.REFRESH,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleTokenRefresh(req, res, next);
+      },
+    );
   }
 
   public get_router() {
