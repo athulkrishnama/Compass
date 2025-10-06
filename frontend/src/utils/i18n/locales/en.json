@@ -1,0 +1,46 @@
+{
+    "brand": {
+        "name": "Compass"
+    },
+    "headings": {
+        "signup": "Sign Up",
+        "enterOtp": "Enter OTP",
+        "otpHasSentToYourEmail": "An OTP has been sent to your email",
+        "cabSignup": "Cab Sign Up",
+        "hotelSignup": "Hotel Sign Up",
+        "login": "LOG IN",
+        "cabLogin": "CAB LOG IN",
+        "hotelLogin": "HOTEL LOG IN",
+        "adminLogin": "ADMIN LOG IN"
+    },
+    "errors": {
+        "minChar": "Minimum character limit is {{count}}",
+        "maxChar": "Maximum character limit is {{count}}",
+        "noSpecial": "Special characters are not allowed",
+        "invalidEmail": "Please enter a valid email address",
+        "passwordRequired": "Password is required",
+        "invalidPassword": "Password must meet the required criteria",
+        "confirmPasswordRequired": "Confirm password is required",
+        "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match"
+    },
+    "form": {
+        "fullname": "Full Name",
+        "email": "Email Address",
+        "password": "Password",
+        "confirmPassword": "Confirm Password"
+    },
+    "button": {
+        "submit": "Submit",
+        "submiting": "Submitting...",
+        "verify": "Verify",
+        "verifing": "Verifying...",
+        "resend": "Resend",
+        "signin": "Sign In",
+        "signup": "Sign Up"
+    },
+    "text": {
+        "alreadyHaveAccount": "Already have an account?",
+        "dontHaveAnAccount": "Don't have an account?",
+        "youAreNotA": "You are not a {{role}}"
+    }
+}
