@@ -9,6 +9,8 @@ import { corsOptions } from "./infrastructure/constants/corsOptions";
 import { AuthRouter } from "./infrastructure/routes/auth/authRouter";
 import { errorHandlingMiddleware } from "./infrastructure/middlewares/errorHandlingMiddleware";
 import { NextFunction } from "express-serve-static-core";
+import { AdminRouter } from "@infrastructure/routes/admin/adminRouter";
+import cookieParser from "cookie-parser";
 
 export class Server {
   private _app: Express;
@@ -18,6 +20,7 @@ export class Server {
     this._setLoggingMiddleware();
     this._setMiddlewares();
     this._setAuthRouter();
+    this._setAdminRouter();
     this._setErrorHandlingMiddleware();
   }
 
@@ -26,10 +29,16 @@ export class Server {
     this._app.use(Routes.AUTH, authRouter.get_router());
   }
 
+  private _setAdminRouter() {
+    const adminRouter = new AdminRouter();
+    this._app.use(Routes.ADMIN, adminRouter.getRouter());
+  }
+
   private _setMiddlewares() {
     this._app.use(express.json());
     this._app.use(express.urlencoded());
     this._app.use(cors(corsOptions));
+    this._app.use(cookieParser());
   }
 
   private _setErrorHandlingMiddleware() {
