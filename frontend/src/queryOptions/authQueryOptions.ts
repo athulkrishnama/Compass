@@ -1,10 +1,15 @@
 import {
+    forgetPasswordResetPassword,
+    forgetPasswordSendOtp,
+    forgetPasswordVerifyOtp,
     userLogin,
     userResendOtp,
     userSignupSendOTP,
     userVerifyOtp,
 } from "@/services/api/authApiService";
 import {
+    type ForgetPasswordPasswordResetRequest,
+    type ForgetPasswordVerifyOtpRequest,
     type loginRequest,
     type OtpVerifyRequest,
     type signupRequest,
@@ -27,12 +32,38 @@ export function createVerifySignupOtpQueryOptions() {
 
 export function createResendOtpQueryOptions() {
     return mutationOptions<HttpResponse<{}>, Error, string>({
-        mutationFn: (data) => userResendOtp(data)
-    })
+        mutationFn: (data) => userResendOtp(data),
+    });
 }
 
-export function createLoginQueryOption(){
+export function createLoginQueryOption() {
     return mutationOptions<HttpResponse<loginResponse>, Error, loginRequest>({
-        mutationFn: (data) => userLogin(data)
-    })
+        mutationFn: (data) => userLogin(data),
+    });
+}
+
+export function createForgetPasswordSendOtpQueryOptions() {
+    return mutationOptions<HttpResponse<{}>, Error, string>({
+        mutationFn: (data) => forgetPasswordSendOtp(data),
+    });
+}
+
+export function createForgetPasswordVerifyOtpQueryOptions() {
+    return mutationOptions<
+        HttpResponse<{ token: string }>,
+        Error,
+        ForgetPasswordVerifyOtpRequest
+    >({
+        mutationFn: (data) => forgetPasswordVerifyOtp(data),
+    });
+}
+
+export function createForgetPasswordResetPasswordQueryOptions() {
+    return mutationOptions<
+        HttpResponse<{}>,
+        Error,
+        ForgetPasswordPasswordResetRequest
+    >({
+        mutationFn: (data) => forgetPasswordResetPassword(data),
+    });
 }
