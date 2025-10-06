@@ -8,4 +8,5 @@ export enum AuthError {
   PASSWORD_NOT_MATCHING = "Password not matching",
   TOKEN_EXPIRED = "Token expired",
   TOKEN_NOT_MATCHING = "Token not matching",
+  REFRESH_TOKEN_EXPIRED = "Verify token is expired",
 }

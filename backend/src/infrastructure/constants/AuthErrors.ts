@@ -6,4 +6,5 @@ export enum AuthError {
   ADMIN_SIGNUP_ERROR = "Admin signup is not supported",
   NO_OTP = "OTP not provided",
   TOKEN_DATA_MISSING = "Token data is missing",
+  INVALID_TOKEN_ERROR = "Invalid Token",
 }

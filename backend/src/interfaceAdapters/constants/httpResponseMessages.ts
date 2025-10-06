@@ -5,4 +5,5 @@ export enum HttpResponseMessages {
   USER_LOGIN_SUCCESSFULL = "User login successful",
   OTP_VERIFIED_SUCCESSFULLY = "OTP verified Successfully",
   PASSWORD_RESET_SUCCESSFUL = "Password reset is successful",
+  REFRESH_SUCCESSFUL = "Successfuly got new access token",
 }
