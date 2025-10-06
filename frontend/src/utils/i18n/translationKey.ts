@@ -12,6 +12,10 @@ export default {
         cabLogin: "headings.cabLogin",
         hotelLogin: "headings.hotelLogin",
         adminLogin: "headings.adminLogin",
+        forgetPassword: "headings.forgetPassword",
+        resetPassword: "headings.resetPassword",
+        cabForgetPassword: "headings.cabForgetPassword",
+        hotelForgetPassword: "headings.hotelForgetPassword",
     },
     errors: {
         minChar: "errors.minChar",
@@ -29,6 +33,7 @@ export default {
         email: "form.email",
         password: "form.password",
         confirmPassword: "form.confirmPassword",
+        newPassword: "form.newPassword",
     },
     button: {
         submit: "button.submit",
@@ -37,11 +42,14 @@ export default {
         verifing: "button.verifing",
         resend: "button.resend",
         signin: "button.signin",
-        signup: "button.signup"
+        signup: "button.signup",
+        sendOtp: "button.sendOtp",
+        reset: "button.reset",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
         dontHaveAnAccount: "text.dontHaveAnAccount",
         youAreNotA: "text.youAreNotA",
+        forgetPassword: "text.forgetPassword"
     },
 };

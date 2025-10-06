@@ -11,7 +11,11 @@
         "login": "LOG IN",
         "cabLogin": "CAB LOG IN",
         "hotelLogin": "HOTEL LOG IN",
-        "adminLogin": "ADMIN LOG IN"
+        "adminLogin": "ADMIN LOG IN",
+        "forgetPassword": "FORGET PASSWORD",
+        "resetPassword": "Reset Password",
+        "cabForgetPassword": "Forget Password for Cab's",
+        "hotelForgetPassword": "Forget Password for Hotel's"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -27,7 +31,8 @@
         "fullname": "Full Name",
         "email": "Email Address",
         "password": "Password",
-        "confirmPassword": "Confirm Password"
+        "confirmPassword": "Confirm Password",
+        "newPassword": "New Password"
     },
     "button": {
         "submit": "Submit",
@@ -36,11 +41,14 @@
         "verifing": "Verifying...",
         "resend": "Resend",
         "signin": "Sign In",
-        "signup": "Sign Up"
+        "signup": "Sign Up",
+        "sendOtp": "Send OTP",
+        "reset": "Reset"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
         "dontHaveAnAccount": "Don't have an account?",
-        "youAreNotA": "You are not a {{role}}"
+        "youAreNotA": "You are not a {{role}}",
+        "forgetPassword": "forget password ?"
     }
 }
