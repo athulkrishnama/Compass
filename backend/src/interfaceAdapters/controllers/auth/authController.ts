@@ -165,7 +165,7 @@ export class AuthController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_RESEND_SUCCESSFULLY,
+        HttpResponseMessages.OTP_SEND_SUCCESSFULLY,
       );
       res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
