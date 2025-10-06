@@ -22,14 +22,17 @@ import type {
 import { toast } from "sonner";
 import OtpModal from "./OtpModal";
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { ROLES } from "@/constants/roles";
 
 type propType = {
     role: ROLE;
     heading: string;
 };
 export type signupFormType = z.infer<typeof signupValidationSchema>;
-function SignupForm({  role }: propType) {
+function SignupForm({ role }: propType) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -86,6 +89,14 @@ function SignupForm({  role }: propType) {
             {
                 onSuccess: (response) => {
                     toast.success(response.message);
+                    navigate({
+                        to:
+                            role == ROLES.TRAVELER
+                                ? "/traveler/login"
+                                : role === ROLES.CAB
+                                  ? "/cab/login"
+                                  : "/hotel/login",
+                    });
                     console.log(response);
                 },
                 onError: (err) => {
