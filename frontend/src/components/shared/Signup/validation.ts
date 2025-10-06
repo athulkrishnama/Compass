@@ -35,7 +35,7 @@ export const signupValidationSchema = z
             ),
         confirmPassword: z.string().min(1, {
             error: i18next.t(
-                translationKey.errors.passwordAndCofirmPasswordNotMatching
+                translationKey.errors.confirmPasswordRequired
             ),
         }),
     })
