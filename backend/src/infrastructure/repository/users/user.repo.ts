@@ -7,6 +7,7 @@ import { inject, injectable } from "tsyringe";
 import { IUserDocument } from "../database configs/schemas/userSchema";
 import { ROLES } from "@domain/types/roles";
 import { VALUES } from "@infrastructure/constants/values";
+import { ROLES as ROLE_VALUES } from "@domain/constants/roles";
 
 @injectable()
 export class UserRepository
@@ -57,9 +58,10 @@ export class UserRepository
           filter.role = [r];
         }
       }
+    } else {
+      filter.role = [ROLE_VALUES.CAB, ROLE_VALUES.TRAVELER, ROLE_VALUES.HOTEL];
     }
 
-    console.log("filter", filter);
     const response = await this._model
       .find(filter)
       .skip(skip)

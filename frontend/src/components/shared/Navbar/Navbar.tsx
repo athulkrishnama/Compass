@@ -6,6 +6,19 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { createLogoutQueryOptions } from "@/queryOptions/authQueryOptions";
 import { toast } from "sonner";
+import { Languages, type Langtype } from "@/types/langType";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { SelectIcon } from "@radix-ui/react-select";
+import { LanguagesIcon } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { setLanguage } from "@/store/slices/langSlice";
+import i18next from "i18next";
 
 interface propTypes {
     routes: {
@@ -18,6 +31,8 @@ interface propTypes {
 function Navbar({ routes, logoutRoute }: propTypes) {
     const { t } = useTranslation();
     const { location } = useRouterState();
+    const lang = useAppSelector((state) => state.lang.lang);
+    const dispatch = useAppDispatch();
 
     const { mutate } = useMutation(createLogoutQueryOptions());
     const navigate = useNavigate();
@@ -34,6 +49,12 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                 navigate({ to: logoutRoute, replace: true });
             },
         });
+    }
+
+    function handleLanguageChange(lang: Langtype) {
+        i18next.changeLanguage(lang);
+        dispatch(setLanguage(lang as Langtype));
+        document.documentElement.setAttribute("lang", lang);
     }
 
     return (
@@ -68,7 +89,27 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                 })}
             </div>
 
-            <div>
+            <div className="flex gap-3">
+                <div>
+                    <Select value={lang} onValueChange={handleLanguageChange}>
+                        <SelectTrigger className=" text-black">
+                            <SelectValue
+                                placeholder="Select a fruit"
+                                className="text-black"
+                            />
+                            <SelectIcon>
+                                <LanguagesIcon color="white" />
+                            </SelectIcon>
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Languages.map((l, i) => (
+                                <SelectItem key={i} value={l} className="text-black">
+                                    {l}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
                 <Button
                     onClick={handleLogout}
                     className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"

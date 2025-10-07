@@ -4,16 +4,18 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userSlice from "./slices/userSlice";
 import tokenSlice from "./slices/tokenSlice";
+import langSlice from "./slices/langSlice";
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["user"],
+    whitelist: ["user", "lang"],
 };
 
 const rootReducer = combineReducers({
     user: userSlice,
     token: tokenSlice,
+    lang: langSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,0 +1,69 @@
+{
+    "brand": {
+        "name": "कम्पास"
+    },
+    "headings": {
+        "signup": "साइन अप",
+        "enterOtp": "ओटीपी दर्ज करें",
+        "otpHasSentToYourEmail": "एक ओटीपी आपके ईमेल पर भेजा गया है",
+        "cabSignup": "कैब साइन अप",
+        "hotelSignup": "होटल साइन अप",
+        "login": "लॉग इन",
+        "cabLogin": "कैब लॉग इन",
+        "hotelLogin": "होटल लॉग इन",
+        "adminLogin": "एडमिन लॉग इन",
+        "forgetPassword": "पासवर्ड भूल गए",
+        "resetPassword": "पासवर्ड रीसेट करें",
+        "cabForgetPassword": "कैब के लिए पासवर्ड भूल गए",
+        "hotelForgetPassword": "होटल के लिए पासवर्ड भूल गए",
+        "userManagement": "उपयोगकर्ता प्रबंधन"
+    },
+    "errors": {
+        "minChar": "न्यूनतम अक्षर सीमा {{count}} है",
+        "maxChar": "अधिकतम अक्षर सीमा {{count}} है",
+        "noSpecial": "विशेष अक्षर अनुमति नहीं है",
+        "invalidEmail": "कृपया एक मान्य ईमेल पता दर्ज करें",
+        "passwordRequired": "पासवर्ड आवश्यक है",
+        "invalidPassword": "पासवर्ड को आवश्यक मानदंडों को पूरा करना चाहिए",
+        "confirmPasswordRequired": "कन्फर्म पासवर्ड आवश्यक है",
+        "passwordAndCofirmPasswordNotMatching": "पासवर्ड और कन्फर्म पासवर्ड मेल नहीं खा रहे हैं"
+    },
+    "form": {
+        "fullname": "पूरा नाम",
+        "email": "ईमेल पता",
+        "password": "पासवर्ड",
+        "confirmPassword": "पासवर्ड की पुष्टि करें",
+        "newPassword": "नया पासवर्ड"
+    },
+    "button": {
+        "submit": "सबमिट करें",
+        "submiting": "सबमिट किया जा रहा है...",
+        "verify": "सत्यापित करें",
+        "verifing": "सत्यापित किया जा रहा है...",
+        "resend": "दोबारा भेजें",
+        "signin": "साइन इन",
+        "signup": "साइन अप",
+        "sendOtp": "ओटीपी भेजें",
+        "reset": "रीसेट करें",
+        "logout": "लॉग आउट",
+        "dashboard": "डैशबोर्ड",
+        "reports": "रिपोर्ट्स",
+        "users": "उपयोगकर्ता",
+        "next": "अगला",
+        "previous": "पिछला",
+        "block": "ब्लॉक करें",
+        "unBlock": "अनब्लॉक करें",
+        "home": "होम",
+        "profile": "प्रोफ़ाइल",
+        "bookings": "बुकिंग्स",
+        "history": "इतिहास",
+        "acitveTrip": "सक्रिय यात्रा",
+        "upcomingBookings": "आगामी बुकिंग्स"
+    },
+    "text": {
+        "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
+        "dontHaveAnAccount": "क्या आपके पास खाता नहीं है?",
+        "youAreNotA": "आप {{role}} नहीं हैं",
+        "forgetPassword": "पासवर्ड भूल गए?"
+    }
+}
