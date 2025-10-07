@@ -7,4 +7,5 @@ export enum AuthError {
   NO_OTP = "OTP not provided",
   TOKEN_DATA_MISSING = "Token data is missing",
   INVALID_TOKEN_ERROR = "Invalid Token",
+  UNAUTHORIZED = "This user is unauthrorized",
 }

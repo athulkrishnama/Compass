@@ -1,6 +1,7 @@
 import { HTTP_STATUS_CODE } from "@domain/constants/statusCodes";
 import { ICacheService } from "@domain/interfaces/service/cacheService.interface";
 import { IJwtService } from "@domain/interfaces/service/jwtService.interface";
+import { ROLES } from "@domain/types/roles";
 import { AuthError } from "@infrastructure/constants/AuthErrors";
 import { HTTPResponseBuilder } from "@utils/httpResponseBuilder";
 import { NextFunction, Request, Response } from "express";
@@ -39,8 +40,17 @@ export class AuthMiddleware {
       res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
       return;
     }
-
-    (req as any).user = { role: decoded.role, id: decoded.id };
+    res.locals.user = { role: decoded.role, id: decoded.id };
+    // (req as any).user = { role: decoded.role, id: decoded.id };
     next();
+  };
+
+  authorizeRole = (roles: ROLES[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+      const user = res.locals.user;
+      const curRole = user.role;
+      if (roles.includes(curRole)) return next();
+      next(new Error(AuthError.UNAUTHORIZED));
+    };
   };
 }

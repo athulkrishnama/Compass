@@ -1,4 +1,5 @@
 import { adminController, authMiddleware } from "@DI/resolve";
+import { ROLES } from "@domain/constants/roles";
 import { AdminRoutes } from "@infrastructure/constants/routes/adminRoutes";
 import { NextFunction, Request, Response, Router } from "express";
 
@@ -14,6 +15,7 @@ export class AdminRouter {
     this._router.get(
       AdminRoutes.USERS,
       authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
       (req: Request, res: Response, next: NextFunction) => {
         adminController.handleGetUsers(req, res, next);
       },
