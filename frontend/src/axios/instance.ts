@@ -1,4 +1,6 @@
 import { AUTH_ROUTES } from "@/constants/routes/authRoutes";
+import { removeToken, setToken } from "@/store/slices/tokenSlice";
+import { removeUser } from "@/store/slices/userSlice";
 import { store } from "@/store/store";
 import axios from "axios";
 
@@ -30,9 +32,21 @@ axiosInstance.interceptors.response.use(
                 const response = await axiosInstance.post(AUTH_ROUTES.REFRESH);
                 originalRequest.headers.Authorization =
                     "Bearer " + response.data.data.accessToken;
+                store.dispatch(setToken(response.data.data.accessToken))
                 return axiosInstance(originalRequest);
             } catch (error) {
-                console.log(error);
+
+                const role = store.getState().user.role;
+                store.dispatch(removeToken())
+                store.dispatch(removeUser())
+                
+                let url = ""
+                if(role === "ADMIN") url = "/admin/login";
+                else if(role === "CAB") url = "/cab/login";
+                else if(role === "HOTEL") url = "/hotel/login"
+                else url = "/traveler/login"
+
+                window.location.href = url;
             }
         }else{
             return Promise.reject(err)
