@@ -7,6 +7,7 @@ import { ILoginUseCase } from "@domain/interfaces/useCase/auth/loginUseCase.inte
 import { IRefreshTokenUseCase } from "@domain/interfaces/useCase/auth/refreshTokenUseCase.interface";
 import { ISignupResendOtpUsecase } from "@domain/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
+import { ITokenInvalidationUseCase } from "@domain/interfaces/useCase/auth/tokenInvalidationUseCase.interface";
 import { IVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import { GetUsersUseCase } from "@useCases/admin/getUsersUseCase";
 import { UserStatusChangeUseCase } from "@useCases/admin/userStatusChangeUseCase";
@@ -18,6 +19,7 @@ import { RefreshTokenUseCase } from "@useCases/auth/refreshTokenUseCase";
 import { SignupResendOtpUseCase } from "@useCases/auth/signupResendOtpUseCase";
 import { SignupUseCase } from "@useCases/auth/signupUseCase";
 import { SignupVerifyOtpUseCase } from "@useCases/auth/signupVerifyOtpUseCase";
+import { TokenInvalidationUseCase } from "@useCases/auth/tokenInvalidationUseCase";
 import { container } from "tsyringe";
 
 export function registerUsecases() {
@@ -54,5 +56,9 @@ export function registerUsecases() {
   container.registerSingleton<IUserStatusChangeUseCase>(
     "IUserStatusChangeUseCase",
     UserStatusChangeUseCase,
+  );
+  container.registerSingleton<ITokenInvalidationUseCase>(
+    "ITokenInvalidationUseCase",
+    TokenInvalidationUseCase,
   );
 }
