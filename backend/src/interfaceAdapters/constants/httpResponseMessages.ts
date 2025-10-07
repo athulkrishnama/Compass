@@ -8,4 +8,5 @@ export enum HttpResponseMessages {
   REFRESH_SUCCESSFUL = "Successfuly got new access token",
   DATA_FETCHED_SUCCESSFULLY = "Data fetched successfully",
   STATUS_UPDATED_SUCCESSFULLY = "User Status updated Successfully",
+  LOGOUT_SUCCESSFUL = "Logout successfully",
 }
