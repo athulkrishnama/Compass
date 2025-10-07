@@ -15,7 +15,8 @@
         "forgetPassword": "FORGET PASSWORD",
         "resetPassword": "Reset Password",
         "cabForgetPassword": "Forget Password for Cab's",
-        "hotelForgetPassword": "Forget Password for Hotel's"
+        "hotelForgetPassword": "Forget Password for Hotel's",
+        "userManagement": "User Management"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -43,7 +44,21 @@
         "signin": "Sign In",
         "signup": "Sign Up",
         "sendOtp": "Send OTP",
-        "reset": "Reset"
+        "reset": "Reset",
+        "logout": "Log out",
+        "dashboard": "Dashboard",
+        "reports": "Reports",
+        "users": "Users",
+        "next": "Next",
+        "previous": "Previous",
+        "block": "Block",
+        "unBlock": "UnBlock",
+        "home": "Home",
+        "profile": "Profile",
+        "bookings": "Bookings",
+        "history": "History",
+        "acitveTrip": "Active Trip",
+        "upcomingBookings": "Upcoming Bookings"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
