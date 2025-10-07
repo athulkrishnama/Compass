@@ -1,8 +1,11 @@
 import logo from "@/assets/images/logo.png";
 import translationKey from "@/utils/i18n/translationKey";
 import { useTranslation } from "react-i18next";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { createLogoutQueryOptions } from "@/queryOptions/authQueryOptions";
+import { toast } from "sonner";
 
 export default function SideBar() {
     const router = useRouterState();
@@ -14,6 +17,23 @@ export default function SideBar() {
         { to: "/admin/users", label: t(translationKey.button.users) },
         { to: "/admin/reports", label: t(translationKey.button.reports) },
     ];
+
+    const {mutate} = useMutation(createLogoutQueryOptions())
+    const navigate = useNavigate();
+
+    function handleLogout(){
+        mutate(undefined, {
+            onSuccess:(response)=>{
+                toast.success(response.message)
+            },
+            onError: (err)=>{
+              toast.error(err.message)  
+            },
+            onSettled:()=>{
+                navigate({to:"/admin/login", replace: true})
+            }
+        })
+    }
 
     return (
         <div className="h-screen w-64 bg-white border-r border-gray-200 flex flex-col justify-between">
@@ -48,7 +68,7 @@ export default function SideBar() {
             </div>
 
             <div className="p-4 border-t border-gray-200">
-                <Button className="w-full bg-red-600 text-white hover:bg-red-500 transition-colors">
+                <Button className="w-full bg-red-600 text-white hover:bg-red-500 transition-colors" onClick={handleLogout}>
                     {t(translationKey.button.logout)}
                 </Button>
             </div>
