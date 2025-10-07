@@ -3,6 +3,7 @@ import { UserEntity } from "@domain/entities/user/user.entity";
 import { ICreateUserRequestDTO } from "@domain/dtos/auth/createUser.dto";
 import { Errors } from "./Errors";
 import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";
+import { IGetUsersResponseDTO } from "@domain/dtos/auth/getUsers.dto";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -50,5 +51,20 @@ export class UserMapper {
       id: user._id!,
       role: user.role,
     };
+  }
+
+  static toGetUsersResponseDTOfromEntity(
+    users: UserEntity[],
+  ): IGetUsersResponseDTO["clients"] {
+    const result: IGetUsersResponseDTO["clients"][number][] = users.map(
+      (user) => ({
+        email: user.email,
+        full_name: user.full_name,
+        id: user._id!,
+        is_blocked: user.is_blocked,
+        role: user.role,
+      }),
+    );
+    return result;
   }
 }
