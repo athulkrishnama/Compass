@@ -66,6 +66,13 @@ export class AuthRouter {
         authController.handleTokenRefresh(req, res, next);
       },
     );
+
+    this._router.post(
+      AuthRoutes.LOGOUT,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleLogout(req, res, next);
+      },
+    );
   }
 
   public get_router() {
