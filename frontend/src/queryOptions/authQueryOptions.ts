@@ -2,6 +2,7 @@ import {
     forgetPasswordResetPassword,
     forgetPasswordSendOtp,
     forgetPasswordVerifyOtp,
+    logOutUser,
     userLogin,
     userResendOtp,
     userSignupSendOTP,
@@ -16,7 +17,7 @@ import {
 } from "@/types/api/requests/authRequests";
 import type { loginResponse } from "@/types/api/responses/loginReponse";
 import type { HttpResponse } from "@/types/api/responseType";
-import { mutationOptions } from "@tanstack/react-query";
+import { mutationOptions, queryOptions } from "@tanstack/react-query";
 
 export function createSignupQueryOptions() {
     return mutationOptions<HttpResponse<{}>, Error, signupRequest>({
@@ -65,5 +66,11 @@ export function createForgetPasswordResetPasswordQueryOptions() {
         ForgetPasswordPasswordResetRequest
     >({
         mutationFn: (data) => forgetPasswordResetPassword(data),
+    });
+}
+
+export function createLogoutQueryOptions() {
+    return mutationOptions<HttpResponse<{}>, Error, void>({
+        mutationFn: () => logOutUser(),
     });
 }

@@ -95,3 +95,15 @@ export async function forgetPasswordResetPassword<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function logOutUser() {
+    try {
+        const response = await axiosInstance.post(AUTH_ROUTES.LOGOUT);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}
