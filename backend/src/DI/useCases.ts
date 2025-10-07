@@ -1,3 +1,5 @@
+import { IGetUsersUseCase } from "@domain/interfaces/useCase/admin/getUsersUseCase.interface";
+import { IUserStatusChangeUseCase } from "@domain/interfaces/useCase/admin/userStatusChangeUseCase.interface";
 import { IForgetPasswordResetPasswordUseCase } from "@domain/interfaces/useCase/auth/forgetPasswordResetPassword.interface";
 import { IForgetPasswordSendOtpUseCase } from "@domain/interfaces/useCase/auth/forgetPasswordSendOtpUseCase.interface";
 import { IForgetPasswordVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/forgetPasswordVerifyOtpUseCase.interface";
@@ -6,6 +8,8 @@ import { IRefreshTokenUseCase } from "@domain/interfaces/useCase/auth/refreshTok
 import { ISignupResendOtpUsecase } from "@domain/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
 import { IVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/verifyOtpUseCase.interface";
+import { GetUsersUseCase } from "@useCases/admin/getUsersUseCase";
+import { UserStatusChangeUseCase } from "@useCases/admin/userStatusChangeUseCase";
 import { ForgetPasswordResetPasswordUseCase } from "@useCases/auth/forgetPasswordResetPasswordUseCase";
 import { ForgetPasswordSendOtpUseCase } from "@useCases/auth/forgetPasswordSendOtpUseCase";
 import { ForgetPasswordVerifyOtpUseCase } from "@useCases/auth/forgetPasswordVerifyOtpUseCase";
@@ -42,5 +46,13 @@ export function registerUsecases() {
   container.registerSingleton<IRefreshTokenUseCase>(
     "IRefreshTokenUseCase",
     RefreshTokenUseCase,
+  );
+  container.registerSingleton<IGetUsersUseCase>(
+    "IGetUsersUseCase",
+    GetUsersUseCase,
+  );
+  container.registerSingleton<IUserStatusChangeUseCase>(
+    "IUserStatusChangeUseCase",
+    UserStatusChangeUseCase,
   );
 }
