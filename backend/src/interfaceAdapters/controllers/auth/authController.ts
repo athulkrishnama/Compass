@@ -8,6 +8,7 @@ import { ILoginUseCase } from "@domain/interfaces/useCase/auth/loginUseCase.inte
 import { IRefreshTokenUseCase } from "@domain/interfaces/useCase/auth/refreshTokenUseCase.interface";
 import { ISignupResendOtpUsecase } from "@domain/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { ISignupUseCase } from "@domain/interfaces/useCase/auth/signupUseCase.interface";
+import { ITokenInvalidationUseCase } from "@domain/interfaces/useCase/auth/tokenInvalidationUseCase.interface";
 import { IVerifyOtpUseCase } from "@domain/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import {
   emailValidationSchema,
@@ -40,6 +41,8 @@ export class AuthController {
     private _forgetPassawordResetPasswordUseCase: IForgetPasswordResetPasswordUseCase,
     @inject("IRefreshTokenUseCase")
     private _tokenRefreshUseCase: IRefreshTokenUseCase,
+    @inject("ITokenInvalidationUseCase")
+    private _tokenInvalidationUseCase: ITokenInvalidationUseCase,
   ) {}
 
   async handleUserRegistration(
@@ -239,6 +242,25 @@ export class AuthController {
         HttpResponseMessages.REFRESH_SUCCESSFUL,
         { accessToken },
       );
+      res.status(HTTP_STATUS_CODE.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleLogout(req: Request, res: Response, next: NextFunction) {
+    try {
+      const accessToken = req.header("Authorization")!;
+      if (accessToken && accessToken.split(" ")[1])
+        await this._tokenInvalidationUseCase.validate(
+          accessToken.split(" ")[1],
+        );
+
+      const response = HTTPResponseBuilder.buildSuccessResponse(
+        HTTP_STATUS_CODE.OK,
+        HttpResponseMessages.LOGOUT_SUCCESSFUL,
+      );
+
       res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
