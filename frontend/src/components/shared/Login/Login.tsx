@@ -37,8 +37,23 @@ function LoginPage({ role, heading, imagePath }: propType) {
                     </div>
 
                     {role !== ROLES.ADMIN && (
-                        <p className="text-gray-500 text-sm mt-6">
-                            {t(translationKey.text.dontHaveAnAccount) + " "}
+                        <div className="flex justify-between items-center w-full px-8">
+                            <Link
+                                className="text-gray-500 text-sm"
+                                
+                                to={
+                                    role === ROLES.TRAVELER
+                                        ? "/traveler/forgetPassword"
+                                        : role === ROLES.HOTEL
+                                          ? "/hotel/forgetPassword"
+                                          : "/cab/forgetPassword"
+                                }
+                            >
+                                <Button variant="link">
+                                    {t(translationKey.text.forgetPassword) +
+                                        " "}
+                                </Button>
+                            </Link>
 
                             <Link
                                 to={
@@ -55,7 +70,7 @@ function LoginPage({ role, heading, imagePath }: propType) {
                                     {t(translationKey.button.signup)}
                                 </Button>
                             </Link>
-                        </p>
+                        </div>
                     )}
                 </div>
             </div>

@@ -51,3 +51,59 @@ export async function userLogin<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function forgetPasswordSendOtp<T>(data: T) {
+    try {
+        const response = await axiosInstance.post(AUTH_ROUTES.FORGET_SEND_OTP, {
+            email: data,
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function forgetPasswordVerifyOtp<T>(data: T) {
+    try {
+        const response = await axiosInstance.post(
+            AUTH_ROUTES.FORGET_VERIFY_OTP,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function forgetPasswordResetPassword<T>(data: T) {
+    try {
+        const response = await axiosInstance.post(
+            AUTH_ROUTES.FORGET_RESET_PASSWORD,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function logOutUser() {
+    try {
+        const response = await axiosInstance.post(AUTH_ROUTES.LOGOUT);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}

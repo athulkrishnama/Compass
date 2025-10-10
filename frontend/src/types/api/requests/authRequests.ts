@@ -12,8 +12,18 @@ export interface OtpVerifyRequest {
     otp: string;
 }
 
+export interface loginRequest {
+    email: string;
+    password: string;
+}
 
-export interface loginRequest{
-    email: string,
-    password: string,
+export interface ForgetPasswordVerifyOtpRequest {
+    email: string;
+    otp: string;
+}
+
+export interface ForgetPasswordPasswordResetRequest{
+    email: string;
+    password: string;
+    token: string;
 }

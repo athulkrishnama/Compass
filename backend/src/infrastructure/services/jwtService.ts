@@ -1,11 +1,11 @@
-import { IJwtService } from "@domain/interfaces/service/jwtService.interface";
+import { IJwtService } from "application/interfaces/service/jwtService.interface";
 import { JWTPayloadType } from "@domain/types/JWTPayload";
 import { env } from "@config/envConfig";
 import { sign, verify } from "jsonwebtoken";
 import { injectable } from "tsyringe";
 import { JWTDecodeType } from "@domain/types/JWTDecode";
 import { v4 } from "uuid";
-import { AuthError } from "@infrastructure/constants/AuthErrors";
+import { AuthError } from "presentation/constants/AuthErrors";
 
 @injectable()
 export class JwtService implements IJwtService {
