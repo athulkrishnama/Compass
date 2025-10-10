@@ -2,7 +2,7 @@ import { IForgetPasswordVerifyOtpRequestDTO } from "@domain/dtos/auth/forgetPass
 import { ICacheService } from "application/interfaces/service/cacheService.interface";
 import { ITokenService } from "application/interfaces/service/tokenService.interface";
 import { IForgetPasswordVerifyOtpUseCase } from "application/interfaces/useCase/auth/forgetPasswordVerifyOtpUseCase.interface";
-import { AuthError } from "@useCases/constants/Errors";
+import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

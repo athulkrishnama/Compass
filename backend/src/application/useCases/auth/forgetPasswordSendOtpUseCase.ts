@@ -5,8 +5,8 @@ import { IEmailTemplateGenerator } from "application/interfaces/service/emailTem
 import { IOtpService } from "application/interfaces/service/otpService.interface";
 import { IForgetPasswordSendOtpUseCase } from "application/interfaces/useCase/auth/forgetPasswordSendOtpUseCase.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
-import { EmailSubjects } from "@useCases/constants/emailConstants";
-import { AuthError } from "@useCases/constants/Errors";
+import { EmailSubjects } from "@application/constants/emailConstants";
+import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

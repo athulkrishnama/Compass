@@ -1,6 +1,6 @@
 import { IJwtService } from "application/interfaces/service/jwtService.interface";
 import { IRefreshTokenUseCase } from "application/interfaces/useCase/auth/refreshTokenUseCase.interface";
-import { AuthError } from "@useCases/constants/Errors";
+import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

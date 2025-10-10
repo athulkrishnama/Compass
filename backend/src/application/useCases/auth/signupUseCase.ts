@@ -7,9 +7,9 @@ import { IHashService } from "application/interfaces/service/hashService.interfa
 import { IOtpService } from "application/interfaces/service/otpService.interface";
 import { ISignupUseCase } from "application/interfaces/useCase/auth/signupUseCase.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
-import { EmailSubjects } from "@useCases/constants/emailConstants";
+import { EmailSubjects } from "@application/constants/emailConstants";
 import { UserMapper } from "application/mappers/user.mapper";
-import { AuthError } from "@useCases/constants/Errors";
+import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

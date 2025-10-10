@@ -3,8 +3,8 @@ import { IEmailService } from "application/interfaces/service/emailService.inter
 import { IEmailTemplateGenerator } from "application/interfaces/service/emailTemplateGenerator.interface";
 import { ISignupResendOtpUsecase } from "application/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
-import { EmailSubjects } from "@useCases/constants/emailConstants";
-import { AuthError } from "@useCases/constants/Errors";
+import { EmailSubjects } from "@application/constants/emailConstants";
+import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

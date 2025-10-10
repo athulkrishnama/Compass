@@ -3,7 +3,7 @@ import { IUserRepo } from "application/interfaces/repository/users/user.repo.int
 import { ICacheService } from "application/interfaces/service/cacheService.interface";
 import { IVerifyOtpUseCase } from "application/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import { UserMapper } from "application/mappers/user.mapper";
-import { AuthError } from "@useCases/constants/Errors";
+import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
