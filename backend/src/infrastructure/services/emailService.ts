@@ -1,4 +1,4 @@
-import { IEmailService } from "@domain/interfaces/service/emailService.interface";
+import { IEmailService } from "application/interfaces/service/emailService.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
 import { env } from "@config/envConfig";
 import nodemailer from "nodemailer";

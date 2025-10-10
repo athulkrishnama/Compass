@@ -1,4 +1,4 @@
-import { IEmailTemplateGenerator } from "@domain/interfaces/service/emailTemplateGenerator.interface";
+import { IEmailTemplateGenerator } from "application/interfaces/service/emailTemplateGenerator.interface";
 
 export abstract class BaseEmailTemplateGenerator
   implements IEmailTemplateGenerator

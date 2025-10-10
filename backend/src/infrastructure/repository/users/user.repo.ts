@@ -1,12 +1,12 @@
-import { IUserRepo } from "@domain/interfaces/repository/users/user.repo.interface.";
+import { IUserRepo } from "application/interfaces/repository/users/user.repo.interface";
 import { BaseRepository } from "../base/base.repo";
 import { Model, RootFilterQuery } from "mongoose";
-import { UserMapper } from "@mappers/user.mapper";
+import { UserMapper } from "application/mappers/user.mapper";
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { inject, injectable } from "tsyringe";
 import { IUserDocument } from "../database configs/schemas/userSchema";
 import { ROLES } from "@domain/types/roles";
-import { VALUES } from "@infrastructure/constants/values";
+import { VALUES } from "presentation/constants/values";
 import { ROLES as ROLE_VALUES } from "@domain/constants/roles";
 
 @injectable()

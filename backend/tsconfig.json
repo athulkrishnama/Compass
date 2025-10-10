@@ -33,12 +33,11 @@
     "paths": {
       "@infrastructure/*": ["infrastructure/*"],
       "@utils/*": ["utils/*"],
-      "@interfaceAdapters/*": ["interfaceAdapters/*"],
       "@domain/*": ["domain/*"],
-      "@useCases/*": ["useCases/*"],
+      "@useCases/*": ["application/useCases/*"],
       "@config/*": ["config/*"],
-      "@DI/*": ["DI/*"],
-      "@mappers/*": ["mappers/*"]
+      "@DI/*": ["infrastructure/DI/*"],
+      "@mappers/*": ["application/mappers/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

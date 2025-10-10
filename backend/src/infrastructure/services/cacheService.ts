@@ -1,6 +1,6 @@
-import { ICacheService } from "@domain/interfaces/service/cacheService.interface";
-import { Errors } from "@infrastructure/constants/Error";
-import { Messages } from "@infrastructure/constants/messages";
+import { ICacheService } from "application/interfaces/service/cacheService.interface";
+import { Errors } from "presentation/constants/Error";
+import { Messages } from "presentation/constants/messages";
 import { createClient, RedisClientType } from "@redis/client";
 import { env } from "@config/envConfig";
 import { injectable } from "tsyringe";

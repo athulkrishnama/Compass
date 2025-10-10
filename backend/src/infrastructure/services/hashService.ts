@@ -1,4 +1,4 @@
-import { IHashService } from "@domain/interfaces/service/hashService.interface";
+import { IHashService } from "application/interfaces/service/hashService.interface";
 import bcrypt from "bcrypt";
 import { injectable } from "tsyringe";
 
