@@ -8,6 +8,11 @@ import { ILoginUseCase } from "application/interfaces/useCase/auth/loginUseCase.
 import { UserMapper } from "application/mappers/user.mapper";
 import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
+import {
+  PasswordNotMatchingException,
+  UserIsBlockedException,
+  UserNotFoundException,
+} from "@application/constants/Exceptions";
 
 @injectable()
 export class LoginUseCase implements ILoginUseCase {
@@ -22,11 +27,11 @@ export class LoginUseCase implements ILoginUseCase {
     const user = await this._userRepo.findByEmail(email);
 
     if (!user) {
-      throw new Error(AuthError.USER_NOT_FOUND);
+      throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
     }
 
     if (user.is_blocked) {
-      throw new Error(AuthError.USER_IS_BLOCKED);
+      throw new UserIsBlockedException(AuthError.USER_IS_BLOCKED);
     }
 
     const passwordMatch = await this._hashService.compare(
@@ -35,7 +40,7 @@ export class LoginUseCase implements ILoginUseCase {
     );
 
     if (!passwordMatch) {
-      throw new Error(AuthError.PASSWORD_NOT_MATCHING);
+      throw new PasswordNotMatchingException(AuthError.PASSWORD_NOT_MATCHING);
     }
 
     const dto = UserMapper.toLoginUserResponseDTOfromEntity(user);

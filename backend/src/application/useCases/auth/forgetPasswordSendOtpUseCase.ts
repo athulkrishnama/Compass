@@ -8,6 +8,7 @@ import { EmailPayloadType } from "@domain/types/emailPayload";
 import { EmailSubjects } from "@application/constants/emailConstants";
 import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
+import { UserNotFoundException } from "@application/constants/Exceptions";
 
 @injectable()
 export class ForgetPasswordSendOtpUseCase
@@ -26,7 +27,7 @@ export class ForgetPasswordSendOtpUseCase
     const user = await this._userRepo.findByEmail(email);
 
     if (!user) {
-      throw new Error(AuthError.USER_NOT_FOUND);
+      throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
     }
 
     const otp = this._otpService.generateOtp(6);

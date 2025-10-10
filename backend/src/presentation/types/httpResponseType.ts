@@ -3,5 +3,5 @@ export interface HttpResponse<T extends object> {
   data?: T;
   message?: string;
   error?: string;
-  statusCode?: number;
+  statusCode: number;
 }
