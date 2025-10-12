@@ -4,6 +4,7 @@ import { Errors } from "../constants/Error";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import {
   ApplicationException,
+  InvalideDataException,
   InvalidOTPException,
   OTPExpiredException,
   PasswordNotMatchingException,
@@ -37,7 +38,8 @@ export const errorHandlingMiddleware = (
         err instanceof OTPExpiredException ||
         err instanceof UserDataMissingException ||
         err instanceof PasswordNotMatchingException ||
-        err instanceof TokenMissingException
+        err instanceof TokenMissingException ||
+        err instanceof InvalideDataException
       ) {
         statusCode = HTTP_STATUS_CODE.BAD_REQUEST;
       } else if (err instanceof TokenExpiredException) {

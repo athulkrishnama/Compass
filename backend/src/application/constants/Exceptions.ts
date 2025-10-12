@@ -57,3 +57,9 @@ export class OTPExpiredException extends ApplicationException {
     super(message);
   }
 }
+
+export class InvalideDataException extends ApplicationException {
+  constructor(message: string) {
+    super(message);
+  }
+}

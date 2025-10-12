@@ -9,17 +9,24 @@ import translationKey from "@/utils/i18n/translationKey";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
-import { createLoginQueryOption } from "@/queryOptions/authQueryOptions";
+import {
+    createGoogleLoginQueryOptions,
+    createLoginQueryOption,
+} from "@/queryOptions/authQueryOptions";
 import { toast } from "sonner";
-import {  useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { setUser } from "@/store/slices/userSlice";
 import { setToken } from "@/store/slices/tokenSlice";
+import { ROLES } from "@/constants/roles";
+import { useGoogleLogin } from "@react-oauth/google";
+import type { HttpResponse } from "@/types/api/responseType";
+import type { loginResponse } from "@/types/api/responses/loginReponse";
 
 type propType = {
     role: ROLE;
 };
-function LoginForm({role}: propType) {
+function LoginForm({ role }: propType) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -27,6 +34,9 @@ function LoginForm({role}: propType) {
     type loginFormType = z.infer<typeof loginValidationSchema>;
 
     const { mutate } = useMutation(createLoginQueryOption());
+    const { mutate: googleLoginMutate } = useMutation(
+        createGoogleLoginQueryOptions()
+    );
 
     const {
         register,
@@ -41,27 +51,14 @@ function LoginForm({role}: propType) {
             mutate(data, {
                 onSuccess: (response) => {
                     console.log(response);
-
-                    if(response.data?.userData.role !== role){
-                        toast.error(t(translationKey.text.youAreNotA, {role}))
+                    if (response.data?.userData.role !== role) {
+                        toast.error(
+                            t(translationKey.text.youAreNotA, { role })
+                        );
                         rej();
                         return;
                     }
-
-                    
-                    toast.success(response.message);
-                    dispatch(
-                        setUser({
-                            email: response.data?.userData.email!,
-                            id: response.data?.userData.id!,
-                            full_name: response.data?.userData.full_name!,
-                            role: response.data?.userData.role!
-                        })
-                    );
-                    dispatch(setToken(response.data?.accessToken!));
-
-
-                    navigate({ to: "..", replace: true });
+                    handleLoginSuccess(response);
                     res();
                 },
                 onError: (err) => {
@@ -72,6 +69,44 @@ function LoginForm({role}: propType) {
             });
         });
     };
+    const login = useGoogleLogin({
+        onSuccess: (res) => handleGoogleLoginsuccess(res.code),
+        onError: (err) => console.log(err),
+        flow: "auth-code",
+    });
+
+    function handleGoogleLoginsuccess(code: string) {
+        googleLoginMutate(
+            { authorizationCode: code, role },
+            {
+                onSuccess: (res) => {
+                    if (res.data?.userData.role !== role) {
+                        toast.error(
+                            t(translationKey.text.youAreNotA, { role })
+                        );
+                        return;
+                    }
+                    handleLoginSuccess(res);
+                },
+                onError: (err) => console.log(err),
+            }
+        );
+    }
+
+    function handleLoginSuccess(response: HttpResponse<loginResponse>) {
+        toast.success(response.message);
+        dispatch(
+            setUser({
+                email: response.data?.userData.email!,
+                id: response.data?.userData.id!,
+                full_name: response.data?.userData.full_name!,
+                role: response.data?.userData.role!,
+            })
+        );
+        dispatch(setToken(response.data?.accessToken!));
+
+        navigate({ to: "..", replace: true });
+    }
     return (
         <div className="w-full">
             <form
@@ -112,7 +147,7 @@ function LoginForm({role}: propType) {
                         )}
                     </div>
                 </div>
-                
+
                 <Button
                     disabled={isSubmitting}
                     type="submit"
@@ -120,6 +155,21 @@ function LoginForm({role}: propType) {
                 >
                     {t(translationKey.button.signin)}
                 </Button>
+                {role === ROLES.TRAVELER && (
+                    <Button
+                        onClick={() => login()}
+                        type="button"
+                        className="w-full x-4 py-2 border flex gap-2 bg-white hover:bg-gray-50  border-slate-200  rounded-lg text-slate-700  hover:border-slate-300  hover:text-slate-900  hover:shadow transition duration-150"
+                    >
+                        <img
+                            className="w-6 h-6"
+                            src="https://www.svgrepo.com/show/475656/google-color.svg"
+                            loading="lazy"
+                            alt="google logo"
+                        ></img>
+                        Login
+                    </Button>
+                )}
             </form>
         </div>
     );

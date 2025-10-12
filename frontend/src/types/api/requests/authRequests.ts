@@ -27,3 +27,8 @@ export interface ForgetPasswordPasswordResetRequest{
     password: string;
     token: string;
 }
+
+export interface GoogleLoginRequest{
+    authorizationCode: string;
+    role:ROLE
+}

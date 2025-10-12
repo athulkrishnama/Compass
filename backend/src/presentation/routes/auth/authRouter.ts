@@ -73,6 +73,13 @@ export class AuthRouter {
         authController.handleLogout(req, res, next);
       },
     );
+
+    this._router.post(
+      AuthRoutes.GOOGLE_LOGIN,
+      (req: Request, res: Response, next: NextFunction) => {
+        authController.handleGoogleLogin(req, res, next);
+      },
+    );
   }
 
   public get_router() {

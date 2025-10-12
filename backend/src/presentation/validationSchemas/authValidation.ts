@@ -40,3 +40,14 @@ export const forgetPasswordResetPasswordSchema = z.object({
   password: z.string({ error: AuthError.INVALID_PASSWORD }),
   token: z.string({ error: AuthError.TOKEN_DATA_MISSING }),
 });
+
+export const googleLoginSchema = z.object({
+  authorizationCode: z.string({ error: AuthError.AUTHROIZATION_CODE_MISSING }),
+  role: z
+    .enum(ROLES, {
+      error: AuthError.INVALID_ROLE,
+    })
+    .refine((role) => role !== ROLES.ADMIN, {
+      error: AuthError.ADMIN_SIGNUP_ERROR,
+    }),
+});

@@ -107,3 +107,18 @@ export async function logOutUser() {
         throw new Error("something went wrong");
     }
 }
+
+export async function googleLogin<T>(data: T) {
+    try {
+        const response = await axiosInstance.post(
+            AUTH_ROUTES.GOOGLE_LOGIN,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}

@@ -34,6 +34,12 @@ export class LoginUseCase implements ILoginUseCase {
       throw new UserIsBlockedException(AuthError.USER_IS_BLOCKED);
     }
 
+    if (!user.password) {
+      if (user.googleId) {
+        throw new PasswordNotMatchingException(AuthError.INVALID_LOGIN_TYPE);
+      }
+      throw new PasswordNotMatchingException(AuthError.PASSWORD_NOT_MATCHING);
+    }
     const passwordMatch = await this._hashService.compare(
       password,
       user.password,

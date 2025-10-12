@@ -15,6 +15,8 @@ import { JwtService } from "@infrastructure/services/jwtService";
 import { OtpService } from "@infrastructure/services/otpService";
 import { TokenService } from "@infrastructure/services/tokenService";
 import { container } from "tsyringe";
+import { IGoogleAuthService } from "@application/interfaces/service/googleAuthService.interface";
+import { GoogleAuthService } from "@infrastructure/services/googleAuthService";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -35,4 +37,8 @@ export function registerServices() {
     ForgetPasswordOtpEmailTemplateGenerator,
   );
   container.registerSingleton<ITokenService>("ITokenService", TokenService);
+  container.registerSingleton<IGoogleAuthService>(
+    "IGoogleAuthService",
+    GoogleAuthService,
+  );
 }

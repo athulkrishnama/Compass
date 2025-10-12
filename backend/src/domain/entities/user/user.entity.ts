@@ -32,7 +32,8 @@ export interface UserEntity {
   email: string;
   role: ROLES;
   full_name: string;
-  password: string;
+  password?: string;
+  googleId?: string;
   mobile?: string;
   is_blocked: boolean;
   travelerDetails?: TravelerDetails;

@@ -8,4 +8,6 @@ export enum AuthError {
   TOKEN_DATA_MISSING = "Token data is missing",
   INVALID_TOKEN_ERROR = "Invalid Token",
   UNAUTHORIZED = "This user is unauthrorized",
+  BLOCKED = "This user is blocked",
+  AUTHROIZATION_CODE_MISSING = "Authorisaztion code is missing",
 }

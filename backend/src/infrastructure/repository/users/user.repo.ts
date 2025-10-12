@@ -8,6 +8,8 @@ import { IUserDocument } from "../database configs/schemas/userSchema";
 import { ROLES } from "@domain/types/roles";
 import { VALUES } from "presentation/constants/values";
 import { ROLES as ROLE_VALUES } from "@domain/constants/roles";
+import { UserNotFoundException } from "@application/constants/Exceptions";
+import { AuthError } from "@application/constants/Errors";
 
 @injectable()
 export class UserRepository
@@ -80,5 +82,17 @@ export class UserRepository
 
   async userStatusChange(id: string, status: boolean): Promise<void> {
     await this._model.findByIdAndUpdate(id, { is_blocked: status });
+  }
+
+  async getUserStatus(id: string): Promise<boolean> {
+    const data = await this._model.findById(id, { is_blocked: true });
+
+    if (!data) throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
+    return data.is_blocked;
+  }
+
+  async googleSignUp(user: UserEntity): Promise<string> {
+    const newUser = await this._model.create(user);
+    return newUser._id.toString();
   }
 }

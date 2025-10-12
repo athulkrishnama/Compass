@@ -11,6 +11,7 @@ import { persistor, store } from "./store/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
 import "@/utils/i18n";
 import { Toaster } from "sonner";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createRouter({ routeTree, context: queryClient });
 
@@ -22,14 +23,16 @@ declare module "@tanstack/react-router" {
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <Provider store={store}>
-                <PersistGate persistor={persistor}>
-                    <RouterProvider router={router} />
-                </PersistGate>
-            </Provider>
-            <ReactQueryDevtools />
-        </QueryClientProvider>
-        <Toaster position="top-right" />
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+            <QueryClientProvider client={queryClient}>
+                <Provider store={store}>
+                    <PersistGate persistor={persistor}>
+                        <RouterProvider router={router} />
+                    </PersistGate>
+                </Provider>
+                <ReactQueryDevtools />
+            </QueryClientProvider>
+            <Toaster position="top-right" />
+        </GoogleOAuthProvider>
     </StrictMode>
 );

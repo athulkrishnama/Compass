@@ -8,4 +8,5 @@ export enum AuthRoutes {
   FORGET_PASSWORD_RESET = "/forget-password-reset",
   REFRESH = "/refresh-token",
   LOGOUT = "/logout",
+  GOOGLE_LOGIN = "/google-login",
 }

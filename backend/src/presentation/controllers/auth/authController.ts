@@ -14,6 +14,7 @@ import {
   emailValidationSchema,
   forgetPasswordResetPasswordSchema,
   forgetPasswordVerifyOtpSchema,
+  googleLoginSchema,
   loginValidationSchema,
   userRegistrationSchema,
   userRegistrationVerifyOtpSchema,
@@ -23,6 +24,8 @@ import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { setCookie } from "presentation/utils/setCookie";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
+import { IGoogleLoginUseCase } from "@application/interfaces/useCase/auth/googleLoginUseCase.interface";
+import { InvalideDataException } from "@application/constants/Exceptions";
 
 @injectable()
 export class AuthController {
@@ -43,6 +46,8 @@ export class AuthController {
     private _tokenRefreshUseCase: IRefreshTokenUseCase,
     @inject("ITokenInvalidationUseCase")
     private _tokenInvalidationUseCase: ITokenInvalidationUseCase,
+    @inject("IGoogleLoginUseCase")
+    private _googleLoginUseCase: IGoogleLoginUseCase,
   ) {}
 
   async handleUserRegistration(
@@ -259,6 +264,46 @@ export class AuthController {
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
         HttpResponseMessages.LOGOUT_SUCCESSFUL,
+      );
+
+      res.status(HTTP_STATUS_CODE.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGoogleLogin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const loginData = googleLoginSchema.safeParse(req.body);
+
+      if (loginData.error) {
+        throw new InvalideDataException(loginData.error.issues[0].message);
+      }
+
+      const responseDTO = await this._googleLoginUseCase.execute(
+        loginData.data,
+      );
+
+      const accessToken = await this._jwtService.createAccessToken({
+        id: responseDTO.id,
+        role: responseDTO.role,
+      });
+
+      const refreshToken = await this._jwtService.createRefreshToken({
+        id: responseDTO.id,
+        role: responseDTO.role,
+      });
+
+      setCookie(res, "refreshToken", refreshToken, {
+        maxAge: env.REFRESH_TOKEN_EXPIRATION_TIME * 1000,
+        httpOnly: true,
+        secure: true,
+      });
+
+      const response = HTTPResponseBuilder.buildSuccessResponse(
+        HTTP_STATUS_CODE.OK,
+        HttpResponseMessages.USER_LOGIN_SUCCESSFULL,
+        { userData: responseDTO, accessToken },
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);

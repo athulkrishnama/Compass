@@ -13,4 +13,6 @@ export interface IUserRepo extends IBaseRepository<UserEntity, IUserDocument> {
     query: string | undefined,
   ): Promise<{ users: UserEntity[]; total: number }>;
   userStatusChange(id: string, status: boolean): Promise<void>;
+  getUserStatus(id: string): Promise<boolean>;
+  googleSignUp(user: UserEntity): Promise<string>;
 }
