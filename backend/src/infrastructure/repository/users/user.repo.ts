@@ -49,10 +49,13 @@ export class UserRepository
     }
 
     if (query !== undefined) {
-      filter.query = query;
+      filter["$or"] = [
+        { full_name: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+      ];
     }
 
-    if (role) {
+    if (role?.length) {
       for (const r of role) {
         if (filter.role) {
           filter.role.push(r);

@@ -1,6 +1,6 @@
+import Filter from "@/components/admin/UserListing/Filter";
+import UserTable from "@/components/admin/UserListing/UserTable";
 import Pagination from "@/components/shared/Pagination/Pagination";
-import Table from "@/components/shared/Table/Table";
-import { Button } from "@/components/ui/button";
 import { queryClient } from "@/config/tanstackQueryConfig";
 import { AdminQueryKeys } from "@/constants/queryKeys/adminQueryKeys";
 import {
@@ -8,18 +8,33 @@ import {
     createGetUsersQueryOption,
 } from "@/queryOptions/adminQueryOptions";
 import type { IGetUsersResponse } from "@/types/api/responses/adminResponse";
+import type { HttpResponse } from "@/types/api/responseType";
+import type { ROLE } from "@/types/role";
 import translationKey from "@/utils/i18n/translationKey";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
+export interface filterType {
+    query: string;
+    role: ROLE | "all";
+    status: "active" | "blocked" | "all";
+    pageNo: number;
+}
 function Users() {
-    const [page, setPage] = useState(1);
-    const { data } = useQuery(createGetUsersQueryOption(page));
+    const [filter, setFilter] = useState<filterType>({
+        query: "",
+        role: "all",
+        status: "all",
+        pageNo: 1,
+    });
+    const { data } = useQuery(createGetUsersQueryOption(filter));
     const { t } = useTranslation();
-
     const { mutate } = useMutation(createChangeUserStatusQueryOptions());
+
+    const setPage = (no: number) =>
+        setFilter((prev) => ({ ...prev, pageNo: no }));
 
     function handleStatusChange(id: string, status: boolean) {
         mutate(
@@ -28,28 +43,32 @@ function Users() {
                 onSuccess: (res) => {
                     toast.success(res.message);
                     queryClient.setQueryData(
-                        [AdminQueryKeys.USERS, page],
-                        (response: { data: IGetUsersResponse }) => {
-                            const newUsers = response.data.clients.map(
+                        [AdminQueryKeys.USERS, filter.pageNo],
+                        (response: HttpResponse<IGetUsersResponse>) => {
+                            const newUsers = response.data?.clients.map(
                                 (user) => {
-                                    if (user.id === id)
+                                    if (user.id === id) {
                                         return { ...user, is_blocked: status };
+                                    }
                                     return user;
                                 }
                             );
 
-                            const newRes = structuredClone(response);
-                            newRes.data.clients = newUsers;
-                            return newRes;
+                            const newData = structuredClone(response);
+                            if (newData.data)
+                                newData.data.clients = newUsers || [];
+                            return newData;
                         }
                     );
                 },
-                onError: (err) => console.log(err),
+                onError: (err) => {
+                    console.log(err);
+                    toast.error(err.message);
+                },
             }
         );
     }
-
-    if (data?.data?.clients.length) {
+    {
         return (
             <div className="p-8 bg-white rounded-2xl shadow-sm">
                 <div className="flex items-center justify-between mb-6">
@@ -59,78 +78,29 @@ function Users() {
                 </div>
 
                 <div className="w-full overflow-x-auto rounded-xl ">
-                    <Table
-                        headers={[
-                            {
-                                id: "name",
-                                label: "Name",
-                                render: (row) => (
-                                    <span className="font-medium text-gray-800">
-                                        {row.full_name}
-                                    </span>
-                                ),
-                            },
-                            {
-                                id: "email",
-                                label: "Email",
-                                render: (row) => (
-                                    <span className="text-gray-700">
-                                        {row.email}
-                                    </span>
-                                ),
-                            },
-                            {
-                                id: "role",
-                                label: "Role",
-                                render: (row) => (
-                                    <span className="capitalize text-gray-700">
-                                        {row.role}
-                                    </span>
-                                ),
-                            },
-                            {
-                                id: "status",
-                                label: "Status",
-                                render: (row) => (
-                                    <Button
-                                        onClick={() =>
-                                            handleStatusChange(
-                                                row.id,
-                                                !row.is_blocked
-                                            )
-                                        }
-                                        className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                                            row.is_blocked
-                                                ? ""
-                                                : "bg-red-600 hover:bg-red-700 text-white"
-                                        }`}
-                                    >
-                                        {t(
-                                            row.is_blocked
-                                                ? translationKey.button.unBlock
-                                                : translationKey.button.block
-                                        )}
-                                    </Button>
-                                ),
-                            },
-                        ]}
-                        data={data.data.clients}
-                    />
+                    <Filter filter={filter} setFilter={setFilter} />
+                    {data?.data?.clients.length ? (
+                        <UserTable
+                            handleStatusChange={handleStatusChange}
+                            data={data.data.clients}
+                        />
+                    ) : (
+                        ""
+                    )}
                 </div>
-
-                {data.data && (
+                {data?.data?.clients.length ? (
                     <div className="mt-6 flex justify-center">
                         <Pagination
                             totalPages={data.data.totalPages}
-                            currentPage={page}
+                            currentPage={filter.pageNo}
                             setPage={setPage}
                         />
                     </div>
+                ) : (
+                    ""
                 )}
             </div>
         );
-    } else {
-        return <h1>NO data</h1>;
     }
 }
 
