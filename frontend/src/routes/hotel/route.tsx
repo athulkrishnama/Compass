@@ -1,10 +1,31 @@
 import Navbar from "@/components/shared/Navbar/Navbar";
+import { ROLES } from "@/constants/roles";
+import type { FileRoutesByTo } from "@/routeTree.gen";
 import translationKey from "@/utils/i18n/translationKey";
-import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
+import {
+    createFileRoute,
+    Outlet,
+    redirect,
+    useLocation,
+} from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/hotel")({
     component: RouteComponent,
+    beforeLoad: ({ context, location }) => {
+        const allowedRoutes: (keyof FileRoutesByTo)[] = [
+            "/hotel/login",
+            "/hotel/forgetPassword",
+            "/hotel/signup",
+        ];
+        if (
+            (!context.isLoggedin() ||
+            !context.checkRole(ROLES.HOTEL)) &&
+            !allowedRoutes.includes(location.pathname as keyof FileRoutesByTo)
+        ) {
+            throw redirect({to: "/hotel/login", replace: true})
+        }
+    },
 });
 
 function RouteComponent() {

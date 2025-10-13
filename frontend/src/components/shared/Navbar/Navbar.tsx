@@ -19,6 +19,8 @@ import { LanguagesIcon } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { setLanguage } from "@/store/slices/langSlice";
 import i18next from "i18next";
+import { removeToken } from "@/store/slices/tokenSlice";
+import { removeUser } from "@/store/slices/userSlice";
 
 interface propTypes {
     routes: {
@@ -46,6 +48,8 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                 toast.error(err.message);
             },
             onSettled: () => {
+                dispatch(removeToken());
+                dispatch(removeUser())
                 navigate({ to: logoutRoute, replace: true });
             },
         });
