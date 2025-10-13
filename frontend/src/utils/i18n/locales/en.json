@@ -62,7 +62,8 @@
         "blocked": "Blocked",
         "active": "Active",
         "all": "All",
-        "search": "Search"
+        "search": "Search",
+        "cancel": "Cancel"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -71,6 +72,8 @@
         "forgetPassword": "forget password ?",
         "selectRole": "Select Role",
         "enterNameToSearch": "Enter name to search",
-        "userStatus": "User Status"
+        "userStatus": "User Status",
+        "areYouSureToBlock": "Are you sure to block {{name}}?",
+        "areYouSureToUnblock": "Are you sure to unblock {{name}}?"
     }
 }

@@ -64,6 +64,7 @@ export default {
         active: "button.active",
         all: "button.all",
         search: "button.search",
+        cancel: "button.cancel",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
@@ -73,5 +74,7 @@ export default {
         selectRole: "text.selectRole",
         enterNameToSearch: "text.enterNameToSearch",
         userStatus: "text.userStatus",
+        areYouSureToBlock: "text.areYouSureToBlock",
+        areYouSureToUnblock: "text.areYouSureToUnblock",
     },
 };
