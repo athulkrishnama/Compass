@@ -93,11 +93,7 @@ function UserTable({ data, handleStatusChange }: propTypes) {
                                             )
                                         }
                                         className={`group flex items-center justify-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 w-24
-      ${
-          row.is_blocked
-              ? ""
-              : "bg-rose-600 text-white hover:bg-rose-700"
-      }`}
+      ${row.is_blocked ? "" : "bg-rose-600 text-white hover:bg-rose-700"}`}
                                     >
                                         {row.is_blocked ? (
                                             <Unlock className="w-4 h-4" />

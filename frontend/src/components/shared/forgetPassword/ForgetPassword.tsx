@@ -32,7 +32,7 @@ function ForgetPasswordPage({ imagePath, heading, role }: propType) {
 
                     <div className="w-full max-w-sm">
                         {/* <LoginForm role={role} /> */}
-                        <ForgetPasswordForm role={role}/>
+                        <ForgetPasswordForm role={role} />
                     </div>
                 </div>
             </div>

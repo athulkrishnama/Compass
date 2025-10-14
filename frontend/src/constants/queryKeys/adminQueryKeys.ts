@@ -1,3 +1,3 @@
 export enum AdminQueryKeys {
-    USERS = "USERS"
+    USERS = "USERS",
 }

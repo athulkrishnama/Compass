@@ -22,13 +22,13 @@ export interface ForgetPasswordVerifyOtpRequest {
     otp: string;
 }
 
-export interface ForgetPasswordPasswordResetRequest{
+export interface ForgetPasswordPasswordResetRequest {
     email: string;
     password: string;
     token: string;
 }
 
-export interface GoogleLoginRequest{
+export interface GoogleLoginRequest {
     authorizationCode: string;
-    role:ROLE
+    role: ROLE;
 }

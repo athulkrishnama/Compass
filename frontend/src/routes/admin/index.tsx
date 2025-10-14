@@ -1,11 +1,9 @@
-import { createGetUsersQueryOption } from '@/queryOptions/adminQueryOptions'
-import { useQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/admin/')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/admin/")({
+    component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/admin/"!</div>
+    return <div>Hello "/admin/"!</div>;
 }

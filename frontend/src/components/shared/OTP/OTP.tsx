@@ -4,11 +4,10 @@ interface propType {
     count: number;
     handleComplete: (otp: string) => void;
     disabled: boolean;
-    rootRef: RefObject<(HTMLInputElement | null)[]>
+    rootRef: RefObject<(HTMLInputElement | null)[]>;
 }
 
 function OTP({ count, handleComplete, disabled, rootRef }: propType) {
-
     const handleSubmit = () => {
         const index = rootRef.current.findIndex((ref) => {
             if (ref) {
@@ -53,21 +52,21 @@ function OTP({ count, handleComplete, disabled, rootRef }: propType) {
         }
     };
     return (
-<div className="flex items-center justify-center gap-3">
-  {Array(count)
-    .fill(null)
-    .map((_, i) => (
-      <input
-        key={i}
-        onChange={onData}
-        onKeyUp={handleKeyDown}
-        data-index={i}
-        type="number"
-        disabled={disabled}
-        ref={(r) => {
-          rootRef.current[i] = r;
-        }}
-        className={`
+        <div className="flex items-center justify-center gap-3">
+            {Array(count)
+                .fill(null)
+                .map((_, i) => (
+                    <input
+                        key={i}
+                        onChange={onData}
+                        onKeyUp={handleKeyDown}
+                        data-index={i}
+                        type="number"
+                        disabled={disabled}
+                        ref={(r) => {
+                            rootRef.current[i] = r;
+                        }}
+                        className={`
           w-12 h-14 text-center text-2xl font-semibold
           border-2 border-gray-300 rounded-xl 
           focus:border-gray-800 focus:ring-2 focus:ring-gray-400
@@ -76,12 +75,12 @@ function OTP({ count, handleComplete, disabled, rootRef }: propType) {
           caret-transparent relative
           focus:scale-105
         `}
-        style={{
-          animation: 'blinkCaret 1s step-end infinite',
-        }}
-      />
-    ))}
-</div>
+                        style={{
+                            animation: "blinkCaret 1s step-end infinite",
+                        }}
+                    />
+                ))}
+        </div>
     );
 }
 

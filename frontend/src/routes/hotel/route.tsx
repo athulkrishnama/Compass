@@ -19,11 +19,10 @@ export const Route = createFileRoute("/hotel")({
             "/hotel/signup",
         ];
         if (
-            (!context.isLoggedin() ||
-            !context.checkRole(ROLES.HOTEL)) &&
+            (!context.isLoggedin() || !context.checkRole(ROLES.HOTEL)) &&
             !allowedRoutes.includes(location.pathname as keyof FileRoutesByTo)
         ) {
-            throw redirect({to: "/hotel/login", replace: true})
+            throw redirect({ to: "/hotel/login", replace: true });
         }
     },
 });

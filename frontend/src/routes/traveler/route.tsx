@@ -6,18 +6,20 @@ export const Route = createFileRoute("/traveler")({
     component: RouteComponent,
 });
 
-
 function RouteComponent() {
-  const { pathname } = useLocation();
-  const {t} = useTranslation()
+    const { pathname } = useLocation();
+    const { t } = useTranslation();
 
-  const routes = [
-    {name: t(translationKey.button.home), route: "/traveler"},
-    {name: t(translationKey.button.bookings), route: "/traveler/bookings"},
-    {name: t(translationKey.button.history), route: "/traveler/history"},
-    {name: t(translationKey.button.profile), route: "/traveler/profile"},
-  ]
-  return (
+    const routes = [
+        { name: t(translationKey.button.home), route: "/traveler" },
+        {
+            name: t(translationKey.button.bookings),
+            route: "/traveler/bookings",
+        },
+        { name: t(translationKey.button.history), route: "/traveler/history" },
+        { name: t(translationKey.button.profile), route: "/traveler/profile" },
+    ];
+    return (
         <div className="h-full w-full">
             {[
                 "/traveler/login",
@@ -27,7 +29,7 @@ function RouteComponent() {
                 <Outlet />
             ) : (
                 <div className="h-full w-full">
-                    <Navbar routes={routes} logoutRoute="/traveler/login"/>
+                    <Navbar routes={routes} logoutRoute="/traveler/login" />
                     <Outlet />
                 </div>
             )}

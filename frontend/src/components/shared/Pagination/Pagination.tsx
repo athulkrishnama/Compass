@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import translationKey from "@/utils/i18n/translationKey";
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 interface propType {
@@ -13,7 +12,12 @@ function Pagination({ totalPages, currentPage, setPage }: propType) {
     const { t } = useTranslation();
     return (
         <div className="flex items-center justify-center space-x-2 mt-6">
-            <Button onClick={()=>setPage(currentPage - 1)} disabled={currentPage <= 1}>{t(translationKey.button.previous)}</Button>
+            <Button
+                onClick={() => setPage(currentPage - 1)}
+                disabled={currentPage <= 1}
+            >
+                {t(translationKey.button.previous)}
+            </Button>
             {Array(totalPages)
                 .fill(null)
                 .map((_, i) => {
@@ -33,7 +37,12 @@ function Pagination({ totalPages, currentPage, setPage }: propType) {
                         </button>
                     );
                 })}
-            <Button onClick={()=>setPage(currentPage + 1)} disabled={currentPage == totalPages}>{t(translationKey.button.next)}</Button>
+            <Button
+                onClick={() => setPage(currentPage + 1)}
+                disabled={currentPage == totalPages}
+            >
+                {t(translationKey.button.next)}
+            </Button>
         </div>
     );
 }

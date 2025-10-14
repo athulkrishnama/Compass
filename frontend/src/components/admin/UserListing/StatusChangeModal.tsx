@@ -1,7 +1,6 @@
 import Modal from "@/components/shared/modal/Modal";
 import { Button } from "@/components/ui/button";
 import translationKey from "@/utils/i18n/translationKey";
-import { dataTagErrorSymbol } from "@tanstack/react-query";
 import { ShieldOff, Unlock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 

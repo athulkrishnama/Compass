@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { createLogoutQueryOptions } from "@/queryOptions/authQueryOptions";
 import { toast } from "sonner";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import { Home, LogOut, Settings, User } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { removeToken } from "@/store/slices/tokenSlice";
@@ -19,9 +19,21 @@ export default function SideBar() {
     const dispatch = useDispatch();
 
     const links = [
-        { to: "/admin", label: t(translationKey.button.dashboard), icon: <Home className="w-5 h-5"/> },
-        { to: "/admin/users", label: t(translationKey.button.users), icon: <User className="w-5 h-5"/> },
-        { to: "/admin/reports", label: t(translationKey.button.reports) , icon: <Settings className="w-5 h-5"/>},
+        {
+            to: "/admin",
+            label: t(translationKey.button.dashboard),
+            icon: <Home className="w-5 h-5" />,
+        },
+        {
+            to: "/admin/users",
+            label: t(translationKey.button.users),
+            icon: <User className="w-5 h-5" />,
+        },
+        {
+            to: "/admin/reports",
+            label: t(translationKey.button.reports),
+            icon: <Settings className="w-5 h-5" />,
+        },
     ];
 
     const { mutate } = useMutation(createLogoutQueryOptions());
@@ -37,7 +49,7 @@ export default function SideBar() {
             },
             onSettled: () => {
                 dispatch(removeToken());
-                dispatch(removeUser())
+                dispatch(removeUser());
                 navigate({ to: "/admin/login", replace: true });
             },
         });

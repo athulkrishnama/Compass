@@ -4,13 +4,17 @@ import { changeUserStatus, getUsers } from "@/services/api/adminApiService";
 import type { IUserStatusChangeRequest } from "@/types/api/requests/adminRequest";
 import type { IGetUsersResponse } from "@/types/api/responses/adminResponse";
 import type { HttpResponse } from "@/types/api/responseType";
-import { keepPreviousData, mutationOptions, queryOptions } from "@tanstack/react-query";
+import {
+    keepPreviousData,
+    mutationOptions,
+    queryOptions,
+} from "@tanstack/react-query";
 
-export function createGetUsersQueryOption( filter: filterType) {
+export function createGetUsersQueryOption(filter: filterType) {
     return queryOptions<HttpResponse<IGetUsersResponse>>({
         queryKey: [AdminQueryKeys.USERS, filter.pageNo],
-        queryFn: () => getUsers( filter),
-        placeholderData: keepPreviousData
+        queryFn: () => getUsers(filter),
+        placeholderData: keepPreviousData,
     });
 }
 

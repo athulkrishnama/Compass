@@ -34,4 +34,6 @@ const RootLayout = () => {
         </>
     );
 };
-export const Route = createRootRouteWithContext<RouterContext>()({ component: RootLayout });
+export const Route = createRootRouteWithContext<RouterContext>()({
+    component: RootLayout,
+});
