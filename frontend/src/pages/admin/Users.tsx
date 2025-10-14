@@ -70,35 +70,43 @@ function Users() {
     }
     {
         return (
-            <div className="p-8 bg-white rounded-2xl shadow-sm">
+            <div className="p-8 bg-white rounded-2xl shadow-sm h-full flex flex-col pb-40">
                 <div className="flex items-center justify-between mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">
                         {t(translationKey.headings.userManagement)}
                     </h1>
                 </div>
 
-                <div className="w-full overflow-x-auto rounded-xl ">
-                    <Filter filter={filter} setFilter={setFilter} />
-                    {data?.data?.clients.length ? (
-                        <UserTable
-                            handleStatusChange={handleStatusChange}
-                            data={data.data.clients}
-                        />
-                    ) : (
-                        ""
-                    )}
-                </div>
-                {data?.data?.clients.length ? (
-                    <div className="mt-6 flex justify-center">
-                        <Pagination
-                            totalPages={data.data.totalPages}
-                            currentPage={filter.pageNo}
-                            setPage={setPage}
-                        />
+                <div className="flex flex-col flex-grow">
+                    <div className="mb-3">
+                        <Filter filter={filter} setFilter={setFilter} />
                     </div>
-                ) : (
-                    ""
-                )}
+
+                    <div className="flex-grow min-h-[400px]">
+                        {data?.data?.clients?.length ? (
+                            <div className="h-full overflow-auto">
+                                <UserTable
+                                    handleStatusChange={handleStatusChange}
+                                    data={data.data.clients}
+                                />
+                            </div>
+                        ) : (
+                            <div className="h-full flex items-center justify-center text-gray-500 text-sm">
+                                No users found
+                            </div>
+                        )}
+                    </div>
+
+                    {data?.data?.clients?.length ? (
+                        <div className="flex justify-center mt-3 mb-1">
+                            <Pagination
+                                totalPages={data.data.totalPages}
+                                currentPage={filter.pageNo}
+                                setPage={setPage}
+                            />
+                        </div>
+                    ) : null}
+                </div>
             </div>
         );
     }

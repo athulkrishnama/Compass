@@ -1,7 +1,12 @@
 import SideBar from "@/components/admin/SideBar";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
-import { createFileRoute, Outlet, redirect, useLocation } from "@tanstack/react-router";
+import {
+    createFileRoute,
+    Outlet,
+    redirect,
+    useLocation,
+} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin")({
     component: RouteComponent,
@@ -23,9 +28,11 @@ function RouteComponent() {
         <Outlet />
     ) : (
         <div className="flex h-screen w-full">
-            <SideBar />
+            <div>
+                <SideBar />
+            </div>
 
-            <div className="flex-grow bg-gray-50 p-6 overflow-y-auto">
+            <div className="flex-grow bg-gray-50 overflow-y-auto">
                 <Outlet />
             </div>
         </div>
