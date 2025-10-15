@@ -1,6 +1,6 @@
-import ForgetPassword from '@/pages/hotel/ForgetPassword'
-import { createFileRoute } from '@tanstack/react-router'
+import ForgetPassword from "@/pages/hotel/ForgetPassword";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/hotel/forgetPassword')({
-  component: ForgetPassword,
-})
+export const Route = createFileRoute("/hotel/forgetPassword")({
+    component: ForgetPassword,
+});

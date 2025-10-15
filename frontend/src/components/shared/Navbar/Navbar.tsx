@@ -14,11 +14,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { SelectIcon } from "@radix-ui/react-select";
-import { LanguagesIcon } from "lucide-react";
+import { LanguagesIcon, LogOut } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { setLanguage } from "@/store/slices/langSlice";
 import i18next from "i18next";
+import { removeToken } from "@/store/slices/tokenSlice";
+import { removeUser } from "@/store/slices/userSlice";
+import { motion } from "framer-motion";
 
 interface propTypes {
     routes: {
@@ -46,6 +48,8 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                 toast.error(err.message);
             },
             onSettled: () => {
+                dispatch(removeToken());
+                dispatch(removeUser());
                 navigate({ to: logoutRoute, replace: true });
             },
         });
@@ -58,65 +62,89 @@ function Navbar({ routes, logoutRoute }: propTypes) {
     }
 
     return (
-        <nav className="flex items-center justify-between px-6 py-3 bg-white shadow-md">
-            <div className="flex items-center space-x-3 ">
+        <nav className="flex items-center justify-between px-8 py-4 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+            {/* Left: Logo + Brand */}
+            <motion.div
+                className="flex items-center space-x-3"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4 }}
+            >
                 <img
                     src={logo}
                     alt="Logo"
                     className="h-10 w-10 object-contain"
                 />
-                <span className="text-4xl font-semibold text-gray-800 nerko-one">
+                <span className="text-3xl font-semibold text-gray-900 nerko-one">
                     {t(translationKey.brand.name)}
                 </span>
-            </div>
-            <div className="flex-1 flex justify-center space-x-6">
+            </motion.div>
+
+            <motion.div
+                className="flex-1 flex justify-center space-x-6"
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+            >
                 {routes.map(({ name, route }) => {
                     const isActive = location.pathname === route;
                     return (
-                        <Link
-                            key={route}
-                            to={route}
-                            className={`px-4 py-2 rounded-md font-medium transition-colors duration-200
+                        <motion.div whileHover={{ y: -1 }} key={route}>
+                            <Link
+                                to={route}
+                                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
               ${
                   isActive
-                      ? "bg-black text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-black text-white shadow-sm"
+                      : "text-gray-700 hover:text-black hover:bg-gray-100"
               }`}
-                        >
-                            {name}
-                        </Link>
+                            >
+                                {name}
+                            </Link>
+                        </motion.div>
                     );
                 })}
-            </div>
+            </motion.div>
 
-            <div className="flex gap-3">
-                <div>
+            <motion.div
+                className="flex items-center gap-4"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4 }}
+            >
+                <div className="flex items-center">
                     <Select value={lang} onValueChange={handleLanguageChange}>
-                        <SelectTrigger className=" text-black">
-                            <SelectValue
-                                placeholder="Select a fruit"
-                                className="text-black"
-                            />
-                            <SelectIcon>
-                                <LanguagesIcon color="white" />
-                            </SelectIcon>
+                        <SelectTrigger className="w-[120px] bg-gray-50 border-gray-300 hover:border-gray-400 text-gray-800">
+                            <LanguagesIcon className="mr-2 h-4 w-4 text-gray-600" />
+                            <SelectValue placeholder="Lang" />
                         </SelectTrigger>
                         <SelectContent>
                             {Languages.map((l, i) => (
-                                <SelectItem key={i} value={l} className="text-black">
+                                <SelectItem
+                                    key={i}
+                                    value={l}
+                                    className="text-gray-700"
+                                >
                                     {l}
                                 </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
                 </div>
-                <Button
-                    onClick={handleLogout}
-                    className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"
+
+                <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                 >
-                    {t(translationKey.button.logout)}
-                </Button>
-            </div>
+                    <Button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-all duration-200"
+                    >
+                        <LogOut className="w-4 h-4" />
+                        {t(translationKey.button.logout)}
+                    </Button>
+                </motion.div>
+            </motion.div>
         </nav>
     );
 }

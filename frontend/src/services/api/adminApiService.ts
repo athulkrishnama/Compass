@@ -1,11 +1,12 @@
 import { axiosInstance } from "@/axios/instance";
 import { AdminRoutes } from "@/constants/routes/adminRoutes";
+import type { filterType } from "@/pages/admin/Users";
 import { AxiosError } from "axios";
 
-export async function getUsers(page: number) {
+export async function getUsers(filter: filterType) {
     try {
         const response = await axiosInstance.get(AdminRoutes.USERS, {
-            params: { pageNo: page },
+            params: { ...filter },
         });
         return response.data;
     } catch (error) {

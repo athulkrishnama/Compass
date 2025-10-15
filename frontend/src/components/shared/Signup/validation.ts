@@ -34,9 +34,7 @@ export const signupValidationSchema = z
                 { error: i18next.t(translationKey.errors.invalidPassword) }
             ),
         confirmPassword: z.string().min(1, {
-            error: i18next.t(
-                translationKey.errors.confirmPasswordRequired
-            ),
+            error: i18next.t(translationKey.errors.confirmPasswordRequired),
         }),
     })
     .refine((values) => values.password === values.confirmPassword, {
@@ -45,4 +43,3 @@ export const signupValidationSchema = z
         ),
         path: ["confirmPassword"],
     });
-

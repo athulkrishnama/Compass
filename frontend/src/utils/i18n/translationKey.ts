@@ -60,11 +60,21 @@ export default {
         history: "button.history",
         acitveTrip: "button.acitveTrip",
         upcomingBookings: "button.upcomingBookings",
+        blocked: "button.blocked",
+        active: "button.active",
+        all: "button.all",
+        search: "button.search",
+        cancel: "button.cancel",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
         dontHaveAnAccount: "text.dontHaveAnAccount",
         youAreNotA: "text.youAreNotA",
-        forgetPassword: "text.forgetPassword"
+        forgetPassword: "text.forgetPassword",
+        selectRole: "text.selectRole",
+        enterNameToSearch: "text.enterNameToSearch",
+        userStatus: "text.userStatus",
+        areYouSureToBlock: "text.areYouSureToBlock",
+        areYouSureToUnblock: "text.areYouSureToUnblock",
     },
 };

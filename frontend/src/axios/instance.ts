@@ -32,24 +32,23 @@ axiosInstance.interceptors.response.use(
                 const response = await axiosInstance.post(AUTH_ROUTES.REFRESH);
                 originalRequest.headers.Authorization =
                     "Bearer " + response.data.data.accessToken;
-                store.dispatch(setToken(response.data.data.accessToken))
+                store.dispatch(setToken(response.data.data.accessToken));
                 return axiosInstance(originalRequest);
             } catch (error) {
-
                 const role = store.getState().user.role;
-                store.dispatch(removeToken())
-                store.dispatch(removeUser())
-                
-                let url = ""
-                if(role === "ADMIN") url = "/admin/login";
-                else if(role === "CAB") url = "/cab/login";
-                else if(role === "HOTEL") url = "/hotel/login"
-                else url = "/traveler/login"
+                store.dispatch(removeToken());
+                store.dispatch(removeUser());
+
+                let url = "";
+                if (role === "ADMIN") url = "/admin/login";
+                else if (role === "CAB") url = "/cab/login";
+                else if (role === "HOTEL") url = "/hotel/login";
+                else url = "/traveler/login";
 
                 window.location.href = url;
             }
-        }else{
-            return Promise.reject(err)
+        } else {
+            return Promise.reject(err);
         }
     }
 );

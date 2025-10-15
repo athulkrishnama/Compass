@@ -40,7 +40,6 @@ function LoginPage({ role, heading, imagePath }: propType) {
                         <div className="flex justify-between items-center w-full px-8">
                             <Link
                                 className="text-gray-500 text-sm"
-                                
                                 to={
                                     role === ROLES.TRAVELER
                                         ? "/traveler/forgetPassword"

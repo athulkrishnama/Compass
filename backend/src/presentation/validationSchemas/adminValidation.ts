@@ -17,7 +17,7 @@ export const getUsersQueryValidationSchema = z.object({
     .string()
     .optional()
     .transform((v) =>
-      v === "true" ? true : v === "false" ? false : undefined,
+      v === "blocked" ? true : v === "active" ? false : undefined,
     ),
   pageNo: z.coerce.number(),
 });

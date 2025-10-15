@@ -58,12 +58,22 @@
         "bookings": "Bookings",
         "history": "History",
         "acitveTrip": "Active Trip",
-        "upcomingBookings": "Upcoming Bookings"
+        "upcomingBookings": "Upcoming Bookings",
+        "blocked": "Blocked",
+        "active": "Active",
+        "all": "All",
+        "search": "Search",
+        "cancel": "Cancel"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
         "dontHaveAnAccount": "Don't have an account?",
         "youAreNotA": "You are not a {{role}}",
-        "forgetPassword": "forget password ?"
+        "forgetPassword": "forget password ?",
+        "selectRole": "Select Role",
+        "enterNameToSearch": "Enter name to search",
+        "userStatus": "User Status",
+        "areYouSureToBlock": "Are you sure to block {{name}}?",
+        "areYouSureToUnblock": "Are you sure to unblock {{name}}?"
     }
 }

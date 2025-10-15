@@ -1,10 +1,18 @@
 import { setLanguage } from "@/store/slices/langSlice";
 import { store } from "@/store/store";
-import  {type Langtype, Languages } from "@/types/langType";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { type Langtype, Languages } from "@/types/langType";
+import type { ROLE } from "@/types/role";
+import type { QueryClient } from "@tanstack/react-query";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import i18next from "i18next";
 import { useEffect } from "react";
+
+interface RouterContext {
+    queryClient: QueryClient;
+    isLoggedin: () => boolean;
+    checkRole: (role: ROLE) => boolean;
+}
 
 const RootLayout = () => {
     useEffect(() => {
@@ -26,4 +34,6 @@ const RootLayout = () => {
         </>
     );
 };
-export const Route = createRootRoute({ component: RootLayout });
+export const Route = createRootRouteWithContext<RouterContext>()({
+    component: RootLayout,
+});

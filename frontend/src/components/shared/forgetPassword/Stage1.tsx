@@ -26,7 +26,7 @@ function Stage1({ onComplete }: propType) {
     const { mutate } = useMutation(createForgetPasswordSendOtpQueryOptions());
     const {
         register,
-        formState: { errors , isSubmitting},
+        formState: { errors, isSubmitting },
         handleSubmit,
     } = useForm<formType>({
         resolver: zodResolver(validationSchema),

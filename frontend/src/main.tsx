@@ -12,8 +12,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import "@/utils/i18n";
 import { Toaster } from "sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { isLoggedin, roleChecker } from "./utils/authChecker.ts";
 
-const router = createRouter({ routeTree, context: queryClient });
+const router = createRouter({
+    routeTree,
+    context: { queryClient, checkRole: roleChecker, isLoggedin: isLoggedin },
+});
 
 declare module "@tanstack/react-router" {
     interface Register {

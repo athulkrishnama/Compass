@@ -1,11 +1,11 @@
 import type { ROLE } from "@/types/role";
 
-export interface loginResponse{
+export interface loginResponse {
     accessToken: string;
-    userData :{
-        email: string,
-        full_name: string,
-        id:string,
-        role: ROLE
-    }
+    userData: {
+        email: string;
+        full_name: string;
+        id: string;
+        role: ROLE;
+    };
 }
