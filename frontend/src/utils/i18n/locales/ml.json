@@ -1,0 +1,69 @@
+{
+    "brand": {
+        "name": "കമ്പാസ്"
+    },
+    "headings": {
+        "signup": "സൈൻ അപ്പ്",
+        "enterOtp": "OTP നൽകുക",
+        "otpHasSentToYourEmail": "ഒരു OTP നിങ്ങളുടെ ഇമെയിലിലേക്ക് അയച്ചിരിക്കുന്നു",
+        "cabSignup": "കാബ് സൈൻ അപ്പ്",
+        "hotelSignup": "ഹോട്ടൽ സൈൻ അപ്പ്",
+        "login": "ലോഗിൻ",
+        "cabLogin": "കാബ് ലോഗിൻ",
+        "hotelLogin": "ഹോട്ടൽ ലോഗിൻ",
+        "adminLogin": "അഡ്മിൻ ലോഗിൻ",
+        "forgetPassword": "പാസ്‌വേഡ് മറന്നോ",
+        "resetPassword": "പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യുക",
+        "cabForgetPassword": "കാബിനായുള്ള പാസ്‌വേഡ് മറന്നോ",
+        "hotelForgetPassword": "ഹോട്ടലിനായുള്ള പാസ്‌വേഡ് മറന്നോ",
+        "userManagement": "ഉപയോക്തൃ നിയന്ത്രണം"
+    },
+    "errors": {
+        "minChar": "കുറഞ്ഞത് {{count}} അക്ഷരങ്ങൾ വേണം",
+        "maxChar": "പരമാവധി {{count}} അക്ഷരങ്ങൾ അനുവദനീയമാണ്",
+        "noSpecial": "സ്പെഷ്യൽ അക്ഷരങ്ങൾ അനുവദനീയമല്ല",
+        "invalidEmail": "സാധുവായ ഒരു ഇമെയിൽ വിലാസം നൽകുക",
+        "passwordRequired": "പാസ്‌വേഡ് ആവശ്യമാണ്",
+        "invalidPassword": "പാസ്‌വേഡ് ആവശ്യമായ മാനദണ്ഡങ്ങൾ പാലിക്കണം",
+        "confirmPasswordRequired": "കൺഫീം പാസ്‌വേഡ് ആവശ്യമാണ്",
+        "passwordAndCofirmPasswordNotMatching": "പാസ്‌വേഡും കൺഫീം പാസ്‌വേഡും പൊരുത്തപ്പെടുന്നില്ല"
+    },
+    "form": {
+        "fullname": "പൂർണ്ണ പേര്",
+        "email": "ഇമെയിൽ വിലാസം",
+        "password": "പാസ്‌വേഡ്",
+        "confirmPassword": "പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക",
+        "newPassword": "പുതിയ പാസ്‌വേഡ്"
+    },
+    "button": {
+        "submit": "സമർപ്പിക്കുക",
+        "submiting": "സമർപ്പിക്കുന്നു...",
+        "verify": "സ്ഥിരീകരിക്കുക",
+        "verifing": "സ്ഥിരീകരിക്കുന്നു...",
+        "resend": "വീണ്ടും അയക്കുക",
+        "signin": "സൈൻ ഇൻ",
+        "signup": "സൈൻ അപ്പ്",
+        "sendOtp": "OTP അയക്കുക",
+        "reset": "റീസെറ്റ് ചെയ്യുക",
+        "logout": "ലോഗ് ഔട്ട്",
+        "dashboard": "ഡാഷ്ബോർഡ്",
+        "reports": "റിപ്പോർട്ടുകൾ",
+        "users": "ഉപയോക്താക്കൾ",
+        "next": "അടുത്തത്",
+        "previous": "മുൻപത്തെത്",
+        "block": "തടയുക",
+        "unBlock": "തടഞ്ഞത് നീക്കുക",
+        "home": "ഹോം",
+        "profile": "പ്രൊഫൈൽ",
+        "bookings": "ബുക്കിംഗുകൾ",
+        "history": "ചരിത്രം",
+        "acitveTrip": "സജീവ യാത്ര",
+        "upcomingBookings": "വരാനിരിക്കുന്ന ബുക്കിംഗുകൾ"
+    },
+    "text": {
+        "alreadyHaveAccount": "നിങ്ങൾക്ക് ഇതിനകം ഒരു അക്കൗണ്ട് ഉണ്ടോ?",
+        "dontHaveAnAccount": "അക്കൗണ്ട് ഇല്ലേ?",
+        "youAreNotA": "നിങ്ങൾ ഒരു {{role}} അല്ല",
+        "forgetPassword": "പാസ്‌വേഡ് മറന്നോ?"
+    }
+}

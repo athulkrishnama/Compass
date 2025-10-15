@@ -1,0 +1,17 @@
+export enum Errors {
+  ENV_PORT_ERROR = "Port should be assigned in environment variables",
+  ENV_MONGODB_URI_ERROR = "Mongodb Uri should be assigned in environment varaibles",
+  ENV_NODE_ENV_ERROR = "NODE ENV should be provided in environment variables",
+  ENV_ACCESS_TOKEN_ERROR = "Access token secret key not provided in environment variables",
+  ENV_REFRESH_TOKEN_ERROR = "Refresh token secret key not provided in environment variables",
+  ENV_REFRESH_TOKEN_EXPIRATION_TIME_ERROR = "Refresh token expiration time should be given in seconds",
+  ENV_ACCESS_TOKEN_EXPIRATION_TIME_ERROR = "Access token expiration time should be given in seconds",
+  ENV_EMAIL_ERROR = "Email in the environment variables should be valid",
+  ENV_EMAIL_PASSWORD_ERROR = "Provide password in environment variables",
+  ENV_REDIS_URL_ERROR = "Provide a valid redis server url in environment variables",
+  REDIS_CONNECTION_ERROR = "Error while connecting to redis client",
+  SERVER_STARTING_ERROR = "Error while starting server",
+  INTERNAL_SERVER_ERROR = "Internal Server Error",
+  GOOGLE_CLIENT_ID_ERROR = "Google client id is missing",
+  GOOGLE_CLIENT_SECRET_ERROR = "Google client secret is missing",
+}
