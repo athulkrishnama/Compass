@@ -11,6 +11,7 @@ export class UserMapper {
       _id: document._id.toString(),
       email: document.email,
       password: document.password,
+      googleId: document.googleId,
       full_name: document.full_name,
       role: document.role,
       is_blocked: document.is_blocked,

@@ -24,4 +24,6 @@ export const envSchema = z.object({
   EMAIL: z.email({ error: Errors.ENV_EMAIL_ERROR }),
   EMAIL_PASSWORD: z.string({ error: Errors.ENV_EMAIL_PASSWORD_ERROR }),
   REDIS_URL: z.url({ error: Errors.ENV_REDIS_URL_ERROR }),
+  GOOGLE_CLIENT_ID: z.string({ error: Errors.GOOGLE_CLIENT_ID_ERROR }),
+  GOOGLE_CLIENT_SECRET: z.string({ error: Errors.GOOGLE_CLIENT_SECRET_ERROR }),
 });

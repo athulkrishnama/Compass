@@ -21,6 +21,8 @@ import { SignupUseCase } from "@useCases/auth/signupUseCase";
 import { SignupVerifyOtpUseCase } from "@useCases/auth/signupVerifyOtpUseCase";
 import { TokenInvalidationUseCase } from "@useCases/auth/tokenInvalidationUseCase";
 import { container } from "tsyringe";
+import { IGoogleLoginUseCase } from "@application/interfaces/useCase/auth/googleLoginUseCase.interface";
+import { GoogleLoginUseCase } from "@useCases/auth/googleLoginUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -60,5 +62,9 @@ export function registerUsecases() {
   container.registerSingleton<ITokenInvalidationUseCase>(
     "ITokenInvalidationUseCase",
     TokenInvalidationUseCase,
+  );
+  container.registerSingleton<IGoogleLoginUseCase>(
+    "IGoogleLoginUseCase",
+    GoogleLoginUseCase,
   );
 }

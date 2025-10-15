@@ -7,5 +7,6 @@ export enum AUTH_ROUTES {
     FORGET_VERIFY_OTP = "/auth/forget-password-verify",
     FORGET_RESET_PASSWORD = "/auth/forget-password-reset",
     REFRESH = "/auth/refresh-token",
-    LOGOUT = "/auth/logout"
+    LOGOUT = "/auth/logout",
+    GOOGLE_LOGIN = "/auth/google-login",
 }

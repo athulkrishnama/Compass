@@ -5,6 +5,7 @@ import { IHashService } from "application/interfaces/service/hashService.interfa
 import { IForgetPasswordResetPasswordUseCase } from "application/interfaces/useCase/auth/forgetPasswordResetPassword.interface";
 import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
+import { TokenExpiredException } from "@application/constants/Exceptions";
 
 @injectable()
 export class ForgetPasswordResetPasswordUseCase
@@ -24,11 +25,11 @@ export class ForgetPasswordResetPasswordUseCase
     const cachedToken = await this._cacheService.getValue(`FToken:${email}`);
 
     if (!cachedToken) {
-      throw new Error(AuthError.TOKEN_EXPIRED);
+      throw new TokenExpiredException(AuthError.TOKEN_EXPIRED);
     }
 
     if (cachedToken !== token) {
-      throw new Error(AuthError.TOKEN_NOT_MATCHING);
+      throw new TokenExpiredException(AuthError.TOKEN_NOT_MATCHING);
     }
 
     const hashedPassword = await this._hashService.hash(password);

@@ -6,6 +6,10 @@ import { EmailPayloadType } from "@domain/types/emailPayload";
 import { EmailSubjects } from "@application/constants/emailConstants";
 import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
+import {
+  InvalidOTPException,
+  UserDataMissingException,
+} from "@application/constants/Exceptions";
 
 @injectable()
 export class SignupResendOtpUseCase implements ISignupResendOtpUsecase {
@@ -19,12 +23,12 @@ export class SignupResendOtpUseCase implements ISignupResendOtpUsecase {
     const otp = await this._cacheService.getValue(`OTP:${email}`);
 
     if (!otp) {
-      throw new Error(AuthError.OTP_EXPIRED_OR_NOT_REQUESTED);
+      throw new InvalidOTPException(AuthError.OTP_EXPIRED_OR_NOT_REQUESTED);
     }
 
     const userData = await this._cacheService.getValue(`SIGNUPDATA:${email}`);
     if (!userData) {
-      throw new Error(AuthError.USER_DATA_MISSIING_IN_CACHE);
+      throw new UserDataMissingException(AuthError.USER_DATA_MISSIING_IN_CACHE);
     }
 
     const emailContent = this._emailTemplateGenerator.generateHtml({ otp });

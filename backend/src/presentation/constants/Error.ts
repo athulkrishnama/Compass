@@ -12,4 +12,6 @@ export enum Errors {
   REDIS_CONNECTION_ERROR = "Error while connecting to redis client",
   SERVER_STARTING_ERROR = "Error while starting server",
   INTERNAL_SERVER_ERROR = "Internal Server Error",
+  GOOGLE_CLIENT_ID_ERROR = "Google client id is missing",
+  GOOGLE_CLIENT_SECRET_ERROR = "Google client secret is missing",
 }

@@ -11,6 +11,7 @@ import { EmailSubjects } from "@application/constants/emailConstants";
 import { UserMapper } from "application/mappers/user.mapper";
 import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
+import { UserAlreadyExistingException } from "@application/constants/Exceptions";
 
 @injectable()
 export class SignupUseCase implements ISignupUseCase {
@@ -28,7 +29,9 @@ export class SignupUseCase implements ISignupUseCase {
     const existingUser = await this._userRepo.findByEmail(userData.email);
 
     if (existingUser) {
-      throw new Error(AuthError.AUTH_EXISTING_EMAIL_ERROR);
+      throw new UserAlreadyExistingException(
+        AuthError.AUTH_EXISTING_EMAIL_ERROR,
+      );
     }
 
     const OTP = this._otpService.generateOtp(6);

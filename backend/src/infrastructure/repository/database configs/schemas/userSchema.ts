@@ -42,7 +42,8 @@ const hotelDetailsSchema = new Schema({
 export interface IUserDocument extends Document {
   _id: ObjectId;
   email: string;
-  password: string;
+  password?: string;
+  googleId?: string;
   is_blocked: boolean;
   full_name: string;
   mobile: string;
@@ -80,7 +81,9 @@ export const userSchema = new Schema<IUserDocument>({
   },
   password: {
     type: String,
-    required: true,
+  },
+  googleId: {
+    type: String,
   },
   is_blocked: {
     type: Boolean,

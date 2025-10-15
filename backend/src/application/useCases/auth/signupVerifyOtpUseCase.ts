@@ -5,6 +5,11 @@ import { IVerifyOtpUseCase } from "application/interfaces/useCase/auth/verifyOtp
 import { UserMapper } from "application/mappers/user.mapper";
 import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
+import {
+  InvalidOTPException,
+  OTPExpiredException,
+  UserDataMissingException,
+} from "@application/constants/Exceptions";
 
 @injectable()
 export class SignupVerifyOtpUseCase implements IVerifyOtpUseCase {
@@ -16,17 +21,17 @@ export class SignupVerifyOtpUseCase implements IVerifyOtpUseCase {
     const cachedOtp = await this._cacheService.getValue(`OTP:${email}`);
 
     if (!cachedOtp) {
-      throw new Error(AuthError.OTP_EXPIRED_OR_NOT_REQUESTED);
+      throw new OTPExpiredException(AuthError.AUTH_EXISTING_EMAIL_ERROR);
     }
 
     if (cachedOtp != otp) {
-      throw new Error(AuthError.INVALID_OTP);
+      throw new InvalidOTPException(AuthError.INVALID_OTP);
     }
 
     const userData = await this._cacheService.getValue(`SIGNUPDATA:${email}`);
 
     if (!userData) {
-      throw new Error(AuthError.USER_DATA_MISSIING_IN_CACHE);
+      throw new UserDataMissingException(AuthError.USER_DATA_MISSIING_IN_CACHE);
     }
 
     const userEntity = UserMapper.toEntityFromString(userData);

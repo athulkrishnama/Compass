@@ -9,4 +9,5 @@ export enum AuthError {
   TOKEN_EXPIRED = "Token expired",
   TOKEN_NOT_MATCHING = "Token not matching",
   REFRESH_TOKEN_EXPIRED = "Verify token is expired",
+  INVALID_LOGIN_TYPE = "Invalid login attempt. use google login",
 }
