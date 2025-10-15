@@ -10,6 +10,7 @@ import OTP from "../OTP/OTP";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import { toast } from "sonner";
 
 interface propType {
     isOpen: boolean;
@@ -54,7 +55,7 @@ function OtpModal({
         try {
             if (intervalRef.current) clearInterval(intervalRef.current);
             await handleResendOtp();
-            setTime(5 * 60);
+            setTime(1 * 60);
             intervalRef.current = setInterval(() => {
                 setTime((prev) => {
                     if (prev >= 1) {
@@ -65,12 +66,14 @@ function OtpModal({
                     return 0;
                 });
             }, 1000);
-        } catch (error) {}
+        } catch (error) {
+            if (error instanceof Error) toast.error(error.message);
+        }
     }
 
     useEffect(() => {
         if (isOpen) {
-            setTime(60 * 5);
+            setTime(60);
             intervalRef.current = setInterval(() => {
                 setTime((prev) => {
                     if (prev >= 1) {
@@ -82,7 +85,7 @@ function OtpModal({
                 });
             }, 1000);
         } else {
-            intervalRef.current && clearInterval(intervalRef.current);
+            if (intervalRef.current) clearInterval(intervalRef.current);
         }
     }, [isOpen]);
 
@@ -117,6 +120,7 @@ function OtpModal({
                     <Button
                         variant="link"
                         onClick={handleResend}
+                        disabled={time > 0}
                         className="text-gray-700 hover:text-gray-900 hover:underline"
                     >
                         {t(translationKey.button.resend)}

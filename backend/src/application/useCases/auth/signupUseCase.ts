@@ -51,8 +51,8 @@ export class SignupUseCase implements ISignupUseCase {
     this._cacheService.setWithExpiry(
       `SIGNUPDATA:${userData.email}`,
       UserMapper.toStringfromCreateUserDTO(userData),
-      60 * 5,
+      60 * 30,
     );
-    this._cacheService.setWithExpiry(`OTP:${userData.email}`, OTP, 60 * 5);
+    this._cacheService.setWithExpiry(`OTP:${userData.email}`, OTP, 60);
   }
 }
