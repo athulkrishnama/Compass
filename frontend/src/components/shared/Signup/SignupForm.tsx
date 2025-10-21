@@ -37,19 +37,19 @@ function SignupForm({ role }: propType) {
     const [isOpen, setIsOpen] = useState(false);
 
     const { mutate: sendOtpMutate } = useMutation<
-        HttpResponse<{}>,
+        HttpResponse<object>,
         Error,
         signupRequest
     >(createSignupQueryOptions());
 
     const { mutate: verifyOtpMutate } = useMutation<
-        HttpResponse<{}>,
+        HttpResponse<object>,
         Error,
         OtpVerifyRequest
     >(createVerifySignupOtpQueryOptions());
 
     const { mutate: resendMutate } = useMutation<
-        HttpResponse<{}>,
+        HttpResponse<object>,
         Error,
         string
     >(createResendOtpQueryOptions());

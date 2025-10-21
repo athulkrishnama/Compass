@@ -20,7 +20,6 @@ import { setUser } from "@/store/slices/userSlice";
 import { setToken } from "@/store/slices/tokenSlice";
 import { ROLES } from "@/constants/roles";
 import { useGoogleLogin } from "@react-oauth/google";
-import type { HttpResponse } from "@/types/api/responseType";
 import type { loginResponse } from "@/types/api/responses/loginReponse";
 
 type propType = {
@@ -50,7 +49,9 @@ function LoginForm({ role }: propType) {
         return new Promise((res, rej) => {
             mutate(data, {
                 onSuccess: (response) => {
-                    console.log(response);
+                    if (!response.data?.userData) {
+                        throw new Error();
+                    }
                     if (response.data?.userData.role !== role) {
                         toast.error(
                             t(translationKey.text.youAreNotA, { role })
@@ -58,7 +59,8 @@ function LoginForm({ role }: propType) {
                         rej();
                         return;
                     }
-                    handleLoginSuccess(response);
+                    toast.success(response.message);
+                    handleLoginSuccess(response.data);
                     res();
                 },
                 onError: (err) => {
@@ -86,24 +88,24 @@ function LoginForm({ role }: propType) {
                         );
                         return;
                     }
-                    handleLoginSuccess(res);
+                    toast.success(res.message);
+                    handleLoginSuccess(res.data);
                 },
                 onError: (err) => console.log(err),
             }
         );
     }
 
-    function handleLoginSuccess(response: HttpResponse<loginResponse>) {
-        toast.success(response.message);
+    function handleLoginSuccess(response: loginResponse) {
         dispatch(
             setUser({
-                email: response.data?.userData.email!,
-                id: response.data?.userData.id!,
-                full_name: response.data?.userData.full_name!,
-                role: response.data?.userData.role!,
+                email: response.userData.email,
+                id: response.userData.id,
+                full_name: response.userData.full_name,
+                role: response.userData.role,
             })
         );
-        dispatch(setToken(response.data?.accessToken!));
+        dispatch(setToken(response.accessToken));
 
         navigate({ to: "..", replace: true });
     }

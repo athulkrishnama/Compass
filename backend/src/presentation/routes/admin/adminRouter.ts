@@ -21,9 +21,10 @@ export class AdminRouter {
       },
     );
 
-    this._router.post(
+    this._router.patch(
       AdminRoutes.STATUS,
       authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
       (req: Request, res: Response, next: NextFunction) => {
         adminController.handleUserStatusChange(req, res, next);
       },

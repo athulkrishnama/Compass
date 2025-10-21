@@ -6,12 +6,15 @@ import { AuthError } from "presentation/constants/AuthErrors";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
+import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
+import { UserIsBlockedException } from "@application/constants/Exceptions";
 
 @injectable()
 export class AuthMiddleware {
   constructor(
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("ICacheService") private _cacheService: ICacheService,
+    @inject("IUserRepo") private _userRepo: IUserRepo,
   ) {}
 
   check = async (req: Request, res: Response, next: NextFunction) => {
@@ -51,6 +54,31 @@ export class AuthMiddleware {
       const curRole = user.role;
       if (roles.includes(curRole)) return next();
       next(new Error(AuthError.UNAUTHORIZED));
+    };
+  };
+
+  checkBlocked = () => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      const { id } = res.locals.user;
+
+      let userStatus = await this._cacheService.getValue(`USER_STATUS:${id}`);
+
+      if (!userStatus) {
+        const status = await this._userRepo.getUserStatus(id);
+
+        userStatus = status ? "blocked" : "active";
+        await this._cacheService.setWithExpiry(
+          `USER_STATUS:${id}`,
+          userStatus,
+          60 * 15,
+        );
+      }
+
+      if (userStatus === "blocked") {
+        throw new UserIsBlockedException(AuthError.BLOCKED);
+      }
+
+      next();
     };
   };
 }

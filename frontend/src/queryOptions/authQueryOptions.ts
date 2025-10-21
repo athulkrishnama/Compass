@@ -22,19 +22,19 @@ import type { HttpResponse } from "@/types/api/responseType";
 import { mutationOptions } from "@tanstack/react-query";
 
 export function createSignupQueryOptions() {
-    return mutationOptions<HttpResponse<{}>, Error, signupRequest>({
+    return mutationOptions<HttpResponse<object>, Error, signupRequest>({
         mutationFn: (data) => userSignupSendOTP(data),
     });
 }
 
 export function createVerifySignupOtpQueryOptions() {
-    return mutationOptions<HttpResponse<{}>, Error, OtpVerifyRequest>({
+    return mutationOptions<HttpResponse<object>, Error, OtpVerifyRequest>({
         mutationFn: (data) => userVerifyOtp(data),
     });
 }
 
 export function createResendOtpQueryOptions() {
-    return mutationOptions<HttpResponse<{}>, Error, string>({
+    return mutationOptions<HttpResponse<object>, Error, string>({
         mutationFn: (data) => userResendOtp(data),
     });
 }
@@ -46,7 +46,7 @@ export function createLoginQueryOption() {
 }
 
 export function createForgetPasswordSendOtpQueryOptions() {
-    return mutationOptions<HttpResponse<{}>, Error, string>({
+    return mutationOptions<HttpResponse<object>, Error, string>({
         mutationFn: (data) => forgetPasswordSendOtp(data),
     });
 }
@@ -63,7 +63,7 @@ export function createForgetPasswordVerifyOtpQueryOptions() {
 
 export function createForgetPasswordResetPasswordQueryOptions() {
     return mutationOptions<
-        HttpResponse<{}>,
+        HttpResponse<object>,
         Error,
         ForgetPasswordPasswordResetRequest
     >({
@@ -72,7 +72,7 @@ export function createForgetPasswordResetPasswordQueryOptions() {
 }
 
 export function createLogoutQueryOptions() {
-    return mutationOptions<HttpResponse<{}>, Error, void>({
+    return mutationOptions<HttpResponse<object>, Error, void>({
         mutationFn: () => logOutUser(),
     });
 }

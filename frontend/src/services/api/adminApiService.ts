@@ -19,7 +19,7 @@ export async function getUsers(filter: filterType) {
 
 export async function changeUserStatus<T>(data: T) {
     try {
-        const response = await axiosInstance.post(AdminRoutes.STATUS, data);
+        const response = await axiosInstance.patch(AdminRoutes.STATUS, data);
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {

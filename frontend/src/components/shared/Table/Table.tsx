@@ -44,7 +44,7 @@ function Table<T>({ headers, data }: propType<T>) {
                         {data.length > 0 ? (
                             data.map((row, index) => (
                                 <motion.tr
-                                    key={(row as any).id || index} // unique key per row
+                                    key={index}
                                     custom={index}
                                     initial="hidden"
                                     animate="visible"

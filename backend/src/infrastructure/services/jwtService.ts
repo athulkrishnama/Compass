@@ -6,6 +6,7 @@ import { injectable } from "tsyringe";
 import { JWTDecodeType } from "@domain/types/JWTDecode";
 import { v4 } from "uuid";
 import { AuthError } from "presentation/constants/AuthErrors";
+import { TokenExpiredException } from "@application/constants/Exceptions";
 
 @injectable()
 export class JwtService implements IJwtService {
@@ -22,17 +23,23 @@ export class JwtService implements IJwtService {
     });
   }
   verifyAccessToken(token: string): JWTDecodeType | null {
-    const { id, jti, role } = verify(
-      token,
-      env.ACCESS_TOKEN_SECRET,
-    ) as JWTDecodeType;
+    try {
+      const { id, jti, role } = verify(
+        token,
+        env.ACCESS_TOKEN_SECRET,
+      ) as JWTDecodeType;
 
-    if (!(id && jti && role)) {
-      throw new Error(AuthError.TOKEN_DATA_MISSING);
+      if (!(id && jti && role)) {
+        throw new Error(AuthError.TOKEN_DATA_MISSING);
+      }
+
+      return { id, jti, role };
+    } catch (err) {
+      void err;
+      throw new TokenExpiredException(AuthError.INVALID_TOKEN_ERROR);
     }
-
-    return { id, jti, role };
   }
+
   verifyRefreshToken(token: string): JWTDecodeType | null {
     const { id, jti, role } = verify(
       token,

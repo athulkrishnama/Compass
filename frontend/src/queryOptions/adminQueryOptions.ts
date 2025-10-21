@@ -1,3 +1,4 @@
+/* eslint-disable @tanstack/query/exhaustive-deps */
 import { AdminQueryKeys } from "@/constants/queryKeys/adminQueryKeys";
 import type { filterType } from "@/pages/admin/Users";
 import { changeUserStatus, getUsers } from "@/services/api/adminApiService";
@@ -19,7 +20,11 @@ export function createGetUsersQueryOption(filter: filterType) {
 }
 
 export function createChangeUserStatusQueryOptions() {
-    return mutationOptions<HttpResponse<{}>, Error, IUserStatusChangeRequest>({
+    return mutationOptions<
+        HttpResponse<object>,
+        Error,
+        IUserStatusChangeRequest
+    >({
         mutationFn: (data) => changeUserStatus(data),
     });
 }

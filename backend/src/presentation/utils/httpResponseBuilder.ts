@@ -18,7 +18,7 @@ export class HTTPResponseBuilder {
     statusCode: number,
     error?: string,
     message?: string,
-  ): HttpResponse<{}> {
+  ): HttpResponse<object> {
     return {
       success: false,
       error,
