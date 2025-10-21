@@ -35,6 +35,7 @@ axiosInstance.interceptors.response.use(
                 store.dispatch(setToken(response.data.data.accessToken));
                 return axiosInstance(originalRequest);
             } catch (error) {
+                void error;
                 const role = store.getState().user.role;
                 store.dispatch(removeToken());
                 store.dispatch(removeUser());

@@ -42,7 +42,7 @@ function Stage2({ email, onComplete }: propType) {
             {
                 onSuccess: (res) => {
                     toast.success(res.message);
-                    onComplete(res.data?.token!);
+                    onComplete(res.data?.token as string);
                 },
                 onError: (err) => {
                     toast.error(err.message);
