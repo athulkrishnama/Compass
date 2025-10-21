@@ -32,6 +32,7 @@ export class GoogleLoginUseCase implements IGoogleLoginUseCase {
         role,
         is_blocked: false,
         googleId,
+        is_verified: false,
       };
       const id = await this._userRepo.googleSignUp(user);
       user._id = id;

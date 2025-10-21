@@ -14,11 +14,12 @@ export class UserMapper {
       googleId: document.googleId,
       full_name: document.full_name,
       role: document.role,
+      is_verified: document.is_verified,
+      profile_image: document.profile_image,
+      verfication_id_image: document.verfication_id_image,
       is_blocked: document.is_blocked,
       mobile: document.mobile,
       cabDetails: document.cabDetails,
-      hotelDetails: document.hotelDetails,
-      travelerDetails: document.travelerDetails,
       createdAt: document.createdAt,
       lastLogin: document.lastLogin,
     };
@@ -40,6 +41,7 @@ export class UserMapper {
       role,
       password,
       is_blocked: false,
+      is_verified: false,
     };
   }
 

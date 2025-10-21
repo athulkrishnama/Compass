@@ -1,17 +1,5 @@
 import { ROLES } from "@domain/types/roles";
 
-interface TravelerDetails {
-  profile_image?: string;
-}
-
-interface HotelDetails {
-  hotel_name: string;
-  description: string;
-  images: string[];
-  is_verified: boolean;
-  verfication_id_image: string;
-}
-
 interface vehicle {
   model: string;
   type: string;
@@ -20,9 +8,6 @@ interface vehicle {
 }
 
 export interface CabDetails {
-  is_verified: boolean;
-  dob?: Date;
-  driving_licence_image?: string;
   vehicleDetails?: vehicle;
   baseLocation?: string;
 }
@@ -36,8 +21,9 @@ export interface UserEntity {
   googleId?: string;
   mobile?: string;
   is_blocked: boolean;
-  travelerDetails?: TravelerDetails;
-  hotelDetails?: HotelDetails;
+  profile_image?: string;
+  is_verified: boolean;
+  verfication_id_image?: string;
   cabDetails?: CabDetails;
   createdAt?: Date;
   lastLogin?: Date;

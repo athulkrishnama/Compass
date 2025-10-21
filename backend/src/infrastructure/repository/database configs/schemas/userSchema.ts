@@ -1,14 +1,6 @@
 import { ROLES as ROLE_VALUES } from "@domain/constants/roles";
 import { ObjectId, Schema } from "mongoose";
-import { string } from "zod";
 import { ROLES } from "@domain/types/roles";
-
-const travelerDetailsSchema = new Schema({
-  profile_image: {
-    type: String,
-    required: true,
-  },
-});
 
 const vehicleSchema = new Schema({
   model: String,
@@ -18,25 +10,8 @@ const vehicleSchema = new Schema({
 });
 
 const cabDetailsSchema = new Schema({
-  is_verified: {
-    type: Boolean,
-    default: false,
-  },
-  dob: Date,
-  drivingLicenceImage: string,
   baseLocation: String,
   vehicleDetails: vehicleSchema,
-});
-
-const hotelDetailsSchema = new Schema({
-  is_verified: {
-    type: Boolean,
-    default: false,
-  },
-  verificationId: string,
-  hotel_name: String,
-  description: String,
-  images: [String],
 });
 
 export interface IUserDocument extends Document {
@@ -50,13 +25,10 @@ export interface IUserDocument extends Document {
   role: ROLES;
   createdAt: Date;
   lastLogin: Date;
-  travelerDetails: {
-    profile_image?: string;
-  };
+  profile_image?: string;
+  is_verified: boolean;
+  verfication_id_image?: string;
   cabDetails: {
-    is_verified: boolean;
-    dob?: Date;
-    driving_licence_image?: string;
     vehicleDetails?: {
       model: string;
       type: string;
@@ -64,13 +36,6 @@ export interface IUserDocument extends Document {
       images: string[];
     };
     baseLocation?: string;
-  };
-  hotelDetails: {
-    hotel_name: string;
-    description: string;
-    images: string[];
-    is_verified: boolean;
-    verfication_id_image: string;
   };
 }
 
@@ -100,9 +65,17 @@ export const userSchema = new Schema<IUserDocument>({
     type: String,
     enum: Object.values(ROLE_VALUES),
   },
-  travelerDetails: travelerDetailsSchema,
+  profile_image: {
+    type: String,
+  },
+  is_verified: {
+    type: Boolean,
+    default: true,
+  },
+  verfication_id_image: {
+    type: String,
+  },
   cabDetails: cabDetailsSchema,
-  hotelDetails: hotelDetailsSchema,
   createdAt: {
     type: Date,
     default: new Date(),
