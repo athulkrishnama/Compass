@@ -3,7 +3,9 @@ import { UserEntity } from "@domain/entities/user/user.entity";
 import { ICreateUserRequestDTO } from "@domain/dtos/auth/createUser.dto";
 import { Errors } from "./Errors";
 import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";
-import { IGetUsersResponseDTO } from "@domain/dtos/auth/getUsers.dto";
+import { IGetUsersResponseDTO } from "@domain/dtos/admin/getUsers.dto";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
+import { IGetUserProfileResponseDTO } from "@domain/dtos/auth/getUserProfile.dto";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -41,7 +43,7 @@ export class UserMapper {
       role,
       password,
       is_blocked: false,
-      is_verified: false,
+      is_verified: VERIFICATION_STATUSES.NOT_SUBMITTED,
     };
   }
 
@@ -69,5 +71,18 @@ export class UserMapper {
       }),
     );
     return result;
+  }
+
+  static toGetUserProfileDTOfromEntity(
+    user: UserEntity,
+  ): IGetUserProfileResponseDTO {
+    return {
+      email: user.email,
+      full_name: user.full_name,
+      id: user._id!,
+      is_verified: user.is_verified,
+      profile_image: user.profile_image,
+      verfication_id_image: user.verfication_id_image,
+    };
   }
 }

@@ -25,6 +25,8 @@
     "prettier:fix": "prettier --write src"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.919.0",
+    "@aws-sdk/s3-request-presigner": "^3.919.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -35,6 +37,7 @@
     "module-alias": "^2.2.3",
     "mongoose": "^8.18.2",
     "morgan": "^1.10.1",
+    "multer": "^2.0.2",
     "nodemailer": "^7.0.6",
     "rotating-file-stream": "^3.2.7",
     "uuid": "^13.0.0",
@@ -48,6 +51,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.6.1",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",

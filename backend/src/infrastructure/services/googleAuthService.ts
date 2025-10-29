@@ -21,10 +21,8 @@ export class GoogleAuthService implements IGoogleAuthService {
     profileImage: string;
     full_name: string;
   }> {
-    console.log("google auth service");
     const token = await this._oAuth2Client.getToken(code);
 
-    console.log("token obtained", token.tokens.access_token);
     if (!token.tokens.id_token) {
       throw new InvalideDataException(AuthError.TOKEN_DATA_MISSING);
     }
@@ -35,7 +33,6 @@ export class GoogleAuthService implements IGoogleAuthService {
 
     const payload = ticket.getPayload();
 
-    console.log("payload obtained", payload);
     if (!(payload?.email && payload.sub && payload.picture && payload.name)) {
       throw new InvalideDataException(AuthError.TOKEN_DATA_MISSING);
     }

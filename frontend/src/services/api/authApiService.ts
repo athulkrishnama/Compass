@@ -122,3 +122,30 @@ export async function googleLogin<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function getUserProfile() {
+    try {
+        const response = await axiosInstance.get(AUTH_ROUTES.USER_PROFILE);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function updateUserProfile<T>(data: T) {
+    try {
+        const response = await axiosInstance.patch(
+            AUTH_ROUTES.USER_PROFILE,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.error);
+        }
+        throw new Error("something went wrong");
+    }
+}

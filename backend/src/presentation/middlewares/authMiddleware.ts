@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE } from "@domain/constants/statusCodes";
+import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { ICacheService } from "application/interfaces/service/cacheService.interface";
 import { IJwtService } from "application/interfaces/service/jwtService.interface";
 import { ROLES } from "@domain/types/roles";

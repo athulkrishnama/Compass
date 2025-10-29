@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE } from "@domain/constants/statusCodes";
+import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { IGetUsersUseCase } from "application/interfaces/useCase/admin/getUsersUseCase.interface";
 import { IUserStatusChangeUseCase } from "application/interfaces/useCase/admin/userStatusChangeUseCase.interface";
 import { ROLES } from "@domain/types/roles";

@@ -1,5 +1,5 @@
 import { adminController, authMiddleware } from "@infrastructure/DI/resolve";
-import { ROLES } from "@domain/constants/roles";
+import { ROLES } from "@domain/enums/roles";
 import { AdminRoutes } from "presentation/constants/routes/adminRoutes";
 import { NextFunction, Request, Response, Router } from "express";
 

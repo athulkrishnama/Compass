@@ -9,4 +9,5 @@ export enum HttpResponseMessages {
   DATA_FETCHED_SUCCESSFULLY = "Data fetched successfully",
   STATUS_UPDATED_SUCCESSFULLY = "User Status updated Successfully",
   LOGOUT_SUCCESSFUL = "Logout successfully",
+  UPDATE_SUCCESSFUL = "Data updated successfully",
 }

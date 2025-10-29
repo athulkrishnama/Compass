@@ -1,4 +1,4 @@
 export enum Routes {
-  AUTH = "/auth",
-  ADMIN = "/admin",
+  AUTH = "/api/v1/auth",
+  ADMIN = "/api/v1/admin",
 }

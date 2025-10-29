@@ -1,5 +1,5 @@
 import { env } from "@config/envConfig";
-import { HTTP_STATUS_CODE } from "@domain/constants/statusCodes";
+import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { IJwtService } from "application/interfaces/service/jwtService.interface";
 import { IForgetPasswordResetPasswordUseCase } from "application/interfaces/useCase/auth/forgetPasswordResetPassword.interface";
 import { IForgetPasswordSendOtpUseCase } from "application/interfaces/useCase/auth/forgetPasswordSendOtpUseCase.interface";
@@ -18,6 +18,7 @@ import {
   loginValidationSchema,
   userRegistrationSchema,
   userRegistrationVerifyOtpSchema,
+  userUpdateProfileSchema,
 } from "presentation/validationSchemas/authValidation";
 import { HttpResponseMessages } from "presentation/constants/httpResponseMessages";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
@@ -26,6 +27,11 @@ import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 import { IGoogleLoginUseCase } from "@application/interfaces/useCase/auth/googleLoginUseCase.interface";
 import { InvalideDataException } from "@application/constants/Exceptions";
+import { IGetUserProfileUseCase } from "@application/interfaces/useCase/auth/getUserProfileUseCase.interface";
+import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/updateUserProfileUseCase.interface";
+import { MulterFiles } from "@presentation/types/multerFilesType";
+import { IUpdateUserProfileRequestDTO } from "@domain/dtos/auth/updateUserProfile.dto";
+import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 
 @injectable()
 export class AuthController {
@@ -48,6 +54,10 @@ export class AuthController {
     private _tokenInvalidationUseCase: ITokenInvalidationUseCase,
     @inject("IGoogleLoginUseCase")
     private _googleLoginUseCase: IGoogleLoginUseCase,
+    @inject("IGetUserProfileUseCase")
+    private _getUserProfileUseCase: IGetUserProfileUseCase,
+    @inject("IUpdateUserProfileUseCase")
+    private _updateUserProfileUseCase: IUpdateUserProfileUseCase,
   ) {}
 
   async handleUserRegistration(
@@ -307,6 +317,58 @@ export class AuthController {
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetProfile(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = res.locals.user;
+      const profile = await this._getUserProfileUseCase.execute(id);
+      const response = HTTPResponseBuilder.buildSuccessResponse(
+        HTTP_STATUS_CODE.OK,
+        HttpResponseMessages.DATA_FETCHED_SUCCESSFULLY,
+        profile,
+      );
+
+      res.status(response.statusCode).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleUpdateProfile(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = res.locals.user;
+      const files = req.files as MulterFiles<
+        "profile_image" | "verification_id_image"
+      >;
+
+      const data: IUpdateUserProfileRequestDTO = { id };
+
+      if (files["profile_image"])
+        data.profile_image = mutlterFileToFileconverter(
+          files["profile_image"][0],
+        );
+
+      if (files["verification_id_image"])
+        data.verification_id_image = mutlterFileToFileconverter(
+          files["verification_id_image"][0],
+        );
+      if (req.body.full_name) data.full_name = req.body.full_name;
+
+      const parsedData = userUpdateProfileSchema.safeParse(data);
+      if (parsedData.error) {
+        throw new InvalideDataException(parsedData.error.issues[0].message);
+      }
+      await this._updateUserProfileUseCase.update(parsedData.data);
+      const response = HTTPResponseBuilder.buildSuccessResponse(
+        HTTP_STATUS_CODE.OK,
+        HttpResponseMessages.UPDATE_SUCCESSFUL,
+      );
+      console.log(response);
+      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }

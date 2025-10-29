@@ -17,6 +17,8 @@ import { TokenService } from "@infrastructure/services/tokenService";
 import { container } from "tsyringe";
 import { IGoogleAuthService } from "@application/interfaces/service/googleAuthService.interface";
 import { GoogleAuthService } from "@infrastructure/services/googleAuthService";
+import { IStorageService } from "@application/interfaces/service/storageService.interface";
+import { StorageService } from "@infrastructure/services/storageService";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -40,5 +42,9 @@ export function registerServices() {
   container.registerSingleton<IGoogleAuthService>(
     "IGoogleAuthService",
     GoogleAuthService,
+  );
+  container.registerSingleton<IStorageService>(
+    "IStorageService",
+    StorageService,
   );
 }

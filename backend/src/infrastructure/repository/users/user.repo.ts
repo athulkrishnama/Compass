@@ -7,7 +7,7 @@ import { inject, injectable } from "tsyringe";
 import { IUserDocument } from "../database configs/schemas/userSchema";
 import { ROLES } from "@domain/types/roles";
 import { VALUES } from "presentation/constants/values";
-import { ROLES as ROLE_VALUES } from "@domain/constants/roles";
+import { ROLES as ROLE_VALUES } from "@domain/enums/roles";
 import { UserNotFoundException } from "@application/constants/Exceptions";
 import { AuthError } from "@application/constants/Errors";
 
@@ -97,5 +97,9 @@ export class UserRepository
   async googleSignUp(user: UserEntity): Promise<string> {
     const newUser = await this._model.create(user);
     return newUser._id.toString();
+  }
+
+  toEntity(doc: IUserDocument): UserEntity {
+    return UserMapper.toEntityfromMongooseDocument(doc);
   }
 }

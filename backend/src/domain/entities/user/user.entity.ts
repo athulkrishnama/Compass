@@ -1,4 +1,5 @@
 import { ROLES } from "@domain/types/roles";
+import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
 
 interface vehicle {
   model: string;
@@ -22,7 +23,7 @@ export interface UserEntity {
   mobile?: string;
   is_blocked: boolean;
   profile_image?: string;
-  is_verified: boolean;
+  is_verified: VERIFICATION_STATUS;
   verfication_id_image?: string;
   cabDetails?: CabDetails;
   createdAt?: Date;

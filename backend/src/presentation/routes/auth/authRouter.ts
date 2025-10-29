@@ -1,6 +1,7 @@
 import { AuthRoutes } from "presentation/constants/routes/authRoutes";
-import { authController } from "@infrastructure/DI/resolve";
+import { authController, authMiddleware } from "@infrastructure/DI/resolve";
 import { NextFunction, Request, Response, Router } from "express";
+import { uploadMiddleware } from "@presentation/middlewares/multer";
 
 export class AuthRouter {
   private _router: Router;
@@ -80,6 +81,26 @@ export class AuthRouter {
         authController.handleGoogleLogin(req, res, next);
       },
     );
+
+    this._router
+      .get(
+        AuthRoutes.PROFILE,
+        authMiddleware.check,
+        authMiddleware.checkBlocked(),
+        (req: Request, res: Response, next: NextFunction) =>
+          authController.handleGetProfile(req, res, next),
+      )
+      .patch(
+        AuthRoutes.PROFILE,
+        authMiddleware.check,
+        authMiddleware.checkBlocked(),
+        uploadMiddleware.fields([
+          { name: "profile_image", maxCount: 1 },
+          { name: "verification_id_image", maxCount: 1 },
+        ]),
+        (req: Request, res: Response, next: NextFunction) =>
+          authController.handleUpdateProfile(req, res, next),
+      );
   }
 
   public get_router() {

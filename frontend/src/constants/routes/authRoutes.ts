@@ -9,4 +9,5 @@ export enum AUTH_ROUTES {
     REFRESH = "/auth/refresh-token",
     LOGOUT = "/auth/logout",
     GOOGLE_LOGIN = "/auth/google-login",
+    USER_PROFILE = "/auth/profile",
 }

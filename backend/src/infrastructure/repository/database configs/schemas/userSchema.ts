@@ -1,6 +1,8 @@
-import { ROLES as ROLE_VALUES } from "@domain/constants/roles";
+import { ROLES as ROLE_VALUES } from "@domain/enums/roles";
 import { ObjectId, Schema } from "mongoose";
 import { ROLES } from "@domain/types/roles";
+import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 
 const vehicleSchema = new Schema({
   model: String,
@@ -26,7 +28,7 @@ export interface IUserDocument extends Document {
   createdAt: Date;
   lastLogin: Date;
   profile_image?: string;
-  is_verified: boolean;
+  is_verified: VERIFICATION_STATUS;
   verfication_id_image?: string;
   cabDetails: {
     vehicleDetails?: {
@@ -69,8 +71,9 @@ export const userSchema = new Schema<IUserDocument>({
     type: String,
   },
   is_verified: {
-    type: Boolean,
-    default: true,
+    type: String,
+    enum: Object.values(VERIFICATION_STATUSES),
+    default: VERIFICATION_STATUSES.NOT_SUBMITTED,
   },
   verfication_id_image: {
     type: String,

@@ -14,4 +14,9 @@ export enum Errors {
   INTERNAL_SERVER_ERROR = "Internal Server Error",
   GOOGLE_CLIENT_ID_ERROR = "Google client id is missing",
   GOOGLE_CLIENT_SECRET_ERROR = "Google client secret is missing",
+  S3_BUCKET_NAME_ERROR = "Provide S3 bucket name",
+  S3_ACCESS_KEY_ERROR = "Provide S3 access key",
+  S3_REGION_ERROR = "Provide S3 Region",
+  S3_SECRET_ACCESS_KEY_ERROR = "Provide S3 Secret Access Key",
+  SIGNED_URL_EXPIRY_ERROR = "Provide signed url expiray time in seconds",
 }

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { HTTP_STATUS_CODE } from "@domain/constants/statusCodes";
+import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { Errors } from "../constants/Error";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import {

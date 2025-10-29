@@ -8,7 +8,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { queryClient } from "@/config/tanstackQueryConfig";
-import { AdminQueryKeys } from "@/constants/queryKeys/adminQueryKeys";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import { ROLES } from "@/constants/roles";
 import type { filterType } from "@/pages/admin/Users";
 import translationKey from "@/utils/i18n/translationKey";
@@ -36,7 +36,7 @@ function Filter({ filter, setFilter }: propType) {
 
     function handleSearch() {
         queryClient.refetchQueries({
-            queryKey: [AdminQueryKeys.USERS, filter.pageNo],
+            queryKey: [QUERY_KEYS.USERS, filter.pageNo],
         });
     }
     return (
