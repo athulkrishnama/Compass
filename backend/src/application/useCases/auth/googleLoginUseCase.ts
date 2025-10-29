@@ -5,6 +5,7 @@ import {
   IGoogleLoginRequestDTO,
   IGoogleLoginResponseDTO,
 } from "@domain/dtos/auth/googleLogin.dto";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { UserMapper } from "@mappers/user.mapper";
 import { inject, injectable } from "tsyringe";
 
@@ -32,6 +33,7 @@ export class GoogleLoginUseCase implements IGoogleLoginUseCase {
         role,
         is_blocked: false,
         googleId,
+        is_verified: VERIFICATION_STATUSES.NOT_SUBMITTED,
       };
       const id = await this._userRepo.googleSignUp(user);
       user._id = id;

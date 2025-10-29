@@ -28,6 +28,7 @@ export default {
         confirmPasswordRequired: "errors.confirmPasswordRequired",
         passwordAndCofirmPasswordNotMatching:
             "errors.passwordAndCofirmPasswordNotMatching",
+        maxFileSize: "errors.maxFileSize",
     },
     form: {
         fullname: "form.fullname",
@@ -65,6 +66,9 @@ export default {
         all: "button.all",
         search: "button.search",
         cancel: "button.cancel",
+        updateProfile: "button.updateProfile",
+        close: "button.close",
+        upload: "button.upload",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
@@ -76,5 +80,6 @@ export default {
         userStatus: "text.userStatus",
         areYouSureToBlock: "text.areYouSureToBlock",
         areYouSureToUnblock: "text.areYouSureToUnblock",
+        selectImage: "text.selectImage",
     },
 };

@@ -23,6 +23,10 @@ import { TokenInvalidationUseCase } from "@useCases/auth/tokenInvalidationUseCas
 import { container } from "tsyringe";
 import { IGoogleLoginUseCase } from "@application/interfaces/useCase/auth/googleLoginUseCase.interface";
 import { GoogleLoginUseCase } from "@useCases/auth/googleLoginUseCase";
+import { IGetUserProfileUseCase } from "@application/interfaces/useCase/auth/getUserProfileUseCase.interface";
+import { GetUserProfileUseCase } from "@useCases/auth/getUserProfileUseCase";
+import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/updateUserProfileUseCase.interface";
+import { UpdateUserProfileUseCase } from "@useCases/auth/updateUserProfileUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -66,5 +70,13 @@ export function registerUsecases() {
   container.registerSingleton<IGoogleLoginUseCase>(
     "IGoogleLoginUseCase",
     GoogleLoginUseCase,
+  );
+  container.registerSingleton<IGetUserProfileUseCase>(
+    "IGetUserProfileUseCase",
+    GetUserProfileUseCase,
+  );
+  container.registerSingleton<IUpdateUserProfileUseCase>(
+    "IUpdateUserProfileUseCase",
+    UpdateUserProfileUseCase,
   );
 }

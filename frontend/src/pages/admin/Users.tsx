@@ -2,7 +2,7 @@ import Filter from "@/components/admin/UserListing/Filter";
 import UserTable from "@/components/admin/UserListing/UserTable";
 import Pagination from "@/components/shared/Pagination/Pagination";
 import { queryClient } from "@/config/tanstackQueryConfig";
-import { AdminQueryKeys } from "@/constants/queryKeys/adminQueryKeys";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
     createChangeUserStatusQueryOptions,
     createGetUsersQueryOption,
@@ -43,7 +43,7 @@ function Users() {
                 onSuccess: (res) => {
                     toast.success(res.message);
                     queryClient.setQueryData(
-                        [AdminQueryKeys.USERS, filter.pageNo],
+                        [QUERY_KEYS.USERS, filter.pageNo],
                         (response: HttpResponse<IGetUsersResponse>) => {
                             const newUsers = response.data?.clients.map(
                                 (user) => {

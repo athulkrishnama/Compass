@@ -1,9 +1,9 @@
+import Profile from "@/pages/traveler/Profile";
+import { createGetUserProfileQueryOptions } from "@/queryOptions/authQueryOptions";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/traveler/profile")({
-    component: RouteComponent,
+    loader: ({ context }) =>
+        context.queryClient.ensureQueryData(createGetUserProfileQueryOptions()),
+    component: Profile,
 });
-
-function RouteComponent() {
-    return <div>Hello "/traveler/profile"!</div>;
-}

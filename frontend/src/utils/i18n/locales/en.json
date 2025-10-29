@@ -26,7 +26,8 @@
         "passwordRequired": "Password is required",
         "invalidPassword": "Password must meet the required criteria",
         "confirmPasswordRequired": "Confirm password is required",
-        "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match"
+        "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match",
+        "maxFileSize": "Maximum file Size is {{size}}"
     },
     "form": {
         "fullname": "Full Name",
@@ -63,7 +64,10 @@
         "active": "Active",
         "all": "All",
         "search": "Search",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "updateProfile": "Update Profile",
+        "close": "Close",
+        "upload": "Upload"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -74,6 +78,7 @@
         "enterNameToSearch": "Enter name to search",
         "userStatus": "User Status",
         "areYouSureToBlock": "Are you sure to block {{name}}?",
-        "areYouSureToUnblock": "Are you sure to unblock {{name}}?"
+        "areYouSureToUnblock": "Are you sure to unblock {{name}}?",
+        "selectImage": "Please select a image file"
     }
 }

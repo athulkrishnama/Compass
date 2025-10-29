@@ -1,4 +1,4 @@
-import { ROLES } from "@domain/constants/roles";
+import { ROLES } from "@domain/enums/roles";
 import { AuthError } from "presentation/constants/AuthErrors";
 import z from "zod";
 
@@ -50,4 +50,19 @@ export const googleLoginSchema = z.object({
     .refine((role) => role !== ROLES.ADMIN, {
       error: AuthError.ADMIN_SIGNUP_ERROR,
     }),
+});
+
+export const userUpdateProfileSchema = z.object({
+  id: z.string(),
+  full_name: z.string().optional(),
+  profile_image: z
+    .file()
+    .mime(["image/jpeg", "image/png", "image/webp", "image/svg+xml"])
+    .max(1024 * 1024 * 2)
+    .optional(),
+  verification_id_image: z
+    .file()
+    .mime(["image/jpeg", "image/png", "image/webp", "image/svg+xml"])
+    .max(1024 * 1024 * 2)
+    .optional(),
 });

@@ -3,7 +3,9 @@ import { UserEntity } from "@domain/entities/user/user.entity";
 import { ICreateUserRequestDTO } from "@domain/dtos/auth/createUser.dto";
 import { Errors } from "./Errors";
 import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";
-import { IGetUsersResponseDTO } from "@domain/dtos/auth/getUsers.dto";
+import { IGetUsersResponseDTO } from "@domain/dtos/admin/getUsers.dto";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
+import { IGetUserProfileResponseDTO } from "@domain/dtos/auth/getUserProfile.dto";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -14,11 +16,12 @@ export class UserMapper {
       googleId: document.googleId,
       full_name: document.full_name,
       role: document.role,
+      is_verified: document.is_verified,
+      profile_image: document.profile_image,
+      verfication_id_image: document.verfication_id_image,
       is_blocked: document.is_blocked,
       mobile: document.mobile,
       cabDetails: document.cabDetails,
-      hotelDetails: document.hotelDetails,
-      travelerDetails: document.travelerDetails,
       createdAt: document.createdAt,
       lastLogin: document.lastLogin,
     };
@@ -40,6 +43,7 @@ export class UserMapper {
       role,
       password,
       is_blocked: false,
+      is_verified: VERIFICATION_STATUSES.NOT_SUBMITTED,
     };
   }
 
@@ -67,5 +71,18 @@ export class UserMapper {
       }),
     );
     return result;
+  }
+
+  static toGetUserProfileDTOfromEntity(
+    user: UserEntity,
+  ): IGetUserProfileResponseDTO {
+    return {
+      email: user.email,
+      full_name: user.full_name,
+      id: user._id!,
+      is_verified: user.is_verified,
+      profile_image: user.profile_image,
+      verfication_id_image: user.verfication_id_image,
+    };
   }
 }

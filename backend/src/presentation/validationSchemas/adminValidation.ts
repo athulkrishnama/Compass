@@ -1,4 +1,4 @@
-import { ROLES } from "@domain/constants/roles";
+import { ROLES } from "@domain/enums/roles";
 import { ROLES as ROLETYPE } from "@domain/types/roles";
 import { ValidationErrors } from "presentation/constants/validationErrors";
 import z from "zod";

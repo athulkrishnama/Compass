@@ -1,7 +1,7 @@
 import {
   IGetUsersRequestDTO,
   IGetUsersResponseDTO,
-} from "@domain/dtos/auth/getUsers.dto";
+} from "@domain/dtos/admin/getUsers.dto";
 import { IUserRepo } from "application/interfaces/repository/users/user.repo.interface";
 import { IGetUsersUseCase } from "application/interfaces/useCase/admin/getUsersUseCase.interface";
 import { UserMapper } from "application/mappers/user.mapper";

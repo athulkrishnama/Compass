@@ -1,9 +1,12 @@
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
     forgetPasswordResetPassword,
     forgetPasswordSendOtp,
     forgetPasswordVerifyOtp,
+    getUserProfile,
     googleLogin,
     logOutUser,
+    updateUserProfile,
     userLogin,
     userResendOtp,
     userSignupSendOTP,
@@ -17,9 +20,11 @@ import {
     type OtpVerifyRequest,
     type signupRequest,
 } from "@/types/api/requests/authRequests";
+import type { IUpdateUserProfileRequest } from "@/types/api/requests/updateProfileRequest";
 import type { loginResponse } from "@/types/api/responses/loginReponse";
+import type { IGetUserProfileResponse } from "@/types/api/responses/userResponses";
 import type { HttpResponse } from "@/types/api/responseType";
-import { mutationOptions } from "@tanstack/react-query";
+import { mutationOptions, queryOptions } from "@tanstack/react-query";
 
 export function createSignupQueryOptions() {
     return mutationOptions<HttpResponse<object>, Error, signupRequest>({
@@ -84,5 +89,18 @@ export function createGoogleLoginQueryOptions() {
         GoogleLoginRequest
     >({
         mutationFn: (data) => googleLogin(data),
+    });
+}
+
+export function createGetUserProfileQueryOptions() {
+    return queryOptions<HttpResponse<IGetUserProfileResponse>, Error>({
+        queryKey: [QUERY_KEYS.USER_PROFILE],
+        queryFn: getUserProfile,
+    });
+}
+
+export function createUpdateUserProfileQueryOptions() {
+    return mutationOptions<HttpResponse<object>, Error, FormData>({
+        mutationFn: updateUserProfile,
     });
 }

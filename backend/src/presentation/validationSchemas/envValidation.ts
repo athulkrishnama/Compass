@@ -26,4 +26,9 @@ export const envSchema = z.object({
   REDIS_URL: z.url({ error: Errors.ENV_REDIS_URL_ERROR }),
   GOOGLE_CLIENT_ID: z.string({ error: Errors.GOOGLE_CLIENT_ID_ERROR }),
   GOOGLE_CLIENT_SECRET: z.string({ error: Errors.GOOGLE_CLIENT_SECRET_ERROR }),
+  S3_BUCKET_NAME: z.string({ error: Errors.S3_BUCKET_NAME_ERROR }),
+  S3_ACCESS_KEY: z.string({ error: Errors.S3_ACCESS_KEY_ERROR }),
+  S3_REGION: z.string({ error: Errors.S3_REGION_ERROR }),
+  S3_SECRET_ACCESS_KEY: z.string({ error: Errors.S3_SECRET_ACCESS_KEY_ERROR }),
+  SIGNED_URL_EXPIRY: z.coerce.number({ error: Errors.SIGNED_URL_EXPIRY_ERROR }),
 });

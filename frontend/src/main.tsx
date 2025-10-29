@@ -13,6 +13,7 @@ import "@/utils/i18n";
 import { Toaster } from "sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { isLoggedin, roleChecker } from "./utils/authChecker.ts";
+import { env } from "./config/env.ts";
 
 const router = createRouter({
     routeTree,
@@ -27,7 +28,7 @@ declare module "@tanstack/react-router" {
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <GoogleOAuthProvider clientId={env.VITE_GOOGLE_CLIENT_ID}>
             <QueryClientProvider client={queryClient}>
                 <Provider store={store}>
                     <PersistGate persistor={persistor}>
