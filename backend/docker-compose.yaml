@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+    container_name: compassapplication
+    ports: 
+      - 4000:4000
+    environment:
+      - port=4000
+    env_file:
+      - ./.env.development
+    depends_on:
+      - mongodb
+    networks:
+      - compass-network
+
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0-ubi8
+    networks:
+      - compass-network
+
+  redis:
+    networks:
+      - compass-network
+    image: redis:8.2.2-bookworm
+
+networks:
+  compass-network:
