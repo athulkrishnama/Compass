@@ -79,6 +79,19 @@
         "userStatus": "User Status",
         "areYouSureToBlock": "Are you sure to block {{name}}?",
         "areYouSureToUnblock": "Are you sure to unblock {{name}}?",
-        "selectImage": "Please select a image file"
+        "selectImage": "Please select a image file",
+        "verficationStatus": "Verification Status",
+        "verficationIdImage": "Verification ID Image",
+        "noVerificationImageUploaded": "No verfication ID Image Uploaded",
+        "notSubmited": "Not submitted",
+        "pending": "Pending",
+        "verfied": "Verfied",
+        "rejected": "Submitted",
+        "submitDetails": "Please submit your verification details.",
+        "verficationBeingReviewed": "Your verification is being reviewed.",
+        "profileVerfied": "Your profile has been successfully verified.",
+        "verficationRejected": "Your verification was rejected. Please resubmit your details.",
+        "profileImage": "Profile Image",
+        "uploadVerficationId": "Upload Verification ID"
     }
 }

@@ -25,6 +25,11 @@ export class GetUserProfileUseCase implements IGetUserProfileUseCase {
         user.profile_image,
         env.SIGNED_URL_EXPIRY,
       );
+    if (user.verfication_id_image)
+      user.verfication_id_image = await this._storageService.createSignedUrl(
+        user.verfication_id_image,
+        env.SIGNED_URL_EXPIRY,
+      );
 
     return UserMapper.toGetUserProfileDTOfromEntity(user);
   }

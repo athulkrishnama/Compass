@@ -367,7 +367,6 @@ export class AuthController {
         HTTP_STATUS_CODE.OK,
         HttpResponseMessages.UPDATE_SUCCESSFUL,
       );
-      console.log(response);
       res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);

@@ -39,6 +39,7 @@ function RouteComponent() {
             route: "/hotel/upcomingBookings",
         },
         { name: t(translationKey.button.history), route: "/hotel/history" },
+        { name: t(translationKey.button.profile), route: "/hotel/profile" },
     ];
     return (
         <div className="h-full w-full">
@@ -49,7 +50,7 @@ function RouteComponent() {
             ].includes(pathname) ? (
                 <Outlet />
             ) : (
-                <div className="h-full w-full">
+                <div className="h-full w-full flex flex-col">
                     <Navbar routes={routes} logoutRoute="/hotel/login" />
                     <Outlet />
                 </div>
