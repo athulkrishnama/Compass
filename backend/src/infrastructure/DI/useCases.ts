@@ -27,6 +27,8 @@ import { IGetUserProfileUseCase } from "@application/interfaces/useCase/auth/get
 import { GetUserProfileUseCase } from "@useCases/auth/getUserProfileUseCase";
 import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/updateUserProfileUseCase.interface";
 import { UpdateUserProfileUseCase } from "@useCases/auth/updateUserProfileUseCase";
+import { IGetUnverifiedUsersUseCase } from "@application/interfaces/useCase/admin/getUnverifiedUserUseCase.interface";
+import { GetUnverifiedUsersUseCase } from "@useCases/admin/getUnverifiedUsersUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -78,5 +80,9 @@ export function registerUsecases() {
   container.registerSingleton<IUpdateUserProfileUseCase>(
     "IUpdateUserProfileUseCase",
     UpdateUserProfileUseCase,
+  );
+  container.registerSingleton<IGetUnverifiedUsersUseCase>(
+    "IGetUnverifiedUsersUseCase",
+    GetUnverifiedUsersUseCase,
   );
 }

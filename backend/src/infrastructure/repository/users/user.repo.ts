@@ -10,6 +10,8 @@ import { VALUES } from "presentation/constants/values";
 import { ROLES as ROLE_VALUES } from "@domain/enums/roles";
 import { UserNotFoundException } from "@application/constants/Exceptions";
 import { AuthError } from "@application/constants/Errors";
+import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 
 @injectable()
 export class UserRepository
@@ -34,12 +36,19 @@ export class UserRepository
     await this._model.updateOne({ email }, { $set: { password } });
   }
 
-  async getUsersWithFilter(
-    pageNo: number,
-    role: ROLES[] | undefined,
-    status: boolean | undefined,
-    query: string | undefined,
-  ): Promise<{ users: UserEntity[]; total: number }> {
+  async getUsersWithFilter({
+    pageNo,
+    role,
+    status,
+    query,
+    is_verified,
+  }: {
+    pageNo: number;
+    role?: ROLES[];
+    status?: boolean;
+    query?: string;
+    is_verified?: VERIFICATION_STATUS[] | undefined;
+  }): Promise<{ users: UserEntity[]; total: number }> {
     const skip = (pageNo - 1) * VALUES.GET_USERS_LIMIT;
 
     const filter: RootFilterQuery<IUserDocument> = {};
@@ -65,6 +74,18 @@ export class UserRepository
       }
     } else {
       filter.role = [ROLE_VALUES.CAB, ROLE_VALUES.TRAVELER, ROLE_VALUES.HOTEL];
+    }
+
+    if (is_verified?.length) {
+      for (const i of is_verified) {
+        if (filter.is_verified) {
+          filter.is_verified.push(i);
+        } else {
+          filter.is_verified = [i];
+        }
+      }
+    } else {
+      filter.is_verified = Object.values(VERIFICATION_STATUSES);
     }
 
     const response = await this._model

@@ -29,6 +29,15 @@ export class AdminRouter {
         adminController.handleUserStatusChange(req, res, next);
       },
     );
+
+    this._router.get(
+      AdminRoutes.VERIFICATION,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleGetUnverifiedUsers(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

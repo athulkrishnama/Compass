@@ -6,6 +6,7 @@ import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";
 import { IGetUsersResponseDTO } from "@domain/dtos/admin/getUsers.dto";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { IGetUserProfileResponseDTO } from "@domain/dtos/auth/getUserProfile.dto";
+import { GetUnverifiedUsersResponseDTO } from "@domain/dtos/admin/getUnverifiedUsers.dto";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -61,15 +62,13 @@ export class UserMapper {
   static toGetUsersResponseDTOfromEntity(
     users: UserEntity[],
   ): IGetUsersResponseDTO["clients"] {
-    const result: IGetUsersResponseDTO["clients"][number][] = users.map(
-      (user) => ({
-        email: user.email,
-        full_name: user.full_name,
-        id: user._id!,
-        is_blocked: user.is_blocked,
-        role: user.role,
-      }),
-    );
+    const result: IGetUsersResponseDTO["clients"] = users.map((user) => ({
+      email: user.email,
+      full_name: user.full_name,
+      id: user._id!,
+      is_blocked: user.is_blocked,
+      role: user.role,
+    }));
     return result;
   }
 
@@ -84,5 +83,20 @@ export class UserMapper {
       profile_image: user.profile_image,
       verfication_id_image: user.verfication_id_image,
     };
+  }
+
+  static toGetUnverifiedUsersResponseDTOfromEntity(
+    users: UserEntity[],
+  ): GetUnverifiedUsersResponseDTO["users"] {
+    const result: GetUnverifiedUsersResponseDTO["users"] = users.map((u) => ({
+      email: u.email,
+      full_name: u.full_name,
+      id: u._id!,
+      is_verified: u.is_verified,
+      profile_image: u.profile_image!,
+      verification_id_image: u.verfication_id_image!,
+    }));
+
+    return result;
   }
 }
