@@ -29,6 +29,7 @@ export default {
         passwordAndCofirmPasswordNotMatching:
             "errors.passwordAndCofirmPasswordNotMatching",
         maxFileSize: "errors.maxFileSize",
+        provideRejectionReason: "errors.provideRejectionReason",
     },
     form: {
         fullname: "form.fullname",
@@ -36,6 +37,8 @@ export default {
         password: "form.password",
         confirmPassword: "form.confirmPassword",
         newPassword: "form.newPassword",
+        rejectionReason: "form.rejectionReason",
+        enterReasonForRejection: "form.enterReasonForRejection",
     },
     button: {
         submit: "button.submit",
@@ -69,6 +72,10 @@ export default {
         updateProfile: "button.updateProfile",
         close: "button.close",
         upload: "button.upload",
+        hotelVerification: "button.hotelVerification",
+        view: "button.view",
+        approve: "button.approve",
+        reject: "button.reject",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
@@ -94,5 +101,8 @@ export default {
         verficationRejected: "text.verficationRejected",
         profileImage: "text.profileImage",
         uploadVerficationId: "text.uploadVerficationId",
+        status: "text.status",
+        noUsersToShow: "text.noUsersToShow",
+        rejectionReason: "text.rejectionReason",
     },
 };

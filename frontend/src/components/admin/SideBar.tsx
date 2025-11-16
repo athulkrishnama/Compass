@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createLogoutQueryOptions } from "@/queryOptions/authQueryOptions";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Home, LogOut, Settings, User } from "lucide-react";
+import { Check, Home, LogOut, Settings, User } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { removeToken } from "@/store/slices/tokenSlice";
 import { removeUser } from "@/store/slices/userSlice";
@@ -33,6 +33,11 @@ export default function SideBar() {
             to: "/admin/reports",
             label: t(translationKey.button.reports),
             icon: <Settings className="w-5 h-5" />,
+        },
+        {
+            to: "/admin/hotelVerification",
+            label: t(translationKey.button.hotelVerification),
+            icon: <Check className="w-5 h-5" />,
         },
     ];
 

@@ -45,7 +45,6 @@ function Filter({ filter, setFilter }: propType) {
             initial="hidden"
             animate="visible"
         >
-            {/* Search Input */}
             <motion.div
                 variants={itemVariants}
                 custom={0}
@@ -69,7 +68,6 @@ function Filter({ filter, setFilter }: propType) {
                 </div>
             </motion.div>
 
-            {/* Role Select */}
             <motion.div
                 variants={itemVariants}
                 custom={1}
@@ -109,7 +107,6 @@ function Filter({ filter, setFilter }: propType) {
                 </div>
             </motion.div>
 
-            {/* Status Select */}
             <motion.div
                 variants={itemVariants}
                 custom={2}
@@ -148,7 +145,6 @@ function Filter({ filter, setFilter }: propType) {
                 </div>
             </motion.div>
 
-            {/* Search Button */}
             <motion.div
                 variants={itemVariants}
                 custom={3}

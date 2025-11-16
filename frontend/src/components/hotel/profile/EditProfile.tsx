@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Upload, Image as ImageIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
-import { useRef, useState, type ChangeEvent } from "react";
+import { useCallback, useRef, useState, type ChangeEvent } from "react";
 import ProfileCroppingModal from "./ProfileCroppingModal";
 import z from "zod";
 import { toast } from "sonner";
@@ -130,6 +130,12 @@ export default function EditProfile({
         handleClose();
     }
 
+    function handleImageInputClick() {
+        profileImageRef.current?.click();
+    }
+
+    const cachedHandleImageInputclick = useCallback(handleImageInputClick, []);
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -152,7 +158,7 @@ export default function EditProfile({
                 <ProfileAvatar
                     ProfileUrl={profile_image}
                     profileImage={profileImage}
-                    handleClick={() => profileImageRef.current?.click()}
+                    handleClick={cachedHandleImageInputclick}
                 />
                 <input
                     type="file"
@@ -219,7 +225,10 @@ export default function EditProfile({
                     htmlFor="verfication_id_image"
                     className={`flex items-center justify-center gap-2 cursor-pointer border border-gray-300 text-gray-700 rounded-md px-3 py-2 text-sm transition w-fit
     ${
-        is_verified !== VERIFICATION_STATUSES.NOT_SUBMITTED
+        ![
+            VERIFICATION_STATUSES.NOT_SUBMITTED,
+            VERIFICATION_STATUSES.REJECTED,
+        ].includes(is_verified)
             ? "opacity-50 cursor-not-allowed bg-gray-100 text-gray-400 border-gray-200"
             : "hover:bg-gray-50"
     }`}
@@ -229,7 +238,10 @@ export default function EditProfile({
                 </label>
                 <Input
                     disabled={
-                        is_verified !== VERIFICATION_STATUSES.NOT_SUBMITTED
+                        ![
+                            VERIFICATION_STATUSES.NOT_SUBMITTED,
+                            VERIFICATION_STATUSES.REJECTED,
+                        ].includes(is_verified)
                     }
                     id="verfication_id_image"
                     type="file"

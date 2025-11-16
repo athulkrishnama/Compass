@@ -20,7 +20,6 @@ import {
     type OtpVerifyRequest,
     type signupRequest,
 } from "@/types/api/requests/authRequests";
-import type { IUpdateUserProfileRequest } from "@/types/api/requests/updateProfileRequest";
 import type { loginResponse } from "@/types/api/responses/loginReponse";
 import type { IGetUserProfileResponse } from "@/types/api/responses/userResponses";
 import type { HttpResponse } from "@/types/api/responseType";

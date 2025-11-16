@@ -20,6 +20,8 @@ import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { t } from "i18next";
 import { Button } from "@/components/ui/button";
+import { VERIFICATION_STATUSES } from "@/constants/verificationStatus";
+import { cn } from "@/lib/utils";
 
 interface ShowProfileProps {
     profileData: {
@@ -28,33 +30,38 @@ interface ShowProfileProps {
         profile_image?: string;
         verfication_id_image?: string;
         is_verified: VERIFICATION_STATUS;
+        rejection_reason?: string;
     };
     setEditing: () => void;
 }
 
 const statusConfig: Record<
     VERIFICATION_STATUS,
-    { label: string; hint: string; icon: React.ElementType }
+    { label: string; hint: string; icon: React.ElementType; className: string }
 > = {
     NOT_SUBMITTED: {
         label: t(translationKey.text.notSubmited),
         hint: t(translationKey.text.submitDetails),
         icon: HelpCircle,
+        className: "border-gray-300 text-gray-600", // gray
     },
     PENDING: {
         label: t(translationKey.text.pending),
         hint: t(translationKey.text.verficationBeingReviewed),
         icon: Clock,
+        className: "border-yellow-400 text-yellow-700", // muted yellow
     },
     APPROVED: {
         label: t(translationKey.text.verfied),
         hint: t(translationKey.text.profileVerfied),
         icon: CheckCircle2,
+        className: "border-green-500 text-green-700", // muted green
     },
     REJECTED: {
         label: t(translationKey.text.rejected),
         hint: t(translationKey.text.verficationRejected),
         icon: XCircle,
+        className: "border-red-500 text-red-700", // muted red
     },
 };
 
@@ -65,6 +72,7 @@ function ShowProfile({ profileData, setEditing }: ShowProfileProps) {
         profile_image,
         verfication_id_image,
         is_verified,
+        rejection_reason,
     } = profileData;
     const status = statusConfig[is_verified];
 
@@ -114,19 +122,40 @@ function ShowProfile({ profileData, setEditing }: ShowProfileProps) {
                     </div>
                     <p className="text-black">{email}</p>
                 </div>
-
-                <div>
-                    <div className="flex items-center gap-2 text-sm font-medium text-gray-600 mb-1">
-                        <status.icon size={16} />{" "}
+                <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm font-medium text-[#666]">
                         {t(translationKey.text.verficationStatus)}
                     </div>
+
                     <Badge
                         variant="outline"
-                        className="border-gray-400 text-black bg-white font-medium"
+                        className={cn(
+                            "font-medium rounded-sm px-2 py-0.5 bg-white border",
+                            status.className
+                        )}
                     >
+                        <status.icon size={16} />
                         {status.label}
                     </Badge>
-                    <p className="text-sm text-gray-500 mt-1">{status.hint}</p>
+
+                    <p className="text-sm text-[#666]">{status.hint}</p>
+
+                    {is_verified === VERIFICATION_STATUSES.REJECTED &&
+                        rejection_reason && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 2 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.15 }}
+                                className="space-y-1 border-l border-[#eee] pl-3"
+                            >
+                                <p className="text-sm font-medium text-black">
+                                    {t(translationKey.text.rejectionReason)}
+                                </p>
+                                <p className="text-sm text-[#666]">
+                                    {rejection_reason}
+                                </p>
+                            </motion.div>
+                        )}
                 </div>
 
                 <div>
