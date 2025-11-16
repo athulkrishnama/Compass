@@ -30,6 +30,7 @@ export interface IUserDocument extends Document {
   profile_image?: string;
   is_verified: VERIFICATION_STATUS;
   verfication_id_image?: string;
+  rejection_reason?: string;
   cabDetails: {
     vehicleDetails?: {
       model: string;
@@ -68,6 +69,9 @@ export const userSchema = new Schema<IUserDocument>({
     enum: Object.values(ROLE_VALUES),
   },
   profile_image: {
+    type: String,
+  },
+  rejection_reason: {
     type: String,
   },
   is_verified: {

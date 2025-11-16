@@ -10,4 +10,5 @@ export enum AuthError {
   UNAUTHORIZED = "This user is unauthrorized",
   BLOCKED = "This user is blocked",
   AUTHROIZATION_CODE_MISSING = "Authorisaztion code is missing",
+  INVALID_ID = "Invalid user Id"
 }

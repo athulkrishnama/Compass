@@ -1,11 +1,10 @@
 import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
 
-export interface IGetUserProfileResponseDTO {
+export interface IGetUnverifedUserDetailsResponseDTO {
   id: string;
   full_name: string;
   email: string;
   profile_image?: string;
   is_verified: VERIFICATION_STATUS;
-  verfication_id_image?: string;
-  rejection_reason?: string;
+  verification_id_image?: string;
 }

@@ -34,4 +34,10 @@ export const getUnverifiedUserValidationSchema = z.object({
       error: ValidationErrors.INVALID_ROLE,
     }),
   pageNo: z.coerce.number({ error: ValidationErrors.INVALID_PAGE_NO }),
+  query: z.string().optional(),
+});
+
+export const rejectUserVerificationRequestValidationSchema = z.object({
+  userId: z.string({ error: ValidationErrors.ID_MISSING }),
+  reason: z.string({ error: ValidationErrors.REASON_MISSING }),
 });

@@ -35,7 +35,8 @@ export class UpdateUserProfileUseCase implements IUpdateUserProfileUseCase {
 
     if (
       verification_id_image &&
-      user.is_verified === VERIFICATION_STATUSES.NOT_SUBMITTED
+      (user.is_verified === VERIFICATION_STATUSES.NOT_SUBMITTED ||
+        user.is_verified === VERIFICATION_STATUSES.REJECTED)
     ) {
       user.is_verified = VERIFICATION_STATUSES.PENDING;
       user.verfication_id_image = await this._storageService.upload(

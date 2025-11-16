@@ -38,6 +38,33 @@ export class AdminRouter {
         adminController.handleGetUnverifiedUsers(req, res, next);
       },
     );
+
+    this._router.get(
+      `${AdminRoutes.VERIFICATION}/:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleGetUnverifiedUserDetails(req, res, next);
+      },
+    );
+
+    this._router.patch(
+      AdminRoutes.APPROVE_USER,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleVerifyUser(req, res, next);
+      },
+    );
+
+    this._router.patch(
+      AdminRoutes.REJECT_USER,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleRejectUser(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

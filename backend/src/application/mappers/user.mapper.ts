@@ -7,6 +7,7 @@ import { IGetUsersResponseDTO } from "@domain/dtos/admin/getUsers.dto";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { IGetUserProfileResponseDTO } from "@domain/dtos/auth/getUserProfile.dto";
 import { GetUnverifiedUsersResponseDTO } from "@domain/dtos/admin/getUnverifiedUsers.dto";
+import { IGetUnverifedUserDetailsResponseDTO } from "@domain/dtos/admin/getUnverifiedUserDetails.dto";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -20,6 +21,7 @@ export class UserMapper {
       is_verified: document.is_verified,
       profile_image: document.profile_image,
       verfication_id_image: document.verfication_id_image,
+      rejection_reason: document.rejection_reason,
       is_blocked: document.is_blocked,
       mobile: document.mobile,
       cabDetails: document.cabDetails,
@@ -82,6 +84,7 @@ export class UserMapper {
       is_verified: user.is_verified,
       profile_image: user.profile_image,
       verfication_id_image: user.verfication_id_image,
+      rejection_reason: user.rejection_reason,
     };
   }
 
@@ -93,10 +96,22 @@ export class UserMapper {
       full_name: u.full_name,
       id: u._id!,
       is_verified: u.is_verified,
-      profile_image: u.profile_image!,
-      verification_id_image: u.verfication_id_image!,
+      profile_image: u.profile_image,
     }));
 
     return result;
+  }
+
+  static toGetUnverifedUserDetailsResponseDTOfromEntity(
+    user: UserEntity,
+  ): IGetUnverifedUserDetailsResponseDTO {
+    return {
+      id: user._id!,
+      full_name: user.full_name,
+      profile_image: user.profile_image,
+      email: user.email,
+      is_verified: user.is_verified,
+      verification_id_image: user.verfication_id_image,
+    };
   }
 }
