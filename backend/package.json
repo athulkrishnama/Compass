@@ -15,9 +15,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=DEVELOPMENT nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "preview": "NODE_ENV=DEVELOPMENT nodemon dist/index.js",
+    "preview": "NODE_ENV=DEVELOPMENT node dist/index.js",
     "production": "NODE_ENV=PRODUCTION node dist/index.js",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -47,7 +47,6 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@types/nodemailer": "^7.0.3",
     "@eslint/js": "^9.36.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.9",
@@ -57,14 +56,27 @@
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
     "@types/node": "^24.6.1",
+    "@types/nodemailer": "^7.0.3",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.44.1"
+  },
+  "_moduleAliases": {
+      "@infrastructure/*": "dist/infrastructure/*",
+      "@utils/*": "dist/utils/*",
+      "@domain/*": "dist/domain/*",
+      "@useCases/*": "dist/application/useCases/*",
+      "@config/*": "dist/config/*",
+      "@DI/*": "dist/infrastructure/DI/*",
+      "@mappers/*": "dist/application/mappers/*",
+      "@application/*": "dist/application/*",
+      "@presentation/*": "dist/presentation/*"
   }
 }

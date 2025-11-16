@@ -11,12 +11,12 @@ import { inject, injectable } from "tsyringe";
 export class GetUsersUseCase implements IGetUsersUseCase {
   constructor(@inject("IUserRepo") private _userRepo: IUserRepo) {}
   async get(dto: IGetUsersRequestDTO): Promise<IGetUsersResponseDTO> {
-    const { total, users } = await this._userRepo.getUsersWithFilter(
-      dto.page,
-      dto.filter.role,
-      dto.filter.status,
-      dto.filter.query,
-    );
+    const { total, users } = await this._userRepo.getUsersWithFilter({
+      pageNo: dto.page,
+      query: dto.filter.query,
+      role: dto.filter.role,
+      status: dto.filter.status,
+    });
 
     return {
       clients: UserMapper.toGetUsersResponseDTOfromEntity(users),

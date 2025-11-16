@@ -27,14 +27,17 @@
         "invalidPassword": "Password must meet the required criteria",
         "confirmPasswordRequired": "Confirm password is required",
         "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match",
-        "maxFileSize": "Maximum file Size is {{size}}"
+        "maxFileSize": "Maximum file Size is {{size}}",
+        "provideRejectionReason": "Please provide a rejection reason"
     },
     "form": {
         "fullname": "Full Name",
         "email": "Email Address",
         "password": "Password",
         "confirmPassword": "Confirm Password",
-        "newPassword": "New Password"
+        "newPassword": "New Password",
+        "rejectionReason": "Reason for rejection",
+        "enterReasonForRejection": "Enter reason for rejecting"
     },
     "button": {
         "submit": "Submit",
@@ -67,7 +70,11 @@
         "cancel": "Cancel",
         "updateProfile": "Update Profile",
         "close": "Close",
-        "upload": "Upload"
+        "upload": "Upload",
+        "hotelVerification": "Hotel Verification",
+        "view": "View",
+        "approve": "Approve",
+        "reject": "Reject"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -79,6 +86,22 @@
         "userStatus": "User Status",
         "areYouSureToBlock": "Are you sure to block {{name}}?",
         "areYouSureToUnblock": "Are you sure to unblock {{name}}?",
-        "selectImage": "Please select a image file"
+        "selectImage": "Please select a image file",
+        "verficationStatus": "Verification Status",
+        "verficationIdImage": "Verification ID Image",
+        "noVerificationImageUploaded": "No verfication ID Image Uploaded",
+        "notSubmited": "Not submitted",
+        "pending": "Pending",
+        "verfied": "Verfied",
+        "rejected": "Rejected",
+        "submitDetails": "Please submit your verification details.",
+        "verficationBeingReviewed": "Your verification is being reviewed.",
+        "profileVerfied": "Your profile has been successfully verified.",
+        "verficationRejected": "Your verification was rejected. Please resubmit your details in edit profile.",
+        "profileImage": "Profile Image",
+        "uploadVerficationId": "Upload Verification ID",
+        "status": "Status",
+        "noUsersToShow": "No users to show",
+        "rejectionReason": "Reason for rejection"
     }
 }

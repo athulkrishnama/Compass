@@ -24,6 +24,7 @@ export interface UserEntity {
   is_blocked: boolean;
   profile_image?: string;
   is_verified: VERIFICATION_STATUS;
+  rejection_reason?: string;
   verfication_id_image?: string;
   cabDetails?: CabDetails;
   createdAt?: Date;

@@ -27,6 +27,14 @@ import { IGetUserProfileUseCase } from "@application/interfaces/useCase/auth/get
 import { GetUserProfileUseCase } from "@useCases/auth/getUserProfileUseCase";
 import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/updateUserProfileUseCase.interface";
 import { UpdateUserProfileUseCase } from "@useCases/auth/updateUserProfileUseCase";
+import { IGetUnverifiedUsersUseCase } from "@application/interfaces/useCase/admin/getUnverifiedUserUseCase.interface";
+import { GetUnverifiedUsersUseCase } from "@useCases/admin/getUnverifiedUsersUseCase";
+import { GetUnverifiedUserDetailsUseCase } from "@useCases/admin/getUnverifiedUserDetailsUseCase";
+import { IGetUnverifiedUserDetailsUseCase } from "@application/interfaces/useCase/admin/getUnverifiedUserDetailsUseCase.interface";
+import { IApproveUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/approveUserVerificationRequestUseCase.interface";
+import { ApproveUserVerificationRequestUseCase } from "@useCases/admin/approveUserVerificationRequestUseCase";
+import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/rejectUserVerificationRequestUseCase.interface";
+import { RejectUserVerificationRequestUseCase } from "@useCases/admin/rejectUserVerificationRequestUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -78,5 +86,21 @@ export function registerUsecases() {
   container.registerSingleton<IUpdateUserProfileUseCase>(
     "IUpdateUserProfileUseCase",
     UpdateUserProfileUseCase,
+  );
+  container.registerSingleton<IGetUnverifiedUsersUseCase>(
+    "IGetUnverifiedUsersUseCase",
+    GetUnverifiedUsersUseCase,
+  );
+  container.registerSingleton<IGetUnverifiedUserDetailsUseCase>(
+    "IGetUnverifiedUserDetailsUseCase",
+    GetUnverifiedUserDetailsUseCase,
+  );
+  container.registerSingleton<IApproveUserVerificationRequestUseCase>(
+    "IApproveUserVerificationRequestUseCase",
+    ApproveUserVerificationRequestUseCase,
+  );
+  container.registerSingleton<IRejectUserVerificationRequestUseCase>(
+    "IRejectUserVerificationRequestUseCase",
+    RejectUserVerificationRequestUseCase,
   );
 }

@@ -5,6 +5,7 @@ import { IUserRepo } from "@application/interfaces/repository/users/user.repo.in
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/updateUserProfileUseCase.interface";
 import { IUpdateUserProfileRequestDTO } from "@domain/dtos/auth/updateUserProfile.dto";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -32,7 +33,12 @@ export class UpdateUserProfileUseCase implements IUpdateUserProfileUseCase {
       );
     }
 
-    if (verification_id_image && !user.is_verified) {
+    if (
+      verification_id_image &&
+      (user.is_verified === VERIFICATION_STATUSES.NOT_SUBMITTED ||
+        user.is_verified === VERIFICATION_STATUSES.REJECTED)
+    ) {
+      user.is_verified = VERIFICATION_STATUSES.PENDING;
       user.verfication_id_image = await this._storageService.upload(
         verification_id_image,
         StorageFolderNames.VERIFICATION_DOCUMENT + "/" + id + Date.now(),

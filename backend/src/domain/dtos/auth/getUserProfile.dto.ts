@@ -7,4 +7,5 @@ export interface IGetUserProfileResponseDTO {
   profile_image?: string;
   is_verified: VERIFICATION_STATUS;
   verfication_id_image?: string;
+  rejection_reason?: string;
 }

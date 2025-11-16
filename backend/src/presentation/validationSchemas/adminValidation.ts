@@ -26,3 +26,18 @@ export const userStatusChangeValidationSchema = z.object({
   id: z.string({ error: ValidationErrors.ID_MISSING }),
   status: z.boolean({ error: ValidationErrors.STATUS_MISSING }),
 });
+
+export const getUnverifiedUserValidationSchema = z.object({
+  role: z
+    .string()
+    .refine((val) => Object.values(ROLES).includes(val as ROLETYPE), {
+      error: ValidationErrors.INVALID_ROLE,
+    }),
+  pageNo: z.coerce.number({ error: ValidationErrors.INVALID_PAGE_NO }),
+  query: z.string().optional(),
+});
+
+export const rejectUserVerificationRequestValidationSchema = z.object({
+  userId: z.string({ error: ValidationErrors.ID_MISSING }),
+  reason: z.string({ error: ValidationErrors.REASON_MISSING }),
+});

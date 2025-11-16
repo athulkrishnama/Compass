@@ -23,7 +23,6 @@ export const Route = createFileRoute("/admin")({
 
 function RouteComponent() {
     const location = useLocation();
-    console.log(location.pathname);
     return location.pathname === "/admin/login" ? (
         <Outlet />
     ) : (

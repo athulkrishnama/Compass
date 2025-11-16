@@ -31,7 +31,7 @@ function Modal({ isOpen, children, handleClose }: propType) {
                             damping: 25,
                         }}
                     >
-                        <div className="relative w-full max-w-lg min-w-[25%] max-h-[80vh] rounded-2xl overflow-hidden shadow-2xl">
+                        <div className="relative w-full max-w-lg min-w-[25%] max-h-[80vh] rounded-2xl overflow-hidden shadow-2xl ">
                             <div className="absolute inset-0 z-0">
                                 <div className="w-full h-full bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl" />
                             </div>
@@ -39,7 +39,7 @@ function Modal({ isOpen, children, handleClose }: propType) {
                             <div className="relative z-10 p-6 flex flex-col gap-4">
                                 <button
                                     className="absolute top-3 right-3 p-1 rounded-full hover:bg-white/20 transition"
-                                    onClick={handleClose}
+                                    onClick={() => handleClose()}
                                 >
                                     <X className="w-5 h-5 text-red-500" />
                                 </button>

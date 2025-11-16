@@ -29,6 +29,42 @@ export class AdminRouter {
         adminController.handleUserStatusChange(req, res, next);
       },
     );
+
+    this._router.get(
+      AdminRoutes.VERIFICATION,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleGetUnverifiedUsers(req, res, next);
+      },
+    );
+
+    this._router.get(
+      `${AdminRoutes.VERIFICATION}/:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleGetUnverifiedUserDetails(req, res, next);
+      },
+    );
+
+    this._router.patch(
+      AdminRoutes.APPROVE_USER,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleVerifyUser(req, res, next);
+      },
+    );
+
+    this._router.patch(
+      AdminRoutes.REJECT_USER,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleRejectUser(req, res, next);
+      },
+    );
   }
 
   public getRouter() {
