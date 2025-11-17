@@ -43,14 +43,13 @@ export class AuthMiddleware {
       res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
       return;
     }
-    res.locals.user = { role: decoded.role, id: decoded.id };
-    // (req as any).user = { role: decoded.role, id: decoded.id };
+    req.user = { id: decoded.id, role: decoded.role };
     next();
   };
 
   authorizeRole = (roles: ROLES[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
-      const user = res.locals.user;
+      const user = req.user;
       const curRole = user.role;
       if (roles.includes(curRole)) return next();
       next(new Error(AuthError.UNAUTHORIZED));
@@ -59,7 +58,7 @@ export class AuthMiddleware {
 
   checkBlocked = () => {
     return async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = res.locals.user;
+      const { id } = req.user;
 
       let userStatus = await this._cacheService.getValue(`USER_STATUS:${id}`);
 

@@ -324,7 +324,7 @@ export class AuthController {
 
   async handleGetProfile(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = res.locals.user;
+      const { id } = req.user;
       const profile = await this._getUserProfileUseCase.execute(id);
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
@@ -340,7 +340,7 @@ export class AuthController {
 
   async handleUpdateProfile(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = res.locals.user;
+      const { id } = req.user;
       const files = req.files as MulterFiles<
         "profile_image" | "verification_id_image"
       >;
