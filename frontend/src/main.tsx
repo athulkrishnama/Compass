@@ -15,7 +15,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { isLoggedin, roleChecker } from "./utils/authChecker.ts";
 import { env } from "./config/env.ts";
 
-const router = createRouter({
+export const router = createRouter({
     routeTree,
     context: { queryClient, checkRole: roleChecker, isLoggedin: isLoggedin },
 });
