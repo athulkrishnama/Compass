@@ -1,9 +1,12 @@
 import { env } from "@/config/env";
+import { ROLES } from "@/constants/roles";
 import { AUTH_ROUTES } from "@/constants/routes/authRoutes";
+import { router } from "@/main";
 import { removeToken, setToken } from "@/store/slices/tokenSlice";
 import { removeUser } from "@/store/slices/userSlice";
 import { store } from "@/store/store";
 import axios from "axios";
+import { toast } from "sonner";
 
 export const axiosInstance = axios.create({
     baseURL: env.VITE_BASEURL,
@@ -22,6 +25,23 @@ axiosInstance.interceptors.response.use(
     (res) => res,
     async (err) => {
         const originalRequest = err.config;
+
+        if (
+            err.response.status === 403 &&
+            err.response.data.error === "This user is blocked"
+        ) {
+            const role = store.getState().user.role;
+            toast.error(err.response.data.message);
+            store.dispatch(removeUser());
+            router.navigate({
+                to:
+                    role === ROLES.HOTEL
+                        ? "/hotel/login"
+                        : role === ROLES.CAB
+                          ? "/cab/login"
+                          : "/traveler/login",
+            });
+        }
 
         if (
             err.response.status === 401 &&
