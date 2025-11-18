@@ -1,7 +1,7 @@
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { IGoogleAuthService } from "@application/interfaces/service/googleAuthService.interface";
 import { env } from "@config/envConfig";
-import { AuthError } from "@presentation/constants/AuthErrors";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { OAuth2Client } from "google-auth-library";
 import { injectable } from "tsyringe";
 
@@ -24,7 +24,9 @@ export class GoogleAuthService implements IGoogleAuthService {
     const token = await this._oAuth2Client.getToken(code);
 
     if (!token.tokens.id_token) {
-      throw new InvalideDataException(AuthError.TOKEN_DATA_MISSING);
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.TOKEN_DATA_MISSING,
+      );
     }
     const ticket = await this._oAuth2Client.verifyIdToken({
       idToken: token.tokens.id_token,
@@ -34,7 +36,9 @@ export class GoogleAuthService implements IGoogleAuthService {
     const payload = ticket.getPayload();
 
     if (!(payload?.email && payload.sub && payload.picture && payload.name)) {
-      throw new InvalideDataException(AuthError.TOKEN_DATA_MISSING);
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.TOKEN_DATA_MISSING,
+      );
     }
     return {
       email: payload?.email,

@@ -8,18 +8,17 @@ import {
   rejectUserVerificationRequestValidationSchema,
   userStatusChangeValidationSchema,
 } from "presentation/validationSchemas/adminValidation";
-import { HttpResponseMessages } from "presentation/constants/httpResponseMessages";
+import { Messages } from "@domain/enums/messages";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { IGetUnverifiedUsersUseCase } from "@application/interfaces/useCase/admin/getUnverifiedUserUseCase.interface";
-import { AuthError } from "@presentation/constants/AuthErrors";
 import { IGetUnverifiedUserDetailsUseCase } from "@application/interfaces/useCase/admin/getUnverifiedUserDetailsUseCase.interface";
-import { ValidationErrors } from "@presentation/constants/validationErrors";
 import { IApproveUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/approveUserVerificationRequestUseCase.interface";
 import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/rejectUserVerificationRequestUseCase.interface";
 import { IRejectUserVerificationRequestRequestDTO } from "@domain/dtos/admin/rejectUserVerificationRequest.dto";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class AdminController {
@@ -41,7 +40,7 @@ export class AdminController {
     try {
       const query = getUsersQueryValidationSchema.safeParse(req.query);
       if (query.error) {
-        throw new Error(query.error.issues[0].message);
+        throw new InvalideDataException(query.error.issues[0].message);
       }
 
       const data = await this._getUsersUseCase.get({
@@ -55,7 +54,7 @@ export class AdminController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.DATA_FETCHED_SUCCESSFULLY,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         data,
       );
 
@@ -73,7 +72,7 @@ export class AdminController {
     try {
       const data = userStatusChangeValidationSchema.safeParse(req.body);
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
       await this._userStatusChangeUseCase.change(
         data.data.id,
@@ -82,7 +81,7 @@ export class AdminController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.STATUS_UPDATED_SUCCESSFULLY,
+        Messages.STATUS_UPDATED_SUCCESSFULLY,
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
@@ -111,7 +110,7 @@ export class AdminController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.DATA_FETCHED_SUCCESSFULLY,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         users,
       );
 
@@ -129,13 +128,13 @@ export class AdminController {
     try {
       const { id } = req.params;
       if (!id) {
-        throw new InvalideDataException(AuthError.INVALID_ID);
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
       }
 
       const user = await this._getUnverifiedUserDetailsUseCase.get(id);
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.DATA_FETCHED_SUCCESSFULLY,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         user,
       );
 
@@ -149,13 +148,13 @@ export class AdminController {
     try {
       const { id } = req.params;
       if (!id) {
-        throw new InvalideDataException(ValidationErrors.ID_MISSING);
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
       }
       await this._approveUserVerificationRequestUseCase.approve(id);
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.VERIFICATION_APPROVED,
+        Messages.VERIFICATION_APPROVED,
       );
       res.status(response.statusCode).json(response);
     } catch (error) {
@@ -183,7 +182,7 @@ export class AdminController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.VERIFICATION_REJECTED,
+        Messages.VERIFICATION_REJECTED,
       );
       res.status(response.statusCode).json(response);
     } catch (error) {

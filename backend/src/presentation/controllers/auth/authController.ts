@@ -20,7 +20,7 @@ import {
   userRegistrationVerifyOtpSchema,
   userUpdateProfileSchema,
 } from "presentation/validationSchemas/authValidation";
-import { HttpResponseMessages } from "presentation/constants/httpResponseMessages";
+import { Messages } from "@domain/enums/messages";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { setCookie } from "presentation/utils/setCookie";
 import { NextFunction, Request, Response } from "express";
@@ -68,13 +68,13 @@ export class AuthController {
     try {
       const data = userRegistrationSchema.safeParse(req.body);
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
       await this._signupUseCase.signup(data.data);
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_SEND_SUCCESSFULLY,
+        Messages.OTP_SEND_SUCCESSFULLY,
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
@@ -92,13 +92,13 @@ export class AuthController {
       const data = userRegistrationVerifyOtpSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
       await this._verifyOtpUseCase.verify(data.data);
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.CREATED,
-        HttpResponseMessages.USER_SIGNUP_SUCCESS,
+        Messages.USER_SIGNUP_SUCCESS,
       );
 
       res.status(HTTP_STATUS_CODE.CREATED).json(response);
@@ -116,14 +116,14 @@ export class AuthController {
       const data = emailValidationSchema.safeParse(req.body.email);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       await this._resendOtpUseCase.resend(data.data);
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_RESEND_SUCCESSFULLY,
+        Messages.OTP_RESEND_SUCCESSFULLY,
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
@@ -137,7 +137,7 @@ export class AuthController {
       const data = loginValidationSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       const responseDto = await this._loginUseCase.login(data.data);
@@ -160,7 +160,7 @@ export class AuthController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.USER_LOGIN_SUCCESSFULL,
+        Messages.USER_LOGIN_SUCCESSFULL,
         { userData: responseDto, accessToken },
       );
 
@@ -179,14 +179,14 @@ export class AuthController {
       const data = emailValidationSchema.safeParse(req.body.email);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       await this._forgetPasswordSendOtpUseCase.sendOtp(data.data);
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_SEND_SUCCESSFULLY,
+        Messages.OTP_SEND_SUCCESSFULLY,
       );
       res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
@@ -203,7 +203,7 @@ export class AuthController {
       const data = forgetPasswordVerifyOtpSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       const token = await this._forgetPasswordVerifyOtpUseCase.verify(
@@ -212,7 +212,7 @@ export class AuthController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_VERIFIED_SUCCESSFULLY,
+        Messages.OTP_VERIFIED_SUCCESSFULLY,
         { token },
       );
 
@@ -231,14 +231,14 @@ export class AuthController {
       const data = forgetPasswordResetPasswordSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       await this._forgetPassawordResetPasswordUseCase.reset(data.data);
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.PASSWORD_RESET_SUCCESSFUL,
+        Messages.PASSWORD_RESET_SUCCESSFUL,
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
@@ -254,7 +254,7 @@ export class AuthController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.REFRESH_SUCCESSFUL,
+        Messages.REFRESH_SUCCESSFUL,
         { accessToken },
       );
       res.status(HTTP_STATUS_CODE.OK).json(response);
@@ -273,7 +273,7 @@ export class AuthController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.LOGOUT_SUCCESSFUL,
+        Messages.LOGOUT_SUCCESSFUL,
       );
 
       res.status(HTTP_STATUS_CODE.OK).json(response);
@@ -312,7 +312,7 @@ export class AuthController {
 
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.USER_LOGIN_SUCCESSFULL,
+        Messages.USER_LOGIN_SUCCESSFULL,
         { userData: responseDTO, accessToken },
       );
 
@@ -328,7 +328,7 @@ export class AuthController {
       const profile = await this._getUserProfileUseCase.execute(id);
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.DATA_FETCHED_SUCCESSFULLY,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         profile,
       );
 
@@ -365,7 +365,7 @@ export class AuthController {
       await this._updateUserProfileUseCase.update(parsedData.data);
       const response = HTTPResponseBuilder.buildSuccessResponse(
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.UPDATE_SUCCESSFUL,
+        Messages.UPDATE_SUCCESSFUL,
       );
       res.status(response.statusCode).json(response);
     } catch (error) {

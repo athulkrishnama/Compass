@@ -5,8 +5,8 @@ import { sign, verify } from "jsonwebtoken";
 import { injectable } from "tsyringe";
 import { JWTDecodeType } from "@domain/types/JWTDecode";
 import { v4 } from "uuid";
-import { AuthError } from "presentation/constants/AuthErrors";
 import { TokenExpiredException } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class JwtService implements IJwtService {
@@ -30,13 +30,15 @@ export class JwtService implements IJwtService {
       ) as JWTDecodeType;
 
       if (!(id && jti && role)) {
-        throw new Error(AuthError.TOKEN_DATA_MISSING);
+        throw new Error(INTERNAL_ERROR_MESSAGES.TOKEN_DATA_MISSING);
       }
 
       return { id, jti, role };
     } catch (err) {
       void err;
-      throw new TokenExpiredException(AuthError.INVALID_TOKEN_ERROR);
+      throw new TokenExpiredException(
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
     }
   }
 
@@ -47,7 +49,7 @@ export class JwtService implements IJwtService {
     ) as JWTDecodeType;
 
     if (!(id && jti && role)) {
-      throw new Error(AuthError.TOKEN_DATA_MISSING);
+      throw new Error(INTERNAL_ERROR_MESSAGES.TOKEN_DATA_MISSING);
     }
 
     return { id, jti, role };

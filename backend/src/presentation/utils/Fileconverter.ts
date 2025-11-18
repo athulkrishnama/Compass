@@ -1,4 +1,4 @@
-import { Errors } from "@infrastructure/Errors";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 export function mutlterFileToFileconverter(
   multerFile: Express.Multer.File,
@@ -20,6 +20,6 @@ export async function fileToBuffer(file: File): Promise<Buffer> {
     const buffer = Buffer.from(arrayBuffer);
     return buffer;
   } catch {
-    throw new Error(Errors.CONVERSION_ERROR);
+    throw new Error(INTERNAL_ERROR_MESSAGES.CONVERSION_ERROR);
   }
 }

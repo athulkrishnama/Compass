@@ -9,9 +9,9 @@ import { ROLES } from "@domain/types/roles";
 import { VALUES } from "presentation/constants/values";
 import { ROLES as ROLE_VALUES } from "@domain/enums/roles";
 import { UserNotFoundException } from "@application/constants/Exceptions";
-import { AuthError } from "@application/constants/Errors";
 import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class UserRepository
@@ -111,7 +111,8 @@ export class UserRepository
   async getUserStatus(id: string): Promise<boolean> {
     const data = await this._model.findById(id, { is_blocked: true });
 
-    if (!data) throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
+    if (!data)
+      throw new UserNotFoundException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     return data.is_blocked;
   }
 

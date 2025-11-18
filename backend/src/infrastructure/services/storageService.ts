@@ -6,7 +6,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from "@config/envConfig";
-import { Errors } from "@infrastructure/Errors";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { fileToBuffer } from "@presentation/utils/Fileconverter";
 import { injectable } from "tsyringe";
 
@@ -34,7 +34,7 @@ export class StorageService implements IStorageService {
       await this._client.send(command);
       return key;
     } catch {
-      throw new Error(Errors.UPLOAD_ERROR);
+      throw new Error(INTERNAL_ERROR_MESSAGES.UPLOAD_ERROR);
     }
   }
 
