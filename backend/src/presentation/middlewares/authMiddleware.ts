@@ -20,19 +20,24 @@ export class AuthMiddleware {
   check = async (req: Request, res: Response, next: NextFunction) => {
     const header = req.header("Authorization");
 
-    const invalidTokenResponse = HTTPResponseBuilder.buildErrorResponse(
-      HTTP_STATUS_CODE.UNAUTHORIZED,
-      INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
-    );
-
     if (!header?.startsWith("Bearer ")) {
-      res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.UNAUTHORIZED,
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
       return;
     }
     const token = header.split(" ")[1];
     const decoded = this._jwtService.verifyAccessToken(token);
     if (!decoded) {
-      res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.UNAUTHORIZED,
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
       return;
     }
     const blackListed = await this._cacheService.getValue(
@@ -40,7 +45,12 @@ export class AuthMiddleware {
     );
 
     if (blackListed) {
-      res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.UNAUTHORIZED,
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
       return;
     }
     req.user = { id: decoded.id, role: decoded.role };

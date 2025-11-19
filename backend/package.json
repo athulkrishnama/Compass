@@ -34,6 +34,9 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "google-auth-library": "^10.4.0",
+    "i18next": "^25.6.2",
+    "i18next-fs-backend": "^2.6.1",
+    "i18next-http-middleware": "^3.8.2",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "mongoose": "^8.18.2",
@@ -69,14 +72,14 @@
     "typescript-eslint": "^8.44.1"
   },
   "_moduleAliases": {
-      "@infrastructure/*": "dist/infrastructure/*",
-      "@utils/*": "dist/utils/*",
-      "@domain/*": "dist/domain/*",
-      "@useCases/*": "dist/application/useCases/*",
-      "@config/*": "dist/config/*",
-      "@DI/*": "dist/infrastructure/DI/*",
-      "@mappers/*": "dist/application/mappers/*",
-      "@application/*": "dist/application/*",
-      "@presentation/*": "dist/presentation/*"
+    "@infrastructure/*": "dist/infrastructure/*",
+    "@utils/*": "dist/utils/*",
+    "@domain/*": "dist/domain/*",
+    "@useCases/*": "dist/application/useCases/*",
+    "@config/*": "dist/config/*",
+    "@DI/*": "dist/infrastructure/DI/*",
+    "@mappers/*": "dist/application/mappers/*",
+    "@application/*": "dist/application/*",
+    "@presentation/*": "dist/presentation/*"
   }
 }

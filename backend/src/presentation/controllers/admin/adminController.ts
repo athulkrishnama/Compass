@@ -52,13 +52,13 @@ export class AdminController {
         page: query.data.pageNo,
       });
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         data,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -79,12 +79,12 @@ export class AdminController {
         data.data.status,
       );
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.STATUS_UPDATED_SUCCESSFULLY,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -108,13 +108,13 @@ export class AdminController {
         query: query.data.query,
       });
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         users,
       );
-
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }
@@ -132,13 +132,13 @@ export class AdminController {
       }
 
       const user = await this._getUnverifiedUserDetailsUseCase.get(id);
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         user,
       );
-
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }
@@ -152,11 +152,12 @@ export class AdminController {
       }
       await this._approveUserVerificationRequestUseCase.approve(id);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.VERIFICATION_APPROVED,
       );
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }
@@ -180,11 +181,12 @@ export class AdminController {
 
       await this._rejectUserVerificationRequestUseCase.reject(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.VERIFICATION_REJECTED,
       );
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }

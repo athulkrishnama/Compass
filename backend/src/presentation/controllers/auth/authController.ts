@@ -72,12 +72,12 @@ export class AuthController {
       }
       await this._signupUseCase.signup(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.OTP_SEND_SUCCESSFULLY,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -96,12 +96,12 @@ export class AuthController {
       }
       await this._verifyOtpUseCase.verify(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.CREATED,
         Messages.USER_SIGNUP_SUCCESS,
       );
-
-      res.status(HTTP_STATUS_CODE.CREATED).json(response);
     } catch (error) {
       next(error);
     }
@@ -121,12 +121,12 @@ export class AuthController {
 
       await this._resendOtpUseCase.resend(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.OTP_RESEND_SUCCESSFULLY,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -158,13 +158,13 @@ export class AuthController {
         secure: true,
       });
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.USER_LOGIN_SUCCESSFULL,
         { userData: responseDto, accessToken },
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -184,11 +184,12 @@ export class AuthController {
 
       await this._forgetPasswordSendOtpUseCase.sendOtp(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.OTP_SEND_SUCCESSFULLY,
       );
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -210,13 +211,13 @@ export class AuthController {
         data.data,
       );
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.OTP_VERIFIED_SUCCESSFULLY,
         { token },
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -236,12 +237,12 @@ export class AuthController {
 
       await this._forgetPassawordResetPasswordUseCase.reset(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.PASSWORD_RESET_SUCCESSFUL,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -252,12 +253,13 @@ export class AuthController {
       const refreshToken = req.cookies.refreshToken;
       const accessToken = await this._tokenRefreshUseCase.refresh(refreshToken);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.REFRESH_SUCCESSFUL,
         { accessToken },
       );
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -271,12 +273,12 @@ export class AuthController {
           accessToken.split(" ")[1],
         );
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.LOGOUT_SUCCESSFUL,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -310,13 +312,13 @@ export class AuthController {
         secure: true,
       });
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.USER_LOGIN_SUCCESSFULL,
         { userData: responseDTO, accessToken },
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -326,13 +328,13 @@ export class AuthController {
     try {
       const { id } = req.user;
       const profile = await this._getUserProfileUseCase.execute(id);
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         profile,
       );
-
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }
@@ -363,11 +365,12 @@ export class AuthController {
         throw new InvalideDataException(parsedData.error.issues[0].message);
       }
       await this._updateUserProfileUseCase.update(parsedData.data);
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
         Messages.UPDATE_SUCCESSFUL,
       );
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }
