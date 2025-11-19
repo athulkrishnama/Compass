@@ -8,7 +8,7 @@ import {
     createUpdateUserProfileQueryOptions,
 } from "@/queryOptions/authQueryOptions";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -88,7 +88,7 @@ function Profile() {
                                 profileData={userData!}
                                 onChange={handleDataChange}
                                 handleClose={setShowProfile}
-                                role={ROLES.HOTEL}
+                                role={ROLES.CAB}
                             />
                         </motion.div>
                     ) : (
@@ -102,7 +102,7 @@ function Profile() {
                             <ShowProfile
                                 profileData={userData!}
                                 setEditing={setEditing}
-                                role={ROLES.HOTEL}
+                                role={ROLES.CAB}
                             />
                         </motion.div>
                     )}

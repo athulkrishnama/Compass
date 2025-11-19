@@ -14,6 +14,8 @@ import VerficationIdCroppingModal from "./VerificationIdCroppingModal";
 import { Button } from "@/components/ui/button";
 import type { VERIFICATION_STATUS } from "@/types/verificationStatus";
 import { VERIFICATION_STATUSES } from "@/constants/verificationStatus";
+import type { ROLE } from "@/types/role";
+import { ROLES } from "@/constants/roles";
 
 interface EditProfileProps {
     profileData: {
@@ -29,12 +31,14 @@ interface EditProfileProps {
         verification_id_image?: File;
     }) => void;
     handleClose: () => void;
+    role: ROLE;
 }
 
 export default function EditProfile({
     profileData,
     onChange,
     handleClose,
+    role,
 }: EditProfileProps) {
     const { t } = useTranslation();
     const {
@@ -197,7 +201,11 @@ export default function EditProfile({
 
             <div className="space-y-2">
                 <Label className="text-gray-700 text-sm font-medium">
-                    {t(translationKey.text.verficationIdImage)}
+                    {t(
+                        role === ROLES.HOTEL
+                            ? translationKey.text.verficationIdImage
+                            : translationKey.text.drivingLicence
+                    )}
                 </Label>
 
                 {verfication_id_image || verificationIdImage ? (
@@ -234,7 +242,11 @@ export default function EditProfile({
     }`}
                 >
                     <Upload size={16} />
-                    {t(translationKey.text.uploadVerficationId)}
+                    {t(
+                        role === ROLES.HOTEL
+                            ? translationKey.text.uploadVerficationId
+                            : translationKey.text.uploadDrivingLicence
+                    )}
                 </label>
                 <Input
                     disabled={
