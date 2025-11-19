@@ -8,7 +8,7 @@ export async function userSignupSendOTP<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -20,7 +20,7 @@ export async function userVerifyOtp<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -34,7 +34,7 @@ export async function userResendOtp<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -46,7 +46,7 @@ export async function userLogin<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -60,7 +60,7 @@ export async function forgetPasswordSendOtp<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -75,7 +75,7 @@ export async function forgetPasswordVerifyOtp<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -90,7 +90,7 @@ export async function forgetPasswordResetPassword<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -102,7 +102,7 @@ export async function logOutUser() {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -117,7 +117,7 @@ export async function googleLogin<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -129,7 +129,7 @@ export async function getUserProfile() {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -144,7 +144,7 @@ export async function updateUserProfile<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
