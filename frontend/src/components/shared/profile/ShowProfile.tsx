@@ -22,6 +22,8 @@ import { t } from "i18next";
 import { Button } from "@/components/ui/button";
 import { VERIFICATION_STATUSES } from "@/constants/verificationStatus";
 import { cn } from "@/lib/utils";
+import type { ROLE } from "@/types/role";
+import { ROLES } from "@/constants/roles";
 
 interface ShowProfileProps {
     profileData: {
@@ -33,6 +35,7 @@ interface ShowProfileProps {
         rejection_reason?: string;
     };
     setEditing: () => void;
+    role: ROLE;
 }
 
 const statusConfig: Record<
@@ -65,7 +68,7 @@ const statusConfig: Record<
     },
 };
 
-function ShowProfile({ profileData, setEditing }: ShowProfileProps) {
+function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
     const {
         full_name,
         email,
@@ -160,7 +163,11 @@ function ShowProfile({ profileData, setEditing }: ShowProfileProps) {
 
                 <div>
                     <div className="text-sm font-medium text-gray-600 mb-1">
-                        {t(translationKey.text.verficationIdImage)}
+                        {t(
+                            role === ROLES.HOTEL
+                                ? translationKey.text.verficationIdImage
+                                : translationKey.text.drivingLicence
+                        )}
                     </div>
 
                     {verfication_id_image ? (

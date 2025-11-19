@@ -102,6 +102,8 @@
         "verficationRejected": "Your verification was rejected. Please resubmit your details in edit profile.",
         "profileImage": "Profile Image",
         "uploadVerficationId": "Upload Verification ID",
+        "drivingLicence": "Driving Licence",
+        "uploadDrivingLicence": "Upload Driving Licence",
         "status": "Status",
         "noUsersToShow": "No users to show",
         "rejectionReason": "Reason for rejection"

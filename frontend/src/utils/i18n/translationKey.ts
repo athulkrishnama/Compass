@@ -103,6 +103,8 @@ export default {
         verficationRejected: "text.verficationRejected",
         profileImage: "text.profileImage",
         uploadVerficationId: "text.uploadVerficationId",
+        drivingLicence: "text.drivingLicence",
+        uploadDrivingLicence: "text.uploadDrivingLicence",
         status: "text.status",
         noUsersToShow: "text.noUsersToShow",
         rejectionReason: "text.rejectionReason",

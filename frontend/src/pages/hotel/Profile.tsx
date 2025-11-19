@@ -2,6 +2,7 @@ import EditProfile from "@/components/shared/profile/EditProfile";
 import ShowProfile from "@/components/shared/profile/ShowProfile";
 import { queryClient } from "@/config/tanstackQueryConfig";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import { ROLES } from "@/constants/roles";
 import {
     createGetUserProfileQueryOptions,
     createUpdateUserProfileQueryOptions,
@@ -87,6 +88,7 @@ function Profile() {
                                 profileData={userData!}
                                 onChange={handleDataChange}
                                 handleClose={setShowProfile}
+                                role={ROLES.HOTEL}
                             />
                         </motion.div>
                     ) : (
@@ -100,6 +102,7 @@ function Profile() {
                             <ShowProfile
                                 profileData={userData!}
                                 setEditing={setEditing}
+                                role={ROLES.HOTEL}
                             />
                         </motion.div>
                     )}
