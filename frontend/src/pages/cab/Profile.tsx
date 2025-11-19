@@ -7,7 +7,7 @@ import {
     createUpdateUserProfileQueryOptions,
 } from "@/queryOptions/authQueryOptions";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { useState } from "react";
 import { toast } from "sonner";
 
