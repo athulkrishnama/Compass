@@ -1,29 +1,37 @@
+import { Response, Request } from "express";
 import { HttpResponse } from "../types/httpResponseType";
 
 export class HTTPResponseBuilder {
   static buildSuccessResponse<T extends object>(
+    req: Request,
+    res: Response,
     statusCode: number,
-    message?: string,
+    message: string,
     data?: T,
-  ): HttpResponse<T> {
-    return {
+  ): void {
+    const response: HttpResponse<T> = {
       success: true,
       data,
-      message,
+      message: req.t(message),
       statusCode,
     };
+
+    res.status(statusCode).json(response);
   }
 
   static buildErrorResponse(
+    req: Request,
+    res: Response,
     statusCode: number,
-    error?: string,
-    message?: string,
-  ): HttpResponse<object> {
-    return {
+    error: string,
+  ): void {
+    const response: HttpResponse<object> = {
       success: false,
       error,
-      message,
+      message: req.t(error),
       statusCode,
     };
+
+    res.status(statusCode).json(response);
   }
 }

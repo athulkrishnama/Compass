@@ -18,6 +18,9 @@ axiosInstance.interceptors.request.use(function (config) {
         config.headers.Authorization =
             "Bearer " + store.getState().token.accessToken;
     }
+    if (store.getState().lang.lang) {
+        config.headers["Accept-Language"] = store.getState().lang.lang;
+    }
     return config;
 });
 
@@ -28,7 +31,7 @@ axiosInstance.interceptors.response.use(
 
         if (
             err.response.status === 403 &&
-            err.response.data.error === "This user is blocked"
+            err.response.data.error === "blocked"
         ) {
             const role = store.getState().user.role;
             toast.error(err.response.data.message);
@@ -45,7 +48,7 @@ axiosInstance.interceptors.response.use(
 
         if (
             err.response.status === 401 &&
-            err.response.data.error === "Invalid Token" &&
+            err.response.data.error === "invalidToken" &&
             !originalRequest.retry
         ) {
             try {

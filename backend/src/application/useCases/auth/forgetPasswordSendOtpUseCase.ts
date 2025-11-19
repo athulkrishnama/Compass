@@ -6,9 +6,9 @@ import { IOtpService } from "application/interfaces/service/otpService.interface
 import { IForgetPasswordSendOtpUseCase } from "application/interfaces/useCase/auth/forgetPasswordSendOtpUseCase.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
 import { EmailSubjects } from "@application/constants/emailConstants";
-import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 import { UserNotFoundException } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class ForgetPasswordSendOtpUseCase
@@ -27,7 +27,7 @@ export class ForgetPasswordSendOtpUseCase
     const user = await this._userRepo.findByEmail(email);
 
     if (!user) {
-      throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
+      throw new UserNotFoundException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
     const otp = this._otpService.generateOtp(6);

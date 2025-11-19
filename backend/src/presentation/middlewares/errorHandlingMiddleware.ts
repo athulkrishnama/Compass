@@ -47,11 +47,12 @@ export const errorHandlingMiddleware = (
       }
     }
 
-    const errorResponse = HTTPResponseBuilder.buildErrorResponse(
+    HTTPResponseBuilder.buildErrorResponse(
+      req,
+      res,
       statusCode,
       err instanceof Error ? err.message : Errors.INTERNAL_SERVER_ERROR,
     );
-    res.status(errorResponse.statusCode).json(errorResponse);
 
     console.log(err instanceof Error ? err.message : err);
   } catch (error) {

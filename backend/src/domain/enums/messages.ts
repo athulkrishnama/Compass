@@ -1,0 +1,15 @@
+export enum Messages {
+  OTP_SEND_SUCCESSFULLY = "otpSendSuccessfully",
+  USER_SIGNUP_SUCCESS = "userSignupSuccessful",
+  OTP_RESEND_SUCCESSFULLY = "otpSuccessfullyResended",
+  USER_LOGIN_SUCCESSFULL = "userLoginSuccessful",
+  OTP_VERIFIED_SUCCESSFULLY = "otpVerifiedSuccessfully",
+  PASSWORD_RESET_SUCCESSFUL = "passwordResetSuccessful",
+  REFRESH_SUCCESSFUL = "refreshSuccessful",
+  DATA_FETCHED_SUCCESSFULLY = "dataFetchedSuccessfully",
+  STATUS_UPDATED_SUCCESSFULLY = "statusUpdatedSuccessfully",
+  LOGOUT_SUCCESSFUL = "logoutSuccessful",
+  UPDATE_SUCCESSFUL = "updateSuccessful",
+  VERIFICATION_APPROVED = "verificationApproved",
+  VERIFICATION_REJECTED = "verificationRejected",
+}

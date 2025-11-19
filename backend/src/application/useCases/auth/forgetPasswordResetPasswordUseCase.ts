@@ -3,9 +3,9 @@ import { IUserRepo } from "application/interfaces/repository/users/user.repo.int
 import { ICacheService } from "application/interfaces/service/cacheService.interface";
 import { IHashService } from "application/interfaces/service/hashService.interface";
 import { IForgetPasswordResetPasswordUseCase } from "application/interfaces/useCase/auth/forgetPasswordResetPassword.interface";
-import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 import { TokenExpiredException } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class ForgetPasswordResetPasswordUseCase
@@ -25,11 +25,13 @@ export class ForgetPasswordResetPasswordUseCase
     const cachedToken = await this._cacheService.getValue(`FToken:${email}`);
 
     if (!cachedToken) {
-      throw new TokenExpiredException(AuthError.TOKEN_EXPIRED);
+      throw new TokenExpiredException(INTERNAL_ERROR_MESSAGES.TOKEN_EXPIRED);
     }
 
     if (cachedToken !== token) {
-      throw new TokenExpiredException(AuthError.TOKEN_NOT_MATCHING);
+      throw new TokenExpiredException(
+        INTERNAL_ERROR_MESSAGES.TOKEN_NOT_MATCHING,
+      );
     }
 
     const hashedPassword = await this._hashService.hash(password);

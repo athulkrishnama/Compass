@@ -2,12 +2,12 @@ import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { ICacheService } from "application/interfaces/service/cacheService.interface";
 import { IJwtService } from "application/interfaces/service/jwtService.interface";
 import { ROLES } from "@domain/types/roles";
-import { AuthError } from "presentation/constants/AuthErrors";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { UserIsBlockedException } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class AuthMiddleware {
@@ -20,19 +20,24 @@ export class AuthMiddleware {
   check = async (req: Request, res: Response, next: NextFunction) => {
     const header = req.header("Authorization");
 
-    const invalidTokenResponse = HTTPResponseBuilder.buildErrorResponse(
-      HTTP_STATUS_CODE.UNAUTHORIZED,
-      AuthError.INVALID_TOKEN_ERROR,
-    );
-
     if (!header?.startsWith("Bearer ")) {
-      res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.UNAUTHORIZED,
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
       return;
     }
     const token = header.split(" ")[1];
     const decoded = this._jwtService.verifyAccessToken(token);
     if (!decoded) {
-      res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.UNAUTHORIZED,
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
       return;
     }
     const blackListed = await this._cacheService.getValue(
@@ -40,7 +45,12 @@ export class AuthMiddleware {
     );
 
     if (blackListed) {
-      res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json(invalidTokenResponse);
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.UNAUTHORIZED,
+        INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
+      );
       return;
     }
     req.user = { id: decoded.id, role: decoded.role };
@@ -52,7 +62,7 @@ export class AuthMiddleware {
       const user = req.user;
       const curRole = user.role;
       if (roles.includes(curRole)) return next();
-      next(new Error(AuthError.UNAUTHORIZED));
+      next(new Error(INTERNAL_ERROR_MESSAGES.UNAUTHORIZED));
     };
   };
 
@@ -74,7 +84,7 @@ export class AuthMiddleware {
       }
 
       if (userStatus === "blocked") {
-        throw new UserIsBlockedException(AuthError.BLOCKED);
+        throw new UserIsBlockedException(INTERNAL_ERROR_MESSAGES.BLOCKED);
       }
 
       next();

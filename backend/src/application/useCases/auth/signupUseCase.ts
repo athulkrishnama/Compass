@@ -9,9 +9,9 @@ import { ISignupUseCase } from "application/interfaces/useCase/auth/signupUseCas
 import { EmailPayloadType } from "@domain/types/emailPayload";
 import { EmailSubjects } from "@application/constants/emailConstants";
 import { UserMapper } from "application/mappers/user.mapper";
-import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 import { UserAlreadyExistingException } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class SignupUseCase implements ISignupUseCase {
@@ -30,7 +30,7 @@ export class SignupUseCase implements ISignupUseCase {
 
     if (existingUser) {
       throw new UserAlreadyExistingException(
-        AuthError.AUTH_EXISTING_EMAIL_ERROR,
+        INTERNAL_ERROR_MESSAGES.AUTH_EXISTING_EMAIL_ERROR,
       );
     }
 

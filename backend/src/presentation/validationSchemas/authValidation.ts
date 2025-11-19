@@ -1,54 +1,56 @@
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { ROLES } from "@domain/enums/roles";
-import { AuthError } from "presentation/constants/AuthErrors";
 import z from "zod";
 
 export const userRegistrationSchema = z.object({
-  email: z.email({ error: AuthError.INVALID_EMAIL }),
-  password: z.string({ error: AuthError.INVALID_PASSWORD }),
-  full_name: z.string({ error: AuthError.NO_FULLNAME }),
+  email: z.email({ error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL }),
+  password: z.string({ error: INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD }),
+  full_name: z.string({ error: INTERNAL_ERROR_MESSAGES.NO_FULLNAME }),
   role: z
     .enum(ROLES, {
-      error: AuthError.INVALID_ROLE,
+      error: INTERNAL_ERROR_MESSAGES.INVALID_ROLE,
     })
     .refine((role) => role !== ROLES.ADMIN, {
-      error: AuthError.ADMIN_SIGNUP_ERROR,
+      error: INTERNAL_ERROR_MESSAGES.ADMIN_SIGNUP_ERROR,
       path: ["role"],
     }),
 });
 
 export const userRegistrationVerifyOtpSchema = z.object({
-  email: z.email({ error: AuthError.INVALID_EMAIL }),
-  otp: z.string({ error: AuthError.NO_OTP }),
+  email: z.email({ error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL }),
+  otp: z.string({ error: INTERNAL_ERROR_MESSAGES.NO_OTP }),
 });
 
 export const emailValidationSchema = z.email({
-  error: AuthError.INVALID_EMAIL,
+  error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL,
 });
 
 export const loginValidationSchema = z.object({
-  email: z.email({ error: AuthError.INVALID_EMAIL }),
-  password: z.string({ error: AuthError.INVALID_PASSWORD }),
+  email: z.email({ error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL }),
+  password: z.string({ error: INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD }),
 });
 
 export const forgetPasswordVerifyOtpSchema = z.object({
-  email: z.email({ error: AuthError.INVALID_EMAIL }),
-  otp: z.string({ error: AuthError.NO_OTP }),
+  email: z.email({ error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL }),
+  otp: z.string({ error: INTERNAL_ERROR_MESSAGES.NO_OTP }),
 });
 
 export const forgetPasswordResetPasswordSchema = z.object({
-  email: z.email({ error: AuthError.INVALID_EMAIL }),
-  password: z.string({ error: AuthError.INVALID_PASSWORD }),
-  token: z.string({ error: AuthError.TOKEN_DATA_MISSING }),
+  email: z.email({ error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL }),
+  password: z.string({ error: INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD }),
+  token: z.string({ error: INTERNAL_ERROR_MESSAGES.TOKEN_DATA_MISSING }),
 });
 
 export const googleLoginSchema = z.object({
-  authorizationCode: z.string({ error: AuthError.AUTHROIZATION_CODE_MISSING }),
+  authorizationCode: z.string({
+    error: INTERNAL_ERROR_MESSAGES.AUTHROIZATION_CODE_MISSING,
+  }),
   role: z
     .enum(ROLES, {
-      error: AuthError.INVALID_ROLE,
+      error: INTERNAL_ERROR_MESSAGES.INVALID_ROLE,
     })
     .refine((role) => role !== ROLES.ADMIN, {
-      error: AuthError.ADMIN_SIGNUP_ERROR,
+      error: INTERNAL_ERROR_MESSAGES.ADMIN_SIGNUP_ERROR,
     }),
 });
 

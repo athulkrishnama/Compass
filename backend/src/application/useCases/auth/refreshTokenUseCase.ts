@@ -1,8 +1,8 @@
 import { IJwtService } from "application/interfaces/service/jwtService.interface";
 import { IRefreshTokenUseCase } from "application/interfaces/useCase/auth/refreshTokenUseCase.interface";
-import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 import { TokenExpiredException } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class RefreshTokenUseCase implements IRefreshTokenUseCase {
@@ -12,7 +12,9 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
     const decoded = this._jwtService.verifyRefreshToken(token);
 
     if (!decoded) {
-      throw new TokenExpiredException(AuthError.REFRESH_TOKEN_EXPIRED);
+      throw new TokenExpiredException(
+        INTERNAL_ERROR_MESSAGES.REFRESH_TOKEN_EXPIRED,
+      );
     }
 
     const accessToken = this._jwtService.createAccessToken({

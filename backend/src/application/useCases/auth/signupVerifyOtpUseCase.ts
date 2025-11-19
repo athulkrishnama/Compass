@@ -3,13 +3,13 @@ import { IUserRepo } from "application/interfaces/repository/users/user.repo.int
 import { ICacheService } from "application/interfaces/service/cacheService.interface";
 import { IVerifyOtpUseCase } from "application/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import { UserMapper } from "application/mappers/user.mapper";
-import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 import {
   InvalidOTPException,
   OTPExpiredException,
   UserDataMissingException,
 } from "@application/constants/Exceptions";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class SignupVerifyOtpUseCase implements IVerifyOtpUseCase {
@@ -21,17 +21,21 @@ export class SignupVerifyOtpUseCase implements IVerifyOtpUseCase {
     const cachedOtp = await this._cacheService.getValue(`OTP:${email}`);
 
     if (!cachedOtp) {
-      throw new OTPExpiredException(AuthError.AUTH_EXISTING_EMAIL_ERROR);
+      throw new OTPExpiredException(
+        INTERNAL_ERROR_MESSAGES.AUTH_EXISTING_EMAIL_ERROR,
+      );
     }
 
     if (cachedOtp != otp) {
-      throw new InvalidOTPException(AuthError.INVALID_OTP);
+      throw new InvalidOTPException(INTERNAL_ERROR_MESSAGES.INVALID_OTP);
     }
 
     const userData = await this._cacheService.getValue(`SIGNUPDATA:${email}`);
 
     if (!userData) {
-      throw new UserDataMissingException(AuthError.USER_DATA_MISSIING_IN_CACHE);
+      throw new UserDataMissingException(
+        INTERNAL_ERROR_MESSAGES.CACHE_DATA_MISSING,
+      );
     }
 
     const userEntity = UserMapper.toEntityFromString(userData);

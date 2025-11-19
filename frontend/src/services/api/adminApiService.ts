@@ -11,7 +11,7 @@ export async function getUsers(filter: filterType) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -23,7 +23,7 @@ export async function changeUserStatus<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -37,7 +37,7 @@ export async function getUnverifiedUsers<T>(data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -51,7 +51,7 @@ export async function getUnverifiedUserDetails(id: string) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -65,7 +65,7 @@ export async function approveUserVerificationRequest(id: string) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }
@@ -81,7 +81,7 @@ export async function rejectUserVerificationRequest<T>(id: string, data: T) {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.error);
+            throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
     }

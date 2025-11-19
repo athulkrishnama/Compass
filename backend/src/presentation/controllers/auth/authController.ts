@@ -20,7 +20,7 @@ import {
   userRegistrationVerifyOtpSchema,
   userUpdateProfileSchema,
 } from "presentation/validationSchemas/authValidation";
-import { HttpResponseMessages } from "presentation/constants/httpResponseMessages";
+import { Messages } from "@domain/enums/messages";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { setCookie } from "presentation/utils/setCookie";
 import { NextFunction, Request, Response } from "express";
@@ -68,16 +68,16 @@ export class AuthController {
     try {
       const data = userRegistrationSchema.safeParse(req.body);
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
       await this._signupUseCase.signup(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_SEND_SUCCESSFULLY,
+        Messages.OTP_SEND_SUCCESSFULLY,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -92,16 +92,16 @@ export class AuthController {
       const data = userRegistrationVerifyOtpSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
       await this._verifyOtpUseCase.verify(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.CREATED,
-        HttpResponseMessages.USER_SIGNUP_SUCCESS,
+        Messages.USER_SIGNUP_SUCCESS,
       );
-
-      res.status(HTTP_STATUS_CODE.CREATED).json(response);
     } catch (error) {
       next(error);
     }
@@ -116,17 +116,17 @@ export class AuthController {
       const data = emailValidationSchema.safeParse(req.body.email);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       await this._resendOtpUseCase.resend(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_RESEND_SUCCESSFULLY,
+        Messages.OTP_RESEND_SUCCESSFULLY,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -137,7 +137,7 @@ export class AuthController {
       const data = loginValidationSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       const responseDto = await this._loginUseCase.login(data.data);
@@ -158,13 +158,13 @@ export class AuthController {
         secure: true,
       });
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.USER_LOGIN_SUCCESSFULL,
+        Messages.USER_LOGIN_SUCCESSFULL,
         { userData: responseDto, accessToken },
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -179,16 +179,17 @@ export class AuthController {
       const data = emailValidationSchema.safeParse(req.body.email);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       await this._forgetPasswordSendOtpUseCase.sendOtp(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_SEND_SUCCESSFULLY,
+        Messages.OTP_SEND_SUCCESSFULLY,
       );
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -203,20 +204,20 @@ export class AuthController {
       const data = forgetPasswordVerifyOtpSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       const token = await this._forgetPasswordVerifyOtpUseCase.verify(
         data.data,
       );
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.OTP_VERIFIED_SUCCESSFULLY,
+        Messages.OTP_VERIFIED_SUCCESSFULLY,
         { token },
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -231,17 +232,17 @@ export class AuthController {
       const data = forgetPasswordResetPasswordSchema.safeParse(req.body);
 
       if (data.error) {
-        throw new Error(data.error.issues[0].message);
+        throw new InvalideDataException(data.error.issues[0].message);
       }
 
       await this._forgetPassawordResetPasswordUseCase.reset(data.data);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.PASSWORD_RESET_SUCCESSFUL,
+        Messages.PASSWORD_RESET_SUCCESSFUL,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -252,12 +253,13 @@ export class AuthController {
       const refreshToken = req.cookies.refreshToken;
       const accessToken = await this._tokenRefreshUseCase.refresh(refreshToken);
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.REFRESH_SUCCESSFUL,
+        Messages.REFRESH_SUCCESSFUL,
         { accessToken },
       );
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -271,12 +273,12 @@ export class AuthController {
           accessToken.split(" ")[1],
         );
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.LOGOUT_SUCCESSFUL,
+        Messages.LOGOUT_SUCCESSFUL,
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -310,13 +312,13 @@ export class AuthController {
         secure: true,
       });
 
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.USER_LOGIN_SUCCESSFULL,
+        Messages.USER_LOGIN_SUCCESSFULL,
         { userData: responseDTO, accessToken },
       );
-
-      res.status(HTTP_STATUS_CODE.OK).json(response);
     } catch (error) {
       next(error);
     }
@@ -326,13 +328,13 @@ export class AuthController {
     try {
       const { id } = req.user;
       const profile = await this._getUserProfileUseCase.execute(id);
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.DATA_FETCHED_SUCCESSFULLY,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         profile,
       );
-
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }
@@ -363,11 +365,12 @@ export class AuthController {
         throw new InvalideDataException(parsedData.error.issues[0].message);
       }
       await this._updateUserProfileUseCase.update(parsedData.data);
-      const response = HTTPResponseBuilder.buildSuccessResponse(
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
         HTTP_STATUS_CODE.OK,
-        HttpResponseMessages.UPDATE_SUCCESSFUL,
+        Messages.UPDATE_SUCCESSFUL,
       );
-      res.status(response.statusCode).json(response);
     } catch (error) {
       next(error);
     }

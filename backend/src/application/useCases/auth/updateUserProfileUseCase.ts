@@ -1,10 +1,10 @@
-import { AuthError } from "@application/constants/Errors";
 import { UserNotFoundException } from "@application/constants/Exceptions";
 import { StorageFolderNames } from "@application/constants/storageFolderNames";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/updateUserProfileUseCase.interface";
 import { IUpdateUserProfileRequestDTO } from "@domain/dtos/auth/updateUserProfile.dto";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { inject, injectable } from "tsyringe";
 
@@ -22,7 +22,7 @@ export class UpdateUserProfileUseCase implements IUpdateUserProfileUseCase {
   }: IUpdateUserProfileRequestDTO): Promise<void> {
     const user = await this._userRepo.findById(id);
     if (!user?._id) {
-      throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
+      throw new UserNotFoundException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
     if (full_name) user.full_name = full_name;
 

@@ -4,10 +4,10 @@ import { IEmailTemplateGenerator } from "application/interfaces/service/emailTem
 import { ISignupResendOtpUsecase } from "application/interfaces/useCase/auth/signupResendOtpUseCase.interface";
 import { EmailPayloadType } from "@domain/types/emailPayload";
 import { EmailSubjects } from "@application/constants/emailConstants";
-import { AuthError } from "@application/constants/Errors";
 import { inject, injectable } from "tsyringe";
 import { UserDataMissingException } from "@application/constants/Exceptions";
 import { IOtpService } from "@application/interfaces/service/otpService.interface";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 @injectable()
 export class SignupResendOtpUseCase implements ISignupResendOtpUsecase {
@@ -23,7 +23,9 @@ export class SignupResendOtpUseCase implements ISignupResendOtpUsecase {
 
     const userData = await this._cacheService.getValue(`SIGNUPDATA:${email}`);
     if (!userData) {
-      throw new UserDataMissingException(AuthError.USER_DATA_MISSIING_IN_CACHE);
+      throw new UserDataMissingException(
+        INTERNAL_ERROR_MESSAGES.CACHE_DATA_MISSING,
+      );
     }
 
     const emailContent = this._emailTemplateGenerator.generateHtml({ otp });

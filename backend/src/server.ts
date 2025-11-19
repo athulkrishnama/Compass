@@ -11,6 +11,9 @@ import { errorHandlingMiddleware } from "./presentation/middlewares/errorHandlin
 import { NextFunction } from "express-serve-static-core";
 import { AdminRouter } from "presentation/routes/admin/adminRouter";
 import cookieParser from "cookie-parser";
+import "@config/i18nConfig";
+import middleware from "i18next-http-middleware";
+import i18next from "i18next";
 
 export class Server {
   private _app: Express;
@@ -39,6 +42,7 @@ export class Server {
     this._app.use(express.urlencoded());
     this._app.use(cors(corsOptions));
     this._app.use(cookieParser());
+    this._app.use(middleware.handle(i18next));
   }
 
   private _setErrorHandlingMiddleware() {

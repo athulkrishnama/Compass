@@ -1,10 +1,10 @@
-import { AuthError } from "@application/constants/Errors";
 import { UserNotFoundException } from "@application/constants/Exceptions";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { IGetUserProfileUseCase } from "@application/interfaces/useCase/auth/getUserProfileUseCase.interface";
 import { env } from "@config/envConfig";
 import { IGetUserProfileResponseDTO } from "@domain/dtos/auth/getUserProfile.dto";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { UserMapper } from "@mappers/user.mapper";
 import { inject, injectable } from "tsyringe";
 
@@ -18,7 +18,7 @@ export class GetUserProfileUseCase implements IGetUserProfileUseCase {
     const user = await this._userRepo.findById(id);
 
     if (!user) {
-      throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
+      throw new UserNotFoundException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
     if (user.profile_image)
       user.profile_image = await this._storageService.createSignedUrl(

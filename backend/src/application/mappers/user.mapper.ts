@@ -1,13 +1,13 @@
 import { IUserDocument } from "@infrastructure/repository/database configs/schemas/userSchema";
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { ICreateUserRequestDTO } from "@domain/dtos/auth/createUser.dto";
-import { Errors } from "./Errors";
 import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";
 import { IGetUsersResponseDTO } from "@domain/dtos/admin/getUsers.dto";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { IGetUserProfileResponseDTO } from "@domain/dtos/auth/getUserProfile.dto";
 import { GetUnverifiedUsersResponseDTO } from "@domain/dtos/admin/getUnverifiedUsers.dto";
 import { IGetUnverifedUserDetailsResponseDTO } from "@domain/dtos/admin/getUnverifiedUserDetails.dto";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 export class UserMapper {
   static toEntityfromMongooseDocument(document: IUserDocument): UserEntity {
@@ -37,7 +37,7 @@ export class UserMapper {
   static toEntityFromString(cachedData: string): UserEntity {
     const { email, full_name, role, password } = JSON.parse(cachedData);
     if (!(email && full_name && role && password)) {
-      throw new Error(Errors.REDIS_DATA_MISSING_ERROR);
+      throw new Error(INTERNAL_ERROR_MESSAGES.CACHE_DATA_MISSING);
     }
 
     return {

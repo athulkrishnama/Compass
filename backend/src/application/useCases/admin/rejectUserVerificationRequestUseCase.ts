@@ -1,4 +1,3 @@
-import { AuthError } from "@application/constants/Errors";
 import {
   InvalideDataException,
   UserNotFoundException,
@@ -6,6 +5,7 @@ import {
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/rejectUserVerificationRequestUseCase.interface";
 import { IRejectUserVerificationRequestRequestDTO } from "@domain/dtos/admin/rejectUserVerificationRequest.dto";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 import { inject, injectable } from "tsyringe";
 
@@ -18,11 +18,13 @@ export class RejectUserVerificationRequestUseCase
     const user = await this._userRepo.findById(dto.userId);
 
     if (!user) {
-      throw new UserNotFoundException(AuthError.USER_NOT_FOUND);
+      throw new UserNotFoundException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
     if (user.is_verified !== VERIFICATION_STATUSES.PENDING) {
-      throw new InvalideDataException("not verified");
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.CANNOT_CHANGE_STATUS,
+      );
     }
 
     user.is_verified = VERIFICATION_STATUSES.REJECTED;
