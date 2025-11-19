@@ -16,7 +16,9 @@
         "resetPassword": "Reset Password",
         "cabForgetPassword": "Forget Password for Cab's",
         "hotelForgetPassword": "Forget Password for Hotel's",
-        "userManagement": "User Management"
+        "userManagement": "User Management",
+        "hotelVerification": "Hotel Verification",
+        "cabVerification": "Cab Verification"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
