@@ -29,4 +29,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   UNAUTHORIZED = "unauthorized",
   BLOCKED = "blocked",
   INVALID_ID = "invalidId",
+  SOCIAL_LOGIN_PASSWORD_CHANGE_ERROR = "social_login_password_change_error",
 }

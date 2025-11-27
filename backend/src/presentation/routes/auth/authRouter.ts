@@ -101,6 +101,14 @@ export class AuthRouter {
         (req: Request, res: Response, next: NextFunction) =>
           authController.handleUpdateProfile(req, res, next),
       );
+
+    this._router.patch(
+      AuthRoutes.CHANGE_PASSWORD,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      (req: Request, res: Response, next: NextFunction) =>
+        authController.handleChangePassword(req, res, next),
+    );
   }
 
   public get_router() {

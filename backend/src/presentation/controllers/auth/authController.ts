@@ -11,6 +11,7 @@ import { ISignupUseCase } from "application/interfaces/useCase/auth/signupUseCas
 import { ITokenInvalidationUseCase } from "application/interfaces/useCase/auth/tokenInvalidationUseCase.interface";
 import { IVerifyOtpUseCase } from "application/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import {
+  changePasswordSchema,
   emailValidationSchema,
   forgetPasswordResetPasswordSchema,
   forgetPasswordVerifyOtpSchema,
@@ -32,6 +33,7 @@ import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/
 import { MulterFiles } from "@presentation/types/multerFilesType";
 import { IUpdateUserProfileRequestDTO } from "@domain/dtos/auth/updateUserProfile.dto";
 import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
+import { IChangePasswordUseCase } from "@application/interfaces/useCase/auth/changePasswordUseCase.interface";
 
 @injectable()
 export class AuthController {
@@ -58,6 +60,8 @@ export class AuthController {
     private _getUserProfileUseCase: IGetUserProfileUseCase,
     @inject("IUpdateUserProfileUseCase")
     private _updateUserProfileUseCase: IUpdateUserProfileUseCase,
+    @inject("IChangePasswordUseCase")
+    private _changePasswordUseCase: IChangePasswordUseCase,
   ) {}
 
   async handleUserRegistration(
@@ -366,6 +370,28 @@ export class AuthController {
         throw new InvalideDataException(parsedData.error.issues[0].message);
       }
       await this._updateUserProfileUseCase.update(parsedData.data);
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.UPDATE_SUCCESSFUL,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleChangePassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.user;
+      const data = changePasswordSchema.safeParse(req.body);
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      await this._changePasswordUseCase.change({ userId: id, ...data.data });
+
       HTTPResponseBuilder.buildSuccessResponse(
         req,
         res,

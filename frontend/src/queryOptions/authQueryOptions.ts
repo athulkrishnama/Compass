@@ -1,5 +1,6 @@
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
+    changePassword,
     forgetPasswordResetPassword,
     forgetPasswordSendOtp,
     forgetPasswordVerifyOtp,
@@ -13,6 +14,7 @@ import {
     userVerifyOtp,
 } from "@/services/api/authApiService";
 import {
+    type ChangePasswordRequest,
     type ForgetPasswordPasswordResetRequest,
     type ForgetPasswordVerifyOtpRequest,
     type GoogleLoginRequest,
@@ -101,5 +103,11 @@ export function createGetUserProfileQueryOptions() {
 export function createUpdateUserProfileQueryOptions() {
     return mutationOptions<HttpResponse<object>, Error, FormData>({
         mutationFn: updateUserProfile,
+    });
+}
+
+export function createChangePasswordMutationOptions() {
+    return mutationOptions<HttpResponse<object>, Error, ChangePasswordRequest>({
+        mutationFn: changePassword,
     });
 }

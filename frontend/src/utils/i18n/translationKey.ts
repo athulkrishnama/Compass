@@ -32,6 +32,8 @@ export default {
             "errors.passwordAndCofirmPasswordNotMatching",
         maxFileSize: "errors.maxFileSize",
         provideRejectionReason: "errors.provideRejectionReason",
+        newPasswordAndOldPasswordMustnotBeSame:
+            "errors.newPasswordAndOldPasswordMustnotBeSame",
     },
     form: {
         fullname: "form.fullname",
@@ -41,6 +43,7 @@ export default {
         newPassword: "form.newPassword",
         rejectionReason: "form.rejectionReason",
         enterReasonForRejection: "form.enterReasonForRejection",
+        oldPassword: "form.oldPassword",
     },
     button: {
         submit: "button.submit",
@@ -78,6 +81,7 @@ export default {
         view: "button.view",
         approve: "button.approve",
         reject: "button.reject",
+        changePassword: "button.changePassword",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
@@ -108,5 +112,6 @@ export default {
         status: "text.status",
         noUsersToShow: "text.noUsersToShow",
         rejectionReason: "text.rejectionReason",
+        enterCurrentPasswordToSetNewOne: "text.enterCurrentPasswordToSetNewOne",
     },
 };

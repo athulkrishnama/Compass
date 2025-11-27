@@ -10,4 +10,5 @@ export enum AuthRoutes {
   LOGOUT = "/logout",
   GOOGLE_LOGIN = "/google-login",
   PROFILE = "/profile",
+  CHANGE_PASSWORD = "/change-password",
 }

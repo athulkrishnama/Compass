@@ -24,6 +24,7 @@ import { VERIFICATION_STATUSES } from "@/constants/verificationStatus";
 import { cn } from "@/lib/utils";
 import type { ROLE } from "@/types/role";
 import { ROLES } from "@/constants/roles";
+import ChangePasswordModalWithButton from "../changePassword/ChangePasswordModalWithButton";
 
 interface ShowProfileProps {
     profileData: {
@@ -191,10 +192,13 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                     )}
                 </div>
             </div>
-            <Button className="mt-6 w-full max-w-md" onClick={setEditing}>
-                <Edit className="mr-2 h-4 w-4" />
-                {t(translationKey.button.updateProfile)}
-            </Button>
+            <div className="flex flex-col gap-3">
+                <Button className="mt-6 w-full max-w-md" onClick={setEditing}>
+                    <Edit className="mr-2 h-4 w-4" />
+                    {t(translationKey.button.updateProfile)}
+                </Button>
+                <ChangePasswordModalWithButton />
+            </div>
         </motion.div>
     );
 }
