@@ -14,13 +14,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { LanguagesIcon, LogOut } from "lucide-react";
+import { LanguagesIcon, LogIn, LogOut } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { setLanguage } from "@/store/slices/langSlice";
 import i18next from "i18next";
 import { removeToken } from "@/store/slices/tokenSlice";
 import { removeUser } from "@/store/slices/userSlice";
 import { motion } from "framer-motion";
+import { isLoggedin } from "@/utils/authChecker";
 
 interface propTypes {
     routes: {
@@ -61,9 +62,12 @@ function Navbar({ routes, logoutRoute }: propTypes) {
         document.documentElement.setAttribute("lang", lang);
     }
 
+    function handleRedirectToLogin() {
+        navigate({ to: logoutRoute });
+    }
+
     return (
         <nav className="flex items-center justify-between px-8 py-4 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
-            {/* Left: Logo + Brand */}
             <motion.div
                 className="flex items-center space-x-3"
                 initial={{ opacity: 0, x: -20 }}
@@ -136,13 +140,20 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                 >
-                    <Button
-                        onClick={handleLogout}
-                        className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-all duration-200"
-                    >
-                        <LogOut className="w-4 h-4" />
-                        {t(translationKey.button.logout)}
-                    </Button>
+                    {isLoggedin() ? (
+                        <Button
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-all duration-200"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            {t(translationKey.button.logout)}
+                        </Button>
+                    ) : (
+                        <Button onClick={handleRedirectToLogin}>
+                            <LogIn className="w-4 h-4" />
+                            {t(translationKey.button.signin)}
+                        </Button>
+                    )}
                 </motion.div>
             </motion.div>
         </nav>

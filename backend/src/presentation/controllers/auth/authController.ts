@@ -273,6 +273,7 @@ export class AuthController {
           accessToken.split(" ")[1],
         );
 
+      res.clearCookie("refreshToken");
       HTTPResponseBuilder.buildSuccessResponse(
         req,
         res,
