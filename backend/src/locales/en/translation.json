@@ -29,6 +29,7 @@
   "unauthorized": "You are unauthorized to perform this action",
   "blocked": "You are blocked from accessing this resource",
   "invalidId": "Invalid ID",
+  "social_login_password_change_error": "User signedin using social login are currently not allowed to change password",
 
   "otpSendSuccessfully": "OTP sent successfully",
   "userSignupSuccessful": "User signup successful",

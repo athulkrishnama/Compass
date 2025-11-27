@@ -149,3 +149,18 @@ export async function updateUserProfile<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function changePassword<T>(data: T) {
+    try {
+        const response = await axiosInstance.patch(
+            AUTH_ROUTES.CHANGE_PASSWORD,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

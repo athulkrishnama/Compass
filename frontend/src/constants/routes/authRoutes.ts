@@ -10,4 +10,5 @@ export enum AUTH_ROUTES {
     LOGOUT = "/auth/logout",
     GOOGLE_LOGIN = "/auth/google-login",
     USER_PROFILE = "/auth/profile",
+    CHANGE_PASSWORD = "/auth/change-password",
 }

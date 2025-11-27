@@ -68,3 +68,8 @@ export const userUpdateProfileSchema = z.object({
     .max(1024 * 1024 * 2)
     .optional(),
 });
+
+export const changePasswordSchema = z.object({
+  oldPassword: z.string(INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD),
+  newPassword: z.string(INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD),
+});

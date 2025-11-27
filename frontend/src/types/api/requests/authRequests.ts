@@ -32,3 +32,8 @@ export interface GoogleLoginRequest {
     authorizationCode: string;
     role: ROLE;
 }
+
+export interface ChangePasswordRequest {
+    oldPassword: string;
+    newPassword: string;
+}

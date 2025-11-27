@@ -63,3 +63,9 @@ export class InvalideDataException extends ApplicationException {
     super(message);
   }
 }
+
+export class InvalidOperationException extends ApplicationException {
+  constructor(message: string) {
+    super(message);
+  }
+}

@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import ChangePasswordModalWithButton from "@/components/shared/changePassword/ChangePasswordModalWithButton";
 
 interface PropType {
     profileData: {
@@ -97,7 +98,7 @@ function ShowProfile({
                     </div>
                 </CardContent>
 
-                <CardFooter className="px-8 pb-8">
+                <CardFooter className="px-8 pb-8 flex flex-col gap-3">
                     <Button
                         className="w-full"
                         size="lg"
@@ -107,6 +108,7 @@ function ShowProfile({
                         <Edit className="mr-2 h-4 w-4" />{" "}
                         {t(translationKey.button.updateProfile)}
                     </Button>
+                    <ChangePasswordModalWithButton className="w-full" />
                 </CardFooter>
             </Card>
         </motion.div>

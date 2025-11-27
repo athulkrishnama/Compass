@@ -30,7 +30,8 @@
         "confirmPasswordRequired": "Confirm password is required",
         "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match",
         "maxFileSize": "Maximum file Size is {{size}}",
-        "provideRejectionReason": "Please provide a rejection reason"
+        "provideRejectionReason": "Please provide a rejection reason",
+        "newPasswordAndOldPasswordMustnotBeSame": "New password and old password must not be same"
     },
     "form": {
         "fullname": "Full Name",
@@ -39,7 +40,8 @@
         "confirmPassword": "Confirm Password",
         "newPassword": "New Password",
         "rejectionReason": "Reason for rejection",
-        "enterReasonForRejection": "Enter reason for rejecting"
+        "enterReasonForRejection": "Enter reason for rejecting",
+        "oldPassword": "Old Password"
     },
     "button": {
         "submit": "Submit",
@@ -76,7 +78,8 @@
         "hotelVerification": "Hotel Verification",
         "view": "View",
         "approve": "Approve",
-        "reject": "Reject"
+        "reject": "Reject",
+        "changePassword": "Change Password"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -106,6 +109,7 @@
         "uploadDrivingLicence": "Upload Driving Licence",
         "status": "Status",
         "noUsersToShow": "No users to show",
-        "rejectionReason": "Reason for rejection"
+        "rejectionReason": "Reason for rejection",
+        "enterCurrentPasswordToSetNewOne": "Enter current password to set new one"
     }
 }
