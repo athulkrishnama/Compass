@@ -13,7 +13,6 @@ import {
     userSignupSendOTP,
     userVerifyOtp,
 } from "@/services/api/authApiService";
-import { store } from "@/store/store";
 import {
     type ChangePasswordRequest,
     type ForgetPasswordPasswordResetRequest,
@@ -98,9 +97,6 @@ export function createGetUserProfileQueryOptions() {
     return queryOptions<HttpResponse<IGetUserProfileResponse>, Error>({
         queryKey: [QUERY_KEYS.USER_PROFILE],
         queryFn: getUserProfile,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        enabled: !!store.getState().token.accessToken,
     });
 }
 

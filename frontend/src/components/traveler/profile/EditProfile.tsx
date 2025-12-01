@@ -1,9 +1,3 @@
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -97,8 +91,8 @@ export function UserProfileEdit({
                 exit="exit"
                 className="w-full max-w-lg"
             >
-                <Card>
-                    <CardHeader className="items-center justify-center text-center pt-8 relative">
+                <motion.div className="bg-white rounded-2xl  p-0">
+                    <div className="flex flex-col items-center justify-center text-center pt-8 relative">
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -129,9 +123,9 @@ export function UserProfileEdit({
                                 onChange={handleImageEdit}
                             />
                         </motion.div>
-                    </CardHeader>
+                    </div>
 
-                    <CardContent className="space-y-8 px-8 py-10">
+                    <div className="space-y-8 px-8 py-10">
                         <div className="space-y-2">
                             <Label
                                 htmlFor="full_name"
@@ -146,9 +140,9 @@ export function UserProfileEdit({
                                 onChange={(e) => setFullName(e.target.value)}
                             />
                         </div>
-                    </CardContent>
+                    </div>
 
-                    <CardFooter className="px-8 pb-8 flex justify-end space-x-4">
+                    <div className="px-8 pb-8 flex justify-between space-x-4">
                         <Button variant="outline" size="lg" onClick={onClose}>
                             <X className="mr-2 h-4 w-4" />
                             {t(translationKey.button.cancel)}
@@ -157,8 +151,8 @@ export function UserProfileEdit({
                             <Save className="mr-2 h-4 w-4" />
                             {t(translationKey.button.updateProfile)}
                         </Button>
-                    </CardFooter>
-                </Card>
+                    </div>
+                </motion.div>
             </motion.div>
             <ImageCropperModal
                 isOpen={isCropping}

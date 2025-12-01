@@ -9,7 +9,6 @@ import {
     XCircle,
     Clock,
     HelpCircle,
-    UserIcon,
     ImageIcon,
     Edit,
 } from "lucide-react";
@@ -23,7 +22,7 @@ import { cn } from "@/lib/utils";
 import type { ROLE } from "@/types/role";
 import { ROLES } from "@/constants/roles";
 import ChangePasswordModalWithButton from "../changePassword/ChangePasswordModalWithButton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ProfileAvatar from "./ProfileAvatar";
 
 interface ShowProfileProps {
     profileData: {
@@ -105,19 +104,10 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <Avatar className="rounded-md shadow-[0_12px_32px_0_rgba(0,0,0,0.45)] flex-shrink-0 bg-white w-full h-full">
-                                    <AvatarImage
-                                        src={profile_image}
-                                        alt={full_name}
-                                        className="object-cover w-full h-full rounded-md"
-                                    />
-                                    <AvatarFallback className="bg-gray-100 text-gray-500 flex items-center justify-center w-full h-full rounded-md">
-                                        <UserIcon
-                                            size={40}
-                                            className="text-gray-400 w-full h-full"
-                                        />
-                                    </AvatarFallback>
-                                </Avatar>
+                                <ProfileAvatar
+                                    imageUrl={profile_image}
+                                    fallbackText={full_name}
+                                />
                             </motion.div>
                         </div>
                     </motion.div>

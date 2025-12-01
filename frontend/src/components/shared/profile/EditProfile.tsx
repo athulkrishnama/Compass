@@ -2,10 +2,16 @@ import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Upload, Image as ImageIcon, Mail, UserIcon } from "lucide-react";
+import { Upload, Image as ImageIcon, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
-import { useCallback, useRef, useState, type ChangeEvent } from "react";
+import {
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+    type ChangeEvent,
+} from "react";
 import ProfileCroppingModal from "./ProfileCroppingModal";
 import z from "zod";
 import { toast } from "sonner";
@@ -15,7 +21,7 @@ import type { VERIFICATION_STATUS } from "@/types/verificationStatus";
 import { VERIFICATION_STATUSES } from "@/constants/verificationStatus";
 import type { ROLE } from "@/types/role";
 import { ROLES } from "@/constants/roles";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ProfileAvatar from "./ProfileAvatar";
 
 interface EditProfileProps {
     profileData: {
@@ -51,6 +57,9 @@ export default function EditProfile({
     const [name, setName] = useState(full_name);
     const profileImageRef = useRef<HTMLInputElement | null>(null);
     const [profileImage, setProfileImage] = useState<File | null>(null);
+    const [profilePreviewUrl, setProfilePreviewUrl] = useState<
+        string | undefined
+    >(profile_image);
     const [isProfileImageModalOpen, setIsProfileImageModalOpen] =
         useState(false);
 
@@ -140,6 +149,17 @@ export default function EditProfile({
 
     const cachedHandleImageInputclick = useCallback(handleImageInputClick, []);
 
+    useEffect(() => {
+        if (profileImage) {
+            const url = URL.createObjectURL(profileImage);
+            setProfilePreviewUrl(url);
+            return () => {
+                URL.revokeObjectURL(url);
+            };
+        }
+        setProfilePreviewUrl(profile_image);
+    }, [profileImage, profile_image]);
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -166,25 +186,10 @@ export default function EditProfile({
                                 className="relative group cursor-pointer h-full w-full"
                                 onClick={cachedHandleImageInputclick}
                             >
-                                <Avatar className="rounded-md shadow-[0_12px_32px_0_rgba(0,0,0,0.45)] flex-shrink-0 bg-white w-full h-full">
-                                    <AvatarImage
-                                        src={
-                                            profileImage
-                                                ? URL.createObjectURL(
-                                                      profileImage
-                                                  )
-                                                : profile_image
-                                        }
-                                        alt={full_name}
-                                        className="object-cover w-full h-full rounded-md"
-                                    />
-                                    <AvatarFallback className="bg-gray-100 text-gray-500 flex items-center justify-center w-full h-full rounded-md">
-                                        <UserIcon
-                                            size={40}
-                                            className="text-gray-400"
-                                        />
-                                    </AvatarFallback>
-                                </Avatar>
+                                <ProfileAvatar
+                                    imageUrl={profilePreviewUrl}
+                                    fallbackText={full_name}
+                                />
                                 <div className="absolute inset-0 flex items-center justify-center rounded-md bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Upload size={24} className="text-white" />
                                 </div>
