@@ -49,8 +49,8 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                 toast.error(err.message);
             },
             onSettled: () => {
-                dispatch(removeToken());
                 dispatch(removeUser());
+                dispatch(removeToken());
                 navigate({ to: logoutRoute, replace: true });
             },
         });

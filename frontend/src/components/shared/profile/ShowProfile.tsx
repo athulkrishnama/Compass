@@ -100,7 +100,7 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                             delay: 0.1,
                         }}
                     >
-                        <div className="h-full">
+                        <div className="h-full w-full">
                             <motion.div
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}

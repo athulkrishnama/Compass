@@ -83,6 +83,7 @@ export default {
         reject: "button.reject",
         changePassword: "button.changePassword",
         userDetails: "button.userDetails",
+        cabDetails: "button.cabDetails",
         wallet: "button.wallet",
     },
     text: {

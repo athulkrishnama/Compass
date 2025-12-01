@@ -163,7 +163,7 @@ export default function EditProfile({
                             <motion.div
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}
-                                className="relative group cursor-pointer"
+                                className="relative group cursor-pointer h-full w-full"
                                 onClick={cachedHandleImageInputclick}
                             >
                                 <Avatar className="rounded-md shadow-[0_12px_32px_0_rgba(0,0,0,0.45)] flex-shrink-0 bg-white w-full h-full">
