@@ -30,7 +30,8 @@
     "confirmPasswordRequired": "സ്ഥിരീകരണ പാസ്വേഡ് ആവശ്യമാണ്",
     "passwordAndCofirmPasswordNotMatching": "പാസ്വേഡും സ്ഥിരീകരണ പാസ്വേഡും ഒത്തുപോകുന്നില്ല",
     "maxFileSize": "പരമാവധി ഫയൽ വലുപ്പം {{size}} ആണ്",
-    "provideRejectionReason": "ദയവായി നിരസിക്കാനുള്ള കാരണം നൽകുക"
+    "provideRejectionReason": "ദയവായി നിരസിക്കാനുള്ള കാരണം നൽകുക",
+    "newPasswordAndOldPasswordMustnotBeSame": "പുതിയ പാസ്വേഡും പഴയ പാസ്വേഡും ഒന്നുതന്നെയാകാൻ പാടില്ല"
   },
   "form": {
     "fullname": "പൂർണ്ണ പേര്",
@@ -39,7 +40,8 @@
     "confirmPassword": "പാസ്വേഡ് സ്ഥിരീകരിക്കുക",
     "newPassword": "പുതിയ പാസ്വേഡ്",
     "rejectionReason": "നിരസിച്ച കാരണങ്ങൾ",
-    "enterReasonForRejection": "നിരസിക്കാനുള്ള കാരണം നൽകുക"
+    "enterReasonForRejection": "നിരസിക്കാനുള്ള കാരണം നൽകുക",
+    "oldPassword": "പഴയ പാസ്വേഡ്"
   },
   "button": {
     "submit": "സമർപ്പിക്കുക",
@@ -76,7 +78,10 @@
     "hotelVerification": "ഹോട്ടൽ വെരിഫിക്കേഷൻ",
     "view": "കാണുക",
     "approve": "അംഗീകരിക്കുക",
-    "reject": "നിരസിക്കുക"
+    "reject": "നിരസിക്കുക",
+    "changePassword": "പാസ്വേഡ് മാറ്റുക",
+    "userDetails": "ഉപയോക്തൃ വിശദാംശങ്ങൾ",
+    "wallet": "വാലറ്റ്"
   },
   "text": {
     "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -106,6 +111,7 @@
     "uploadDrivingLicence": "ഡ്രൈവിംഗ് ലൈസൻസ് അപ്ലോഡ് ചെയ്യുക",
     "status": "നില",
     "noUsersToShow": "പ്രദർശിപ്പിക്കാൻ ഉപയോക്താക്കൾ ഇല്ല",
-    "rejectionReason": "നിരസിച്ച കാരണങ്ങൾ"
+    "rejectionReason": "നിരസിച്ച കാരണങ്ങൾ",
+    "enterCurrentPasswordToSetNewOne": "പുതിയ പാസ്വേഡ് സജ്ജമാക്കാൻ നിലവിലെ പാസ്വേഡ് നൽകുക"
   }
 }

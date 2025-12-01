@@ -79,7 +79,9 @@
         "view": "View",
         "approve": "Approve",
         "reject": "Reject",
-        "changePassword": "Change Password"
+        "changePassword": "Change Password",
+        "userDetails": "User Details",
+        "wallet": "Wallet"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",

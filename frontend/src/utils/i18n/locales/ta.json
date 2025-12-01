@@ -30,7 +30,8 @@
     "confirmPasswordRequired": "கடவுச்சொல் உறுதிப்படுத்துதல் தேவை",
     "passwordAndCofirmPasswordNotMatching": "கடவுச்சொல் மற்றும் உறுதிப்படுத்தல் கடவுச்சொல் பொருந்தவில்லை",
     "maxFileSize": "அதிகபட்ச கோப்பு அளவு {{size}}",
-    "provideRejectionReason": "தயவு செய்து மறுக்கும் காரணத்தை வழங்கவும்"
+    "provideRejectionReason": "தயவு செய்து மறுக்கும் காரணத்தை வழங்கவும்",
+    "newPasswordAndOldPasswordMustnotBeSame": "புதிய கடவுச்சொல் மற்றும் பழைய கடவுச்சொல் ஒரே மாதிரியாக இருக்கக்கூடாது"
   },
   "form": {
     "fullname": "முழுப்பெயர்",
@@ -39,7 +40,8 @@
     "confirmPassword": "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
     "newPassword": "புதிய கடவுச்சொல்",
     "rejectionReason": "மறுப்புக் காரணம்",
-    "enterReasonForRejection": "மறுப்பதற்கான காரணத்தை உள்ளிடவும்"
+    "enterReasonForRejection": "மறுப்பதற்கான காரணத்தை உள்ளிடவும்",
+    "oldPassword": "பழைய கடவுச்சொல்"
   },
   "button": {
     "submit": "சமர்ப்பிக்க",
@@ -76,7 +78,10 @@
     "hotelVerification": "ஹோட்டல் சரிபார்ப்பு",
     "view": "பார்க்க",
     "approve": "அனுமதி",
-    "reject": "நிராகரிக்க"
+    "reject": "நிராகரிக்க",
+    "changePassword": "கடவுச்சொல்லை மாற்றவும்",
+    "userDetails": "பயனர் விவரங்கள்",
+    "wallet": "பணப்பை"
   },
   "text": {
     "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -106,6 +111,7 @@
     "uploadDrivingLicence": "டிரைவிங் லைசென்ஸைப் பதிவேற்றவும்",
     "status": "நிலை",
     "noUsersToShow": "காட்ட பயனர்கள் இல்லை",
-    "rejectionReason": "நிராகரிப்புக் காரணம்"
+    "rejectionReason": "நிராகரிப்புக் காரணம்",
+    "enterCurrentPasswordToSetNewOne": "புதிய கடவுச்சொல்லை அமைக்க தற்போதைய கடவுச்சொல்லை உள்ளிடவும்"
   }
 }
