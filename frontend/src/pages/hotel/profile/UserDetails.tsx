@@ -10,17 +10,15 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "@/config/tanstackQueryConfig";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import { toast } from "sonner";
-import { useAppSelector } from "@/hooks/reduxHooks";
 
 function UserDetails() {
     const [isEditing, setIsEditing] = useState(false);
     const { mutate } = useMutation(createUpdateUserProfileQueryOptions());
-    const token = useAppSelector((state) => state.token.accessToken);
     const {
         data: profileDataResponse,
         isLoading,
         isError,
-    } = useQuery({ ...createGetUserProfileQueryOptions(), enabled: !!token });
+    } = useQuery(createGetUserProfileQueryOptions());
     const profileData = profileDataResponse?.data;
     function handleDataChange(data: {
         full_name?: string;

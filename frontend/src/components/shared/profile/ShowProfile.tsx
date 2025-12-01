@@ -303,25 +303,13 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                     delay: 0.7,
                 }}
             >
-                <motion.div
-                    className="w-1/2"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
-                >
+                <div className="w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95">
                     <Button className="w-full" onClick={setEditing}>
                         <Edit className="mr-2 h-4 w-4" />
                         {t(translationKey.button.updateProfile)}
                     </Button>
-                </motion.div>
-                <motion.div
-                    className="w-1/2"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
-                >
-                    <ChangePasswordModalWithButton className="w-full" />
-                </motion.div>
+                </div>
+                <ChangePasswordModalWithButton className="w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95" />
             </motion.div>
         </motion.div>
     );

@@ -97,6 +97,8 @@ export function createGetUserProfileQueryOptions() {
     return queryOptions<HttpResponse<IGetUserProfileResponse>, Error>({
         queryKey: [QUERY_KEYS.USER_PROFILE],
         queryFn: getUserProfile,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
     });
 }
 
