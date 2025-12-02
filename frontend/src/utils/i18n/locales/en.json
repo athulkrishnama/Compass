@@ -79,7 +79,10 @@
         "view": "View",
         "approve": "Approve",
         "reject": "Reject",
-        "changePassword": "Change Password"
+        "changePassword": "Change Password",
+        "userDetails": "User Details",
+        "cabDetails": "Cab Details",
+        "wallet": "Wallet"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",

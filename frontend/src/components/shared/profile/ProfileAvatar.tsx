@@ -1,43 +1,38 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
+import { UserIcon } from "lucide-react";
 import React from "react";
-import * as Avatar from "@radix-ui/react-avatar";
-import { Camera, UserIcon } from "lucide-react";
 
 interface ProfileAvatarProps {
-    profileImage: File | null;
-    ProfileUrl?: string;
-    handleClick: () => void;
+    imageUrl?: string | null;
+    fallbackText?: string;
+    className?: string;
 }
 
 function ProfileAvatar({
-    profileImage,
-    ProfileUrl,
-    handleClick,
+    imageUrl,
+    fallbackText,
+    className,
 }: ProfileAvatarProps) {
     return (
-        <div className="flex justify-center items-center">
-            <div className="relative group cursor-pointer w-28 h-28 rounded-full overflow-hidden">
-                <Avatar.Root className="w-full h-full rounded-full overflow-hidden  border-gray-300">
-                    <Avatar.Image
-                        src={
-                            profileImage
-                                ? URL.createObjectURL(profileImage)
-                                : ProfileUrl
-                        }
-                        alt="Profile Image"
-                        className="w-full h-full object-cover"
-                    />
-                    <Avatar.Fallback className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500">
-                        <UserIcon size={40} />
-                    </Avatar.Fallback>
-                </Avatar.Root>
-
-                <div
-                    onClick={handleClick}
-                    className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                    <Camera size={24} className="text-white" />
-                </div>
-            </div>
+        <div className="w-full h-full">
+            <Avatar
+                className={cn(
+                    "rounded-md shadow-[0_12px_32px_0_rgba(0,0,0,0.45)] bg-white w-full h-full flex-shrink-0",
+                    className
+                )}
+            >
+                <AvatarImage
+                    src={imageUrl ?? undefined}
+                    alt={fallbackText}
+                    className="object-cover w-full h-full rounded-md"
+                />
+                <AvatarFallback className="bg-gray-100 text-gray-500 flex items-center justify-center w-full h-full rounded-md text-3xl">
+                    {fallbackText?.charAt(0)?.toUpperCase() ?? (
+                        <UserIcon size={40} className="text-gray-400" />
+                    )}
+                </AvatarFallback>
+            </Avatar>
         </div>
     );
 }

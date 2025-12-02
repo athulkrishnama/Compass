@@ -82,6 +82,9 @@ export default {
         approve: "button.approve",
         reject: "button.reject",
         changePassword: "button.changePassword",
+        userDetails: "button.userDetails",
+        cabDetails: "button.cabDetails",
+        wallet: "button.wallet",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",

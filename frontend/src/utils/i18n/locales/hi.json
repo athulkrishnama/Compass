@@ -30,7 +30,8 @@
     "confirmPasswordRequired": "कन्फर्म पासवर्ड आवश्यक है",
     "passwordAndCofirmPasswordNotMatching": "पासवर्ड और कन्फर्म पासवर्ड मेल नहीं खाते",
     "maxFileSize": "अधिकतम फ़ाइल आकार {{size}} है",
-    "provideRejectionReason": "कृपया अस्वीकृति का कारण प्रदान करें"
+    "provideRejectionReason": "कृपया अस्वीकृति का कारण प्रदान करें",
+    "newPasswordAndOldPasswordMustnotBeSame": "नया पासवर्ड और पुराना पासवर्ड समान नहीं होना चाहिए"
   },
   "form": {
     "fullname": "पूरा नाम",
@@ -39,7 +40,8 @@
     "confirmPassword": "पासवर्ड की पुष्टि करें",
     "newPassword": "नया पासवर्ड",
     "rejectionReason": "अस्वीकृति का कारण",
-    "enterReasonForRejection": "अस्वीकृति का कारण दर्ज करें"
+    "enterReasonForRejection": "अस्वीकृति का कारण दर्ज करें",
+    "oldPassword": "पुराना पासवर्ड"
   },
   "button": {
     "submit": "सबमिट करें",
@@ -76,7 +78,11 @@
     "hotelVerification": "होटल वेरिफिकेशन",
     "view": "देखें",
     "approve": "अनुमोदित करें",
-    "reject": "अस्वीकार करें"
+    "reject": "अस्वीकार करें",
+    "changePassword": "पासवर्ड बदलें",
+    "userDetails": "यूज़र विवरण",
+    "cabDetails": "कैब विवरण",
+    "wallet": "वॉलेट"
   },
   "text": {
     "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -106,6 +112,7 @@
     "uploadDrivingLicence": "ड्राइविंग लाइसेंस अपलोड करें",
     "status": "स्थिति",
     "noUsersToShow": "दिखाने के लिए कोई यूज़र नहीं",
-    "rejectionReason": "अस्वीकृति का कारण"
+    "rejectionReason": "अस्वीकृति का कारण",
+    "enterCurrentPasswordToSetNewOne": "नया पासवर्ड सेट करने के लिए वर्तमान पासवर्ड दर्ज करें"
   }
 }
