@@ -18,11 +18,8 @@ export const Route = createFileRoute("/traveler")({
             "/traveler/forgetPassword",
         ];
         if (
-            !context.isLoggedin() ||
-            (!context.checkRole(ROLES.TRAVELER) &&
-                !allowedRoutes.includes(
-                    location.pathname as keyof FileRoutesByTo
-                ))
+            (!context.isLoggedin() || !context.checkRole(ROLES.TRAVELER)) &&
+            !allowedRoutes.includes(location.pathname as keyof FileRoutesByTo)
         ) {
             throw redirect({ to: "/traveler/login", replace: true });
         }
