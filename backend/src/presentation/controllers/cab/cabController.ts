@@ -1,6 +1,8 @@
 import { InvalideDataException } from "@application/constants/Exceptions";
+import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCabDetailsUseCase.interface";
 import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updateVehicleUseCase.interface";
 import { IUpdateVehicleRequestDTO } from "@domain/dtos/cab/updateVehicle.dto";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { MulterFiles } from "@presentation/types/multerFilesType";
@@ -15,6 +17,8 @@ export class CabController {
   constructor(
     @inject("IUpdateVehicleUseCase")
     private _updateVehicleUseCase: IUpdateVehicleUseCase,
+    @inject("IGetCabDetailsUseCase")
+    private _getCabDetailsUseCase: IGetCabDetailsUseCase,
   ) {}
 
   async handleGetCabDetails(
@@ -23,6 +27,19 @@ export class CabController {
     next: NextFunction,
   ): Promise<void> {
     try {
+      const userId = req.user.id;
+      if(!userId){
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
+      }
+      const cab = await this._getCabDetailsUseCase.execute(userId);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        cab
+      );
     } catch (error) {
       next(error);
     }

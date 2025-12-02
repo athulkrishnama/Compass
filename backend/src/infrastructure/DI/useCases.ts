@@ -39,6 +39,8 @@ import { IChangePasswordUseCase } from "@application/interfaces/useCase/auth/cha
 import { ChangePasswordUseCase } from "@useCases/auth/changePasswordUseCase";
 import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updateVehicleUseCase.interface";
 import { UpdateVehicleUseCase } from "@useCases/cab/updateVehicleUseCase";
+import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCabDetailsUseCase.interface";
+import { GetCabDetailsUseCase } from "@useCases/cab/getCabDetailsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -114,5 +116,9 @@ export function registerUsecases() {
   container.registerSingleton<IUpdateVehicleUseCase>(
     "IUpdateVehicleUseCase",
     UpdateVehicleUseCase,
+  );
+  container.registerSingleton<IGetCabDetailsUseCase>(
+    "IGetCabDetailsUseCase",
+    GetCabDetailsUseCase,
   );
 }
