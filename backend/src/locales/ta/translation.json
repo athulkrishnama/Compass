@@ -31,6 +31,8 @@
   "blocked": "இந்த சேவையில் இருந்து நீங்கள் தடைசெய்யப்பட்டுள்ளீர்கள்",
   "invalidId": "தவறான ID",
 
+  "invalidCabType": "தவறான காப் வகை",
+
   "otpSendSuccessfully": "OTP வெற்றிகரமாக அனுப்பப்பட்டது",
   "userSignupSuccessful": "பயனர் பதிவு வெற்றிகரமாக முடிந்தது",
   "otpSuccessfullyResended": "OTP மீண்டும் வெற்றிகரமாக அனுப்பப்பட்டது",
@@ -43,5 +45,8 @@
   "logoutSuccessful": "வெற்றிகரமாக வெளியேறப்பட்டது",
   "updateSuccessful": "வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
   "verificationApproved": "சரிபார்ப்பு அங்கீகரிக்கப்பட்டது",
-  "verificationRejected": "சரிபார்ப்பு நிராகரிக்கப்பட்டது"
+  "verificationRejected": "சரிபார்ப்பு நிராகரிக்கப்பட்டது",
+  "fileTooLarge": "கோப்பு மிகவும் பெரியது",
+  "cabNotFound": "கேப் கிடைக்கவில்லை",
+  "vehicleInfoIncomplete": "வாகனத் தகவல் முழுமையடையவில்லை"
 }

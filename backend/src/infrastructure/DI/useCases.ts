@@ -37,6 +37,8 @@ import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/u
 import { RejectUserVerificationRequestUseCase } from "@useCases/admin/rejectUserVerificationRequestUseCase";
 import { IChangePasswordUseCase } from "@application/interfaces/useCase/auth/changePasswordUseCase.interface";
 import { ChangePasswordUseCase } from "@useCases/auth/changePasswordUseCase";
+import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updateVehicleUseCase.interface";
+import { UpdateVehicleUseCase } from "@useCases/cab/updateVehicleUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -108,5 +110,9 @@ export function registerUsecases() {
   container.registerSingleton<IChangePasswordUseCase>(
     "IChangePasswordUseCase",
     ChangePasswordUseCase,
+  );
+  container.registerSingleton<IUpdateVehicleUseCase>(
+    "IUpdateVehicleUseCase",
+    UpdateVehicleUseCase,
   );
 }

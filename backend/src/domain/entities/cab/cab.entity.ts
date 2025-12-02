@@ -1,6 +1,8 @@
+import { VehicleType } from "@domain/types/vehicleType";
+
 interface vehicle {
   model: string;
-  type: string;
+  type: VehicleType;
   registrationNumber: string;
   images: string[];
 }

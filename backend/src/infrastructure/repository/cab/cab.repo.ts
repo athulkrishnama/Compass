@@ -1,4 +1,4 @@
-import { CabEntity } from "@domain/entities/user/cab.entity";
+import { CabEntity } from "@domain/entities/cab/cab.entity";
 import { BaseRepository } from "../base/base.repo";
 import { ICabDocument } from "../database configs/schemas/cabSchema";
 import { inject, injectable } from "tsyringe";

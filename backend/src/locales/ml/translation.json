@@ -31,6 +31,8 @@
   "blocked": "ഈ സേവനത്തിൽ നിന്ന് നിങ്ങൾ ബ്ലോക്ക് ചെയ്‌തിരിക്കുന്നു",
   "invalidId": "അസാധുവായ ID",
 
+  "invalidCabType": "അസാധുവായ കാബ് തരം",
+
   "otpSendSuccessfully": "OTP വിജയകരമായി അയച്ചു",
   "userSignupSuccessful": "ഉപയോക്തൃ രജിസ്ട്രേഷൻ വിജയകരമായി",
   "otpSuccessfullyResended": "OTP വീണ്ടും വിജയകരമായി അയച്ചു",
@@ -43,5 +45,8 @@
   "logoutSuccessful": "വിജയകരമായി ലോഗൗട്ട് ചെയ്തു",
   "updateSuccessful": "വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
   "verificationApproved": "സ്ഥിരീകരണം അംഗീകരിച്ചു",
-  "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു"
+  "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു",
+  "fileTooLarge": "ഫയൽ വളരെ വലുതാണ്",
+  "cabNotFound": "കാബ് കണ്ടെത്തിയില്ല",
+  "vehicleInfoIncomplete": "വാഹന വിവരങ്ങൾ അപൂർണ്ണമാണ്"
 }

@@ -31,6 +31,8 @@
   "blocked": "आप इस सेवा से ब्लॉक किए गए हैं",
   "invalidId": "अमान्य ID",
 
+  "invalidCabType": "अमान्य कैब प्रकार",
+
   "otpSendSuccessfully": "OTP सफलतापूर्वक भेजा गया",
   "userSignupSuccessful": "उपयोगकर्ता साइनअप सफल",
   "otpSuccessfullyResended": "OTP सफलतापूर्वक दोबारा भेजा गया",
@@ -43,5 +45,8 @@
   "logoutSuccessful": "सफलतापूर्वक लॉगआउट किया गया",
   "updateSuccessful": "सफलतापूर्वक अपडेट किया गया",
   "verificationApproved": "वेरिफिकेशन स्वीकृत",
-  "verificationRejected": "वेरिफिकेशन अस्वीकृत"
+  "verificationRejected": "वेरिफिकेशन अस्वीकृत",
+  "fileTooLarge": "फ़ाइल बहुत बड़ी है",
+  "cabNotFound": "कैब नहीं मिली",
+  "vehicleInfoIncomplete": "वाहन की जानकारी अधूरी है"
 }

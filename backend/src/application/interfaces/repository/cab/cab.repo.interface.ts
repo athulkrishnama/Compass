@@ -1,4 +1,4 @@
-import { CabEntity } from "@domain/entities/user/cab.entity";
+import { CabEntity } from "@domain/entities/cab/cab.entity";
 import { IBaseRepository } from "../base/base.repo.interface";
 import { ICabDocument } from "@infrastructure/repository/database configs/schemas/cabSchema";
 

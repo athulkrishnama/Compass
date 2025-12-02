@@ -1,3 +1,4 @@
+import { VehicleType, VEHICLE_TYPES } from "@domain/types/vehicleType";
 import { ObjectId, Schema } from "mongoose";
 
 export interface ICabDocument extends Document {
@@ -12,7 +13,7 @@ export interface ICabDocument extends Document {
 
 interface vehicle {
   model: string;
-  type: string;
+  type: VehicleType;
   registrationNumber: string;
   images: string[];
 }
@@ -27,6 +28,7 @@ export const cabSchema = new Schema<ICabDocument>({
     },
     type: {
       type: String,
+      enum: VEHICLE_TYPES,
     },
     registrationNumber: {
       type: String,
