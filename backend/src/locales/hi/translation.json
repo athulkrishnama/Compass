@@ -13,6 +13,7 @@
   "passwordNotMatching": "पासवर्ड मेल नहीं खा रहे",
   "verificationTokenExpired": "वेरिफिकेशन टोकन की अवधि समाप्त हो गई",
   "emailExists": "यह ईमेल पहले से मौजूद है",
+  "cabAlreadyExists": "इस उपयोगकर्ता के लिए कैब प्रोफ़ाइल पहले से मौजूद है",
   "uploadError": "फ़ाइल अपलोड करते समय त्रुटि हुई",
   "conversionError": "डेटा परिवर्तन के दौरान त्रुटि",
   "invalidPassword": "अमान्य पासवर्ड प्रारूप",

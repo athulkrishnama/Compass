@@ -13,6 +13,7 @@ export enum INTERNAL_ERROR_MESSAGES {
   PASSWORD_NOT_MATCHING = "passwordNotMatching",
   REFRESH_TOKEN_EXPIRED = "verificationTokenExpired",
   AUTH_EXISTING_EMAIL_ERROR = "emailExists",
+  CAB_ALREADY_EXISTS = "cabAlreadyExists",
   UPLOAD_ERROR = "uploadError",
   CONVERSION_ERROR = "conversionError",
   INVALID_PASSWORD = "invalidPassword",

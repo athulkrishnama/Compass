@@ -13,6 +13,7 @@
   "passwordNotMatching": "Password does not match",
   "verificationTokenExpired": "Verification token expired",
   "emailExists": "Email already exists",
+  "cabAlreadyExists": "Cab profile already exists for this user",
   "uploadError": "Error while uploading file",
   "conversionError": "Error during data conversion",
   "invalidPassword": "Invalid password format",

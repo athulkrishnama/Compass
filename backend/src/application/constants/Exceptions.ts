@@ -69,3 +69,9 @@ export class InvalidOperationException extends ApplicationException {
     super(message);
   }
 }
+
+export class ConflictException extends ApplicationException {
+  constructor(message: string) {
+    super(message);
+  }
+}

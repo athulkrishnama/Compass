@@ -13,6 +13,7 @@
   "passwordNotMatching": "கடவுச்சொற்கள் பொருந்தவில்லை",
   "verificationTokenExpired": "சரிபார்ப்புக் குறியீடு காலாவதியானது",
   "emailExists": "இந்த மின்னஞ்சல் ஏற்கனவே உள்ளது",
+  "cabAlreadyExists": "இந்த பயனருக்கான காப் சுயவிவரம் ஏற்கனவே உள்ளது",
   "uploadError": "கோப்பை பதிவேற்றும் போது பிழை ஏற்பட்டது",
   "conversionError": "தரவு மாற்றத்தில் பிழை",
   "invalidPassword": "தவறான கடவுச்சொல் வடிவம்",
