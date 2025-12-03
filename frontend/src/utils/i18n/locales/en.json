@@ -82,7 +82,13 @@
         "changePassword": "Change Password",
         "userDetails": "User Details",
         "cabDetails": "Cab Details",
-        "wallet": "Wallet"
+        "wallet": "Wallet",
+        "change": "Change",
+        "editVehicle": "Edit Vehicle",
+        "changeBaseLocation": "Change Base Location",
+        "online": "ONLINE",
+        "offline": "OFFLINE",
+        "addVehicle": "Add Vehicle"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -113,6 +119,10 @@
         "status": "Status",
         "noUsersToShow": "No users to show",
         "rejectionReason": "Reason for rejection",
-        "enterCurrentPasswordToSetNewOne": "Enter current password to set new one"
+        "enterCurrentPasswordToSetNewOne": "Enter current password to set new one",
+        "baseLocation": "Base Location",
+        "notSet": "Not Set",
+        "registrationNumber": "Registration Number",
+        "vehicleImage": "Vehicle image"
     }
 }

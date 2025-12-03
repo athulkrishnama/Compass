@@ -85,6 +85,12 @@ export default {
         userDetails: "button.userDetails",
         cabDetails: "button.cabDetails",
         wallet: "button.wallet",
+        change: "button.change",
+        editVehicle: "button.editVehicle",
+        changeBaseLocation: "button.changeBaseLocation",
+        online: "button.online",
+        offline: "button.offline",
+        addVehicle: "button.addVehicle",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
@@ -116,5 +122,9 @@ export default {
         noUsersToShow: "text.noUsersToShow",
         rejectionReason: "text.rejectionReason",
         enterCurrentPasswordToSetNewOne: "text.enterCurrentPasswordToSetNewOne",
+        baseLocation: "text.baseLocation",
+        notSet: "text.notSet",
+        registrationNumber: "text.registrationNumber",
+        vehicleImage: "text.vehicleImage",
     },
 };

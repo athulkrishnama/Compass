@@ -8,18 +8,15 @@ export class CabRouter {
   private _router: Router;
   constructor() {
     this._router = Router();
-    this._setBlockMiddleware();
     this._setRoute();
   }
 
-  _setBlockMiddleware() {
-    this._router.use(authMiddleware.checkBlocked());
-  }
 
   _setRoute() {
     this._router.get(
       "/",
       authMiddleware.check,
+      authMiddleware.checkBlocked(),
       authMiddleware.authorizeRole([ROLES.CAB]),
       (req: Request, res: Response, next: NextFunction) =>
         cabController.handleGetCabDetails(req, res, next),
@@ -28,6 +25,7 @@ export class CabRouter {
     this._router.patch(
       CAB_ROUTES.VEHICLE,
       authMiddleware.check,
+      authMiddleware.checkBlocked(),
       authMiddleware.authorizeRole([ROLES.CAB]),
       uploadMiddleware.fields([{ name: "images", maxCount: 5 }]),
       (req: Request, res: Response, next: NextFunction) => {
