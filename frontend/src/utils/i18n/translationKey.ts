@@ -34,6 +34,13 @@ export default {
         provideRejectionReason: "errors.provideRejectionReason",
         newPasswordAndOldPasswordMustnotBeSame:
             "errors.newPasswordAndOldPasswordMustnotBeSame",
+        registrationNumberRequired: "errors.registrationNumberRequired",
+        registrationNumberMaxLength: "errors.registrationNumberMaxLength",
+        modelNameRequired: "errors.modelNameRequired",
+        modelNameMaxLength: "errors.modelNameMaxLength",
+        atLeastOneImageRequired: "errors.atLeastOneImageRequired",
+        unsupportedImageFormat: "errors.unsupportedImageFormat",
+        invalidVehicleType: "errors.invalidVehicleType",
     },
     form: {
         fullname: "form.fullname",
@@ -126,5 +133,7 @@ export default {
         notSet: "text.notSet",
         registrationNumber: "text.registrationNumber",
         vehicleImage: "text.vehicleImage",
+        modelName: "text.modelName",
+        vehicleType: "text.vehicleType",
     },
 };

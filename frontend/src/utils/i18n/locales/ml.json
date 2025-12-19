@@ -31,7 +31,14 @@
         "passwordAndCofirmPasswordNotMatching": "പാസ്വേഡും സ്ഥിരീകരണ പാസ്വേഡും ഒത്തുപോകുന്നില്ല",
         "maxFileSize": "പരമാവധി ഫയൽ വലുപ്പം {{size}} ആണ്",
         "provideRejectionReason": "ദയവായി നിരസിക്കാനുള്ള കാരണം നൽകുക",
-        "newPasswordAndOldPasswordMustnotBeSame": "പുതിയ പാസ്വേഡും പഴയ പാസ്വേഡും ഒന്നുതന്നെയാകാൻ പാടില്ല"
+        "newPasswordAndOldPasswordMustnotBeSame": "പുതിയ പാസ്വേഡും പഴയ പാസ്വേഡും ഒന്നുതന്നെയാകാൻ പാടില്ല",
+        "registrationNumberRequired": "രജിസ്ട്രേഷൻ നമ്പർ ആവശ്യമാണ്",
+        "registrationNumberMaxLength": "രജിസ്ട്രേഷൻ നമ്പർ 20 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
+        "modelNameRequired": "മോഡൽ നാമം ആവശ്യമാണ്",
+        "modelNameMaxLength": "മോഡൽ നാമം 50 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
+        "atLeastOneImageRequired": "കുറഞ്ഞത് ഒരു ചിത്രമെങ്കിലും ആവശ്യമാണ്",
+        "unsupportedImageFormat": ".jpg, .jpeg, .png, .webp ഫോർമാറ്റുകൾ മാത്രമേ പിന്തുണയ്ക്കൂ",
+        "invalidVehicleType": "ദയവായി സാധുവായ വാഹന തരം തിരഞ്ഞെടുക്കുക"
     },
     "form": {
         "fullname": "പൂർണ്ണ പേര്",
@@ -123,6 +130,8 @@
         "baseLocation": "അടിസ്ഥാന സ്ഥലം",
         "notSet": "സജ്ജീകരിച്ചിട്ടില്ല",
         "registrationNumber": "രജിസ്ട്രേഷൻ നമ്പർ",
-        "vehicleImage": "വാഹന ചിത്രം"
+        "vehicleImage": "വാഹന ചിത്രം",
+        "modelName": "മോഡൽ നാമം",
+        "vehicleType": "വാഹന തരം"
     }
 }

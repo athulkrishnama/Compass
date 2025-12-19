@@ -1,16 +1,11 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import AddVehicleComponentWithButton from "./AddVehicleComponentWithButton";
 
-interface NoVehicleDetailsProps {
-    onAddVehicle: () => void;
-}
 
-const NoVehicleDetails: React.FC<NoVehicleDetailsProps> = ({
-    onAddVehicle,
-}) => {
+
+const NoVehicleDetails = () => {
     const { t } = useTranslation();
 
     return (
@@ -34,10 +29,7 @@ const NoVehicleDetails: React.FC<NoVehicleDetailsProps> = ({
                     )}
                 </p>
             </div>
-            <Button onClick={onAddVehicle} className="gap-2">
-                <Plus className="w-4 h-4" />
-                {t("button.addVehicle")}
-            </Button>
+            <AddVehicleComponentWithButton/>
         </div>
     );
 };

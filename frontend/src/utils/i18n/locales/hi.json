@@ -31,7 +31,14 @@
         "passwordAndCofirmPasswordNotMatching": "पासवर्ड और कन्फर्म पासवर्ड मेल नहीं खाते",
         "maxFileSize": "अधिकतम फ़ाइल आकार {{size}} है",
         "provideRejectionReason": "कृपया अस्वीकृति का कारण प्रदान करें",
-        "newPasswordAndOldPasswordMustnotBeSame": "नया पासवर्ड और पुराना पासवर्ड समान नहीं होना चाहिए"
+        "newPasswordAndOldPasswordMustnotBeSame": "नया पासवर्ड और पुराना पासवर्ड समान नहीं होना चाहिए",
+        "registrationNumberRequired": "पंजीकरण संख्या आवश्यक है",
+        "registrationNumberMaxLength": "पंजीकरण संख्या 20 अक्षरों से कम होनी चाहिए",
+        "modelNameRequired": "मॉडल का नाम आवश्यक है",
+        "modelNameMaxLength": "मॉडल का नाम 50 अक्षरों से कम होना चाहिए",
+        "atLeastOneImageRequired": "कम से कम एक छवि आवश्यक है",
+        "unsupportedImageFormat": "केवल .jpg, .jpeg, .png और .webp प्रारूप समर्थित हैं",
+        "invalidVehicleType": "कृपया एक मान्य वाहन प्रकार चुनें"
     },
     "form": {
         "fullname": "पूरा नाम",
@@ -123,6 +130,8 @@
         "baseLocation": "आधार स्थान",
         "notSet": "सेट नहीं है",
         "registrationNumber": "पंजीकरण संख्या",
-        "vehicleImage": "वाहन छवि"
+        "vehicleImage": "वाहन छवि",
+        "modelName": "मॉडल का नाम",
+        "vehicleType": "वाहन प्रकार"
     }
 }

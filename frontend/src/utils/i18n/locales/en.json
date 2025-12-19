@@ -31,7 +31,14 @@
         "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match",
         "maxFileSize": "Maximum file Size is {{size}}",
         "provideRejectionReason": "Please provide a rejection reason",
-        "newPasswordAndOldPasswordMustnotBeSame": "New password and old password must not be same"
+        "newPasswordAndOldPasswordMustnotBeSame": "New password and old password must not be same",
+        "registrationNumberRequired": "Registration number is required",
+        "registrationNumberMaxLength": "Registration number must be less than 20 characters",
+        "modelNameRequired": "Model name is required",
+        "modelNameMaxLength": "Model name must be less than 50 characters",
+        "atLeastOneImageRequired": "At least one image is required",
+        "unsupportedImageFormat": "Only .jpg, .jpeg, .png and .webp formats are supported",
+        "invalidVehicleType": "Please select a valid vehicle type"
     },
     "form": {
         "fullname": "Full Name",
@@ -123,6 +130,8 @@
         "baseLocation": "Base Location",
         "notSet": "Not Set",
         "registrationNumber": "Registration Number",
-        "vehicleImage": "Vehicle image"
+        "vehicleImage": "Vehicle image",
+        "modelName": "Model Name",
+        "vehicleType": "Vehicle Type"
     }
 }

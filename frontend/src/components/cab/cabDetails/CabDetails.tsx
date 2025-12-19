@@ -11,6 +11,7 @@ import RegistrationNumber from "./RegistrationNumber";
 import CabStatus from "./CabStatus";
 import NoVehicleDetails from "./NoVehicleDetails";
 import Loading from "@/components/shared/loading/Loading";
+import AddVehicleComponentWithButton from "./AddVehicleComponentWithButton";
 
 function CabDetails() {
     const { t } = useTranslation();
@@ -19,9 +20,7 @@ function CabDetails() {
     const baseLocation = data?.data?.baseLocation;
     const [isOnline, setIsOnline] = useState(true);
 
-    const handleAddVehicle = () => {
-        console.log("Add vehicle clicked");
-    };
+
 
     if (isLoading) {
         return <Loading />;
@@ -40,32 +39,17 @@ function CabDetails() {
                 </div>
 
                 {!vehicleDetails?.model ? (
-                    <NoVehicleDetails onAddVehicle={handleAddVehicle} />
+                    <NoVehicleDetails />
                 ) : (
                     <>
-                        <div className="w-full -mx-2">
-                            <ImageScroll
-                                images={
-                                    vehicleDetails.images &&
-                                    vehicleDetails.images.length > 0
-                                        ? vehicleDetails.images
-                                        : []
-                                }
-                            />
-                        </div>
-
                         <div className="flex flex-col gap-6">
                             <div className="flex items-center justify-between">
                                 <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
                                     {vehicleDetails.model}
                                 </h1>
-                                <Button
-                                    variant="secondary"
-                                    className="rounded-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold px-6 py-6 flex items-center gap-2 text-sm uppercase tracking-wide"
-                                >
-                                    <Pencil className="w-4 h-4" />
-                                    {t("button.editVehicle")}
-                                </Button>
+                                <AddVehicleComponentWithButton
+                                    vehicleDetails={data?.data?.vehicleDetails}
+                                />
                             </div>
 
                             <div className="flex flex-wrap items-center gap-4">
@@ -79,6 +63,16 @@ function CabDetails() {
                                     }
                                 />
                             </div>
+                        </div>
+                        <div className="w-full -mx-2">
+                            <ImageScroll
+                                images={
+                                    vehicleDetails.images &&
+                                    vehicleDetails.images.length > 0
+                                        ? vehicleDetails.images
+                                        : []
+                                }
+                            />
                         </div>
                     </>
                 )}

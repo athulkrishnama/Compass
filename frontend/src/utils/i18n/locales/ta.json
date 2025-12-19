@@ -31,7 +31,14 @@
         "passwordAndCofirmPasswordNotMatching": "கடவுச்சொல் மற்றும் உறுதிப்படுத்தல் கடவுச்சொல் பொருந்தவில்லை",
         "maxFileSize": "அதிகபட்ச கோப்பு அளவு {{size}}",
         "provideRejectionReason": "தயவு செய்து மறுக்கும் காரணத்தை வழங்கவும்",
-        "newPasswordAndOldPasswordMustnotBeSame": "புதிய கடவுச்சொல் மற்றும் பழைய கடவுச்சொல் ஒரே மாதிரியாக இருக்கக்கூடாது"
+        "newPasswordAndOldPasswordMustnotBeSame": "புதிய கடவுச்சொல் மற்றும் பழைய கடவுச்சொல் ஒரே மாதிரியாக இருக்கக்கூடாது",
+        "registrationNumberRequired": "பதிவு எண் தேவை",
+        "registrationNumberMaxLength": "பதிவு எண் 20 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
+        "modelNameRequired": "மாதிரி பெயர் தேவை",
+        "modelNameMaxLength": "மாதிரி பெயர் 50 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
+        "atLeastOneImageRequired": "குறைந்தபட்சம் ஒரு படமாவது தேவை",
+        "unsupportedImageFormat": ".jpg, .jpeg, .png மற்றும் .webp வடிவங்கள் மட்டுமே ஆதரிக்கப்படுகின்றன",
+        "invalidVehicleType": "செல்லுபடியாகும் வாகன வகையைத் தேர்ந்தெடுக்கவும்"
     },
     "form": {
         "fullname": "முழுப்பெயர்",
@@ -123,6 +130,8 @@
         "baseLocation": "அடிப்படை இடம்",
         "notSet": "அமைக்கப்படவில்லை",
         "registrationNumber": "பதிவு எண்",
-        "vehicleImage": "வாகனப் படம்"
+        "vehicleImage": "வாகனப் படம்",
+        "modelName": "மாதிரி பெயர்",
+        "vehicleType": "வாகன வகை"
     }
 }

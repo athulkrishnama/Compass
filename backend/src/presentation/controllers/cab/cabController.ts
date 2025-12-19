@@ -53,10 +53,10 @@ export class CabController {
     try {
       const data: IUpdateVehicleRequestDTO = { ...req.body };
       data.userId = req.user.id;
-      const files = req.files as MulterFiles<"images">["images"];
+      const files = req.files as MulterFiles<"images">;
 
-      if (files?.length) {
-        data.images = files.map((img) => mutlterFileToFileconverter(img));
+      if (files.images?.length) {
+        data.images = files.images.map((img) => mutlterFileToFileconverter(img));
       }
 
       const parsedData = updateVehicleValidationSchema.safeParse(data);

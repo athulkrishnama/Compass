@@ -24,7 +24,7 @@ const BaseLocation: React.FC<BaseLocationProps> = ({
             className="w-full flex items-center justify-between py-2"
         >
             <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-black fill-current" />
+                <MapPin className="w-5 h-5 text-black fill-white" />
                 <span className="text-base font-medium text-gray-800">
                     {t("text.baseLocation")}: {displayLocation}
                 </span>

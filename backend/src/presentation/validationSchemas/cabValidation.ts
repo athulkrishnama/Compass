@@ -11,7 +11,7 @@ export const updateVehicleValidationSchema = z.object({
   registrationNumber: z.string().optional(),
   images: z
     .array(
-      z.file().max(1024 * 1024 * 2, {
+      z.file().max(1024 * 1024 * 5, {
         message: INTERNAL_ERROR_MESSAGES.FILE_TOO_LARGE,
       }),
     )
