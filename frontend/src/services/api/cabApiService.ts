@@ -25,3 +25,15 @@ export async function updateVehicleDetails<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function deleteVehicleImage(index: number) {
+    try {
+        const response = await axiosInstance.delete(`${CAB_ROUTES.IMAGE}/${index}`);
+        return response.data
+    } catch (error) {
+        if(error instanceof AxiosError){
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

@@ -41,6 +41,8 @@ import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updat
 import { UpdateVehicleUseCase } from "@useCases/cab/updateVehicleUseCase";
 import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCabDetailsUseCase.interface";
 import { GetCabDetailsUseCase } from "@useCases/cab/getCabDetailsUseCase";
+import { IDeleteCabImageUseCase } from "@application/interfaces/useCase/cab/deleteCabImageUseCase.interface";
+import { DeleteCabImageUseCase } from "@useCases/cab/deleteCabImageUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -121,4 +123,8 @@ export function registerUsecases() {
     "IGetCabDetailsUseCase",
     GetCabDetailsUseCase,
   );
+  container.registerSingleton<IDeleteCabImageUseCase>(
+    "IDeleteCabImageUseCase",
+    DeleteCabImageUseCase,
+  )
 }

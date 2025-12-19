@@ -8,7 +8,11 @@ export const createVehicleValidationSchema = () => {
         registrationNumber: z
             .string()
             .min(1, t(translationKey.errors.registrationNumberRequired))
-            .max(20, t(translationKey.errors.registrationNumberMaxLength)),
+            .max(20, t(translationKey.errors.registrationNumberMaxLength))
+            .regex(
+                /^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$/,
+                t(translationKey.errors.invalidRegistrationNumber)
+            ),
         modelName: z
             .string()
             .min(1, t(translationKey.errors.modelNameRequired))

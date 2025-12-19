@@ -49,5 +49,7 @@
   "verificationRejected": "Verification rejected",
   "fileTooLarge": "File is too large",
   "cabNotFound": "Cab not found",
-  "vehicleInfoIncomplete": "Vehicle information is incomplete"
+  "vehicleInfoIncomplete": "Vehicle information is incomplete",
+  "imageNotFound": "Image not found",
+  "invalidData": "Invalid data"
 }

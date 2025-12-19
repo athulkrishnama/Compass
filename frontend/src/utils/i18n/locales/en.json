@@ -38,7 +38,8 @@
         "modelNameMaxLength": "Model name must be less than 50 characters",
         "atLeastOneImageRequired": "At least one image is required",
         "unsupportedImageFormat": "Only .jpg, .jpeg, .png and .webp formats are supported",
-        "invalidVehicleType": "Please select a valid vehicle type"
+        "invalidVehicleType": "Please select a valid vehicle type",
+        "invalidRegistrationNumber":"Registration number is invalid"
     },
     "form": {
         "fullname": "Full Name",

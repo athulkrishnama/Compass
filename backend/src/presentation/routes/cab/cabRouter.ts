@@ -32,6 +32,16 @@ export class CabRouter {
         cabController.handleVehicleUpdate(req, res, next);
       },
     );
+
+    this._router.delete(
+      `${CAB_ROUTES.IMAGE}/:index`,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      authMiddleware.authorizeRole([ROLES.CAB]),
+      (req: Request, res: Response, next: NextFunction) => {
+        cabController.handleCabImageDelete(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

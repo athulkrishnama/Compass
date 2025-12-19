@@ -1,5 +1,6 @@
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
+    deleteVehicleImage,
     getCabDetails,
     updateVehicleDetails,
 } from "@/services/api/cabApiService";
@@ -17,4 +18,8 @@ export function createGetCabDetailsQueryOptions() {
 
 export function createUpdateVehicleMutationOption() {
     return mutationOptions<HttpResponse<object>, Error, FormData>({mutationFn:updateVehicleDetails});
+}
+
+export function createDeleteVehicleImageMutationOption() {
+    return mutationOptions<HttpResponse<object>, Error, number>({mutationFn:deleteVehicleImage});
 }

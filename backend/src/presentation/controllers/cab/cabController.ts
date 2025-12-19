@@ -1,4 +1,5 @@
 import { InvalideDataException } from "@application/constants/Exceptions";
+import { IDeleteCabImageUseCase } from "@application/interfaces/useCase/cab/deleteCabImageUseCase.interface";
 import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCabDetailsUseCase.interface";
 import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updateVehicleUseCase.interface";
 import { IUpdateVehicleRequestDTO } from "@domain/dtos/cab/updateVehicle.dto";
@@ -19,6 +20,8 @@ export class CabController {
     private _updateVehicleUseCase: IUpdateVehicleUseCase,
     @inject("IGetCabDetailsUseCase")
     private _getCabDetailsUseCase: IGetCabDetailsUseCase,
+    @inject("IDeleteCabImageUseCase")
+    private _deleteCabImageUseCase: IDeleteCabImageUseCase
   ) {}
 
   async handleGetCabDetails(
@@ -66,6 +69,31 @@ export class CabController {
       }
 
       await this._updateVehicleUseCase.execute(data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.VEHICLE_UPDATED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleCabImageDelete(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const userId = req.user.id;
+      const index = +req.params.index;
+      if(index == null){
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+      }
+      
+      await this._deleteCabImageUseCase.execute(userId,index);
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,

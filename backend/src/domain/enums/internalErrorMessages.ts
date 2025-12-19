@@ -35,4 +35,6 @@ export enum INTERNAL_ERROR_MESSAGES {
   FILE_TOO_LARGE = "fileTooLarge",
   CAB_NOT_FOUND = "cabNotFound",
   VEHICLE_INFO_INCOMPLETE = "vehicleInfoIncomplete",
+  IMAGE_NOT_FOUND = "imageNotFound",
+  INVALID_DATA = "invalidData",
 }

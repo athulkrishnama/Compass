@@ -23,9 +23,15 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import { createUpdateVehicleMutationOption } from "@/queryOptions/cabQueryOptions";
+import {
+    createDeleteVehicleImageMutationOption,
+    createUpdateVehicleMutationOption,
+} from "@/queryOptions/cabQueryOptions";
+import { deleteVehicleImage } from "@/services/api/cabApiService";
 import { queryClient } from "@/config/tanstackQueryConfig";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import type { HttpResponse } from "@/types/api/responseType";
+import type { ICabDetailsResponseDTO } from "@/types/api/responses/cabResponses";
 
 interface AddVehicleProps {
     vehicleDetails?: {
@@ -39,11 +45,20 @@ interface AddVehicleProps {
 function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
     const [open, setOpen] = useState(false);
     const { t } = useTranslation();
-    const [previewImages, setPreviewImages] = useState<string[]>(
-        vehicleDetails?.images || []
+    const [previewImages, setPreviewImages] = useState<
+        { existing: boolean; url: string; index: number }[]
+    >(
+        vehicleDetails?.images?.map((url, index) => ({
+            existing: true,
+            url,
+            index,
+        })) || []
     );
     const [images, setImages] = useState<File[]>([]);
     const { mutate } = useMutation(createUpdateVehicleMutationOption());
+    const { mutate: deleteVehicleImageMutation } = useMutation(
+        createDeleteVehicleImageMutationOption()
+    );
 
     const {
         register,
@@ -69,7 +84,13 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                 type: vehicleDetails?.type || undefined,
                 ...vehicleDetails,
             });
-            setPreviewImages(vehicleDetails?.images || []);
+            setPreviewImages(
+                vehicleDetails?.images?.map((url, index) => ({
+                    existing: true,
+                    url,
+                    index,
+                })) || []
+            );
         }
     }, [open, vehicleDetails, reset, t]);
 
@@ -84,9 +105,11 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                 setImages((prev) => [...prev, ...Array.from(files)]);
                 setPreviewImages((prev) => [
                     ...prev,
-                    ...Array.from(files).map((file) =>
-                        URL.createObjectURL(file)
-                    ),
+                    ...Array.from(files).map((file, i) => ({
+                        index: prev.length + i,
+                        existing: false,
+                        url: URL.createObjectURL(file),
+                    })),
                 ]);
             }
         }
@@ -114,14 +137,63 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                     queryClient.invalidateQueries({
                         queryKey: [QUERY_KEYS.CAB_DETAILS],
                     });
-                    res("success")
+                    res("success");
                 },
                 onError: (err) => {
                     toast.error(err.message);
-                    rej(err)
+                    rej(err);
+                },
+                onSettled: () => {
+                    setImages([]);
                 },
             });
         });
+    };
+
+    const handleRemoveImage = async (index: number, existing: boolean) => {
+        if (existing) {
+            deleteVehicleImageMutation(index, {
+                onSuccess: (response) => {
+                    toast.success(response.message);
+                    const newImages = previewImages
+                        .filter((obj) => obj.index !== index && obj.existing)
+                        .map((obj) =>
+                            obj.index >= index && obj.existing
+                                ? { ...obj, index: obj.index - 1 }
+                                : obj
+                        );
+
+                    setPreviewImages(newImages);
+                    queryClient.setQueriesData(
+                        { queryKey: [QUERY_KEYS.CAB_DETAILS] },
+                        (prevData: HttpResponse<ICabDetailsResponseDTO>) => {
+                            if(prevData.data?.vehicleDetails.images){
+                                const clone = structuredClone(prevData)
+                                if(clone.data){
+                                    clone.data.vehicleDetails.images = newImages.map((img)=>img.url)
+                                    return clone
+                                }
+                            }
+                            return prevData
+                        }
+                    );
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                },
+            });
+        } else {
+            setPreviewImages((prev) =>
+                prev
+                    .filter((obj) => obj.index !== index && !obj.existing)
+                    .map((obj) =>
+                        obj.index >= index && !obj.existing
+                            ? { ...obj, index: obj.index - 1 }
+                            : obj
+                    )
+            );
+            setImages((prev) => prev.filter((_, i) => i !== index));
+        }
     };
 
     return (
@@ -167,6 +239,10 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                                     errors.registrationNumber
                                         ? "border-red-500"
                                         : ""
+                                }
+                                onChange={(e) =>
+                                    (e.target.value =
+                                        e.target.value.toUpperCase())
                                 }
                             />
                             {errors.registrationNumber && (
@@ -293,7 +369,10 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                                     </label>
                                 </div>
 
-                                <ImagePreview previewImages={previewImages} />
+                                <ImagePreview
+                                    previewImages={previewImages}
+                                    onRemove={handleRemoveImage}
+                                />
                             </div>
                         </div>
 
@@ -303,7 +382,9 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                             disabled={isSubmitting}
                         >
                             {isSubmitting
-                                ? t(translationKey.button.submiting)
+                                ? vehicleDetails
+                                    ? t(translationKey.button.submiting)
+                                    : t(translationKey.button.editVehicle)
                                 : t(translationKey.button.addVehicle)}
                         </Button>
                     </form>
