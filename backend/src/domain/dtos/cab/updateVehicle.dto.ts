@@ -6,4 +6,9 @@ export interface IUpdateVehicleRequestDTO {
   type?: VehicleType;
   registrationNumber?: string;
   images?: File[];
+  isOnline?: boolean;
+  baseLocation?: {
+    city: string;
+    coordinates: [number, number];
+  };
 }

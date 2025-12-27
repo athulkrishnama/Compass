@@ -6,7 +6,6 @@ import { env } from "@config/envConfig";
 import { IGetCabDetailsResponseDTO } from "@domain/dtos/cab/getCabDetails.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { CabMapper } from "@mappers/cab.mapper";
-import { timeStamp } from "console";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

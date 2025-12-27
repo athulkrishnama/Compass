@@ -26,6 +26,12 @@ export class UpdateVehicleUseCase implements IUpdateVehicleUseCase {
       );
     }
 
+    if (dto.isOnline !== undefined) {
+      cab.isOnline = dto.isOnline;
+    }
+    if (dto.baseLocation) {
+      cab.baseLocation = dto.baseLocation;
+    }
     if (cab.vehicleDetails) {
       if (dto.model) cab.vehicleDetails.model = dto.model;
       if (dto.type) cab.vehicleDetails.type = dto.type;

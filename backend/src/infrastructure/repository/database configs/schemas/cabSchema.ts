@@ -1,14 +1,17 @@
 import { VehicleType, VEHICLE_TYPES } from "@domain/types/vehicleType";
-import { ObjectId, Schema } from "mongoose";
+import { Types, Schema } from "mongoose";
 
 export interface ICabDocument extends Document {
-  _id: ObjectId;
-  baseLocation?: string;
+  _id: Types.ObjectId;
+  baseLocation?: {
+    city: string;
+    coordinates: { type: string; coordinates: [number, number] };
+  };
   vehicleDetails?: vehicle;
   isOnline: boolean;
   userId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 interface vehicle {
@@ -18,10 +21,25 @@ interface vehicle {
   images: string[];
 }
 
-export const cabSchema = new Schema<ICabDocument>({
-  baseLocation: {
+const baseLocationSchema = new Schema({
+  city: {
     type: String,
   },
+  coordinates: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
+});
+
+export const cabSchema = new Schema<ICabDocument>({
+  baseLocation: { type: baseLocationSchema, required: false },
   vehicleDetails: {
     model: {
       type: String,
@@ -55,3 +73,5 @@ export const cabSchema = new Schema<ICabDocument>({
     default: new Date(),
   },
 });
+
+cabSchema.index({ "baseLocation.coordinates": "2dsphere" });

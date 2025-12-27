@@ -2,7 +2,7 @@ import { CabEntity } from "@domain/entities/cab/cab.entity";
 import { BaseRepository } from "../base/base.repo";
 import { ICabDocument } from "../database configs/schemas/cabSchema";
 import { inject, injectable } from "tsyringe";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 
 @injectable()
@@ -22,15 +22,48 @@ export class CabRepo
     return null;
   }
 
+  async update(e: CabEntity, id: string): Promise<void> {
+    await this._model.updateOne({ _id: id }, this.toMongoDoc(e));
+  }
+
+  toMongoDoc(entity: CabEntity): ICabDocument {
+    const userMongoDoc = new this._model({
+      _id: new Types.ObjectId(entity._id),
+      userId: entity.userId,
+      isOnline: entity.isOnline,
+      vehicleDetails: entity.vehicleDetails,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+    });
+
+    if (entity.baseLocation) {
+      userMongoDoc.baseLocation = {
+        city: entity.baseLocation.city,
+        coordinates: {
+          type: "Point",
+          coordinates: entity.baseLocation.coordinates,
+        },
+      };
+    }
+    return userMongoDoc;
+  }
+
   toEntity(doc: ICabDocument): CabEntity {
-    return {
+    const entity: CabEntity = {
       _id: doc._id.toString(),
       userId: doc.userId,
       isOnline: doc.isOnline,
       vehicleDetails: doc.vehicleDetails,
-      baseLocation: doc.baseLocation,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };
+
+    if (doc.baseLocation) {
+      entity.baseLocation = {
+        city: doc.baseLocation.city,
+        coordinates: doc.baseLocation.coordinates.coordinates,
+      };
+    }
+    return entity;
   }
 }

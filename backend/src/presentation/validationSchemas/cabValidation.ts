@@ -9,6 +9,13 @@ export const updateVehicleValidationSchema = z.object({
     .enum(VEHICLE_TYPES, { error: INTERNAL_ERROR_MESSAGES.INVALID_CAB_TYPE })
     .optional(),
   registrationNumber: z.string().optional(),
+  baseLocation: z
+    .object({
+      city: z.string(),
+      coordinates: z.array(z.number()),
+    })
+    .optional(),
+  isOnline: z.boolean().optional(),
   images: z
     .array(
       z.file().max(1024 * 1024 * 5, {

@@ -21,7 +21,7 @@ export class CabController {
     @inject("IGetCabDetailsUseCase")
     private _getCabDetailsUseCase: IGetCabDetailsUseCase,
     @inject("IDeleteCabImageUseCase")
-    private _deleteCabImageUseCase: IDeleteCabImageUseCase
+    private _deleteCabImageUseCase: IDeleteCabImageUseCase,
   ) {}
 
   async handleGetCabDetails(
@@ -31,7 +31,7 @@ export class CabController {
   ): Promise<void> {
     try {
       const userId = req.user.id;
-      if(!userId){
+      if (!userId) {
         throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
       }
       const cab = await this._getCabDetailsUseCase.execute(userId);
@@ -41,7 +41,7 @@ export class CabController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
-        cab
+        cab,
       );
     } catch (error) {
       next(error);
@@ -59,7 +59,9 @@ export class CabController {
       const files = req.files as MulterFiles<"images">;
 
       if (files.images?.length) {
-        data.images = files.images.map((img) => mutlterFileToFileconverter(img));
+        data.images = files.images.map((img) =>
+          mutlterFileToFileconverter(img),
+        );
       }
 
       const parsedData = updateVehicleValidationSchema.safeParse(data);
@@ -89,11 +91,11 @@ export class CabController {
     try {
       const userId = req.user.id;
       const index = +req.params.index;
-      if(index == null){
+      if (index == null) {
         throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
       }
-      
-      await this._deleteCabImageUseCase.execute(userId,index);
+
+      await this._deleteCabImageUseCase.execute(userId, index);
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,

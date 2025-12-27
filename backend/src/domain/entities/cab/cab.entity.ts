@@ -12,7 +12,10 @@ export interface CabEntity {
   userId: string;
   isOnline: boolean;
   vehicleDetails?: vehicle;
-  baseLocation?: string;
+  baseLocation?: {
+    city: string;
+    coordinates: [number, number];
+  };
   createdAt?: Date;
   updatedAt?: Date;
 }
