@@ -1,9 +1,6 @@
 import { createGetCabDetailsQueryOptions } from "@/queryOptions/cabQueryOptions";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Pencil } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import BaseLocation from "./BaseLocation";
 import ImageScroll from "./ImageScroll";
 import VehicleModel from "./VehicleModel";
@@ -14,13 +11,10 @@ import Loading from "@/components/shared/loading/Loading";
 import AddVehicleComponentWithButton from "./AddVehicleComponentWithButton";
 
 function CabDetails() {
-    const { t } = useTranslation();
     const { data, isLoading } = useQuery(createGetCabDetailsQueryOptions());
     const vehicleDetails = data?.data?.vehicleDetails;
     const baseLocation = data?.data?.baseLocation;
     const [isOnline, setIsOnline] = useState(true);
-
-
 
     if (isLoading) {
         return <Loading />;

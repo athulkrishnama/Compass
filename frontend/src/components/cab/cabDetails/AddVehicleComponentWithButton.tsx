@@ -27,7 +27,6 @@ import {
     createDeleteVehicleImageMutationOption,
     createUpdateVehicleMutationOption,
 } from "@/queryOptions/cabQueryOptions";
-import { deleteVehicleImage } from "@/services/api/cabApiService";
 import { queryClient } from "@/config/tanstackQueryConfig";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type { HttpResponse } from "@/types/api/responseType";
@@ -47,13 +46,7 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
     const { t } = useTranslation();
     const [previewImages, setPreviewImages] = useState<
         { existing: boolean; url: string; index: number }[]
-    >(
-        vehicleDetails?.images?.map((url, index) => ({
-            existing: true,
-            url,
-            index,
-        })) || []
-    );
+    >([]);
     const [images, setImages] = useState<File[]>([]);
     const { mutate } = useMutation(createUpdateVehicleMutationOption());
     const { mutate: deleteVehicleImageMutation } = useMutation(
@@ -119,9 +112,11 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
         return new Promise((res, rej) => {
             const formData = new FormData();
 
-            if (data.modelName) formData.append("model", data.modelName);
-            if (data.type) formData.append("type", data.type);
-            if (data.registrationNumber)
+            if (data.modelName !== vehicleDetails?.model)
+                formData.append("model", data.modelName);
+            if (data.type !== vehicleDetails?.type)
+                formData.append("type", data.type);
+            if (data.registrationNumber !== vehicleDetails?.registrationNumber)
                 formData.append("registrationNumber", data.registrationNumber);
 
             if (images.length > 0) {
@@ -167,14 +162,15 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                     queryClient.setQueriesData(
                         { queryKey: [QUERY_KEYS.CAB_DETAILS] },
                         (prevData: HttpResponse<ICabDetailsResponseDTO>) => {
-                            if(prevData.data?.vehicleDetails.images){
-                                const clone = structuredClone(prevData)
-                                if(clone.data){
-                                    clone.data.vehicleDetails.images = newImages.map((img)=>img.url)
-                                    return clone
+                            if (prevData.data?.vehicleDetails.images) {
+                                const clone = structuredClone(prevData);
+                                if (clone.data) {
+                                    clone.data.vehicleDetails.images =
+                                        newImages.map((img) => img.url);
+                                    return clone;
                                 }
                             }
-                            return prevData
+                            return prevData;
                         }
                     );
                 },
