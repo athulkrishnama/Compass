@@ -18,7 +18,8 @@
         "hotelForgetPassword": "ஹோட்டலிற்கான கடவுச்சொல் மறந்துவிட்டீர்களா",
         "userManagement": "பயனர் மேலாண்மை",
         "hotelVerification": "ஹோட்டல் சரிபார்ப்பு",
-        "cabVerification": "கேப் சரிபார்ப்பு"
+        "cabVerification": "கேப் சரிபார்ப்பு",
+        "updateBaseLocation": "அடிப்படை இடத்தை புதுப்பிக்கவும்"
     },
     "errors": {
         "minChar": "குறைந்தபட்ச எழுத்துகள் {{count}} தேவை",
@@ -132,6 +133,8 @@
         "registrationNumber": "பதிவு எண்",
         "vehicleImage": "வாகனப் படம்",
         "modelName": "மாதிரி பெயர்",
-        "vehicleType": "வாகன வகை"
+        "vehicleType": "வாகன வகை",
+        "searchAndSelectBaseLocation": "கீழே உள்ள நகரங்களிலிருந்து உங்கள் புதிய அடிப்படை இடத்தைத் தேடி தேர்ந்தெடுக்கவும்",
+        "selectedLocation": "தேர்ந்தெடுக்கப்பட்ட இடம்"
     }
 }

@@ -1,6 +1,9 @@
-import { createGetCabDetailsQueryOptions } from "@/queryOptions/cabQueryOptions";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import {
+    createGetCabDetailsQueryOptions,
+    createUpdateVehicleMutationOption,
+} from "@/queryOptions/cabQueryOptions";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import BaseLocation from "./BaseLocation";
 import ImageScroll from "./ImageScroll";
 import VehicleModel from "./VehicleModel";
@@ -9,12 +12,105 @@ import CabStatus from "./CabStatus";
 import NoVehicleDetails from "./NoVehicleDetails";
 import Loading from "@/components/shared/loading/Loading";
 import AddVehicleComponentWithButton from "./AddVehicleComponentWithButton";
+import { toast } from "sonner";
+import { queryClient } from "@/config/tanstackQueryConfig";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import type { HttpResponse } from "@/types/api/responseType";
+import type { ICabDetailsResponseDTO } from "@/types/api/responses/cabResponses";
 
 function CabDetails() {
     const { data, isLoading } = useQuery(createGetCabDetailsQueryOptions());
     const vehicleDetails = data?.data?.vehicleDetails;
     const baseLocation = data?.data?.baseLocation;
-    const [isOnline, setIsOnline] = useState(true);
+    const [isOnline, setIsOnline] = useState(data?.data?.isOnline ?? true);
+    const { mutate: updateVehicleMutate } = useMutation(
+        createUpdateVehicleMutationOption()
+    );
+
+    // Sync isOnline state with server data
+    useEffect(() => {
+        if (data?.data?.isOnline !== undefined) {
+            setIsOnline(data.data.isOnline);
+        }
+    }, [data?.data?.isOnline]);
+
+    const handleLocationChange = (
+        city: string,
+        coordinates: [number, number]
+    ) => {
+        const formData = new FormData();
+        formData.append("baseLocation[city]", city);
+        formData.append(
+            "baseLocation[coordinates][0]",
+            coordinates[0].toString()
+        );
+        formData.append(
+            "baseLocation[coordinates][1]",
+            coordinates[1].toString()
+        );
+
+        updateVehicleMutate(formData, {
+            onSuccess: (response) => {
+                toast.success(response.message);
+                queryClient.setQueriesData(
+                    { queryKey: [QUERY_KEYS.CAB_DETAILS] },
+                    (
+                        prevData:
+                            | HttpResponse<ICabDetailsResponseDTO>
+                            | undefined
+                    ) => {
+                        if (!prevData || !prevData.data) return prevData;
+
+                        const clone = structuredClone(prevData);
+                        if (clone.data) {
+                            clone.data.baseLocation = {
+                                city: city,
+                                coordinates: coordinates,
+                            };
+                        }
+                        return clone;
+                    }
+                );
+            },
+            onError: (err) => {
+                toast.error(err.message);
+            },
+        });
+    };
+
+    const handleStatusToggle = (status: boolean) => {
+        setIsOnline(status);
+
+        const formData = new FormData();
+        formData.append("isOnline", status.toString());
+
+        updateVehicleMutate(formData, {
+            onSuccess: (response) => {
+                toast.success(response.message);
+                queryClient.setQueriesData(
+                    { queryKey: [QUERY_KEYS.CAB_DETAILS] },
+                    (
+                        prevData:
+                            | HttpResponse<ICabDetailsResponseDTO>
+                            | undefined
+                    ) => {
+                        if (!prevData || !prevData.data) return prevData;
+
+                        const clone = structuredClone(prevData);
+                        if (clone.data) {
+                            clone.data.isOnline = status;
+                        }
+                        return clone;
+                    }
+                );
+            },
+            onError: (err) => {
+                toast.error(err.message);
+                // Revert optimistic update on error
+                setIsOnline(!status);
+            },
+        });
+    };
 
     if (isLoading) {
         return <Loading />;
@@ -24,11 +120,14 @@ function CabDetails() {
         <div className="w-full bg-gray-50/50 p-4 flex justify-center items-start">
             <div className="w-full max-w-5xl bg-white rounded-[2.5rem] flex flex-col gap-8 p-6 md:p-10">
                 <div className="flex flex-col gap-6">
-                    <CabStatus isOnline={isOnline} onToggle={setIsOnline} />
+                    <CabStatus
+                        isOnline={isOnline}
+                        onToggle={handleStatusToggle}
+                    />
 
                     <BaseLocation
-                        baseLocation={baseLocation}
-                        onLocationChange={() => console.log("Change location")}
+                        baseLocation={baseLocation?.city}
+                        onLocationChange={handleLocationChange}
                     />
                 </div>
 

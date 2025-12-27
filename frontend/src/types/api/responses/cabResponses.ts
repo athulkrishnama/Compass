@@ -1,9 +1,12 @@
 import type { VehicleType } from "@/types/vehicleType";
 
 export interface ICabDetailsResponseDTO {
-    baseLocation?: string;
+    baseLocation?: {
+        city?: string;
+        coordinates?: [number, number];
+    };
     isOnline: boolean;
-    vehicleDetails: Vehicle
+    vehicleDetails: Vehicle;
 }
 
 interface Vehicle {

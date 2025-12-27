@@ -18,7 +18,8 @@
         "hotelForgetPassword": "ഹോട്ടൽ പാസ്വേഡ് മറന്നോ",
         "userManagement": "ഉപയോക്തൃ മാനേജ്മെന്റ്",
         "hotelVerification": "ഹോട്ടൽ വെരിഫിക്കേഷൻ",
-        "cabVerification": "കാബ് വെരിഫിക്കേഷൻ"
+        "cabVerification": "കാബ് വെരിഫിക്കേഷൻ",
+        "updateBaseLocation": "അടിസ്ഥാന സ്ഥലം അപ്ഡേറ്റ് ചെയ്യുക"
     },
     "errors": {
         "minChar": "കുറഞ്ഞത് {{count}} അക്ഷരങ്ങൾ ആവശ്യമാണ്",
@@ -132,6 +133,8 @@
         "registrationNumber": "രജിസ്ട്രേഷൻ നമ്പർ",
         "vehicleImage": "വാഹന ചിത്രം",
         "modelName": "മോഡൽ നാമം",
-        "vehicleType": "വാഹന തരം"
+        "vehicleType": "വാഹന തരം",
+        "searchAndSelectBaseLocation": "താഴെ പറയുന്ന നഗരങ്ങളിൽ നിന്ന് നിങ്ങളുടെ പുതിയ അടിസ്ഥാന സ്ഥലം തിരഞ്ഞെടുക്കുക",
+        "selectedLocation": "തിരഞ്ഞെടുത്ത സ്ഥലം"
     }
 }

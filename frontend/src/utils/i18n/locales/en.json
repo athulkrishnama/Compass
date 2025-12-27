@@ -18,7 +18,8 @@
         "hotelForgetPassword": "Forget Password for Hotel's",
         "userManagement": "User Management",
         "hotelVerification": "Hotel Verification",
-        "cabVerification": "Cab Verification"
+        "cabVerification": "Cab Verification",
+        "updateBaseLocation": "Update Base Location"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -133,6 +134,8 @@
         "registrationNumber": "Registration Number",
         "vehicleImage": "Vehicle image",
         "modelName": "Model Name",
-        "vehicleType": "Vehicle Type"
+        "vehicleType": "Vehicle Type",
+        "searchAndSelectBaseLocation": "Search and select your new base location from the cities below",
+        "selectedLocation": "Selected Location"
     }
 }

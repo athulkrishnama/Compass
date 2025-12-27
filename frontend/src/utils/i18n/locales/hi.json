@@ -18,7 +18,8 @@
         "hotelForgetPassword": "होटल के लिए पासवर्ड भूल गए",
         "userManagement": "यूज़र मैनेजमेंट",
         "hotelVerification": "होटल वेरिफिकेशन",
-        "cabVerification": "कैब वेरिफिकेशन"
+        "cabVerification": "कैब वेरिफिकेशन",
+        "updateBaseLocation": "आधार स्थान अपडेट करें"
     },
     "errors": {
         "minChar": "न्यूनतम {{count}} अक्षर आवश्यक हैं",
@@ -132,6 +133,8 @@
         "registrationNumber": "पंजीकरण संख्या",
         "vehicleImage": "वाहन छवि",
         "modelName": "मॉडल का नाम",
-        "vehicleType": "वाहन प्रकार"
+        "vehicleType": "वाहन प्रकार",
+        "searchAndSelectBaseLocation": "नीचे दिए गए शहरों में से अपना नया आधार स्थान खोजें और चुनें",
+        "selectedLocation": "चयनित स्थान"
     }
 }

@@ -19,6 +19,7 @@ export default {
         hotelVerification: "headings.hotelVerification",
         cabVerification: "headings.cabVerification",
         userManagement: "headings.userManagement",
+        updateBaseLocation: "headings.updateBaseLocation",
     },
     errors: {
         minChar: "errors.minChar",
@@ -41,7 +42,7 @@ export default {
         atLeastOneImageRequired: "errors.atLeastOneImageRequired",
         unsupportedImageFormat: "errors.unsupportedImageFormat",
         invalidVehicleType: "errors.invalidVehicleType",
-        invalidRegistrationNumber:"errors.invalidRegistrationNumber"
+        invalidRegistrationNumber: "errors.invalidRegistrationNumber",
     },
     form: {
         fullname: "form.fullname",
@@ -136,5 +137,7 @@ export default {
         vehicleImage: "text.vehicleImage",
         modelName: "text.modelName",
         vehicleType: "text.vehicleType",
+        searchAndSelectBaseLocation: "text.searchAndSelectBaseLocation",
+        selectedLocation: "text.selectedLocation",
     },
 };

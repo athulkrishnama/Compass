@@ -12,10 +12,10 @@ export const updateVehicleValidationSchema = z.object({
   baseLocation: z
     .object({
       city: z.string(),
-      coordinates: z.array(z.number()),
+      coordinates: z.array(z.coerce.number()),
     })
     .optional(),
-  isOnline: z.boolean().optional(),
+  isOnline: z.coerce.boolean().optional(),
   images: z
     .array(
       z.file().max(1024 * 1024 * 5, {
