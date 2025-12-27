@@ -33,6 +33,11 @@
   "social_login_password_change_error": "User signedin using social login are currently not allowed to change password",
 
   "invalidCabType": "Invalid cab type",
+  "fileTooLarge": "File is too large",
+  "cabNotFound": "Cab not found",
+  "vehicleInfoIncomplete": "Vehicle information is incomplete",
+  "imageNotFound": "Image not found",
+  "invalidData": "Invalid data",
 
   "otpSendSuccessfully": "OTP sent successfully",
   "userSignupSuccessful": "User signup successful",
@@ -45,11 +50,7 @@
   "statusUpdatedSuccessfully": "Status updated successfully",
   "logoutSuccessful": "Logout successful",
   "updateSuccessful": "Updated successfully",
+  "vehicleUpdatedSuccessfully": "Vehicle updated successfully",
   "verificationApproved": "Verification approved",
-  "verificationRejected": "Verification rejected",
-  "fileTooLarge": "File is too large",
-  "cabNotFound": "Cab not found",
-  "vehicleInfoIncomplete": "Vehicle information is incomplete",
-  "imageNotFound": "Image not found",
-  "invalidData": "Invalid data"
+  "verificationRejected": "Verification rejected"
 }

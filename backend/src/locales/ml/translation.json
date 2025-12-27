@@ -32,6 +32,11 @@
   "invalidId": "അസാധുവായ ID",
 
   "invalidCabType": "അസാധുവായ കാബ് തരം",
+  "fileTooLarge": "ഫയൽ വളരെ വലുതാണ്",
+  "cabNotFound": "കാബ് കണ്ടെത്തിയില്ല",
+  "vehicleInfoIncomplete": "വാഹന വിവരങ്ങൾ അപൂർണ്ണമാണ്",
+  "imageNotFound": "ചിത്രം കണ്ടെത്തിയില്ല",
+  "invalidData": "അസാധുവായ ഡാറ്റ",
 
   "otpSendSuccessfully": "OTP വിജയകരമായി അയച്ചു",
   "userSignupSuccessful": "ഉപയോക്തൃ രജിസ്ട്രേഷൻ വിജയകരമായി",
@@ -44,9 +49,7 @@
   "statusUpdatedSuccessfully": "സ്റ്റാറ്റസ് വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
   "logoutSuccessful": "വിജയകരമായി ലോഗൗട്ട് ചെയ്തു",
   "updateSuccessful": "വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
+  "vehicleUpdatedSuccessfully": "വാഹനം വിജയകരമായി അപ്‌ഡേറ്റുചെയ്‌തു",
   "verificationApproved": "സ്ഥിരീകരണം അംഗീകരിച്ചു",
-  "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു",
-  "fileTooLarge": "ഫയൽ വളരെ വലുതാണ്",
-  "cabNotFound": "കാബ് കണ്ടെത്തിയില്ല",
-  "vehicleInfoIncomplete": "വാഹന വിവരങ്ങൾ അപൂർണ്ണമാണ്"
+  "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു"
 }

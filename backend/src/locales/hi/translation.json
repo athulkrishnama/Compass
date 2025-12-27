@@ -32,6 +32,11 @@
   "invalidId": "अमान्य ID",
 
   "invalidCabType": "अमान्य कैब प्रकार",
+  "fileTooLarge": "फ़ाइल बहुत बड़ी है",
+  "cabNotFound": "कैब नहीं मिली",
+  "vehicleInfoIncomplete": "वाहन की जानकारी अधूरी है",
+  "imageNotFound": "छवि नहीं मिली",
+  "invalidData": "अमान्य डेटा",
 
   "otpSendSuccessfully": "OTP सफलतापूर्वक भेजा गया",
   "userSignupSuccessful": "उपयोगकर्ता साइनअप सफल",
@@ -44,9 +49,7 @@
   "statusUpdatedSuccessfully": "स्थिति सफलतापूर्वक अपडेट की गई",
   "logoutSuccessful": "सफलतापूर्वक लॉगआउट किया गया",
   "updateSuccessful": "सफलतापूर्वक अपडेट किया गया",
+  "vehicleUpdatedSuccessfully": "वाहन सफलतापूर्वक अपडेट किया गया",
   "verificationApproved": "वेरिफिकेशन स्वीकृत",
-  "verificationRejected": "वेरिफिकेशन अस्वीकृत",
-  "fileTooLarge": "फ़ाइल बहुत बड़ी है",
-  "cabNotFound": "कैब नहीं मिली",
-  "vehicleInfoIncomplete": "वाहन की जानकारी अधूरी है"
+  "verificationRejected": "वेरिफिकेशन अस्वीकृत"
 }
