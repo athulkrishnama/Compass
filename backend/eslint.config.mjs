@@ -8,4 +8,14 @@ export default defineConfig([
   ...tseslint.configs.recommended,
   eslintPluginPrettier,
   globalIgnores(["./dist/*"]),
+  {
+    rules: {
+      "prettier/prettier": [
+        "error",
+        {
+          endOfLine: "auto",
+        },
+      ],
+    },
+  },
 ]);
