@@ -3,4 +3,6 @@ export interface IUpdateUserProfileRequestDTO {
   full_name?: string;
   profile_image?: File;
   verification_id_image?: File;
+  mobile?: string;
+  date_of_birth?: Date;
 }

@@ -38,6 +38,9 @@
   "vehicleInfoIncomplete": "Vehicle information is incomplete",
   "imageNotFound": "Image not found",
   "invalidData": "Invalid data",
+  "invalidMobileNumber": "Mobile number must be exactly 10 digits",
+  "dateOfBirthMustBePast": "Date of birth must be in the past",
+  "minimumAgeRequired": "You must be at least 15 years old",
 
   "otpSendSuccessfully": "OTP sent successfully",
   "userSignupSuccessful": "User signup successful",

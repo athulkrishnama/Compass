@@ -37,4 +37,7 @@ export enum INTERNAL_ERROR_MESSAGES {
   VEHICLE_INFO_INCOMPLETE = "vehicleInfoIncomplete",
   IMAGE_NOT_FOUND = "imageNotFound",
   INVALID_DATA = "invalidData",
+  INVALID_MOBILE_NUMBER = "invalidMobileNumber",
+  DATE_OF_BIRTH_MUST_BE_PAST = "dateOfBirthMustBePast",
+  MINIMUM_AGE_REQUIRED = "minimumAgeRequired",
 }

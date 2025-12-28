@@ -11,6 +11,7 @@ export interface UserEntity {
   mobile?: string;
   is_blocked: boolean;
   profile_image?: string;
+  date_of_birth?: Date;
   is_verified: VERIFICATION_STATUS;
   rejection_reason?: string;
   verfication_id_image?: string;

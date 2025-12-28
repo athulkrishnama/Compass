@@ -6,10 +6,18 @@ interface AvatarProps {
     profileImage: string;
     image: File | null;
     placeHolder: string;
+    className?: string;
 }
-function ProfileAvatar({ image, profileImage, placeHolder }: AvatarProps) {
+function ProfileAvatar({
+    image,
+    profileImage,
+    placeHolder,
+    className = "h-28 w-28",
+}: AvatarProps) {
     return (
-        <Avatar className="h-28 w-28 cursor-pointer justify-center items-center bg-stone-100">
+        <Avatar
+            className={`${className} cursor-pointer justify-center items-center bg-stone-100 shadow-lg`}
+        >
             <AvatarImage
                 src={image ? URL.createObjectURL(image) : profileImage}
             />

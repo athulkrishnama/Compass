@@ -39,7 +39,12 @@
         "modelNameMaxLength": "मॉडल का नाम 50 अक्षरों से कम होना चाहिए",
         "atLeastOneImageRequired": "कम से कम एक छवि आवश्यक है",
         "unsupportedImageFormat": "केवल .jpg, .jpeg, .png और .webp प्रारूप समर्थित हैं",
-        "invalidVehicleType": "कृपया एक मान्य वाहन प्रकार चुनें"
+        "invalidVehicleType": "कृपया एक मान्य वाहन प्रकार चुनें",
+        "fullnameRequired": "पूरा नाम आवश्यक है",
+        "fullnameMaxLength": "पूरा नाम 30 अक्षरों से कम होना चाहिए",
+        "invalidMobileNumber": "मोबाइल नंबर ठीक 10 अंकों का होना चाहिए",
+        "dateOfBirthMustBePast": "जन्म तिथि भूतकाल में होनी चाहिए",
+        "minimumAgeRequired": "आपकी उम्र कम से कम 15 वर्ष होनी चाहिए"
     },
     "form": {
         "fullname": "पूरा नाम",

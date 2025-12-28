@@ -23,15 +23,22 @@ function UserDetails() {
     function handleUpdate({
         full_name,
         profile_image,
+        mobile,
+        date_of_birth,
     }: {
         full_name?: string;
         profile_image: File | null;
+        mobile?: string;
+        date_of_birth?: Date;
     }): void {
-        if (!full_name && !profile_image) return;
+        if (!full_name && !profile_image && !mobile && !date_of_birth) return;
 
         const form = new FormData();
         if (full_name) form.append("full_name", full_name);
         if (profile_image) form.append("profile_image", profile_image);
+        if (mobile) form.append("mobile", mobile);
+        if (date_of_birth)
+            form.append("date_of_birth", date_of_birth.toISOString());
 
         mutate(form, {
             onSuccess: (res) => {
@@ -57,6 +64,8 @@ function UserDetails() {
                 profileData={{
                     full_name: profileData?.full_name ?? "",
                     profile_image: profileData?.profile_image ?? "",
+                    mobile: profileData?.mobile,
+                    date_of_birth: profileData?.date_of_birth,
                 }}
                 onClose={() => setIsEditing(false)}
                 onSave={handleUpdate}

@@ -39,7 +39,12 @@
         "modelNameMaxLength": "മോഡൽ നാമം 50 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
         "atLeastOneImageRequired": "കുറഞ്ഞത് ഒരു ചിത്രമെങ്കിലും ആവശ്യമാണ്",
         "unsupportedImageFormat": ".jpg, .jpeg, .png, .webp ഫോർമാറ്റുകൾ മാത്രമേ പിന്തുണയ്ക്കൂ",
-        "invalidVehicleType": "ദയവായി സാധുവായ വാഹന തരം തിരഞ്ഞെടുക്കുക"
+        "invalidVehicleType": "ദയവായി സാധുവായ വാഹന തരം തിരഞ്ഞെടുക്കുക",
+        "fullnameRequired": "പൂർണ്ണ പേര് ആവശ്യമാണ്",
+        "fullnameMaxLength": "പൂർണ്ണ പേര് 30 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
+        "invalidMobileNumber": "മൊബൈൽ നമ്പർ കൃത്യമായി 10 അക്കങ്ങൾ ആയിരിക്കണം",
+        "dateOfBirthMustBePast": "ജനനത്തീയതി ഭൂതകാലത്തിൽ ആയിരിക്കണം",
+        "minimumAgeRequired": "നിങ്ങളുടെ പ്രായം കുറഞ്ഞത് 15 വയസ്സ് ആയിരിക്കണം"
     },
     "form": {
         "fullname": "പൂർണ്ണ പേര്",

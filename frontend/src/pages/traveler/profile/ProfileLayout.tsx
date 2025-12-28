@@ -32,7 +32,7 @@ function ProfileLayout() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
-                className="flex bg-white rounded-[2rem] shadow-2xl shadow-black/10 overflow-hidden h-1/2 w-1/2 py-3"
+                className="flex bg-white rounded-[2rem] shadow-2xl shadow-black/10 overflow-hidden h-3/4 w-1/2 py-3"
             >
                 <ProfileSidebar tabs={tabs} />
                 <div className="flex-1 flex justify-center p-1 overflow-y-auto hide-scroll-bar">
