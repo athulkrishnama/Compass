@@ -43,6 +43,11 @@ export default {
         unsupportedImageFormat: "errors.unsupportedImageFormat",
         invalidVehicleType: "errors.invalidVehicleType",
         invalidRegistrationNumber: "errors.invalidRegistrationNumber",
+        fullnameRequired: "errors.fullnameRequired",
+        fullnameMaxLength: "errors.fullnameMaxLength",
+        invalidMobileNumber: "errors.invalidMobileNumber",
+        dateOfBirthMustBePast: "errors.dateOfBirthMustBePast",
+        minimumAgeRequired: "errors.minimumAgeRequired",
     },
     form: {
         fullname: "form.fullname",

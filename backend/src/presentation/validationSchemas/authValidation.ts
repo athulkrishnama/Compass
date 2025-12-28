@@ -67,6 +67,34 @@ export const userUpdateProfileSchema = z.object({
     .mime(["image/jpeg", "image/png", "image/webp", "image/svg+xml"])
     .max(1024 * 1024 * 2)
     .optional(),
+  mobile: z
+    .string()
+    .regex(/^\d{10}$/, {
+      message: INTERNAL_ERROR_MESSAGES.INVALID_MOBILE_NUMBER,
+    })
+    .optional(),
+  date_of_birth: z.coerce
+    .date()
+    .refine(
+      (date) => {
+        const today = new Date();
+        return date < today;
+      },
+      {
+        message: INTERNAL_ERROR_MESSAGES.DATE_OF_BIRTH_MUST_BE_PAST,
+      },
+    )
+    .refine(
+      (date) => {
+        const ageInMs = Date.now() - date.getTime();
+        const age = ageInMs / (1000 * 60 * 60 * 24 * 365.25);
+        return age >= 15;
+      },
+      {
+        message: INTERNAL_ERROR_MESSAGES.MINIMUM_AGE_REQUIRED,
+      },
+    )
+    .optional(),
 });
 
 export const changePasswordSchema = z.object({

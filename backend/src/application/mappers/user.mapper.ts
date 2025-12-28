@@ -24,6 +24,7 @@ export class UserMapper {
       rejection_reason: document.rejection_reason,
       is_blocked: document.is_blocked,
       mobile: document.mobile,
+      date_of_birth: document.date_of_birth,
       createdAt: document.createdAt,
       lastLogin: document.lastLogin,
     };
@@ -84,6 +85,8 @@ export class UserMapper {
       profile_image: user.profile_image,
       verfication_id_image: user.verfication_id_image,
       rejection_reason: user.rejection_reason,
+      ...(user.mobile && { mobile: user.mobile }),
+      ...(user.date_of_birth && { date_of_birth: user.date_of_birth }),
     };
   }
 

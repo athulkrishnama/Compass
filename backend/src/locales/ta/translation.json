@@ -37,6 +37,9 @@
   "vehicleInfoIncomplete": "வாகனத் தகவல் முழுமையடையவில்லை",
   "imageNotFound": "படம் கிடைக்கவில்லை",
   "invalidData": "தவறான தரவு",
+  "invalidMobileNumber": "மொபைல் எண் சரியாக 10 இலக்கங்களாக இருக்க வேண்டும்",
+  "dateOfBirthMustBePast": "பிறந்த தேதி கடந்த காலத்தில் இருக்க வேண்டும்",
+  "minimumAgeRequired": "உங்கள் வயது குறைந்தது 15 ஆண்டுகள் இருக்க வேண்டும்",
 
   "otpSendSuccessfully": "OTP வெற்றிகரமாக அனுப்பப்பட்டது",
   "userSignupSuccessful": "பயனர் பதிவு வெற்றிகரமாக முடிந்தது",

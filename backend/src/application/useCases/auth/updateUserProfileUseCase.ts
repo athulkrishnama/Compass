@@ -19,13 +19,16 @@ export class UpdateUserProfileUseCase implements IUpdateUserProfileUseCase {
     profile_image,
     verification_id_image,
     id,
+    mobile,
+    date_of_birth,
   }: IUpdateUserProfileRequestDTO): Promise<void> {
     const user = await this._userRepo.findById(id);
     if (!user?._id) {
       throw new UserNotFoundException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
     if (full_name) user.full_name = full_name;
-
+    if (mobile) user.mobile = mobile;
+    if (date_of_birth) user.date_of_birth = date_of_birth;
     if (profile_image) {
       user.profile_image = await this._storageService.upload(
         profile_image,

@@ -365,6 +365,10 @@ export class AuthController {
         );
       if (req.body.full_name) data.full_name = req.body.full_name;
 
+      if (req.body.mobile) data.mobile = req.body.mobile;
+
+      if (req.body.date_of_birth) data.date_of_birth = req.body.date_of_birth;
+
       const parsedData = userUpdateProfileSchema.safeParse(data);
       if (parsedData.error) {
         throw new InvalideDataException(parsedData.error.issues[0].message);

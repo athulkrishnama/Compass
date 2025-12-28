@@ -40,7 +40,12 @@
         "atLeastOneImageRequired": "At least one image is required",
         "unsupportedImageFormat": "Only .jpg, .jpeg, .png and .webp formats are supported",
         "invalidVehicleType": "Please select a valid vehicle type",
-        "invalidRegistrationNumber":"Registration number is invalid"
+        "invalidRegistrationNumber":"Registration number is invalid",
+        "fullnameRequired": "Full name is required",
+        "fullnameMaxLength": "Full name must be less than 30 characters",
+        "invalidMobileNumber": "Mobile number must be exactly 10 digits",
+        "dateOfBirthMustBePast": "Date of birth must be in the past",
+        "minimumAgeRequired": "You must be at least 15 years old"
     },
     "form": {
         "fullname": "Full Name",

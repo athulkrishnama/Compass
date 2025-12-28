@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Edit, Mail } from "lucide-react";
+import { Edit, Mail, Phone, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -12,12 +12,14 @@ interface PropType {
         full_name: string;
         email: string;
         profile_image?: string;
+        mobile?: string;
+        date_of_birth?: Date;
     };
     switchEditState: () => void;
 }
 
 function ShowProfile({
-    profileData: { email, full_name, profile_image },
+    profileData: { email, full_name, profile_image, mobile, date_of_birth },
     switchEditState,
 }: PropType) {
     const { t } = useTranslation();
@@ -95,6 +97,58 @@ function ShowProfile({
                                 {t(translationKey.form.email)}
                             </div>
                             <p className="text-black">{email}</p>
+                        </motion.div>
+
+                        <motion.div
+                            className="space-y-2"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                                duration: 0.4,
+                                delay: 0.5,
+                            }}
+                        >
+                            <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
+                                <Phone size={16} />
+                                Mobile
+                            </div>
+                            <p
+                                className={
+                                    mobile
+                                        ? "text-black"
+                                        : "text-gray-400 italic"
+                                }
+                            >
+                                {mobile || "Not provided"}
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            className="space-y-2"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                                duration: 0.4,
+                                delay: 0.6,
+                            }}
+                        >
+                            <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
+                                <Calendar size={16} />
+                                Date of Birth
+                            </div>
+                            <p
+                                className={
+                                    date_of_birth
+                                        ? "text-black"
+                                        : "text-gray-400 italic"
+                                }
+                            >
+                                {date_of_birth
+                                    ? new Date(
+                                          date_of_birth
+                                      ).toLocaleDateString()
+                                    : "Not provided"}
+                            </p>
                         </motion.div>
                     </motion.div>
                 </div>

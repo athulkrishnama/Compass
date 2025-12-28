@@ -11,7 +11,8 @@ export interface IUserDocument extends Document {
   googleId?: string;
   is_blocked: boolean;
   full_name: string;
-  mobile: string;
+  mobile?: string;
+  date_of_birth: Date;
   role: ROLES;
   createdAt: Date;
   lastLogin: Date;
@@ -42,6 +43,9 @@ export const userSchema = new Schema<IUserDocument>({
   },
   mobile: {
     type: String,
+  },
+  date_of_birth: {
+    type: Date,
   },
   role: {
     type: String,
