@@ -64,7 +64,25 @@ export class InvalideDataException extends ApplicationException {
   }
 }
 
+export class ResourceNotFoundException extends ApplicationException {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export class RequiredDataMissingException extends ApplicationException {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
 export class InvalidOperationException extends ApplicationException {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export class ConflictException extends ApplicationException {
   constructor(message: string) {
     super(message);
   }

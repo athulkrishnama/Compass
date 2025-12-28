@@ -40,7 +40,7 @@ function ProfileLayout() {
                 className="flex bg-white rounded-[2rem] shadow-2xl shadow-black/10 overflow-hidden h-3/4 w-1/2 py-3"
             >
                 <ProfileSidebar tabs={tabs} />
-                <div className="flex-1 flex justify-center p-1 overflow-y-auto hide-scroll-bar">
+                <div className="w-2/3 flex justify-center p-1 overflow-y-auto hide-scroll-bar">
                     <Outlet />
                 </div>
             </motion.div>

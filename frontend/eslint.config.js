@@ -31,7 +31,12 @@ export default defineConfig([
             },
         },
         rules: {
-            "prettier/prettier": "error",
+            "prettier/prettier": [
+                "error",
+                {
+                    endOfLine: "auto",
+                },
+            ],
             "@tanstack/query/exhaustive-deps": "error",
             allowObjectTypes: "off",
         },

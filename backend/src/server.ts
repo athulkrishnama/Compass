@@ -14,6 +14,7 @@ import cookieParser from "cookie-parser";
 import "@config/i18nConfig";
 import middleware from "i18next-http-middleware";
 import i18next from "i18next";
+import { CabRouter } from "@presentation/routes/cab/cabRouter";
 
 export class Server {
   private _app: Express;
@@ -24,6 +25,7 @@ export class Server {
     this._setMiddlewares();
     this._setAuthRouter();
     this._setAdminRouter();
+    this._setCabRouter();
     this._setErrorHandlingMiddleware();
   }
 
@@ -35,6 +37,11 @@ export class Server {
   private _setAdminRouter() {
     const adminRouter = new AdminRouter();
     this._app.use(Routes.ADMIN, adminRouter.getRouter());
+  }
+
+  private _setCabRouter() {
+    const cabRouter = new CabRouter();
+    this._app.use(Routes.CAB, cabRouter.getRouter());
   }
 
   private _setMiddlewares() {

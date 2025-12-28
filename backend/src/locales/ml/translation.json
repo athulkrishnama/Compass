@@ -13,6 +13,7 @@
   "passwordNotMatching": "പാസ്‌വേഡുകൾ പൊരുത്തപ്പെടുന്നില്ല",
   "verificationTokenExpired": "വെരിഫിക്കേഷൻ ടോക്കൺ കാലഹരണപ്പെട്ടു",
   "emailExists": "ഈ ഇമെയിൽ ഇതിനകം ഉപയോഗിക്കപ്പെടുന്നു",
+  "cabAlreadyExists": "ഈ ഉപയോക്താവിന് കാബ് പ്രൊഫൈൽ ഇതിനകം നിലവിലുണ്ട്",
   "uploadError": "ഫയൽ അപ്‌ലോഡ് ചെയ്യുമ്പോൾ പിശക് സംഭവിച്ചു",
   "conversionError": "ഡാറ്റ പരിവർത്തനത്തിൽ പിശക്",
   "invalidPassword": "അസാധുവായ പാസ്‌വേഡ് ഫോർമാറ്റ്",
@@ -30,6 +31,13 @@
   "blocked": "ഈ സേവനത്തിൽ നിന്ന് നിങ്ങൾ ബ്ലോക്ക് ചെയ്‌തിരിക്കുന്നു",
   "invalidId": "അസാധുവായ ID",
 
+  "invalidCabType": "അസാധുവായ കാബ് തരം",
+  "fileTooLarge": "ഫയൽ വളരെ വലുതാണ്",
+  "cabNotFound": "കാബ് കണ്ടെത്തിയില്ല",
+  "vehicleInfoIncomplete": "വാഹന വിവരങ്ങൾ അപൂർണ്ണമാണ്",
+  "imageNotFound": "ചിത്രം കണ്ടെത്തിയില്ല",
+  "invalidData": "അസാധുവായ ഡാറ്റ",
+
   "otpSendSuccessfully": "OTP വിജയകരമായി അയച്ചു",
   "userSignupSuccessful": "ഉപയോക്തൃ രജിസ്ട്രേഷൻ വിജയകരമായി",
   "otpSuccessfullyResended": "OTP വീണ്ടും വിജയകരമായി അയച്ചു",
@@ -41,6 +49,7 @@
   "statusUpdatedSuccessfully": "സ്റ്റാറ്റസ് വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
   "logoutSuccessful": "വിജയകരമായി ലോഗൗട്ട് ചെയ്തു",
   "updateSuccessful": "വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
+  "vehicleUpdatedSuccessfully": "വാഹനം വിജയകരമായി അപ്‌ഡേറ്റുചെയ്‌തു",
   "verificationApproved": "സ്ഥിരീകരണം അംഗീകരിച്ചു",
   "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു"
 }

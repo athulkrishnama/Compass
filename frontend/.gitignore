@@ -26,5 +26,9 @@ dist-ssr
 src/routeTree.gen.ts
 
 .env
+.env.development
+.env.production
+.env.test
+.env.test.local
 
 .tanstack

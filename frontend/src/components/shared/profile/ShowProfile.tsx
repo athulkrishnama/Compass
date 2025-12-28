@@ -103,6 +103,7 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                             <motion.div
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}
+                                className="h-full w-full"
                             >
                                 <ProfileAvatar
                                     imageUrl={profile_image}

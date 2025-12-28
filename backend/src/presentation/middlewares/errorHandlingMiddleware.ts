@@ -4,10 +4,12 @@ import { Errors } from "../constants/Error";
 import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import {
   ApplicationException,
+  ConflictException,
   InvalideDataException,
   InvalidOTPException,
   OTPExpiredException,
   PasswordNotMatchingException,
+  ResourceNotFoundException,
   TokenExpiredException,
   TokenMissingException,
   UserAlreadyExistingException,
@@ -27,9 +29,12 @@ export const errorHandlingMiddleware = (
     let statusCode = HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR;
 
     if (err instanceof ApplicationException) {
-      if (err instanceof UserNotFoundException) {
+      if (err instanceof UserNotFoundException || err instanceof ResourceNotFoundException) {
         statusCode = HTTP_STATUS_CODE.NOT_FOUND;
-      } else if (err instanceof UserAlreadyExistingException) {
+      } else if (
+        err instanceof UserAlreadyExistingException ||
+        err instanceof ConflictException
+      ) {
         statusCode = HTTP_STATUS_CODE.CONFLICT;
       } else if (err instanceof UserIsBlockedException) {
         statusCode = HTTP_STATUS_CODE.FORBIDDEN;

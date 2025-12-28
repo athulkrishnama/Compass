@@ -24,7 +24,6 @@ export class UserMapper {
       rejection_reason: document.rejection_reason,
       is_blocked: document.is_blocked,
       mobile: document.mobile,
-      cabDetails: document.cabDetails,
       createdAt: document.createdAt,
       lastLogin: document.lastLogin,
     };

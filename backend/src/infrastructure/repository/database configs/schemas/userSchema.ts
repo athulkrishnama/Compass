@@ -4,18 +4,6 @@ import { ROLES } from "@domain/types/roles";
 import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 
-const vehicleSchema = new Schema({
-  model: String,
-  type: String,
-  registrationNumber: String,
-  images: [String],
-});
-
-const cabDetailsSchema = new Schema({
-  baseLocation: String,
-  vehicleDetails: vehicleSchema,
-});
-
 export interface IUserDocument extends Document {
   _id: ObjectId;
   email: string;
@@ -31,15 +19,6 @@ export interface IUserDocument extends Document {
   is_verified: VERIFICATION_STATUS;
   verfication_id_image?: string;
   rejection_reason?: string;
-  cabDetails: {
-    vehicleDetails?: {
-      model: string;
-      type: string;
-      registrationNumber: string;
-      images: string[];
-    };
-    baseLocation?: string;
-  };
 }
 
 export const userSchema = new Schema<IUserDocument>({
@@ -82,7 +61,6 @@ export const userSchema = new Schema<IUserDocument>({
   verfication_id_image: {
     type: String,
   },
-  cabDetails: cabDetailsSchema,
   createdAt: {
     type: Date,
     default: new Date(),

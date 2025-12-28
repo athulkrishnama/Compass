@@ -10,6 +10,7 @@ export enum Messages {
   STATUS_UPDATED_SUCCESSFULLY = "statusUpdatedSuccessfully",
   LOGOUT_SUCCESSFUL = "logoutSuccessful",
   UPDATE_SUCCESSFUL = "updateSuccessful",
+  VEHICLE_UPDATED_SUCCESSFULLY = "vehicleUpdatedSuccessfully",
   VERIFICATION_APPROVED = "verificationApproved",
   VERIFICATION_REJECTED = "verificationRejected",
 }

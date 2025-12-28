@@ -18,7 +18,8 @@
         "hotelForgetPassword": "Forget Password for Hotel's",
         "userManagement": "User Management",
         "hotelVerification": "Hotel Verification",
-        "cabVerification": "Cab Verification"
+        "cabVerification": "Cab Verification",
+        "updateBaseLocation": "Update Base Location"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -31,7 +32,15 @@
         "passwordAndCofirmPasswordNotMatching": "Password and confirm password do not match",
         "maxFileSize": "Maximum file Size is {{size}}",
         "provideRejectionReason": "Please provide a rejection reason",
-        "newPasswordAndOldPasswordMustnotBeSame": "New password and old password must not be same"
+        "newPasswordAndOldPasswordMustnotBeSame": "New password and old password must not be same",
+        "registrationNumberRequired": "Registration number is required",
+        "registrationNumberMaxLength": "Registration number must be less than 20 characters",
+        "modelNameRequired": "Model name is required",
+        "modelNameMaxLength": "Model name must be less than 50 characters",
+        "atLeastOneImageRequired": "At least one image is required",
+        "unsupportedImageFormat": "Only .jpg, .jpeg, .png and .webp formats are supported",
+        "invalidVehicleType": "Please select a valid vehicle type",
+        "invalidRegistrationNumber":"Registration number is invalid"
     },
     "form": {
         "fullname": "Full Name",
@@ -82,7 +91,13 @@
         "changePassword": "Change Password",
         "userDetails": "User Details",
         "cabDetails": "Cab Details",
-        "wallet": "Wallet"
+        "wallet": "Wallet",
+        "change": "Change",
+        "editVehicle": "Edit Vehicle",
+        "changeBaseLocation": "Change Base Location",
+        "online": "ONLINE",
+        "offline": "OFFLINE",
+        "addVehicle": "Add Vehicle"
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -113,6 +128,14 @@
         "status": "Status",
         "noUsersToShow": "No users to show",
         "rejectionReason": "Reason for rejection",
-        "enterCurrentPasswordToSetNewOne": "Enter current password to set new one"
+        "enterCurrentPasswordToSetNewOne": "Enter current password to set new one",
+        "baseLocation": "Base Location",
+        "notSet": "Not Set",
+        "registrationNumber": "Registration Number",
+        "vehicleImage": "Vehicle image",
+        "modelName": "Model Name",
+        "vehicleType": "Vehicle Type",
+        "searchAndSelectBaseLocation": "Search and select your new base location from the cities below",
+        "selectedLocation": "Selected Location"
     }
 }

@@ -13,6 +13,7 @@
   "passwordNotMatching": "கடவுச்சொற்கள் பொருந்தவில்லை",
   "verificationTokenExpired": "சரிபார்ப்புக் குறியீடு காலாவதியானது",
   "emailExists": "இந்த மின்னஞ்சல் ஏற்கனவே உள்ளது",
+  "cabAlreadyExists": "இந்த பயனருக்கான காப் சுயவிவரம் ஏற்கனவே உள்ளது",
   "uploadError": "கோப்பை பதிவேற்றும் போது பிழை ஏற்பட்டது",
   "conversionError": "தரவு மாற்றத்தில் பிழை",
   "invalidPassword": "தவறான கடவுச்சொல் வடிவம்",
@@ -30,6 +31,13 @@
   "blocked": "இந்த சேவையில் இருந்து நீங்கள் தடைசெய்யப்பட்டுள்ளீர்கள்",
   "invalidId": "தவறான ID",
 
+  "invalidCabType": "தவறான காப் வகை",
+  "fileTooLarge": "கோப்பு மிகவும் பெரியது",
+  "cabNotFound": "கேப் கிடைக்கவில்லை",
+  "vehicleInfoIncomplete": "வாகனத் தகவல் முழுமையடையவில்லை",
+  "imageNotFound": "படம் கிடைக்கவில்லை",
+  "invalidData": "தவறான தரவு",
+
   "otpSendSuccessfully": "OTP வெற்றிகரமாக அனுப்பப்பட்டது",
   "userSignupSuccessful": "பயனர் பதிவு வெற்றிகரமாக முடிந்தது",
   "otpSuccessfullyResended": "OTP மீண்டும் வெற்றிகரமாக அனுப்பப்பட்டது",
@@ -41,6 +49,7 @@
   "statusUpdatedSuccessfully": "நிலை வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
   "logoutSuccessful": "வெற்றிகரமாக வெளியேறப்பட்டது",
   "updateSuccessful": "வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
+  "vehicleUpdatedSuccessfully": "வாகனம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
   "verificationApproved": "சரிபார்ப்பு அங்கீகரிக்கப்பட்டது",
   "verificationRejected": "சரிபார்ப்பு நிராகரிக்கப்பட்டது"
 }

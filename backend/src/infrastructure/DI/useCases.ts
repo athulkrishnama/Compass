@@ -37,6 +37,12 @@ import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/u
 import { RejectUserVerificationRequestUseCase } from "@useCases/admin/rejectUserVerificationRequestUseCase";
 import { IChangePasswordUseCase } from "@application/interfaces/useCase/auth/changePasswordUseCase.interface";
 import { ChangePasswordUseCase } from "@useCases/auth/changePasswordUseCase";
+import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updateVehicleUseCase.interface";
+import { UpdateVehicleUseCase } from "@useCases/cab/updateVehicleUseCase";
+import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCabDetailsUseCase.interface";
+import { GetCabDetailsUseCase } from "@useCases/cab/getCabDetailsUseCase";
+import { IDeleteCabImageUseCase } from "@application/interfaces/useCase/cab/deleteCabImageUseCase.interface";
+import { DeleteCabImageUseCase } from "@useCases/cab/deleteCabImageUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -109,4 +115,16 @@ export function registerUsecases() {
     "IChangePasswordUseCase",
     ChangePasswordUseCase,
   );
+  container.registerSingleton<IUpdateVehicleUseCase>(
+    "IUpdateVehicleUseCase",
+    UpdateVehicleUseCase,
+  );
+  container.registerSingleton<IGetCabDetailsUseCase>(
+    "IGetCabDetailsUseCase",
+    GetCabDetailsUseCase,
+  );
+  container.registerSingleton<IDeleteCabImageUseCase>(
+    "IDeleteCabImageUseCase",
+    DeleteCabImageUseCase,
+  )
 }
