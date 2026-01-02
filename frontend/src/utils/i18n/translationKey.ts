@@ -20,6 +20,7 @@ export default {
         cabVerification: "headings.cabVerification",
         userManagement: "headings.userManagement",
         updateBaseLocation: "headings.updateBaseLocation",
+        changeEmail: "headings.changeEmail",
     },
     errors: {
         minChar: "errors.minChar",
@@ -58,6 +59,10 @@ export default {
         rejectionReason: "form.rejectionReason",
         enterReasonForRejection: "form.enterReasonForRejection",
         oldPassword: "form.oldPassword",
+        mobile: "form.mobile",
+        dateOfBirth: "form.dateOfBirth",
+        currentEmail: "form.currentEmail",
+        newEmail: "form.newEmail",
     },
     button: {
         submit: "button.submit",
@@ -105,6 +110,7 @@ export default {
         online: "button.online",
         offline: "button.offline",
         addVehicle: "button.addVehicle",
+        sending: "button.sending",
     },
     text: {
         alreadyHaveAccount: "text.alreadyHaveAccount",
@@ -144,5 +150,10 @@ export default {
         vehicleType: "text.vehicleType",
         searchAndSelectBaseLocation: "text.searchAndSelectBaseLocation",
         selectedLocation: "text.selectedLocation",
+        notProvided: "text.notProvided",
+        sendVerificationCodeToCurrentEmail:
+            "text.sendVerificationCodeToCurrentEmail",
+        enterNewEmailAddress: "text.enterNewEmailAddress",
+        expired: "text.expired",
     },
 };

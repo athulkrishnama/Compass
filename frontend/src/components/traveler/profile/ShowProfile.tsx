@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import ChangePasswordModalWithButton from "@/components/shared/changePassword/ChangePasswordModalWithButton";
 import ProfileAvatar from "./ProfileAvatar";
+import ChangeEmailButtonWithModal from "@/components/shared/changeEmail/ChangeEmailButtonWithModal";
 
 interface PropType {
     profileData: {
@@ -90,6 +91,7 @@ function ShowProfile({
                                 {email}
                             </p>
                         </div>
+                        <ChangeEmailButtonWithModal />
                     </div>
                 </motion.div>
 
@@ -108,7 +110,7 @@ function ShowProfile({
                         </div>
                         <div className="flex-1">
                             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
-                                Mobile
+                                {t(translationKey.form.mobile)}
                             </p>
                             <p
                                 className={
@@ -117,7 +119,7 @@ function ShowProfile({
                                         : "text-sm font-medium text-gray-400 italic"
                                 }
                             >
-                                {mobile || "Not provided"}
+                                {mobile || t(translationKey.text.notProvided)}
                             </p>
                         </div>
                     </div>
@@ -138,7 +140,7 @@ function ShowProfile({
                         </div>
                         <div className="flex-1">
                             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
-                                Date of Birth
+                                {t(translationKey.form.dateOfBirth)}
                             </p>
                             <p
                                 className={
@@ -151,7 +153,7 @@ function ShowProfile({
                                     ? new Date(
                                           date_of_birth
                                       ).toLocaleDateString()
-                                    : "Not provided"}
+                                    : t(translationKey.text.notProvided)}
                             </p>
                         </div>
                     </div>

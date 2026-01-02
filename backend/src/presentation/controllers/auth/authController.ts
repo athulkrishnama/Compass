@@ -462,13 +462,16 @@ export class AuthController {
         throw new InvalideDataException(parsedData.error.issues[0].message);
       }
 
-      await this._changeEmailVerifyOtpUseCase.execute(parsedData.data);
+      const result = await this._changeEmailVerifyOtpUseCase.execute(
+        parsedData.data,
+      );
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,
         res,
         HTTP_STATUS_CODE.OK,
         Messages.OTP_VERIFIED_SUCCESSFULLY,
+        result,
       );
     } catch (error) {
       next(error);

@@ -18,7 +18,7 @@ export class ChangeEmailNewEmailUseCase implements IChangeEmailNewEmailUseCase {
     userId,
   }: IChangeEmailNewEmailRequestDTO): Promise<void> {
     const cachedToken = await this._cacheService.getValue(
-      `CHANGE_EMAIL_TOKEN_${userId}`,
+      `CHANGE_EMAIL_TOKEN:${userId}`,
     );
     if (!cachedToken) {
       throw new InvalideDataException(
@@ -30,10 +30,17 @@ export class ChangeEmailNewEmailUseCase implements IChangeEmailNewEmailUseCase {
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_OTP);
     }
 
-    await this._cacheService.deleteValue(`CHANGE_EMAIL_TOKEN_${userId}`);
+    await this._cacheService.deleteValue(`CHANGE_EMAIL_TOKEN:${userId}`);
     const user = await this._userRepository.findById(userId);
     if (!user) {
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
+    }
+
+    const existingUser = await this._userRepository.findByEmail(newEmail);
+    if (existingUser) {
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.AUTH_EXISTING_EMAIL_ERROR,
+      );
     }
     user.email = newEmail;
     await this._userRepository.update(user, userId);

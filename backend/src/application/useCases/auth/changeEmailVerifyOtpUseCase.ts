@@ -30,7 +30,7 @@ export class ChangeEmailVerifyOtpUseCase
     }
 
     const cachedOtp = await this._cacheService.getValue(
-      `CHANGE_EMAIL_OTP_${userId}`,
+      `CHANGE_EMAIL_OTP:${userId}`,
     );
     if (!cachedOtp) {
       throw new InvalideDataException(
@@ -42,11 +42,11 @@ export class ChangeEmailVerifyOtpUseCase
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_OTP);
     }
 
-    await this._cacheService.deleteValue(`CHANGE_EMAIL_OTP_${userId}`);
+    await this._cacheService.deleteValue(`CHANGE_EMAIL_OTP:${userId}`);
     const token = this._tokenService.createToken();
 
     await this._cacheService.setWithExpiry(
-      `CHANGE_EMAIL_TOKEN_${userId}`,
+      `CHANGE_EMAIL_TOKEN:${userId}`,
       token,
       60 * 10,
     );

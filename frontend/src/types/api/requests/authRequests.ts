@@ -37,3 +37,12 @@ export interface ChangePasswordRequest {
     oldPassword: string;
     newPassword: string;
 }
+
+export interface ChangeEmailVerifyOtpRequest {
+    otp: string;
+}
+
+export interface ChangeEmailNewEmailRequest {
+    newEmail: string;
+    token: string;
+}

@@ -19,7 +19,8 @@
         "userManagement": "பயனர் மேலாண்மை",
         "hotelVerification": "ஹோட்டல் சரிபார்ப்பு",
         "cabVerification": "கேப் சரிபார்ப்பு",
-        "updateBaseLocation": "அடிப்படை இடத்தை புதுப்பிக்கவும்"
+        "updateBaseLocation": "அடிப்படை இடத்தை புதுப்பிக்கவும்",
+        "changeEmail": "மின்னஞ்சலை மாற்றவும்"
     },
     "errors": {
         "minChar": "குறைந்தபட்ச எழுத்துகள் {{count}} தேவை",
@@ -54,7 +55,11 @@
         "newPassword": "புதிய கடவுச்சொல்",
         "rejectionReason": "மறுப்புக் காரணம்",
         "enterReasonForRejection": "மறுப்பதற்கான காரணத்தை உள்ளிடவும்",
-        "oldPassword": "பழைய கடவுச்சொல்"
+        "oldPassword": "பழைய கடவுச்சொல்",
+        "mobile": "மொபைல்",
+        "dateOfBirth": "பிறந்த தேதி",
+        "currentEmail": "தற்போதைய மின்னஞ்சல்",
+        "newEmail": "புதிய மின்னஞ்சல்"
     },
     "button": {
         "submit": "சமர்ப்பிக்க",
@@ -101,7 +106,8 @@
         "changeBaseLocation": "அடிப்படை இடத்தை மாற்றவும்",
         "online": "ஆன்லைன்",
         "offline": "ஆஃப்லைன்",
-        "addVehicle": "வாகனத்தைச் சேர்க்கவும்"
+        "addVehicle": "வாகனத்தைச் சேர்க்கவும்",
+        "sending": "அனுப்புகிறது..."
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -140,6 +146,10 @@
         "modelName": "மாதிரி பெயர்",
         "vehicleType": "வாகன வகை",
         "searchAndSelectBaseLocation": "கீழே உள்ள நகரங்களிலிருந்து உங்கள் புதிய அடிப்படை இடத்தைத் தேடி தேர்ந்தெடுக்கவும்",
-        "selectedLocation": "தேர்ந்தெடுக்கப்பட்ட இடம்"
+        "selectedLocation": "தேர்ந்தெடுக்கப்பட்ட இடம்",
+        "notProvided": "வழங்கப்படவில்லை",
+        "sendVerificationCodeToCurrentEmail": "உங்கள் தற்போதைய மின்னஞ்சலுக்கு சரிபார்ப்புக் குறியீட்டை அனுப்புவோம்",
+        "enterNewEmailAddress": "உங்கள் புதிய மின்னஞ்சல் முகவரியை உள்ளிடவும்",
+        "expired": "காலாவதியானது"
     }
 }

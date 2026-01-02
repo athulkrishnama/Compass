@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import type { ROLE } from "@/types/role";
 import { ROLES } from "@/constants/roles";
 import ChangePasswordModalWithButton from "../changePassword/ChangePasswordModalWithButton";
+import ChangeEmailButtonWithModal from "../changeEmail/ChangeEmailButtonWithModal";
 import ProfileAvatar from "./ProfileAvatar";
 
 interface ShowProfileProps {
@@ -148,7 +149,10 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                                 <Mail size={16} />{" "}
                                 {t(translationKey.form.email)}
                             </div>
-                            <p className="text-black">{email}</p>
+                            <div className="flex items-center gap-2 justify-between">
+                                <p className="text-black">{email}</p>
+                                <ChangeEmailButtonWithModal />
+                            </div>
                         </motion.div>
 
                         <motion.div

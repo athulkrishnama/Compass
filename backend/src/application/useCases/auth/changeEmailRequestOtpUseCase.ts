@@ -39,7 +39,7 @@ export class ChangeEmailRequestOtpUseCase
     });
 
     this._cacheService.setWithExpiry(
-      `CHANGE_EMAIL_OTP_${userId}`,
+      `CHANGE_EMAIL_OTP:${userId}`,
       otp,
       env.OTP_EXPIRATION_TIME,
     );
