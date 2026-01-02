@@ -54,5 +54,6 @@
   "updateSuccessful": "വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
   "vehicleUpdatedSuccessfully": "വാഹനം വിജയകരമായി അപ്‌ഡേറ്റുചെയ്‌തു",
   "verificationApproved": "സ്ഥിരീകരണം അംഗീകരിച്ചു",
-  "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു"
+  "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു",
+  "emailChangedSuccessfully": "ഇമെയിൽ വിജയകരമായി മാറ്റി"
 }

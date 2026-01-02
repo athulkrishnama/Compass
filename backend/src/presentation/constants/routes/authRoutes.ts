@@ -11,4 +11,7 @@ export enum AuthRoutes {
   GOOGLE_LOGIN = "/google-login",
   PROFILE = "/profile",
   CHANGE_PASSWORD = "/change-password",
+  CHANGE_EMAIL_REQUEST_OTP = "/change-email-request-otp",
+  CHANGE_EMAIL_VERIFY_OTP = "/change-email-verify-otp",
+  CHANGE_EMAIL_NEW_EMAIL = "/change-email-new-email",
 }

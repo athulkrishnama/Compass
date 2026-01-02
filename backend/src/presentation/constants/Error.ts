@@ -19,4 +19,5 @@ export enum Errors {
   S3_REGION_ERROR = "Provide S3 Region",
   S3_SECRET_ACCESS_KEY_ERROR = "Provide S3 Secret Access Key",
   SIGNED_URL_EXPIRY_ERROR = "Provide signed url expiray time in seconds",
+  OTP_EXPIRATION_TIME_ERROR = "Provide otp expiration time in seconds",
 }

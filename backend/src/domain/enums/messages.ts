@@ -13,4 +13,5 @@ export enum Messages {
   VEHICLE_UPDATED_SUCCESSFULLY = "vehicleUpdatedSuccessfully",
   VERIFICATION_APPROVED = "verificationApproved",
   VERIFICATION_REJECTED = "verificationRejected",
+  EMAIL_CHANGED_SUCCESSFULLY = "emailChangedSuccessfully",
 }

@@ -19,6 +19,7 @@ import { IGoogleAuthService } from "@application/interfaces/service/googleAuthSe
 import { GoogleAuthService } from "@infrastructure/services/googleAuthService";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { StorageService } from "@infrastructure/services/storageService";
+import { ChangeEmailTemplateGenerator } from "@infrastructure/services/emailTemplateGenerators/changeEmailTemplateGenerator";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -37,6 +38,10 @@ export function registerServices() {
   container.registerSingleton<IEmailTemplateGenerator>(
     "ForgetPasswordOtpEmailTemplateGenerator",
     ForgetPasswordOtpEmailTemplateGenerator,
+  );
+  container.registerSingleton<IEmailTemplateGenerator>(
+    "ChangeEmailTemplateGenerator",
+    ChangeEmailTemplateGenerator,
   );
   container.registerSingleton<ITokenService>("ITokenService", TokenService);
   container.registerSingleton<IGoogleAuthService>(

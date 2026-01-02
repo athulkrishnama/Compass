@@ -101,3 +101,18 @@ export const changePasswordSchema = z.object({
   oldPassword: z.string(INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD),
   newPassword: z.string(INTERNAL_ERROR_MESSAGES.INVALID_PASSWORD),
 });
+
+export const emailSchema = z.email({
+  error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL,
+});
+
+export const changeEmailVerifyOtpSchema = z.object({
+  userId: z.string({ error: INTERNAL_ERROR_MESSAGES.ID_MISSING }),
+  otp: z.string({ error: INTERNAL_ERROR_MESSAGES.NO_OTP }),
+});
+
+export const changeEmailNewEmailSchema = z.object({
+  userId: z.string({ error: INTERNAL_ERROR_MESSAGES.ID_MISSING }),
+  newEmail: z.email({ error: INTERNAL_ERROR_MESSAGES.INVALID_EMAIL }),
+  token: z.string({ error: INTERNAL_ERROR_MESSAGES.TOKEN_DATA_MISSING }),
+});

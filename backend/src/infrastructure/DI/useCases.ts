@@ -43,6 +43,12 @@ import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCa
 import { GetCabDetailsUseCase } from "@useCases/cab/getCabDetailsUseCase";
 import { IDeleteCabImageUseCase } from "@application/interfaces/useCase/cab/deleteCabImageUseCase.interface";
 import { DeleteCabImageUseCase } from "@useCases/cab/deleteCabImageUseCase";
+import { IChangeEmailNewEmailUseCase } from "@application/interfaces/useCase/auth/changeEmailNewEmailUseCase.interface";
+import { ChangeEmailNewEmailUseCase } from "@useCases/auth/changeEmailNewEmailUseCase";
+import { IChangeEmailRequestOtpUseCase } from "@application/interfaces/useCase/auth/changeEmailRequestOtpUseCase.interface";
+import { ChangeEmailRequestOtpUseCase } from "@useCases/auth/changeEmailRequestOtpUseCase";
+import { IChangeEmailVerifyOtpUseCase } from "@application/interfaces/useCase/auth/changeEmailVerifyOtpUseCase.interface";
+import { ChangeEmailVerifyOtpUseCase } from "@useCases/auth/changeEmailVerifyOtpUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -126,5 +132,17 @@ export function registerUsecases() {
   container.registerSingleton<IDeleteCabImageUseCase>(
     "IDeleteCabImageUseCase",
     DeleteCabImageUseCase,
-  )
+  );
+  container.registerSingleton<IChangeEmailNewEmailUseCase>(
+    "IChangeEmailNewEmailUseCase",
+    ChangeEmailNewEmailUseCase,
+  );
+  container.registerSingleton<IChangeEmailRequestOtpUseCase>(
+    "IChangeEmailRequestOtpUseCase",
+    ChangeEmailRequestOtpUseCase,
+  );
+  container.registerSingleton<IChangeEmailVerifyOtpUseCase>(
+    "IChangeEmailVerifyOtpUseCase",
+    ChangeEmailVerifyOtpUseCase,
+  );
 }

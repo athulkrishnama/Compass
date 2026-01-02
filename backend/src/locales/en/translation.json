@@ -55,5 +55,6 @@
   "updateSuccessful": "Updated successfully",
   "vehicleUpdatedSuccessfully": "Vehicle updated successfully",
   "verificationApproved": "Verification approved",
-  "verificationRejected": "Verification rejected"
+  "verificationRejected": "Verification rejected",
+  "emailChangedSuccessfully": "Email changed successfully"
 }

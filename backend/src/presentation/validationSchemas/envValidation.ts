@@ -31,4 +31,7 @@ export const envSchema = z.object({
   S3_REGION: z.string({ error: Errors.S3_REGION_ERROR }),
   S3_SECRET_ACCESS_KEY: z.string({ error: Errors.S3_SECRET_ACCESS_KEY_ERROR }),
   SIGNED_URL_EXPIRY: z.coerce.number({ error: Errors.SIGNED_URL_EXPIRY_ERROR }),
+  OTP_EXPIRATION_TIME: z.coerce.number({
+    error: Errors.OTP_EXPIRATION_TIME_ERROR,
+  }),
 });
