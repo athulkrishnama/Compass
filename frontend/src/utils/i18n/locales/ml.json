@@ -19,7 +19,8 @@
         "userManagement": "ഉപയോക്തൃ മാനേജ്മെന്റ്",
         "hotelVerification": "ഹോട്ടൽ വെരിഫിക്കേഷൻ",
         "cabVerification": "കാബ് വെരിഫിക്കേഷൻ",
-        "updateBaseLocation": "അടിസ്ഥാന സ്ഥലം അപ്ഡേറ്റ് ചെയ്യുക"
+        "updateBaseLocation": "അടിസ്ഥാന സ്ഥലം അപ്ഡേറ്റ് ചെയ്യുക",
+        "changeEmail": "ഇമെയിൽ മാറ്റുക"
     },
     "errors": {
         "minChar": "കുറഞ്ഞത് {{count}} അക്ഷരങ്ങൾ ആവശ്യമാണ്",
@@ -54,7 +55,11 @@
         "newPassword": "പുതിയ പാസ്വേഡ്",
         "rejectionReason": "നിരസിച്ച കാരണങ്ങൾ",
         "enterReasonForRejection": "നിരസിക്കാനുള്ള കാരണം നൽകുക",
-        "oldPassword": "പഴയ പാസ്വേഡ്"
+        "oldPassword": "പഴയ പാസ്വേഡ്",
+        "mobile": "മൊബൈൽ",
+        "dateOfBirth": "ജനനത്തീയതി",
+        "currentEmail": "നിലവിലെ ഇമെയിൽ",
+        "newEmail": "പുതിയ ഇമെയിൽ"
     },
     "button": {
         "submit": "സമർപ്പിക്കുക",
@@ -101,7 +106,8 @@
         "changeBaseLocation": "അടിസ്ഥാന സ്ഥലം മാറ്റുക",
         "online": "ഓൺലൈൻ",
         "offline": "ഓഫ്‌ലൈൻ",
-        "addVehicle": "വാഹനം ചേർക്കുക"
+        "addVehicle": "വാഹനം ചേർക്കുക",
+        "sending": "അയയ്ക്കുന്നു..."
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -140,6 +146,10 @@
         "modelName": "മോഡൽ നാമം",
         "vehicleType": "വാഹന തരം",
         "searchAndSelectBaseLocation": "താഴെ പറയുന്ന നഗരങ്ങളിൽ നിന്ന് നിങ്ങളുടെ പുതിയ അടിസ്ഥാന സ്ഥലം തിരഞ്ഞെടുക്കുക",
-        "selectedLocation": "തിരഞ്ഞെടുത്ത സ്ഥലം"
+        "selectedLocation": "തിരഞ്ഞെടുത്ത സ്ഥലം",
+        "notProvided": "നൽകിയിട്ടില്ല",
+        "sendVerificationCodeToCurrentEmail": "നിങ്ങളുടെ നിലവിലെ ഇമെയിലിലേക്ക് ഞങ്ങൾ ഒരു സ്ഥിരീകരണ കോഡ് അയയ്ക്കും",
+        "enterNewEmailAddress": "നിങ്ങളുടെ പുതിയ ഇമെയിൽ വിലാസം നൽകുക",
+        "expired": "കാലഹരണപ്പെട്ടു"
     }
 }

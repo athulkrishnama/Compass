@@ -19,7 +19,8 @@
         "userManagement": "User Management",
         "hotelVerification": "Hotel Verification",
         "cabVerification": "Cab Verification",
-        "updateBaseLocation": "Update Base Location"
+        "updateBaseLocation": "Update Base Location",
+        "changeEmail": "Change Email"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -55,7 +56,11 @@
         "newPassword": "New Password",
         "rejectionReason": "Reason for rejection",
         "enterReasonForRejection": "Enter reason for rejecting",
-        "oldPassword": "Old Password"
+        "oldPassword": "Old Password",
+        "mobile": "Mobile",
+        "dateOfBirth": "Date of Birth",
+        "currentEmail": "Current Email",
+        "newEmail": "New Email"
     },
     "button": {
         "submit": "Submit",
@@ -102,7 +107,8 @@
         "changeBaseLocation": "Change Base Location",
         "online": "ONLINE",
         "offline": "OFFLINE",
-        "addVehicle": "Add Vehicle"
+        "addVehicle": "Add Vehicle",
+        "sending": "Sending..."
     },
     "text": {
         "alreadyHaveAccount": "Already have an account?",
@@ -141,6 +147,10 @@
         "modelName": "Model Name",
         "vehicleType": "Vehicle Type",
         "searchAndSelectBaseLocation": "Search and select your new base location from the cities below",
-        "selectedLocation": "Selected Location"
+        "selectedLocation": "Selected Location",
+        "notProvided": "Not provided",
+        "sendVerificationCodeToCurrentEmail": "We'll send a verification code to your current email",
+        "enterNewEmailAddress": "Enter your new email address",
+        "expired": "Expired"
     }
 }

@@ -19,7 +19,8 @@
         "userManagement": "यूज़र मैनेजमेंट",
         "hotelVerification": "होटल वेरिफिकेशन",
         "cabVerification": "कैब वेरिफिकेशन",
-        "updateBaseLocation": "आधार स्थान अपडेट करें"
+        "updateBaseLocation": "आधार स्थान अपडेट करें",
+        "changeEmail": "ईमेल बदलें"
     },
     "errors": {
         "minChar": "न्यूनतम {{count}} अक्षर आवश्यक हैं",
@@ -54,7 +55,11 @@
         "newPassword": "नया पासवर्ड",
         "rejectionReason": "अस्वीकृति का कारण",
         "enterReasonForRejection": "अस्वीकृति का कारण दर्ज करें",
-        "oldPassword": "पुराना पासवर्ड"
+        "oldPassword": "पुराना पासवर्ड",
+        "mobile": "मोबाइल",
+        "dateOfBirth": "जन्म तिथि",
+        "currentEmail": "वर्तमान ईमेल",
+        "newEmail": "नया ईमेल"
     },
     "button": {
         "submit": "सबमिट करें",
@@ -101,7 +106,8 @@
         "changeBaseLocation": "आधार स्थान बदलें",
         "online": "ऑनलाइन",
         "offline": "ऑफलाइन",
-        "addVehicle": "वाहन जोड़ें"
+        "addVehicle": "वाहन जोड़ें",
+        "sending": "भेजा जा रहा है..."
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -140,6 +146,10 @@
         "modelName": "मॉडल का नाम",
         "vehicleType": "वाहन प्रकार",
         "searchAndSelectBaseLocation": "नीचे दिए गए शहरों में से अपना नया आधार स्थान खोजें और चुनें",
-        "selectedLocation": "चयनित स्थान"
+        "selectedLocation": "चयनित स्थान",
+        "notProvided": "उपलब्ध नहीं",
+        "sendVerificationCodeToCurrentEmail": "हम आपके वर्तमान ईमेल पर एक सत्यापन कोड भेजेंगे",
+        "enterNewEmailAddress": "अपना नया ईमेल पता दर्ज करें",
+        "expired": "समाप्त"
     }
 }

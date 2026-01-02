@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import ChangePasswordModalWithButton from "@/components/shared/changePassword/ChangePasswordModalWithButton";
 import ProfileAvatar from "./ProfileAvatar";
+import ChangeEmailButtonWithModal from "@/components/shared/changeEmail/ChangeEmailButtonWithModal";
 
 interface PropType {
     profileData: {
@@ -13,12 +14,20 @@ interface PropType {
         profile_image?: string;
         mobile?: string;
         date_of_birth?: Date;
+        is_google_login: boolean;
     };
     switchEditState: () => void;
 }
 
 function ShowProfile({
-    profileData: { email, full_name, profile_image, mobile, date_of_birth },
+    profileData: {
+        email,
+        full_name,
+        profile_image,
+        mobile,
+        date_of_birth,
+        is_google_login,
+    },
     switchEditState,
 }: PropType) {
     const { t } = useTranslation();
@@ -90,6 +99,7 @@ function ShowProfile({
                                 {email}
                             </p>
                         </div>
+                        {!is_google_login && <ChangeEmailButtonWithModal />}
                     </div>
                 </motion.div>
 
@@ -108,7 +118,7 @@ function ShowProfile({
                         </div>
                         <div className="flex-1">
                             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
-                                Mobile
+                                {t(translationKey.form.mobile)}
                             </p>
                             <p
                                 className={
@@ -117,7 +127,7 @@ function ShowProfile({
                                         : "text-sm font-medium text-gray-400 italic"
                                 }
                             >
-                                {mobile || "Not provided"}
+                                {mobile || t(translationKey.text.notProvided)}
                             </p>
                         </div>
                     </div>
@@ -138,7 +148,7 @@ function ShowProfile({
                         </div>
                         <div className="flex-1">
                             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
-                                Date of Birth
+                                {t(translationKey.form.dateOfBirth)}
                             </p>
                             <p
                                 className={
@@ -151,7 +161,7 @@ function ShowProfile({
                                     ? new Date(
                                           date_of_birth
                                       ).toLocaleDateString()
-                                    : "Not provided"}
+                                    : t(translationKey.text.notProvided)}
                             </p>
                         </div>
                     </div>
@@ -177,7 +187,9 @@ function ShowProfile({
                         {t(translationKey.button.updateProfile)}
                     </Button>
                 </div>
-                <ChangePasswordModalWithButton className="flex-1 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                {!is_google_login && (
+                    <ChangePasswordModalWithButton className="flex-1 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                )}
             </motion.div>
         </motion.div>
     );

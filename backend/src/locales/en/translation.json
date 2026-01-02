@@ -31,6 +31,7 @@
   "blocked": "You are blocked from accessing this resource",
   "invalidId": "Invalid ID",
   "social_login_password_change_error": "User signedin using social login are currently not allowed to change password",
+  "social_login_email_change_error": "Users signed in using social login cannot change their email",
 
   "invalidCabType": "Invalid cab type",
   "fileTooLarge": "File is too large",
@@ -55,5 +56,6 @@
   "updateSuccessful": "Updated successfully",
   "vehicleUpdatedSuccessfully": "Vehicle updated successfully",
   "verificationApproved": "Verification approved",
-  "verificationRejected": "Verification rejected"
+  "verificationRejected": "Verification rejected",
+  "emailChangedSuccessfully": "Email changed successfully"
 }

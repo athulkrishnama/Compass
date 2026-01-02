@@ -109,6 +109,30 @@ export class AuthRouter {
       (req: Request, res: Response, next: NextFunction) =>
         authController.handleChangePassword(req, res, next),
     );
+
+    this._router.patch(
+      AuthRoutes.CHANGE_EMAIL_REQUEST_OTP,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      (req: Request, res: Response, next: NextFunction) =>
+        authController.handleChangeEmailRequestOtp(req, res, next),
+    );
+
+    this._router.patch(
+      AuthRoutes.CHANGE_EMAIL_VERIFY_OTP,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      (req: Request, res: Response, next: NextFunction) =>
+        authController.handleChangeEmailVerifyOtp(req, res, next),
+    );
+
+    this._router.patch(
+      AuthRoutes.CHANGE_EMAIL_NEW_EMAIL,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      (req: Request, res: Response, next: NextFunction) =>
+        authController.handleChangeEmailNewEmail(req, res, next),
+    );
   }
 
   public get_router() {

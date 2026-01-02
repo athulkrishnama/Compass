@@ -10,4 +10,5 @@ export interface IGetUserProfileResponseDTO {
   is_verified: VERIFICATION_STATUS;
   verfication_id_image?: string;
   rejection_reason?: string;
+  is_google_login: boolean;
 }

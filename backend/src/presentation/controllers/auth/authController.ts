@@ -11,6 +11,8 @@ import { ISignupUseCase } from "application/interfaces/useCase/auth/signupUseCas
 import { ITokenInvalidationUseCase } from "application/interfaces/useCase/auth/tokenInvalidationUseCase.interface";
 import { IVerifyOtpUseCase } from "application/interfaces/useCase/auth/verifyOtpUseCase.interface";
 import {
+  changeEmailNewEmailSchema,
+  changeEmailVerifyOtpSchema,
   changePasswordSchema,
   emailValidationSchema,
   forgetPasswordResetPasswordSchema,
@@ -34,6 +36,14 @@ import { MulterFiles } from "@presentation/types/multerFilesType";
 import { IUpdateUserProfileRequestDTO } from "@domain/dtos/auth/updateUserProfile.dto";
 import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 import { IChangePasswordUseCase } from "@application/interfaces/useCase/auth/changePasswordUseCase.interface";
+import { IChangeEmailRequestOtpUseCase } from "@application/interfaces/useCase/auth/changeEmailRequestOtpUseCase.interface";
+import { IChangeEmailVerifyOtpUseCase } from "@application/interfaces/useCase/auth/changeEmailVerifyOtpUseCase.interface";
+import { IChangeEmailNewEmailUseCase } from "@application/interfaces/useCase/auth/changeEmailNewEmailUseCase.interface";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import {
+  IChangeEmailNewEmailRequestDTO,
+  IChangeEmailVerifyOtpRequestDTO,
+} from "@domain/dtos/auth/changeEmail.dto";
 
 @injectable()
 export class AuthController {
@@ -62,6 +72,12 @@ export class AuthController {
     private _updateUserProfileUseCase: IUpdateUserProfileUseCase,
     @inject("IChangePasswordUseCase")
     private _changePasswordUseCase: IChangePasswordUseCase,
+    @inject("IChangeEmailRequestOtpUseCase")
+    private _changeEmailRequestOtpUseCase: IChangeEmailRequestOtpUseCase,
+    @inject("IChangeEmailVerifyOtpUseCase")
+    private _changeEmailVerifyOtpUseCase: IChangeEmailVerifyOtpUseCase,
+    @inject("IChangeEmailNewEmailUseCase")
+    private _changeEmailNewEmailUseCase: IChangeEmailNewEmailUseCase,
   ) {}
 
   async handleUserRegistration(
@@ -401,6 +417,90 @@ export class AuthController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.UPDATE_SUCCESSFUL,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleChangeEmailRequestOtp(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      if (!req.user.id) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
+      }
+
+      await this._changeEmailRequestOtpUseCase.execute(req.user.id);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.OTP_SEND_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleChangeEmailVerifyOtp(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const data: IChangeEmailVerifyOtpRequestDTO = {
+        userId: req.user.id,
+        otp: req.body.otp,
+      };
+
+      const parsedData = changeEmailVerifyOtpSchema.safeParse(data);
+      if (parsedData.error) {
+        throw new InvalideDataException(parsedData.error.issues[0].message);
+      }
+
+      const result = await this._changeEmailVerifyOtpUseCase.execute(
+        parsedData.data,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.OTP_VERIFIED_SUCCESSFULLY,
+        result,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleChangeEmailNewEmail(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const data: IChangeEmailNewEmailRequestDTO = {
+        userId: req.user.id,
+        ...req.body,
+      };
+
+      const parsedData = changeEmailNewEmailSchema.safeParse(data);
+      if (parsedData.error) {
+        throw new InvalideDataException(parsedData.error.issues[0].message);
+      }
+
+      await this._changeEmailNewEmailUseCase.execute(parsedData.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.EMAIL_CHANGED_SUCCESSFULLY,
       );
     } catch (error) {
       next(error);

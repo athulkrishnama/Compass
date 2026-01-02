@@ -1,5 +1,8 @@
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
+    changeEmailNewEmail,
+    changeEmailRequestOtp,
+    changeEmailVerifyOtp,
     changePassword,
     forgetPasswordResetPassword,
     forgetPasswordSendOtp,
@@ -14,6 +17,8 @@ import {
     userVerifyOtp,
 } from "@/services/api/authApiService";
 import {
+    type ChangeEmailNewEmailRequest,
+    type ChangeEmailVerifyOtpRequest,
     type ChangePasswordRequest,
     type ForgetPasswordPasswordResetRequest,
     type ForgetPasswordVerifyOtpRequest,
@@ -109,5 +114,31 @@ export function createUpdateUserProfileQueryOptions() {
 export function createChangePasswordMutationOptions() {
     return mutationOptions<HttpResponse<object>, Error, ChangePasswordRequest>({
         mutationFn: changePassword,
+    });
+}
+
+export function createChangeEmailRequestOtpMutationOptions() {
+    return mutationOptions<HttpResponse<object>, Error>({
+        mutationFn: changeEmailRequestOtp,
+    });
+}
+
+export function createChangeEmailVerifyOtpMutationOptions() {
+    return mutationOptions<
+        HttpResponse<object>,
+        Error,
+        ChangeEmailVerifyOtpRequest
+    >({
+        mutationFn: changeEmailVerifyOtp,
+    });
+}
+
+export function createChangeEmailNewEmailMutationOptions() {
+    return mutationOptions<
+        HttpResponse<object>,
+        Error,
+        ChangeEmailNewEmailRequest
+    >({
+        mutationFn: changeEmailNewEmail,
     });
 }

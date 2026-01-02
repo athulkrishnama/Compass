@@ -32,6 +32,7 @@ export enum INTERNAL_ERROR_MESSAGES {
   INVALID_ID = "invalidId",
   INVALID_CAB_TYPE = "invalidCabType",
   SOCIAL_LOGIN_PASSWORD_CHANGE_ERROR = "social_login_password_change_error",
+  SOCIAL_LOGIN_EMAIL_CHANGE_ERROR = "social_login_email_change_error",
   FILE_TOO_LARGE = "fileTooLarge",
   CAB_NOT_FOUND = "cabNotFound",
   VEHICLE_INFO_INCOMPLETE = "vehicleInfoIncomplete",

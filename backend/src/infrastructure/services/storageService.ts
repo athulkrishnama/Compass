@@ -3,7 +3,7 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
-  DeleteObjectCommand
+  DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from "@config/envConfig";
@@ -53,7 +53,10 @@ export class StorageService implements IStorageService {
   }
 
   async delete(key: string): Promise<void> {
-    const command = new DeleteObjectCommand({Bucket:env.S3_BUCKET_NAME, Key:key})
-    await this._client.send(command)
+    const command = new DeleteObjectCommand({
+      Bucket: env.S3_BUCKET_NAME,
+      Key: key,
+    });
+    await this._client.send(command);
   }
 }

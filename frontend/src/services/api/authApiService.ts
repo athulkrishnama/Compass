@@ -164,3 +164,47 @@ export async function changePassword<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function changeEmailRequestOtp() {
+    try {
+        const response = await axiosInstance.patch(
+            AUTH_ROUTES.CHANGE_EMAIL_REQUEST_OTP
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function changeEmailVerifyOtp<T>(data: T) {
+    try {
+        const response = await axiosInstance.patch(
+            AUTH_ROUTES.CHANGE_EMAIL_VERIFY_OTP,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function changeEmailNewEmail<T>(data: T) {
+    try {
+        const response = await axiosInstance.patch(
+            AUTH_ROUTES.CHANGE_EMAIL_NEW_EMAIL,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
