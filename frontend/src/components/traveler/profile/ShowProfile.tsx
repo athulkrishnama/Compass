@@ -14,12 +14,20 @@ interface PropType {
         profile_image?: string;
         mobile?: string;
         date_of_birth?: Date;
+        is_google_login: boolean;
     };
     switchEditState: () => void;
 }
 
 function ShowProfile({
-    profileData: { email, full_name, profile_image, mobile, date_of_birth },
+    profileData: {
+        email,
+        full_name,
+        profile_image,
+        mobile,
+        date_of_birth,
+        is_google_login,
+    },
     switchEditState,
 }: PropType) {
     const { t } = useTranslation();
@@ -91,7 +99,7 @@ function ShowProfile({
                                 {email}
                             </p>
                         </div>
-                        <ChangeEmailButtonWithModal />
+                        {!is_google_login && <ChangeEmailButtonWithModal />}
                     </div>
                 </motion.div>
 
@@ -179,7 +187,9 @@ function ShowProfile({
                         {t(translationKey.button.updateProfile)}
                     </Button>
                 </div>
-                <ChangePasswordModalWithButton className="flex-1 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                {!is_google_login && (
+                    <ChangePasswordModalWithButton className="flex-1 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                )}
             </motion.div>
         </motion.div>
     );

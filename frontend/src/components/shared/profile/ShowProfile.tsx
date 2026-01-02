@@ -33,6 +33,7 @@ interface ShowProfileProps {
         verfication_id_image?: string;
         is_verified: VERIFICATION_STATUS;
         rejection_reason?: string;
+        is_google_login: boolean;
     };
     setEditing: () => void;
     role: ROLE;
@@ -76,6 +77,7 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
         verfication_id_image,
         is_verified,
         rejection_reason,
+        is_google_login,
     } = profileData;
     const status = statusConfig[is_verified];
 
@@ -151,7 +153,9 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                             </div>
                             <div className="flex items-center gap-2 justify-between">
                                 <p className="text-black">{email}</p>
-                                <ChangeEmailButtonWithModal />
+                                {!is_google_login && (
+                                    <ChangeEmailButtonWithModal />
+                                )}
                             </div>
                         </motion.div>
 
@@ -304,7 +308,9 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                         {t(translationKey.button.updateProfile)}
                     </Button>
                 </div>
-                <ChangePasswordModalWithButton className="w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                {!is_google_login && (
+                    <ChangePasswordModalWithButton className="w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                )}
             </motion.div>
         </motion.div>
     );

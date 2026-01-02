@@ -36,6 +36,12 @@ export class ChangeEmailNewEmailUseCase implements IChangeEmailNewEmailUseCase {
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
+    if (user.googleId) {
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.SOCIAL_LOGIN_EMAIL_CHANGE_ERROR,
+      );
+    }
+
     const existingUser = await this._userRepository.findByEmail(newEmail);
     if (existingUser) {
       throw new InvalideDataException(

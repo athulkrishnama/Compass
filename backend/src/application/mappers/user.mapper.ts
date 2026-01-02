@@ -85,6 +85,7 @@ export class UserMapper {
       profile_image: user.profile_image,
       verfication_id_image: user.verfication_id_image,
       rejection_reason: user.rejection_reason,
+      is_google_login: !!user.googleId,
       ...(user.mobile && { mobile: user.mobile }),
       ...(user.date_of_birth && { date_of_birth: user.date_of_birth }),
     };

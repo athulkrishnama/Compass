@@ -27,6 +27,12 @@ export class ChangeEmailRequestOtpUseCase
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
+    if (user.googleId) {
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.SOCIAL_LOGIN_EMAIL_CHANGE_ERROR,
+      );
+    }
+
     const otp = this._otpService.generateOtp(6);
     const emailTemplate = this._emailTemplateGenerator.generateHtml({
       otp,

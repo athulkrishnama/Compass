@@ -10,4 +10,5 @@ export interface IGetUserProfileResponse {
     rejection_reason?: string;
     mobile?: string;
     date_of_birth?: Date;
+    is_google_login: boolean;
 }

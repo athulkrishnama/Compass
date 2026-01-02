@@ -29,6 +29,12 @@ export class ChangeEmailVerifyOtpUseCase
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
+    if (user.googleId) {
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.SOCIAL_LOGIN_EMAIL_CHANGE_ERROR,
+      );
+    }
+
     const cachedOtp = await this._cacheService.getValue(
       `CHANGE_EMAIL_OTP:${userId}`,
     );
