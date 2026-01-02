@@ -15,7 +15,7 @@ export class ChangeEmailVerifyOtpUseCase
   implements IChangeEmailVerifyOtpUseCase
 {
   constructor(
-    @inject("IUserRepository") private _userRepository: IUserRepo,
+    @inject("IUserRepo") private _userRepository: IUserRepo,
     @inject("ICacheService") private _cacheService: ICacheService,
     @inject("ITokenService") private _tokenService: ITokenService,
   ) {}

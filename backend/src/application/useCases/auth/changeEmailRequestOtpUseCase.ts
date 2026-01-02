@@ -14,8 +14,8 @@ export class ChangeEmailRequestOtpUseCase
   implements IChangeEmailRequestOtpUseCase
 {
   constructor(
-    @inject("IUserRepository") private _userRepository: IUserRepo,
-    @inject("IEmailTemplateGenerator")
+    @inject("IUserRepo") private _userRepository: IUserRepo,
+    @inject("ChangeEmailTemplateGenerator")
     private _emailTemplateGenerator: IEmailTemplateGenerator,
     @inject("IOtpService") private _otpService: IOtpService,
     @inject("ICacheService") private _cacheService: ICacheService,

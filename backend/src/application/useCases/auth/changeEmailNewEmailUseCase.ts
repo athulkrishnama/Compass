@@ -9,7 +9,7 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class ChangeEmailNewEmailUseCase implements IChangeEmailNewEmailUseCase {
   constructor(
-    @inject("IUserRepository") private _userRepository: IUserRepo,
+    @inject("IUserRepo") private _userRepository: IUserRepo,
     @inject("ICacheService") private _cacheService: ICacheService,
   ) {}
   async execute({
