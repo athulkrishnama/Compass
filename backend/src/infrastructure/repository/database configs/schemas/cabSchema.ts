@@ -1,5 +1,5 @@
 import { VehicleType, VEHICLE_TYPES } from "@domain/types/vehicleType";
-import { Types, Schema } from "mongoose";
+import { Types, Schema, Document } from "mongoose";
 
 export interface ICabDocument extends Document {
   _id: Types.ObjectId;
