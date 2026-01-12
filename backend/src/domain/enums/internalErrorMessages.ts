@@ -62,4 +62,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   OPENING_TIME_MISSING = "openingTimeMissing",
   CLOSING_TIME_MISSING = "closingTimeMissing",
   CLOSED_DAYS_MISSING_OR_INVALID = "closedDaysMissingOrInvalid",
+  MINIMUM_ENTRY_FEE = "minimumEntryFee",
 }

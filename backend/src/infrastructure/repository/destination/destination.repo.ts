@@ -25,6 +25,12 @@ export class DestinationRepo
       .then((docs) => docs.map((doc) => this.toEntity(doc)));
   }
 
+  async create(data: DestinationEntity): Promise<string> {
+    const doc = this.toMongoDoc(data);
+    const result = await this.model.create(doc);
+    return result._id.toString();
+  }
+
   toMongoDoc(entity: DestinationEntity): IDestinationDocument {
     return new this._model({
       _id: new Types.ObjectId(entity._id),
@@ -35,7 +41,6 @@ export class DestinationRepo
       images: entity.images,
 
       country: entity.country,
-      state: entity.state,
       city: entity.city,
       pincode: entity.pincode,
       coordinates: {
@@ -73,7 +78,6 @@ export class DestinationRepo
       images: doc.images,
 
       country: doc.country,
-      state: doc.state,
       city: doc.city,
       pincode: doc.pincode,
       coordinates: [

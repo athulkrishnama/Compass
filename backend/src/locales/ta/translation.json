@@ -78,5 +78,6 @@
   "currencyMissingOrInvalid": "நாணயம் தேவை அல்லது தவறானது",
   "openingTimeMissing": "திறக்கும் நேரம் தேவை",
   "closingTimeMissing": "மூடும் நேரம் தேவை",
-  "closedDaysMissingOrInvalid": "மூடப்பட்ட நாட்கள் தகவல் தேவை அல்லது தவறானது"
+  "closedDaysMissingOrInvalid": "விடுமுறை நாட்களின் தகவல் தேவை அல்லது செல்லாதது",
+  "minimumEntryFee": "நுழைவு கட்டணம் குறைந்தது 1 ஆக இருக்க வேண்டும்"
 }

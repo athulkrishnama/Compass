@@ -12,12 +12,11 @@ export interface ICreateDestinationRequestDTO {
   images: File[];
 
   country: string;
-  state: string;
   city: string;
   pincode: string;
   coordinates: [number, number];
 
-  type: DESTINATION_TYPES[];
+  type: DESTINATION_TYPES;
   activities: ACTIVITY_TYPE[];
   bestTimeToVisit: MONTH[];
 

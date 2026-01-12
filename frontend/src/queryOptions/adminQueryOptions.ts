@@ -2,6 +2,7 @@
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type { filterType } from "@/pages/admin/Users";
 import {
+    addDestination,
     approveUserVerificationRequest,
     changeUserStatus,
     getUnverifiedUserDetails,
@@ -77,5 +78,11 @@ export function createRejectUserVerificationRequestMutationOption(id: string) {
 export function createApproveUserVerificationRequestMutationOption(id: string) {
     return mutationOptions<HttpResponse<object>, Error>({
         mutationFn: () => approveUserVerificationRequest(id),
+    });
+}
+
+export function createAddDestinationMutationOption() {
+    return mutationOptions<HttpResponse<object>, Error, FormData>({
+        mutationFn: addDestination,
     });
 }

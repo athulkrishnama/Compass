@@ -50,7 +50,9 @@ export const rejectUserVerificationRequestValidationSchema = z.object({
 export const addDestinationValidationSchema = z.object({
   name: z.string({ error: INTERNAL_ERROR_MESSAGES.NAME_MISSING }),
   tagline: z.string({ error: INTERNAL_ERROR_MESSAGES.TAGLINE_MISSING }),
-  description: z.string({ error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING }),
+  description: z.string({
+    error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING,
+  }),
   coverImage: z
     .file({ error: INTERNAL_ERROR_MESSAGES.COVER_IMAGE_MISSING })
     .max(10 * 1024 * 1024)
@@ -65,52 +67,85 @@ export const addDestinationValidationSchema = z.object({
     .min(4, { error: INTERNAL_ERROR_MESSAGES.MINIMUM_IMAGES_REQUIRED }),
 
   country: z.string({ error: INTERNAL_ERROR_MESSAGES.COUNTRY_MISSING }),
-  state: z.string({ error: INTERNAL_ERROR_MESSAGES.STATE_MISSING }),
   city: z.string({ error: INTERNAL_ERROR_MESSAGES.CITY_MISSING }),
   pincode: z.string({ error: INTERNAL_ERROR_MESSAGES.PINCODE_MISSING }),
-  coordinates: z.tuple([z.number(), z.number()], {
-    error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING,
-  }),
-
-  type: z.array(
-    z.enum(DESTINATION_TYPES, {
-      error: INTERNAL_ERROR_MESSAGES.TYPE_MISSING_OR_INVALID,
-    }),
-  ),
-  activities: z.array(
-    z.enum(ACTIVITY_TYPE, {
-      error: INTERNAL_ERROR_MESSAGES.ACTIVITIES_MISSING_OR_INVALID,
-    }),
-  ),
-  bestTimeToVisit: z.array(
-    z.enum(MONTH, {
-      error: INTERNAL_ERROR_MESSAGES.BEST_TIME_TO_VISIT_MISSING_OR_INVALID,
+  coordinates: z.preprocess(
+    (val) => (typeof val === "string" ? JSON.parse(val) : val),
+    z.tuple([z.number(), z.number()], {
+      error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING,
     }),
   ),
 
-  isWheelChairAccessible: z.boolean({
-    error: INTERNAL_ERROR_MESSAGES.IS_WHEELCHAIR_ACCESSIBLE_MISSING,
-  }),
-  isFree: z.boolean({ error: INTERNAL_ERROR_MESSAGES.IS_FREE_MISSING }),
-  isAlwaysOpen: z.boolean({
-    error: INTERNAL_ERROR_MESSAGES.IS_ALWAYS_OPEN_MISSING,
+  type: z.enum(DESTINATION_TYPES, {
+    error: INTERNAL_ERROR_MESSAGES.TYPE_MISSING_OR_INVALID,
   }),
 
-  entryFee: z.number({ error: INTERNAL_ERROR_MESSAGES.ENTRY_FEE_MISSING }),
-  currency: z.enum(CURRENCY, {
-    error: INTERNAL_ERROR_MESSAGES.CURRENCY_MISSING_OR_INVALID,
-  }),
+  activities: z.preprocess(
+    (val) => (typeof val === "string" ? JSON.parse(val) : val),
+    z.array(
+      z.enum(ACTIVITY_TYPE, {
+        error: INTERNAL_ERROR_MESSAGES.ACTIVITIES_MISSING_OR_INVALID,
+      }),
+    ),
+  ),
+  bestTimeToVisit: z.preprocess(
+    (val) => (typeof val === "string" ? JSON.parse(val) : val),
+    z.array(
+      z.enum(MONTH, {
+        error: INTERNAL_ERROR_MESSAGES.BEST_TIME_TO_VISIT_MISSING_OR_INVALID,
+      }),
+    ),
+  ),
 
-  openingTime: z.string({
-    error: INTERNAL_ERROR_MESSAGES.OPENING_TIME_MISSING,
-  }),
-  closingTime: z.string({
-    error: INTERNAL_ERROR_MESSAGES.CLOSING_TIME_MISSING,
-  }),
-
-  closedDays: z.array(
-    z.enum(WEEKDAY, {
-      error: INTERNAL_ERROR_MESSAGES.CLOSED_DAYS_MISSING_OR_INVALID,
+  isWheelChairAccessible: z.preprocess(
+    (val) => (val === "true" ? true : val === "false" ? false : val),
+    z.boolean({
+      error: INTERNAL_ERROR_MESSAGES.IS_WHEELCHAIR_ACCESSIBLE_MISSING,
     }),
+  ),
+  isFree: z.preprocess(
+    (val) => (val === "true" ? true : val === "false" ? false : val),
+    z.boolean({ error: INTERNAL_ERROR_MESSAGES.IS_FREE_MISSING }),
+  ),
+  isAlwaysOpen: z.preprocess(
+    (val) => (val === "true" ? true : val === "false" ? false : val),
+    z.boolean({
+      error: INTERNAL_ERROR_MESSAGES.IS_ALWAYS_OPEN_MISSING,
+    }),
+  ),
+
+  entryFee: z.preprocess(
+    (val) => (typeof val === "string" ? Number(val) : val),
+    z
+      .number({ error: INTERNAL_ERROR_MESSAGES.ENTRY_FEE_MISSING })
+      .min(1, { message: INTERNAL_ERROR_MESSAGES.MINIMUM_ENTRY_FEE })
+      .optional(),
+  ),
+  currency: z
+    .enum(CURRENCY, {
+      error: INTERNAL_ERROR_MESSAGES.CURRENCY_MISSING_OR_INVALID,
+    })
+    .optional(),
+
+  openingTime: z
+    .string({
+      error: INTERNAL_ERROR_MESSAGES.OPENING_TIME_MISSING,
+    })
+    .optional(),
+  closingTime: z
+    .string({
+      error: INTERNAL_ERROR_MESSAGES.CLOSING_TIME_MISSING,
+    })
+    .optional(),
+
+  closedDays: z.preprocess(
+    (val) => (typeof val === "string" ? JSON.parse(val) : val),
+    z
+      .array(
+        z.enum(WEEKDAY, {
+          error: INTERNAL_ERROR_MESSAGES.CLOSED_DAYS_MISSING_OR_INVALID,
+        }),
+      )
+      .optional(),
   ),
 });

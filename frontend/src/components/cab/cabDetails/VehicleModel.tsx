@@ -38,7 +38,10 @@ const VEHICLE_ICONS: Record<VehicleType, LucideIcon> = {
     rickshaw: Bike,
 };
 
-const VehicleModel: React.FC<VehicleModelProps> = ({ vehicleType, modelName }) => {
+const VehicleModel: React.FC<VehicleModelProps> = ({
+    vehicleType,
+    modelName,
+}) => {
     const Icon = VEHICLE_ICONS[vehicleType] || Car;
 
     return (

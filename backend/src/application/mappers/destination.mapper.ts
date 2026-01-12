@@ -16,7 +16,6 @@ export class DestinationMapper {
       images: data.images,
 
       country: data.country,
-      state: data.state,
       city: data.city,
       pincode: data.pincode,
       coordinates: data.coordinates,

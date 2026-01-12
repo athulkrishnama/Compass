@@ -3,8 +3,6 @@ import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import AddVehicleComponentWithButton from "./AddVehicleComponentWithButton";
 
-
-
 const NoVehicleDetails = () => {
     const { t } = useTranslation();
 
@@ -29,7 +27,7 @@ const NoVehicleDetails = () => {
                     )}
                 </p>
             </div>
-            <AddVehicleComponentWithButton/>
+            <AddVehicleComponentWithButton />
         </div>
     );
 };

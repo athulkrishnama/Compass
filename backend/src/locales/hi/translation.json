@@ -78,5 +78,6 @@
   "currencyMissingOrInvalid": "मुद्रा आवश्यक है या अमान्य है",
   "openingTimeMissing": "खुलने का समय आवश्यक है",
   "closingTimeMissing": "बंद होने का समय आवश्यक है",
-  "closedDaysMissingOrInvalid": "बंद दिनों की जानकारी आवश्यक है या अमान्य है"
+  "closedDaysMissingOrInvalid": "बंद दिनों की जानकारी आवश्यक है या अमान्य है",
+  "minimumEntryFee": "प्रवेश शुल्क कम से कम 1 होना चाहिए"
 }

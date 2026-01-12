@@ -86,3 +86,18 @@ export async function rejectUserVerificationRequest<T>(id: string, data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function addDestination<T>(data: T) {
+    try {
+        const response = await axiosInstance.post(
+            AdminRoutes.DESTINATIONS,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

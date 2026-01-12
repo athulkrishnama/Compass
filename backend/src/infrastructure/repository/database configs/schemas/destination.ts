@@ -14,12 +14,11 @@ export interface IDestinationDocument extends Document {
   images: string[];
 
   country: string;
-  state: string;
   city: string;
   pincode: string;
   coordinates: { type: string; coordinates: [number, number] };
 
-  type: DESTINATION_TYPES[];
+  type: DESTINATION_TYPES;
   activities: ACTIVITY_TYPE[];
   bestTimeToVisit: MONTH[];
 
@@ -65,10 +64,6 @@ export const destinationSchema = new Schema<IDestinationDocument>({
     type: String,
     required: true,
   },
-  state: {
-    type: String,
-    required: true,
-  },
   city: {
     type: String,
     required: true,
@@ -83,7 +78,7 @@ export const destinationSchema = new Schema<IDestinationDocument>({
   },
 
   type: {
-    type: [String],
+    type: String,
     enum: Object.values(DESTINATION_TYPES),
     required: true,
   },
