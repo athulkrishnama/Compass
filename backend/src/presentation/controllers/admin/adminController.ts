@@ -6,6 +6,7 @@ import {
   addDestinationValidationSchema,
   getUnverifiedUserValidationSchema,
   getUsersQueryValidationSchema,
+  listDestinationsValidationSchema,
   rejectUserVerificationRequestValidationSchema,
   userStatusChangeValidationSchema,
 } from "presentation/validationSchemas/adminValidation";
@@ -23,6 +24,7 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { ICreateDestinationUseCase } from "@application/interfaces/useCase/admin/createDestinationUseCase.interface";
 import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 import { MulterFiles } from "@presentation/types/multerFilesType";
+import { IListDestinationsUseCase } from "@application/interfaces/useCase/admin/ListDestinationsUseCase.interface";
 
 @injectable()
 export class AdminController {
@@ -40,6 +42,8 @@ export class AdminController {
     private _rejectUserVerificationRequestUseCase: IRejectUserVerificationRequestUseCase,
     @inject("ICreateDestinationUseCase")
     private _createDestinationUseCase: ICreateDestinationUseCase,
+    @inject("IListDestinationsUseCase")
+    private _listDestinationUseCase: IListDestinationsUseCase,
   ) {}
 
   async handleGetUsers(req: Request, res: Response, next: NextFunction) {
@@ -228,6 +232,31 @@ export class AdminController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.DESTINATION_ADDED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleListDestinations(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const query = listDestinationsValidationSchema.safeParse(req.query);
+      if (query.error) {
+        throw new InvalideDataException(query.error.issues[0].message);
+      }
+
+      const data = await this._listDestinationUseCase.execute(query.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        data,
       );
     } catch (error) {
       next(error);

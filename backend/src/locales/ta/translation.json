@@ -79,5 +79,6 @@
   "openingTimeMissing": "திறக்கும் நேரம் தேவை",
   "closingTimeMissing": "மூடும் நேரம் தேவை",
   "closedDaysMissingOrInvalid": "விடுமுறை நாட்களின் தகவல் தேவை அல்லது செல்லாதது",
-  "minimumEntryFee": "நுழைவு கட்டணம் குறைந்தது 1 ஆக இருக்க வேண்டும்"
+  "minimumEntryFee": "நுழைவு கட்டணம் குறைந்தது 1 ஆக இருக்க வேண்டும்",
+  "invalidDestinationType": "செல்லாத சேருமிடம் வகை"
 }

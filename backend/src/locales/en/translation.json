@@ -80,5 +80,6 @@
   "openingTimeMissing": "Opening time is required",
   "closingTimeMissing": "Closing time is required",
   "closedDaysMissingOrInvalid": "Closed days information is required or invalid",
-  "minimumEntryFee": "Entry fee must be at least 1"
+  "minimumEntryFee": "Entry fee must be at least 1",
+  "invalidDestinationType": "Invalid destination type"
 }

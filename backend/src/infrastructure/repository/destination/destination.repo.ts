@@ -2,8 +2,10 @@ import { IDestinationRepo } from "@application/interfaces/repository/destination
 import { BaseRepository } from "../base/base.repo";
 import { DestinationEntity } from "@domain/entities/destination/destination";
 import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destination";
-import { Model, Types } from "mongoose";
+import { Model, RootFilterQuery, Types } from "mongoose";
 import { inject, injectable } from "tsyringe";
+import { DESTINATION_TYPES } from "@domain/enums/destinationType";
+import { VALUES } from "@presentation/constants/values";
 
 @injectable()
 export class DestinationRepo
@@ -16,13 +18,56 @@ export class DestinationRepo
     super(model);
   }
 
-  async findByQuery(
-    query: Record<string, string | string[]>,
-  ): Promise<DestinationEntity[]> {
-    return this.model
+  async findByQuery(filter: {
+    query?: string;
+    type?: DESTINATION_TYPES[];
+    isActive?: boolean;
+    isFree?: boolean;
+    pageNo: number;
+  }): Promise<{
+    destinations: DestinationEntity[];
+    totalDestinations: number;
+    pageNo: number;
+    totalPages: number;
+  }> {
+    const query: RootFilterQuery<IDestinationDocument> = {};
+
+    if (filter.query) {
+      query.$or = [
+        { name: { $regex: filter.query, $options: "i" } },
+        { tagline: { $regex: filter.query, $options: "i" } },
+        { description: { $regex: filter.query, $options: "i" } },
+        { country: { $regex: filter.query, $options: "i" } },
+        { city: { $regex: filter.query, $options: "i" } },
+      ];
+    }
+
+    if (filter.type?.length) {
+      query.type = { $in: filter.type };
+    }
+
+    if (typeof filter.isActive === "boolean") {
+      query.isActive = filter.isActive;
+    }
+    if (typeof filter.isFree === "boolean") {
+      query.isFree = filter.isFree;
+    }
+
+    const totalDestinations = await this.model.countDocuments(query);
+    const totalPages = Math.ceil(totalDestinations / VALUES.DESTINATIONS_LIMIT);
+    const destinations = await this.model
       .find(query)
+      .skip((filter.pageNo - 1) * VALUES.DESTINATIONS_LIMIT)
+      .limit(VALUES.DESTINATIONS_LIMIT)
       .exec()
       .then((docs) => docs.map((doc) => this.toEntity(doc)));
+
+    return {
+      destinations,
+      totalDestinations,
+      pageNo: filter.pageNo,
+      totalPages,
+    };
   }
 
   async create(data: DestinationEntity): Promise<string> {

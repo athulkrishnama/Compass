@@ -149,3 +149,17 @@ export const addDestinationValidationSchema = z.object({
       .optional(),
   ),
 });
+
+export const listDestinationsValidationSchema = z.object({
+  queryString: z.string().optional(),
+  type: z
+    .array(
+      z.enum(DESTINATION_TYPES, {
+        error: INTERNAL_ERROR_MESSAGES.INVALID_DESTINATION_TYPE,
+      }),
+    )
+    .optional(),
+  isActive: z.boolean().optional(),
+  isFree: z.boolean().optional(),
+  pageNo: z.coerce.number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO }),
+});

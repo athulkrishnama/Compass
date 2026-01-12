@@ -79,5 +79,6 @@
   "openingTimeMissing": "തുറക്കുന്ന സമയം ആവശ്യമാണ്",
   "closingTimeMissing": "അടയ്ക്കുന്ന സമയം ആവശ്യമാണ്",
   "closedDaysMissingOrInvalid": "അവധി ദിവസങ്ങളെക്കുറിച്ചുള്ള വിവരങ്ങൾ ആവശ്യമാണ് അല്ലെങ്കിൽ അസാധുവാണ്",
-  "minimumEntryFee": "പ്രവേശന ഫീസ് കുറഞ്ഞത് 1 ആയിരിക്കണം"
+  "minimumEntryFee": "പ്രവേശന ഫീസ് കുറഞ്ഞത് 1 ആയിരിക്കണം",
+  "invalidDestinationType": "അസാധുവായ ലക്ഷ്യസ്ഥാന തരം"
 }

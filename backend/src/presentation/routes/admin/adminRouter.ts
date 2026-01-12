@@ -76,6 +76,15 @@ export class AdminRouter {
         adminController.handleCreateDestination(req, res, next);
       },
     );
+
+    this._router.get(
+      AdminRoutes.DESTINATIONS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleListDestinations(req, res, next);
+      },
+    );
   }
 
   public getRouter() {
