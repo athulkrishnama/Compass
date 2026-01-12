@@ -3,6 +3,7 @@ import { IGetUsersUseCase } from "application/interfaces/useCase/admin/getUsersU
 import { IUserStatusChangeUseCase } from "application/interfaces/useCase/admin/userStatusChangeUseCase.interface";
 import { ROLES } from "@domain/types/roles";
 import {
+  addDestinationValidationSchema,
   getUnverifiedUserValidationSchema,
   getUsersQueryValidationSchema,
   rejectUserVerificationRequestValidationSchema,
@@ -19,6 +20,9 @@ import { IApproveUserVerificationRequestUseCase } from "@application/interfaces/
 import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/rejectUserVerificationRequestUseCase.interface";
 import { IRejectUserVerificationRequestRequestDTO } from "@domain/dtos/admin/rejectUserVerificationRequest.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { ICreateDestinationUseCase } from "@application/interfaces/useCase/admin/createDestinationUseCase.interface";
+import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
+import { MulterFiles } from "@presentation/types/multerFilesType";
 
 @injectable()
 export class AdminController {
@@ -34,6 +38,8 @@ export class AdminController {
     private _approveUserVerificationRequestUseCase: IApproveUserVerificationRequestUseCase,
     @inject("IRejectUserVerificationRequestUseCase")
     private _rejectUserVerificationRequestUseCase: IRejectUserVerificationRequestUseCase,
+    @inject("ICreateDestinationUseCase")
+    private _createDestinationUseCase: ICreateDestinationUseCase,
   ) {}
 
   async handleGetUsers(req: Request, res: Response, next: NextFunction) {
@@ -186,6 +192,42 @@ export class AdminController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.VERIFICATION_REJECTED,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleCreateDestination(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const files = req.files as MulterFiles<"images" | "coverImage">;
+      const images = files.images?.map((img) =>
+        mutlterFileToFileconverter(img),
+      );
+
+      const coverImage = mutlterFileToFileconverter(files.coverImage![0]);
+
+      const data = addDestinationValidationSchema.safeParse({
+        ...req.body,
+        images,
+        coverImage,
+      });
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      await this._createDestinationUseCase.create(data.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DESTINATION_ADDED_SUCCESSFULLY,
       );
     } catch (error) {
       next(error);

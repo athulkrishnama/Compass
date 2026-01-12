@@ -10,6 +10,7 @@ export interface IDestinationDocument extends Document {
   name: string;
   tagline: string;
   description: string;
+  coverImage: string;
   images: string[];
 
   country: string;
@@ -48,6 +49,10 @@ export const destinationSchema = new Schema<IDestinationDocument>({
     required: true,
   },
   description: {
+    type: String,
+    required: true,
+  },
+  coverImage: {
     type: String,
     required: true,
   },

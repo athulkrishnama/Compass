@@ -49,6 +49,8 @@ import { IChangeEmailRequestOtpUseCase } from "@application/interfaces/useCase/a
 import { ChangeEmailRequestOtpUseCase } from "@useCases/auth/changeEmailRequestOtpUseCase";
 import { IChangeEmailVerifyOtpUseCase } from "@application/interfaces/useCase/auth/changeEmailVerifyOtpUseCase.interface";
 import { ChangeEmailVerifyOtpUseCase } from "@useCases/auth/changeEmailVerifyOtpUseCase";
+import { ICreateDestinationUseCase } from "@application/interfaces/useCase/admin/createDestinationUseCase.interface";
+import { CreateDestinationUseCase } from "@useCases/admin/createDestinationUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -144,5 +146,9 @@ export function registerUsecases() {
   container.registerSingleton<IChangeEmailVerifyOtpUseCase>(
     "IChangeEmailVerifyOtpUseCase",
     ChangeEmailVerifyOtpUseCase,
+  );
+  container.registerSingleton<ICreateDestinationUseCase>(
+    "ICreateDestinationUseCase",
+    CreateDestinationUseCase,
   );
 }

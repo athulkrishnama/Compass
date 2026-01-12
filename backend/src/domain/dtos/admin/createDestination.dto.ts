@@ -4,13 +4,12 @@ import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 import { MONTH } from "@domain/enums/months";
 import { WEEKDAY } from "@domain/enums/weekdays";
 
-export interface DestinationEntity {
-  _id?: string;
+export interface ICreateDestinationRequestDTO {
   name: string;
   tagline: string;
   description: string;
-  coverImage: string;
-  images: string[];
+  coverImage: File;
+  images: File[];
 
   country: string;
   state: string;
@@ -22,7 +21,6 @@ export interface DestinationEntity {
   activities: ACTIVITY_TYPE[];
   bestTimeToVisit: MONTH[];
 
-  isActive: boolean;
   isWheelChairAccessible: boolean;
   isFree: boolean;
   isAlwaysOpen: boolean;
@@ -33,7 +31,4 @@ export interface DestinationEntity {
   openingTime?: string;
   closingTime?: string;
   closedDays?: WEEKDAY[];
-
-  createdAt?: Date;
-  updatedAt?: Date;
 }

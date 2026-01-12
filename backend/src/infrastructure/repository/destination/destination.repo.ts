@@ -3,8 +3,9 @@ import { BaseRepository } from "../base/base.repo";
 import { DestinationEntity } from "@domain/entities/destination/destination";
 import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destination";
 import { Model, Types } from "mongoose";
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class DestinationRepo
   extends BaseRepository<DestinationEntity, IDestinationDocument>
   implements IDestinationRepo
@@ -30,6 +31,7 @@ export class DestinationRepo
       name: entity.name,
       tagline: entity.tagline,
       description: entity.description,
+      coverImage: entity.coverImage,
       images: entity.images,
 
       country: entity.country,
@@ -67,6 +69,7 @@ export class DestinationRepo
       name: doc.name,
       tagline: doc.tagline,
       description: doc.description,
+      coverImage: doc.coverImage,
       images: doc.images,
 
       country: doc.country,
