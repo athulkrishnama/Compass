@@ -24,6 +24,8 @@ export default {
         destinations: "headings.destinations",
         addNewDestination: "headings.addNewDestination",
         addDestinationSubtitle: "headings.addDestinationSubtitle",
+        destinationList: "headings.destinationList",
+        destinationListSubtitle: "headings.destinationListSubtitle",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -163,6 +165,8 @@ export default {
         offline: "button.offline",
         addVehicle: "button.addVehicle",
         sending: "button.sending",
+        newDestination: "button.newDestination",
+        edit: "button.edit",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -282,5 +286,19 @@ export default {
             "text.sendVerificationCodeToCurrentEmail",
         enterNewEmailAddress: "text.enterNewEmailAddress",
         expired: "text.expired",
+        searchByNameOrTagline: "text.searchByNameOrTagline",
+        allTypes: "text.allTypes",
+        isFree: "text.isFree",
+        isActive: "text.isActive",
+        free: "text.free",
+        paid: "text.paid",
+        inactive: "text.inactive",
+        noDestinationsFound: "text.noDestinationsFound",
+    },
+    tableHeaders: {
+        destination: "tableHeaders.destination",
+        type: "tableHeaders.type",
+        fee: "tableHeaders.fee",
+        status: "tableHeaders.status",
     },
 };

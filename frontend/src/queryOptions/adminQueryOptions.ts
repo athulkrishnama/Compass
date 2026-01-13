@@ -5,16 +5,19 @@ import {
     addDestination,
     approveUserVerificationRequest,
     changeUserStatus,
+    findDestinations,
     getUnverifiedUserDetails,
     getUnverifiedUsers,
     getUsers,
     rejectUserVerificationRequest,
 } from "@/services/api/adminApiService";
 import type {
+    IFindDestinationsRequest,
     IRejectUserRegistrationRequest,
     IUserStatusChangeRequest,
 } from "@/types/api/requests/adminRequest";
 import type { IGetUsersResponse } from "@/types/api/responses/adminResponse";
+import type { IFindDestinationsResponse } from "@/types/api/responses/findDestinationAdminResponse";
 import type { IGetUnverifiedUserDetailsResponseDTO } from "@/types/api/responses/getUnverifiedUserDetailsResponse";
 import type { IGetUnverifiedUsersResponseDTO } from "@/types/api/responses/getUnverifiedUsersResponse";
 import type { HttpResponse } from "@/types/api/responseType";
@@ -84,5 +87,22 @@ export function createApproveUserVerificationRequestMutationOption(id: string) {
 export function createAddDestinationMutationOption() {
     return mutationOptions<HttpResponse<object>, Error, FormData>({
         mutationFn: addDestination,
+    });
+}
+
+export function createFindDestinationsQueryOption(
+    filter: IFindDestinationsRequest
+) {
+    return queryOptions<HttpResponse<IFindDestinationsResponse>, Error>({
+        queryKey: [
+            QUERY_KEYS.DESTINATIONS,
+            filter.pageNo,
+            filter.query,
+            filter.type,
+            filter.isFree,
+            filter.isActive,
+        ],
+        queryFn: () => findDestinations(filter),
+        placeholderData: keepPreviousData,
     });
 }

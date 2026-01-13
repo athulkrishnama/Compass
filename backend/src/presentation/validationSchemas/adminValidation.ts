@@ -151,15 +151,28 @@ export const addDestinationValidationSchema = z.object({
 });
 
 export const listDestinationsValidationSchema = z.object({
-  queryString: z.string().optional(),
+  query: z.string().optional(),
   type: z
-    .array(
-      z.enum(DESTINATION_TYPES, {
-        error: INTERNAL_ERROR_MESSAGES.INVALID_DESTINATION_TYPE,
-      }),
+    .preprocess(
+      (val) => (typeof val === "string" ? JSON.parse(val) : val),
+      z.array(
+        z.enum(DESTINATION_TYPES, {
+          error: INTERNAL_ERROR_MESSAGES.INVALID_DESTINATION_TYPE,
+        }),
+      ),
     )
     .optional(),
-  isActive: z.boolean().optional(),
-  isFree: z.boolean().optional(),
+  isActive: z
+    .preprocess(
+      (val) => (val === "true" ? true : val === "false" ? false : val),
+      z.boolean({ error: INTERNAL_ERROR_MESSAGES.INVALID_IS_ACTIVE }),
+    )
+    .optional(),
+  isFree: z
+    .preprocess(
+      (val) => (val === "true" ? true : val === "false" ? false : val),
+      z.boolean({ error: INTERNAL_ERROR_MESSAGES.INVALID_IS_FREE }),
+    )
+    .optional(),
   pageNo: z.coerce.number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO }),
 });

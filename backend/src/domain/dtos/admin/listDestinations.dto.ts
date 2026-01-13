@@ -1,3 +1,4 @@
+import { CURRENCY } from "@domain/enums/currency";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 
 export interface IListDestinationRequestDTO {
@@ -16,6 +17,7 @@ interface Destination {
   coverImage: string;
   isActive: boolean;
   entryFee?: number;
+  currency?: CURRENCY;
   isFree: boolean;
 }
 export interface IListDestinationResponseDTO {

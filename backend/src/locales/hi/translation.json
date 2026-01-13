@@ -80,5 +80,7 @@
   "closingTimeMissing": "बंद होने का समय आवश्यक है",
   "closedDaysMissingOrInvalid": "बंद दिनों की जानकारी आवश्यक है या अमान्य है",
   "minimumEntryFee": "प्रवेश शुल्क कम से कम 1 होना चाहिए",
-  "invalidDestinationType": "अमान्य गंतव्य प्रकार"
+  "invalidDestinationType": "अमान्य गंतव्य प्रकार",
+  "invalidIsActive": "अमान्य सक्रिय स्थिति",
+  "invalidIsFree": "अमान्य निःशुल्क स्थिति"
 }

@@ -23,7 +23,9 @@
         "changeEmail": "Change Email",
         "destinations": "Destinations",
         "addNewDestination": "Add New Destination",
-        "addDestinationSubtitle": "Configure the details for a new destination listing"
+        "addDestinationSubtitle": "Configure the details for a new destination listing",
+        "destinationList": "Destination List",
+        "destinationListSubtitle": "Manage destinations, pricing, and availability status."
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -160,7 +162,9 @@
         "online": "ONLINE",
         "offline": "OFFLINE",
         "addVehicle": "Add Vehicle",
-        "sending": "Sending..."
+        "sending": "Sending...",
+        "newDestination": "New Destination",
+        "edit": "Edit"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -278,6 +282,20 @@
         "notProvided": "Not provided",
         "sendVerificationCodeToCurrentEmail": "We'll send a verification code to your current email",
         "enterNewEmailAddress": "Enter your new email address",
-        "expired": "Expired"
+        "expired": "Expired",
+        "searchByNameOrTagline": "Search by name or tagline...",
+        "allTypes": "All Types",
+        "isFree": "Is Free",
+        "isActive": "Is Active",
+        "free": "FREE",
+        "paid": "Paid",
+        "inactive": "Inactive",
+        "noDestinationsFound": "No destinations found"
+    },
+    "tableHeaders": {
+        "destination": "DESTINATION",
+        "type": "TYPE",
+        "fee": "FEE",
+        "status": "STATUS"
     }
 }
