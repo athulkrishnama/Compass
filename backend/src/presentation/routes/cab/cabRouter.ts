@@ -11,7 +11,6 @@ export class CabRouter {
     this._setRoute();
   }
 
-
   _setRoute() {
     this._router.get(
       "/",

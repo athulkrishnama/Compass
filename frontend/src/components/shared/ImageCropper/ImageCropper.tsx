@@ -82,7 +82,7 @@ function ImageCropper({ ratio, image, onCropComplete }: ImageCropperProps) {
                 <Button variant="outline" onClick={() => onCropComplete()}>
                     {t(translationKey.button.close)}
                 </Button>
-                <Button onClick={handleCropComplete}>
+                <Button type="button" onClick={handleCropComplete}>
                     {t(translationKey.button.upload)}
                 </Button>
             </div>

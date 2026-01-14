@@ -14,4 +14,6 @@ export enum Messages {
   VERIFICATION_APPROVED = "verificationApproved",
   VERIFICATION_REJECTED = "verificationRejected",
   EMAIL_CHANGED_SUCCESSFULLY = "emailChangedSuccessfully",
+  DESTINATION_ADDED_SUCCESSFULLY = "destinationAddedSuccessfully",
+  DESTINATION_UPDATED_SUCCESSFULLY = "destinationUpdatedSuccessfully",
 }

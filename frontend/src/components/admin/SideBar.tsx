@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createLogoutQueryOptions } from "@/queryOptions/authQueryOptions";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Car, Home, Hotel, LogOut, Settings, User } from "lucide-react";
+import { Car, Home, Hotel, LogOut, Map, Settings, User } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { removeToken } from "@/store/slices/tokenSlice";
 import { removeUser } from "@/store/slices/userSlice";
@@ -43,6 +43,11 @@ export default function SideBar() {
             to: "/admin/cabVerification",
             label: t(translationKey.headings.cabVerification),
             icon: <Car className="w-t h-5" />,
+        },
+        {
+            to: "/admin/destinations",
+            label: t(translationKey.headings.destinations),
+            icon: <Map className="w-t h-5" />,
         },
     ];
 

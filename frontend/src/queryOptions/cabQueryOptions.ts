@@ -12,14 +12,18 @@ export function createGetCabDetailsQueryOptions() {
     return queryOptions<HttpResponse<ICabDetailsResponseDTO>, Error>({
         queryKey: [QUERY_KEYS.CAB_DETAILS],
         queryFn: getCabDetails,
-        retry:1
+        retry: 1,
     });
 }
 
 export function createUpdateVehicleMutationOption() {
-    return mutationOptions<HttpResponse<object>, Error, FormData>({mutationFn:updateVehicleDetails});
+    return mutationOptions<HttpResponse<object>, Error, FormData>({
+        mutationFn: updateVehicleDetails,
+    });
 }
 
 export function createDeleteVehicleImageMutationOption() {
-    return mutationOptions<HttpResponse<object>, Error, number>({mutationFn:deleteVehicleImage});
+    return mutationOptions<HttpResponse<object>, Error, number>({
+        mutationFn: deleteVehicleImage,
+    });
 }

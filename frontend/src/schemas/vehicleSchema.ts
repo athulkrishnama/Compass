@@ -18,7 +18,7 @@ export const createVehicleValidationSchema = () => {
             .min(1, t(translationKey.errors.modelNameRequired))
             .max(50, t(translationKey.errors.modelNameMaxLength)),
         type: z.enum(VEHICLE_TYPES, {
-            error: t(translationKey.errors.invalidVehicleType),
+            message: t(translationKey.errors.invalidVehicleType),
         }),
     });
 };

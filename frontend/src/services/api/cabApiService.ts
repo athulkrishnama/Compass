@@ -17,7 +17,7 @@ export async function getCabDetails() {
 export async function updateVehicleDetails<T>(data: T) {
     try {
         const response = await axiosInstance.patch(CAB_ROUTES.VEHICLE, data);
-        return response.data
+        return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
             throw new Error(error.response?.data.message);
@@ -28,10 +28,12 @@ export async function updateVehicleDetails<T>(data: T) {
 
 export async function deleteVehicleImage(index: number) {
     try {
-        const response = await axiosInstance.delete(`${CAB_ROUTES.IMAGE}/${index}`);
-        return response.data
+        const response = await axiosInstance.delete(
+            `${CAB_ROUTES.IMAGE}/${index}`
+        );
+        return response.data;
     } catch (error) {
-        if(error instanceof AxiosError){
+        if (error instanceof AxiosError) {
             throw new Error(error.response?.data.message);
         }
         throw new Error("something went wrong");
