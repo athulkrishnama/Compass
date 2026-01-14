@@ -23,7 +23,9 @@
         "changeEmail": "ईमेल बदलें",
         "destinations": "गंतव्य",
         "addNewDestination": "नया गंतव्य जोड़ें",
-        "addDestinationSubtitle": "नई गंतव्य सूची के लिए विवरण कॉन्फ़िगर करें"
+        "addDestinationSubtitle": "नई गंतव्य सूची के लिए विवरण कॉन्फ़िगर करें",
+        "destinationList": "गंतव्य सूची",
+        "destinationListSubtitle": "गंतव्य, मूल्य निर्धारण और उपलब्धता स्थिति प्रबंधित करें।"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -216,6 +218,7 @@
         "active": "सक्रिय",
         "all": "सभी",
         "search": "खोजें",
+        "selected": "चयनित",
         "cancel": "रद्द करें",
         "updateProfile": "प्रोफ़ाइल अपडेट करें",
         "close": "बंद करें",
@@ -234,7 +237,9 @@
         "online": "ऑनलाइन",
         "offline": "ऑफलाइन",
         "addVehicle": "वाहन जोड़ें",
-        "sending": "भेजा जा रहा है..."
+        "sending": "भेजा जा रहा है...",
+        "newDestination": "नया गंतव्य",
+        "edit": "संपादित करें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -277,6 +282,20 @@
         "notProvided": "उपलब्ध नहीं",
         "sendVerificationCodeToCurrentEmail": "हम आपके वर्तमान ईमेल पर एक सत्यापन कोड भेजेंगे",
         "enterNewEmailAddress": "अपना नया ईमेल पता दर्ज करें",
-        "expired": "समाप्त"
+        "expired": "समाप्त",
+        "searchByNameOrTagline": "नाम या टैगलाइन से खोजें...",
+        "allTypes": "सभी प्रकार",
+        "isFree": "मुफ्त है",
+        "isActive": "सक्रिय है",
+        "free": "मुफ्त",
+        "paid": "सशुल्क",
+        "inactive": "निष्क्रिय",
+        "noDestinationsFound": "कोई गंतव्य नहीं मिला"
+    },
+    "tableHeaders": {
+        "destination": "गंतव्य",
+        "type": "प्रकार",
+        "fee": "शुल्क",
+        "status": "स्थिति"
     }
 }

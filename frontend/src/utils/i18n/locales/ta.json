@@ -23,7 +23,9 @@
         "changeEmail": "மின்னஞ்சலை மாற்றவும்",
         "destinations": "சேருமிடங்கள்",
         "addNewDestination": "புதிய சேருமிடத்தை சேர்க்கவும்",
-        "addDestinationSubtitle": "புதிய சேருமிடப் பட்டியலுக்கான விவரங்களை உள்ளமைக்கவும்"
+        "addDestinationSubtitle": "புதிய சேருமிடப் பட்டியலுக்கான விவரங்களை உள்ளமைக்கவும்",
+        "destinationList": "சேருமிடப் பட்டியல்",
+        "destinationListSubtitle": "சேருமிடங்கள், விலை நிர்ணயம் மற்றும் கிடைக்கும் நிலை ஆகியவற்றை நிர்வகிக்கவும்."
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -216,6 +218,7 @@
         "active": "செயலில்",
         "all": "அனைத்தும்",
         "search": "தேடு",
+        "selected": "தேர்ந்தெடுக்கப்பட்டது",
         "cancel": "ரத்து செய்ய",
         "updateProfile": "சுயவிவரத்தை புதுப்பிக்க",
         "close": "மூடு",
@@ -234,7 +237,9 @@
         "online": "ஆன்லைன்",
         "offline": "ஆஃப்லைன்",
         "addVehicle": "வாகனத்தைச் சேர்க்கவும்",
-        "sending": "அனுப்புகிறது..."
+        "sending": "அனுப்புகிறது...",
+        "newDestination": "புதிய சேருமிடம்",
+        "edit": "திருத்து"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -277,6 +282,20 @@
         "notProvided": "வழங்கப்படவில்லை",
         "sendVerificationCodeToCurrentEmail": "உங்கள் தற்போதைய மின்னஞ்சலுக்கு சரிபார்ப்புக் குறியீட்டை அனுப்புவோம்",
         "enterNewEmailAddress": "உங்கள் புதிய மின்னஞ்சல் முகவரியை உள்ளிடவும்",
-        "expired": "காலாவதியானது"
+        "expired": "காலாவதியானது",
+        "searchByNameOrTagline": "பெயர் அல்லது டேக்லைன் மூலம் தேடவும்...",
+        "allTypes": "அனைத்து வகைகள்",
+        "isFree": "இலவசமா",
+        "isActive": "செயலில் உள்ளதா",
+        "free": "இலவசம்",
+        "paid": "கட்டணம்",
+        "inactive": "செயலில் இல்லை",
+        "noDestinationsFound": "சேருமிடங்கள் எதுவும் இல்லை"
+    },
+    "tableHeaders": {
+        "destination": "சேருமிடம்",
+        "type": "வகை",
+        "fee": "கட்டணம்",
+        "status": "நிலை"
     }
 }

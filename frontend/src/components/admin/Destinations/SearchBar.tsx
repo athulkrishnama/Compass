@@ -11,8 +11,25 @@ import { DESTINATION_TYPES } from "@/constants/destinationConstants/destinationT
 import translationKey from "@/utils/i18n/translationKey";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { Search, RotateCcw } from "lucide-react";
+import {
+    Search,
+    RotateCcw,
+    ChevronDown,
+    Layers,
+    Gift,
+    CreditCard,
+    Activity,
+    CheckCircle2,
+    XCircle,
+} from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { destinationTypeIcons } from "@/constants/destinationConstants/destinationTypeIcons";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export interface DestinationsFilter {
     pageNo: number;
@@ -39,7 +56,6 @@ const itemVariants = {
 function SearchBar({ filter, setFilter }: SearchBarProps) {
     const { t } = useTranslation();
 
-    // Local state for inputs - only updates filter on search click
     const [localFilter, setLocalFilter] = useState({
         query: filter.query,
         type: filter.type,
@@ -98,40 +114,143 @@ function SearchBar({ filter, setFilter }: SearchBarProps) {
                 </div>
             </motion.div>
 
-            <motion.div
-                variants={itemVariants}
-                custom={1}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-            >
-                <Select
-                    value={localFilter.type?.[0] ?? "all"}
-                    onValueChange={(val) =>
-                        setLocalFilter((prev) => ({
-                            ...prev,
-                            type:
-                                val === "all"
-                                    ? undefined
-                                    : [val as DESTINATION_TYPES],
-                        }))
-                    }
-                >
-                    <SelectTrigger className="w-[140px]">
-                        <SelectValue
-                            placeholder={t(translationKey.text.allTypes)}
-                        />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">
-                            {t(translationKey.text.allTypes)}
-                        </SelectItem>
-                        {Object.values(DESTINATION_TYPES).map((type) => (
-                            <SelectItem key={type} value={type}>
-                                {t(translationKey.destinationTypes[type])}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+            <motion.div variants={itemVariants} custom={1}>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <button
+                            type="button"
+                            className="flex h-9 w-[180px] items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-ring"
+                        >
+                            <div className="flex items-center gap-2 truncate text-gray-700">
+                                {localFilter.type &&
+                                localFilter.type.length > 0 ? (
+                                    <>
+                                        {localFilter.type.length === 1 ? (
+                                            <>
+                                                {(() => {
+                                                    const Icon =
+                                                        destinationTypeIcons[
+                                                            localFilter.type[0]
+                                                        ];
+                                                    return (
+                                                        <Icon className="w-4 h-4 text-muted-foreground" />
+                                                    );
+                                                })()}
+                                                <span className="truncate">
+                                                    {t(
+                                                        translationKey
+                                                            .destinationTypes[
+                                                            localFilter.type[0]
+                                                        ]
+                                                    )}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span className="font-semibold text-gray-900">
+                                                {localFilter.type.length}{" "}
+                                                {t(
+                                                    translationKey.tableHeaders
+                                                        .type
+                                                )}{" "}
+                                                {t(
+                                                    translationKey.button
+                                                        .selected
+                                                )}
+                                            </span>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Layers className="w-4 h-4 text-muted-foreground" />
+                                        <span>
+                                            {t(translationKey.text.allTypes)}
+                                        </span>
+                                    </>
+                                )}
+                            </div>
+                            <ChevronDown className="h-4 w-4 opacity-50" />
+                        </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[220px] p-2" align="start">
+                        <div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto pr-1">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setLocalFilter((prev) => ({
+                                        ...prev,
+                                        type: undefined,
+                                    }));
+                                }}
+                                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-gray-100 transition-colors text-left"
+                            >
+                                <Checkbox
+                                    checked={
+                                        !localFilter.type ||
+                                        localFilter.type.length === 0
+                                    }
+                                    onCheckedChange={() => {
+                                        setLocalFilter((prev) => ({
+                                            ...prev,
+                                            type: undefined,
+                                        }));
+                                    }}
+                                />
+                                <Layers className="w-4 h-4 text-muted-foreground" />
+                                <span className="font-medium">
+                                    {t(translationKey.text.allTypes)}
+                                </span>
+                            </button>
+                            <div className="h-px bg-gray-100 my-1 mx-[-4px]" />
+                            {Object.values(DESTINATION_TYPES).map((type) => {
+                                const Icon = destinationTypeIcons[type];
+                                const isSelected =
+                                    localFilter.type?.includes(type);
+                                return (
+                                    <button
+                                        key={type}
+                                        type="button"
+                                        onClick={() => {
+                                            setLocalFilter((prev) => {
+                                                const current = prev.type || [];
+                                                if (current.includes(type)) {
+                                                    const filtered =
+                                                        current.filter(
+                                                            (t) => t !== type
+                                                        );
+                                                    return {
+                                                        ...prev,
+                                                        type:
+                                                            filtered.length > 0
+                                                                ? filtered
+                                                                : undefined,
+                                                    };
+                                                }
+                                                return {
+                                                    ...prev,
+                                                    type: [...current, type],
+                                                };
+                                            });
+                                        }}
+                                        className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-gray-100 transition-colors text-left"
+                                    >
+                                        <Checkbox
+                                            checked={isSelected}
+                                            onCheckedChange={() => {}}
+                                        />
+                                        <Icon className="w-4 h-4 text-muted-foreground" />
+                                        <span className="truncate">
+                                            {t(
+                                                translationKey.destinationTypes[
+                                                    type
+                                                ]
+                                            )}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </PopoverContent>
+                </Popover>
             </motion.div>
 
             <motion.div
@@ -162,12 +281,15 @@ function SearchBar({ filter, setFilter }: SearchBarProps) {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="all">
+                            <Layers className="w-4 h-4 opacity-70" />
                             {t(translationKey.button.all)}
                         </SelectItem>
                         <SelectItem value="free">
+                            <Gift className="w-4 h-4 opacity-70 text-green-600" />
                             {t(translationKey.text.free)}
                         </SelectItem>
                         <SelectItem value="paid">
+                            <CreditCard className="w-4 h-4 opacity-70 text-blue-600" />
                             {t(translationKey.text.paid)}
                         </SelectItem>
                     </SelectContent>
@@ -203,19 +325,21 @@ function SearchBar({ filter, setFilter }: SearchBarProps) {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="all">
+                            <Activity className="w-4 h-4 opacity-70" />
                             {t(translationKey.button.all)}
                         </SelectItem>
                         <SelectItem value="active">
+                            <CheckCircle2 className="w-4 h-4 opacity-70 text-green-600" />
                             {t(translationKey.button.active)}
                         </SelectItem>
                         <SelectItem value="inactive">
+                            <XCircle className="w-4 h-4 opacity-70 text-red-600" />
                             {t(translationKey.text.inactive)}
                         </SelectItem>
                     </SelectContent>
                 </Select>
             </motion.div>
 
-            {/* Reset Button */}
             <motion.div
                 variants={itemVariants}
                 custom={4}

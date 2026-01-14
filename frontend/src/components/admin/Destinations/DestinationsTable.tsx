@@ -123,7 +123,7 @@ function DestinationsTable({
                                 >
                                     <Switch
                                         checked={row.isActive}
-                                        onCheckedChange={(checked) =>
+                                        onCheckedChange={(checked: boolean) =>
                                             handleStatusChange?.(
                                                 row.id,
                                                 checked

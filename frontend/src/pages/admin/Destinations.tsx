@@ -77,7 +77,8 @@ function Destinations() {
                     )}
                 </div>
 
-                {destinationData?.destinations?.length ? (
+                {destinationData?.destinations?.length &&
+                destinationData.totalPages > 1 ? (
                     <div className="flex justify-center mt-3 mb-1">
                         <Pagination
                             totalPages={destinationData.totalPages}

@@ -147,6 +147,7 @@ export default {
         active: "button.active",
         all: "button.all",
         search: "button.search",
+        selected: "button.selected",
         cancel: "button.cancel",
         updateProfile: "button.updateProfile",
         close: "button.close",
