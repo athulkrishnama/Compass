@@ -1,7 +1,7 @@
 import { IDestinationRepo } from "@application/interfaces/repository/destination/destination.repo.interface";
 import { BaseRepository } from "../base/base.repo";
 import { DestinationEntity } from "@domain/entities/destination/destination";
-import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destination";
+import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destinationSchema";
 import { Model, RootFilterQuery, Types } from "mongoose";
 import { inject, injectable } from "tsyringe";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
