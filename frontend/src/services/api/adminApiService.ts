@@ -123,3 +123,24 @@ export async function findDestinations(data: IFindDestinationsRequest) {
         throw new Error("something went wrong");
     }
 }
+
+export async function updateDestination<T>({
+    id,
+    data,
+}: {
+    id: string;
+    data: T;
+}) {
+    try {
+        const response = await axiosInstance.patch(
+            `${AdminRoutes.DESTINATIONS}/${id}`,
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

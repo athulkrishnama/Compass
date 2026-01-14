@@ -212,9 +212,12 @@ export const updateDestinationValidationSchema = z.object({
   city: z.string().optional(),
   pincode: z.string().optional(),
   coordinates: z
-    .tuple([z.number(), z.number()], {
-      error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING,
-    })
+    .preprocess(
+      (val) => (typeof val === "string" ? JSON.parse(val) : val),
+      z.tuple([z.number(), z.number()], {
+        error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING,
+      }),
+    )
     .optional(),
   type: z
     .enum(DESTINATION_TYPES, {
@@ -222,32 +225,50 @@ export const updateDestinationValidationSchema = z.object({
     })
     .optional(),
   activities: z
-    .array(
-      z.enum(ACTIVITY_TYPE, {
-        error: INTERNAL_ERROR_MESSAGES.ACTIVITIES_MISSING_OR_INVALID,
-      }),
+    .preprocess(
+      (val) => (typeof val === "string" ? JSON.parse(val) : val),
+      z.array(
+        z.enum(ACTIVITY_TYPE, {
+          error: INTERNAL_ERROR_MESSAGES.ACTIVITIES_MISSING_OR_INVALID,
+        }),
+      ),
     )
     .optional(),
   bestTimeToVisit: z
-    .array(
-      z.enum(MONTH, {
-        error: INTERNAL_ERROR_MESSAGES.BEST_TIME_TO_VISIT_MISSING_OR_INVALID,
-      }),
+    .preprocess(
+      (val) => (typeof val === "string" ? JSON.parse(val) : val),
+      z.array(
+        z.enum(MONTH, {
+          error: INTERNAL_ERROR_MESSAGES.BEST_TIME_TO_VISIT_MISSING_OR_INVALID,
+        }),
+      ),
     )
     .optional(),
   isWheelChairAccessible: z
-    .boolean({
-      error: INTERNAL_ERROR_MESSAGES.IS_WHEELCHAIR_ACCESSIBLE_MISSING,
-    })
+    .preprocess(
+      (val) => (val === "true" ? true : val === "false" ? false : val),
+      z.boolean({
+        error: INTERNAL_ERROR_MESSAGES.IS_WHEELCHAIR_ACCESSIBLE_MISSING,
+      }),
+    )
     .optional(),
   isFree: z
-    .boolean({ error: INTERNAL_ERROR_MESSAGES.IS_FREE_MISSING })
+    .preprocess(
+      (val) => (val === "true" ? true : val === "false" ? false : val),
+      z.boolean({ error: INTERNAL_ERROR_MESSAGES.IS_FREE_MISSING }),
+    )
     .optional(),
   isAlwaysOpen: z
-    .boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ALWAYS_OPEN_MISSING })
+    .preprocess(
+      (val) => (val === "true" ? true : val === "false" ? false : val),
+      z.boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ALWAYS_OPEN_MISSING }),
+    )
     .optional(),
   isActive: z
-    .boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ACTIVE_MISSING })
+    .preprocess(
+      (val) => (val === "true" ? true : val === "false" ? false : val),
+      z.boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ACTIVE_MISSING }),
+    )
     .optional(),
   entryFee: z
     .number({ error: INTERNAL_ERROR_MESSAGES.ENTRY_FEE_MISSING })
@@ -265,10 +286,13 @@ export const updateDestinationValidationSchema = z.object({
     .string({ error: INTERNAL_ERROR_MESSAGES.CLOSING_TIME_MISSING })
     .optional(),
   closedDays: z
-    .array(
-      z.enum(WEEKDAY, {
-        error: INTERNAL_ERROR_MESSAGES.CLOSED_DAYS_MISSING_OR_INVALID,
-      }),
+    .preprocess(
+      (val) => (typeof val === "string" ? JSON.parse(val) : val),
+      z.array(
+        z.enum(WEEKDAY, {
+          error: INTERNAL_ERROR_MESSAGES.CLOSED_DAYS_MISSING_OR_INVALID,
+        }),
+      ),
     )
     .optional(),
 });

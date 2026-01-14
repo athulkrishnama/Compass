@@ -43,7 +43,7 @@ export class UpdateDestinationUseCase implements IUpdateDestinationUseCase {
         ),
       );
       const imageKeys = await Promise.all(uploadPromises);
-      destination.images = imageKeys;
+      destination.images = [...destination.images, ...imageKeys];
     }
 
     if (requestDto.country) destination.country = requestDto.country;
@@ -65,6 +65,8 @@ export class UpdateDestinationUseCase implements IUpdateDestinationUseCase {
       destination.isAlwaysOpen = requestDto.isAlwaysOpen;
     if (typeof requestDto.entryFee !== "undefined")
       destination.entryFee = requestDto.entryFee;
+    if (typeof requestDto.isActive !== "undefined")
+      destination.isActive = requestDto.isActive;
 
     if (typeof requestDto.currency !== "undefined")
       destination.currency = requestDto.currency;

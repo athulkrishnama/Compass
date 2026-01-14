@@ -10,6 +10,7 @@ import {
     getUnverifiedUsers,
     getUsers,
     rejectUserVerificationRequest,
+    updateDestination,
 } from "@/services/api/adminApiService";
 import type {
     IFindDestinationsRequest,
@@ -104,5 +105,15 @@ export function createFindDestinationsQueryOption(
         ],
         queryFn: () => findDestinations(filter),
         placeholderData: keepPreviousData,
+    });
+}
+
+export function createUpdateDestinationMutationOption() {
+    return mutationOptions<
+        HttpResponse<object>,
+        Error,
+        { id: string; data: FormData }
+    >({
+        mutationFn: updateDestination,
     });
 }

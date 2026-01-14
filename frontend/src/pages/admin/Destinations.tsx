@@ -4,13 +4,22 @@ import SearchBar, {
 import DestinationsTable from "@/components/admin/Destinations/DestinationsTable";
 import Pagination from "@/components/shared/Pagination/Pagination";
 import { Button } from "@/components/ui/button";
-import { createFindDestinationsQueryOption } from "@/queryOptions/adminQueryOptions";
+import {
+    createFindDestinationsQueryOption,
+    createUpdateDestinationMutationOption,
+} from "@/queryOptions/adminQueryOptions";
 import translationKey from "@/utils/i18n/translationKey";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Plus } from "lucide-react";
+import Loading from "@/components/shared/loading/Loading";
+import { toast } from "sonner";
+import { queryClient } from "@/config/tanstackQueryConfig";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import type { HttpResponse } from "@/types/api/responseType";
+import type { IFindDestinationsResponse } from "@/types/api/responses/findDestinationAdminResponse";
 
 function Destinations() {
     const { t } = useTranslation();
@@ -26,11 +35,44 @@ function Destinations() {
         createFindDestinationsQueryOption(filter)
     );
 
+    const { mutate } = useMutation(createUpdateDestinationMutationOption());
+
     const setPage = (no: number) =>
         setFilter((prev) => ({ ...prev, pageNo: no }));
 
     function handleStatusChange(id: string, status: boolean) {
-        console.log("Status change:", id, status);
+        const formData = new FormData();
+        formData.append("isActive", status.toString());
+        mutate(
+            { id, data: formData },
+            {
+                onSuccess: (res) => {
+                    queryClient.setQueryData(
+                        [QUERY_KEYS.DESTINATIONS, ...Object.values(filter)],
+                        (prevData: HttpResponse<IFindDestinationsResponse>) => {
+                            const clone = structuredClone(prevData);
+
+                            if (clone.data?.destinations) {
+                                clone.data.destinations =
+                                    clone.data.destinations.map(
+                                        (destination) => {
+                                            if (destination.id === id) {
+                                                destination.isActive = status;
+                                            }
+                                            return destination;
+                                        }
+                                    );
+                            }
+                            return clone;
+                        }
+                    );
+                    toast.success(res.message);
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                },
+            }
+        );
     }
 
     const destinationData = data?.data;
@@ -60,9 +102,7 @@ function Destinations() {
 
                 <div className="flex-grow min-h-[400px]">
                     {isLoading ? (
-                        <div className="h-full flex items-center justify-center text-gray-500">
-                            Loading...
-                        </div>
+                        <Loading />
                     ) : destinationData?.destinations?.length ? (
                         <div className="h-full overflow-auto">
                             <DestinationsTable
