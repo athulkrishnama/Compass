@@ -76,6 +76,11 @@ export class DestinationRepo
     return result._id.toString();
   }
 
+  async update(entity: DestinationEntity, id: string): Promise<void> {
+    const doc = this.toMongoDoc(entity);
+    await this.model.findByIdAndUpdate(id, doc);
+  }
+
   toMongoDoc(entity: DestinationEntity): IDestinationDocument {
     return new this._model({
       _id: new Types.ObjectId(entity._id),

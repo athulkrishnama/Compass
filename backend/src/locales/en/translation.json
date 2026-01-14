@@ -59,6 +59,7 @@
   "verificationRejected": "Verification rejected",
   "emailChangedSuccessfully": "Email changed successfully",
   "destinationAddedSuccessfully": "Destination added successfully",
+  "destinationUpdatedSuccessfully": "Destination updated successfully",
   "nameMissing": "Destination name is required",
   "taglineMissing": "Tagline is required",
   "descriptionMissing": "Description is required",
@@ -83,5 +84,10 @@
   "minimumEntryFee": "Entry fee must be at least 1",
   "invalidDestinationType": "Invalid destination type",
   "invalidIsActive": "Invalid active status",
-  "invalidIsFree": "Invalid free status"
+  "invalidIsFree": "Invalid free status",
+  "destinationNotFound": "Destination not found",
+  "nameTooLong": "Destination name must be less than 100 characters",
+  "taglineTooLong": "Tagline must be less than 100 characters",
+  "descriptionTooLong": "Description must be less than 1000 characters",
+  "isActiveMissing": "Active status is required"
 }

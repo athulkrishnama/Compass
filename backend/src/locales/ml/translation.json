@@ -58,6 +58,7 @@
   "verificationRejected": "സ്ഥിരീകരണം നിരസിച്ചു",
   "emailChangedSuccessfully": "ഇമെയിൽ വിജയകരമായി മാറ്റി",
   "destinationAddedSuccessfully": "ലക്ഷ്യസ്ഥാനം വിജയകരമായി ചേർത്തു",
+  "destinationUpdatedSuccessfully": "ലക്ഷ്യസ്ഥാനം വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
   "nameMissing": "ലക്ഷ്യസ്ഥാനത്തിന്റെ പേര് ആവശ്യമാണ്",
   "taglineMissing": "ടാഗ്‌ലൈൻ ആവശ്യമാണ്",
   "descriptionMissing": "വിവരണം ആവശ്യമാണ്",
@@ -82,5 +83,10 @@
   "minimumEntryFee": "പ്രവേശന ഫീസ് കുറഞ്ഞത് 1 ആയിരിക്കണം",
   "invalidDestinationType": "അസാധുവായ ലക്ഷ്യസ്ഥാന തരം",
   "invalidIsActive": "അസാധുവായ നില",
-  "invalidIsFree": "അസാധുവായ സൗജന്യ വിവരങ്ങൾ"
+  "invalidIsFree": "അസാധുവായ സൗജന്യ വിവരങ്ങൾ",
+  "destinationNotFound": "ലക്ഷ്യസ്ഥാനം കണ്ടെത്തിയില്ല",
+  "nameTooLong": "ലക്ഷ്യസ്ഥാനത്തിന്റെ പേര് 100 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
+  "taglineTooLong": "ടാഗ്‌ലൈൻ 100 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
+  "descriptionTooLong": "വിവരണം 1000 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
+  "isActiveMissing": "സജീവ നില ആവശ്യമാണ്"
 }

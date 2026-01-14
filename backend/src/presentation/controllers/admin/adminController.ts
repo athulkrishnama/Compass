@@ -8,6 +8,7 @@ import {
   getUsersQueryValidationSchema,
   listDestinationsValidationSchema,
   rejectUserVerificationRequestValidationSchema,
+  updateDestinationValidationSchema,
   userStatusChangeValidationSchema,
 } from "presentation/validationSchemas/adminValidation";
 import { Messages } from "@domain/enums/messages";
@@ -25,6 +26,7 @@ import { ICreateDestinationUseCase } from "@application/interfaces/useCase/admin
 import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 import { MulterFiles } from "@presentation/types/multerFilesType";
 import { IListDestinationsUseCase } from "@application/interfaces/useCase/admin/ListDestinationsUseCase.interface";
+import { IUpdateDestinationUseCase } from "@application/interfaces/useCase/admin/updateDestinationUseCase.interface";
 
 @injectable()
 export class AdminController {
@@ -44,6 +46,8 @@ export class AdminController {
     private _createDestinationUseCase: ICreateDestinationUseCase,
     @inject("IListDestinationsUseCase")
     private _listDestinationUseCase: IListDestinationsUseCase,
+    @inject("IUpdateDestinationUseCase")
+    private _updateDestinationUseCase: IUpdateDestinationUseCase,
   ) {}
 
   async handleGetUsers(req: Request, res: Response, next: NextFunction) {
@@ -257,6 +261,45 @@ export class AdminController {
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleUpdateDestination(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const files = req.files as MulterFiles<"images" | "coverImage">;
+      const images = files?.images?.map((img) =>
+        mutlterFileToFileconverter(img),
+      );
+
+      const coverImage = files?.coverImage?.[0]
+        ? mutlterFileToFileconverter(files.coverImage[0])
+        : undefined;
+
+      const data = updateDestinationValidationSchema.safeParse({
+        ...req.body,
+        id: req.params.id,
+        ...(images?.length && { images }),
+        ...(coverImage && { coverImage }),
+      });
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      await this._updateDestinationUseCase.execute(data.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DESTINATION_UPDATED_SUCCESSFULLY,
       );
     } catch (error) {
       next(error);

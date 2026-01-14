@@ -85,6 +85,16 @@ export class AdminRouter {
         adminController.handleListDestinations(req, res, next);
       },
     );
+
+    this._router.patch(
+      `${AdminRoutes.DESTINATIONS}/:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleUpdateDestination(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

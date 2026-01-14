@@ -176,3 +176,99 @@ export const listDestinationsValidationSchema = z.object({
     .optional(),
   pageNo: z.coerce.number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO }),
 });
+
+export const updateDestinationValidationSchema = z.object({
+  id: z.string({ error: INTERNAL_ERROR_MESSAGES.ID_MISSING }),
+  name: z
+    .string()
+    .min(1, { error: INTERNAL_ERROR_MESSAGES.NAME_MISSING })
+    .max(100, { error: INTERNAL_ERROR_MESSAGES.NAME_TOO_LONG })
+    .optional(),
+  tagline: z
+    .string()
+    .min(1, { error: INTERNAL_ERROR_MESSAGES.TAGLINE_MISSING })
+    .max(100, { error: INTERNAL_ERROR_MESSAGES.TAGLINE_TOO_LONG })
+    .optional(),
+  description: z
+    .string()
+    .min(1, { error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING })
+    .max(1000, { error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_TOO_LONG })
+    .optional(),
+  coverImage: z
+    .file({ error: INTERNAL_ERROR_MESSAGES.COVER_IMAGE_MISSING })
+    .max(10 * 1024 * 1024)
+    .mime(["image/jpeg", "image/png", "image/svg+xml", "image/webp"])
+    .optional(),
+  images: z
+    .array(
+      z
+        .file()
+        .mime(["image/jpeg", "image/png", "image/svg+xml", "image/webp"])
+        .max(10 * 1024 * 1024),
+    )
+    .min(4, { error: INTERNAL_ERROR_MESSAGES.MINIMUM_IMAGES_REQUIRED })
+    .optional(),
+  country: z.string().optional(),
+  city: z.string().optional(),
+  pincode: z.string().optional(),
+  coordinates: z
+    .tuple([z.number(), z.number()], {
+      error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING,
+    })
+    .optional(),
+  type: z
+    .enum(DESTINATION_TYPES, {
+      error: INTERNAL_ERROR_MESSAGES.TYPE_MISSING_OR_INVALID,
+    })
+    .optional(),
+  activities: z
+    .array(
+      z.enum(ACTIVITY_TYPE, {
+        error: INTERNAL_ERROR_MESSAGES.ACTIVITIES_MISSING_OR_INVALID,
+      }),
+    )
+    .optional(),
+  bestTimeToVisit: z
+    .array(
+      z.enum(MONTH, {
+        error: INTERNAL_ERROR_MESSAGES.BEST_TIME_TO_VISIT_MISSING_OR_INVALID,
+      }),
+    )
+    .optional(),
+  isWheelChairAccessible: z
+    .boolean({
+      error: INTERNAL_ERROR_MESSAGES.IS_WHEELCHAIR_ACCESSIBLE_MISSING,
+    })
+    .optional(),
+  isFree: z
+    .boolean({ error: INTERNAL_ERROR_MESSAGES.IS_FREE_MISSING })
+    .optional(),
+  isAlwaysOpen: z
+    .boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ALWAYS_OPEN_MISSING })
+    .optional(),
+  isActive: z
+    .boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ACTIVE_MISSING })
+    .optional(),
+  entryFee: z
+    .number({ error: INTERNAL_ERROR_MESSAGES.ENTRY_FEE_MISSING })
+    .min(1, { message: INTERNAL_ERROR_MESSAGES.MINIMUM_ENTRY_FEE })
+    .optional(),
+  currency: z
+    .enum(CURRENCY, {
+      error: INTERNAL_ERROR_MESSAGES.CURRENCY_MISSING_OR_INVALID,
+    })
+    .optional(),
+  openingTime: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.OPENING_TIME_MISSING })
+    .optional(),
+  closingTime: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.CLOSING_TIME_MISSING })
+    .optional(),
+  closedDays: z
+    .array(
+      z.enum(WEEKDAY, {
+        error: INTERNAL_ERROR_MESSAGES.CLOSED_DAYS_MISSING_OR_INVALID,
+      }),
+    )
+    .optional(),
+});

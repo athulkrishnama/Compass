@@ -58,6 +58,7 @@
   "verificationRejected": "वेरिफिकेशन अस्वीकृत",
   "emailChangedSuccessfully": "ईमेल सफलतापूर्वक बदला गया",
   "destinationAddedSuccessfully": "गंतव्य सफलतापूर्वक जोड़ा गया",
+  "destinationUpdatedSuccessfully": "गंतव्य सफलतापूर्वक अपडेट किया गया",
   "nameMissing": "गंतव्य का नाम आवश्यक है",
   "taglineMissing": "टैगलाइन आवश्यक है",
   "descriptionMissing": "विवरण आवश्यक है",
@@ -82,5 +83,10 @@
   "minimumEntryFee": "प्रवेश शुल्क कम से कम 1 होना चाहिए",
   "invalidDestinationType": "अमान्य गंतव्य प्रकार",
   "invalidIsActive": "अमान्य सक्रिय स्थिति",
-  "invalidIsFree": "अमान्य निःशुल्क स्थिति"
+  "invalidIsFree": "अमान्य निःशुल्क स्थिति",
+  "destinationNotFound": "गंतव्य नहीं मिला",
+  "nameTooLong": "गंतव्य का नाम 100 अक्षरों से कम होना चाहिए",
+  "taglineTooLong": "टैगलाइन 100 अक्षरों से कम होनी चाहिए",
+  "descriptionTooLong": "विवरण 1000 अक्षरों से कम होना चाहिए",
+  "isActiveMissing": "सक्रिय स्थिति आवश्यक है"
 }

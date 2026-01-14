@@ -66,4 +66,9 @@ export enum INTERNAL_ERROR_MESSAGES {
   INVALID_DESTINATION_TYPE = "invalidDestinationType",
   INVALID_IS_ACTIVE = "invalidIsActive",
   INVALID_IS_FREE = "invalidIsFree",
+  DESTINATION_NOT_FOUND = "destinationNotFound",
+  NAME_TOO_LONG = "nameTooLong",
+  TAGLINE_TOO_LONG = "taglineTooLong",
+  DESCRIPTION_TOO_LONG = "descriptionTooLong",
+  IS_ACTIVE_MISSING = "isActiveMissing",
 }

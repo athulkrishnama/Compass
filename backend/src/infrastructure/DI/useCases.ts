@@ -53,6 +53,8 @@ import { ICreateDestinationUseCase } from "@application/interfaces/useCase/admin
 import { CreateDestinationUseCase } from "@useCases/admin/createDestinationUseCase";
 import { IListDestinationsUseCase } from "@application/interfaces/useCase/admin/ListDestinationsUseCase.interface";
 import { ListDestinationsUseCase } from "@useCases/admin/listDestinationsUseCase";
+import { IUpdateDestinationUseCase } from "@application/interfaces/useCase/admin/updateDestinationUseCase.interface";
+import { UpdateDestinationUseCase } from "@useCases/admin/updateDestinationUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -156,5 +158,9 @@ export function registerUsecases() {
   container.registerSingleton<IListDestinationsUseCase>(
     "IListDestinationsUseCase",
     ListDestinationsUseCase,
+  );
+  container.registerSingleton<IUpdateDestinationUseCase>(
+    "IUpdateDestinationUseCase",
+    UpdateDestinationUseCase,
   );
 }

@@ -58,6 +58,7 @@
   "verificationRejected": "சரிபார்ப்பு நிராகரிக்கப்பட்டது",
   "emailChangedSuccessfully": "மின்னஞ்சல் வெற்றிகரமாக மாற்றப்பட்டது",
   "destinationAddedSuccessfully": "சேருமிடம் வெற்றிகரமாக சேர்க்கப்பட்டது",
+  "destinationUpdatedSuccessfully": "சேருமிடம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
   "nameMissing": "சேருமிடத்தின் பெயர் தேவை",
   "taglineMissing": "குறிப்புரை தேவை",
   "descriptionMissing": "விளக்கம் தேவை",
@@ -82,5 +83,10 @@
   "minimumEntryFee": "நுழைவு கட்டணம் குறைந்தது 1 ஆக இருக்க வேண்டும்",
   "invalidDestinationType": "செல்லாத சேருமிடம் வகை",
   "invalidIsActive": "தவறான செயலில் உள்ள நிலை",
-  "invalidIsFree": "தவறான இலவச நிலை"
+  "invalidIsFree": "தவறான இலவச நிலை",
+  "destinationNotFound": "சேருமிடம் கிடைக்கவில்லை",
+  "nameTooLong": "சேருமிடத்தின் பெயர் 100 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
+  "taglineTooLong": "குறிப்புரை 100 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
+  "descriptionTooLong": "விளக்கம் 1000 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
+  "isActiveMissing": "செயலில் உள்ள நிலை தேவை"
 }
