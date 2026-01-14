@@ -15,9 +15,14 @@ export class HotelRepo
     super(_model);
   }
 
+  async findHotelByName(name: string): Promise<HotelEntity | null> {
+    const hotel = await this._model.findOne({ name });
+    return hotel ? this.toEntity(hotel) : null;
+  }
+
   toMongoDoc(entity: HotelEntity): IHotelDocument {
     const doc = new this._model({
-      _id: new Types.ObjectId(entity.id),
+      _id: new Types.ObjectId(entity._id),
       userId: new Types.ObjectId(entity.userId),
       name: entity.name,
       description: entity.description,
@@ -39,7 +44,7 @@ export class HotelRepo
 
   toEntity(doc: IHotelDocument): HotelEntity {
     return {
-      id: doc._id.toString(),
+      _id: doc._id.toString(),
       userId: doc.userId.toString(),
       name: doc.name,
       description: doc.description,

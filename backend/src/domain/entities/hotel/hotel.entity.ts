@@ -7,7 +7,7 @@ interface Address {
 }
 
 export interface HotelEntity {
-  id: string;
+  _id?: string;
   userId: string;
   name: string;
   description: string;

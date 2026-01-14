@@ -3,4 +3,6 @@ import { BaseRepository } from "@infrastructure/repository/base/base.repo";
 import { IHotelDocument } from "@infrastructure/repository/database configs/schemas/hotelSchema";
 
 export interface IHotelRepo
-  extends BaseRepository<HotelEntity, IHotelDocument> {}
+  extends BaseRepository<HotelEntity, IHotelDocument> {
+  findHotelByName(name: string): Promise<HotelEntity | null>;
+}

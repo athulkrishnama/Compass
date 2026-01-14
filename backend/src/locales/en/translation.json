@@ -92,5 +92,17 @@
   "nameTooLong": "Destination name must be less than 100 characters",
   "taglineTooLong": "Tagline must be less than 100 characters",
   "descriptionTooLong": "Description must be less than 1000 characters",
-  "isActiveMissing": "Active status is required"
+  "isActiveMissing": "Active status is required",
+  "userIdMissingOrInvalid": "User ID is missing or invalid",
+  "nameMissingOrInvalid": "Name is missing or invalid",
+  "descriptionMissingOrInvalid": "Description is missing or invalid",
+  "imagesMissingOrInvalid": "Images are missing or invalid",
+  "coverImageMissingOrInvalid": "Cover image is missing or invalid",
+  "countryMissingOrInvalid": "Country is missing or invalid",
+  "cityMissingOrInvalid": "City is missing or invalid",
+  "landmarkMissingOrInvalid": "Landmark is missing or invalid",
+  "pincodeMissingOrInvalid": "Pincode is invalid",
+  "coordinatesMissingOrInvalid": "Coordinates are missing or invalid",
+  "hotelAlreadyExists": "Hotel already exists with this name",
+  "hotelCreatedSuccessfully": "Hotel created successfully"
 }

@@ -91,5 +91,17 @@
   "nameTooLong": "ലക്ഷ്യസ്ഥാനത്തിന്റെ പേര് 100 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
   "taglineTooLong": "ടാഗ്‌ലൈൻ 100 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
   "descriptionTooLong": "വിവരണം 1000 അക്ഷരങ്ങളിൽ കുറവായിരിക്കണം",
-  "isActiveMissing": "സജീവ നില ആവശ്യമാണ്"
+  "isActiveMissing": "സജീവ നില ആവശ്യമാണ്",
+  "userIdMissingOrInvalid": "ഉപയോക്തൃ ഐഡി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "nameMissingOrInvalid": "പേര് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "descriptionMissingOrInvalid": "വിവരണം ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "imagesMissingOrInvalid": "ചിത്രങ്ങൾ ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "coverImageMissingOrInvalid": "കവർ ചിത്രം ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "countryMissingOrInvalid": "രാജ്യം ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "cityMissingOrInvalid": "നഗരം ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "landmarkMissingOrInvalid": "ലാൻഡ്‌മാർക്ക് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "pincodeMissingOrInvalid": "പിൻകോഡ് അസാധുവാണ്",
+  "coordinatesMissingOrInvalid": "കോർഡിനേറ്റുകൾ ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "hotelAlreadyExists": "ഈ പേരിൽ ഒരു ഹോട്ടൽ നിലവിലുണ്ട്",
+  "hotelCreatedSuccessfully": "ഹോട്ടൽ വിജയകരമായി സൃഷ്ടിച്ചു"
 }
