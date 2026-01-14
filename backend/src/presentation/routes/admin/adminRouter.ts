@@ -95,6 +95,24 @@ export class AdminRouter {
         adminController.handleUpdateDestination(req, res, next);
       },
     );
+
+    this._router.get(
+      `${AdminRoutes.DESTINATIONS}/:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleFindDestinationById(req, res, next);
+      },
+    );
+
+    this._router.delete(
+      AdminRoutes.DESTINATION_IMAGE,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleDeleteDestinationImage(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

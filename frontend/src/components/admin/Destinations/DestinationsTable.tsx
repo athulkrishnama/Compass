@@ -131,7 +131,10 @@ function DestinationsTable({
                                         }
                                     />
                                 </motion.div>
-                                <Link to="/admin/addDestinations">
+                                <Link
+                                    to="/admin/edit-destination/$destinationId"
+                                    params={{ destinationId: row.id }}
+                                >
                                     <motion.div
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}

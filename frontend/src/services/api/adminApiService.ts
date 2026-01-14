@@ -144,3 +144,34 @@ export async function updateDestination<T>({
         throw new Error("something went wrong");
     }
 }
+
+export async function findDestinationById(id: string) {
+    try {
+        const response = await axiosInstance.get(
+            `${AdminRoutes.DESTINATIONS}/${id}`
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function DeleteDestinationImage(id: string, index: number) {
+    try {
+        const response = await axiosInstance.delete(
+            AdminRoutes.DESTINATION_IMAGE.replace("##id##", id).replace(
+                "##index##",
+                String(index)
+            )
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

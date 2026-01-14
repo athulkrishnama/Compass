@@ -5,6 +5,8 @@ import {
     addDestination,
     approveUserVerificationRequest,
     changeUserStatus,
+    DeleteDestinationImage,
+    findDestinationById,
     findDestinations,
     getUnverifiedUserDetails,
     getUnverifiedUsers,
@@ -19,6 +21,7 @@ import type {
 } from "@/types/api/requests/adminRequest";
 import type { IGetUsersResponse } from "@/types/api/responses/adminResponse";
 import type { IFindDestinationsResponse } from "@/types/api/responses/findDestinationAdminResponse";
+import type { IFindDestinationResponseDTO } from "@/types/api/responses/findDestinationResponse";
 import type { IGetUnverifiedUserDetailsResponseDTO } from "@/types/api/responses/getUnverifiedUserDetailsResponse";
 import type { IGetUnverifiedUsersResponseDTO } from "@/types/api/responses/getUnverifiedUsersResponse";
 import type { HttpResponse } from "@/types/api/responseType";
@@ -115,5 +118,22 @@ export function createUpdateDestinationMutationOption() {
         { id: string; data: FormData }
     >({
         mutationFn: updateDestination,
+    });
+}
+
+export function createFindDestinationByIdQueryOption(id: string) {
+    return queryOptions<HttpResponse<IFindDestinationResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.DESTINATIONS, id],
+        queryFn: () => findDestinationById(id),
+    });
+}
+
+export function createDeleteDestinationImageMutationOption() {
+    return mutationOptions<
+        HttpResponse<object>,
+        Error,
+        { id: string; index: number }
+    >({
+        mutationFn: (data) => DeleteDestinationImage(data.id, data.index),
     });
 }

@@ -25,7 +25,9 @@
         "addNewDestination": "Add New Destination",
         "addDestinationSubtitle": "Configure the details for a new destination listing",
         "destinationList": "Destination List",
-        "destinationListSubtitle": "Manage destinations, pricing, and availability status."
+        "destinationListSubtitle": "Manage destinations, pricing, and availability status.",
+        "editDestination": "Edit Destination",
+        "editDestinationSubtitle": "Update the details for this destination listing"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -165,7 +167,10 @@
         "addVehicle": "Add Vehicle",
         "sending": "Sending...",
         "newDestination": "New Destination",
-        "edit": "Edit"
+        "edit": "Edit",
+        "update": "Update",
+        "updating": "Updating...",
+        "addImage": "Add"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -291,7 +296,9 @@
         "free": "FREE",
         "paid": "Paid",
         "inactive": "Inactive",
-        "noDestinationsFound": "No destinations found"
+        "noDestinationsFound": "No destinations found",
+        "existingImages": "Existing Images",
+        "newImages": "New Images"
     },
     "tableHeaders": {
         "destination": "DESTINATION",

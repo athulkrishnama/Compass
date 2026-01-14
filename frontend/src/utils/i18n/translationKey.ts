@@ -26,6 +26,8 @@ export default {
         addDestinationSubtitle: "headings.addDestinationSubtitle",
         destinationList: "headings.destinationList",
         destinationListSubtitle: "headings.destinationListSubtitle",
+        editDestination: "headings.editDestination",
+        editDestinationSubtitle: "headings.editDestinationSubtitle",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -168,6 +170,9 @@ export default {
         sending: "button.sending",
         newDestination: "button.newDestination",
         edit: "button.edit",
+        update: "button.update",
+        updating: "button.updating",
+        addImage: "button.addImage",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -295,6 +300,8 @@ export default {
         paid: "text.paid",
         inactive: "text.inactive",
         noDestinationsFound: "text.noDestinationsFound",
+        existingImages: "text.existingImages",
+        newImages: "text.newImages",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",

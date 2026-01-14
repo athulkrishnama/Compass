@@ -25,7 +25,9 @@
         "addNewDestination": "नया गंतव्य जोड़ें",
         "addDestinationSubtitle": "नई गंतव्य सूची के लिए विवरण कॉन्फ़िगर करें",
         "destinationList": "गंतव्य सूची",
-        "destinationListSubtitle": "गंतव्य, मूल्य निर्धारण और उपलब्धता स्थिति प्रबंधित करें।"
+        "destinationListSubtitle": "गंतव्य, मूल्य निर्धारण और उपलब्धता स्थिति प्रबंधित करें।",
+        "editDestination": "गंतव्य संपादित करें",
+        "editDestinationSubtitle": "इस गंतव्य सूची के लिए विवरण अपडेट करें"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -239,7 +241,10 @@
         "addVehicle": "वाहन जोड़ें",
         "sending": "भेजा जा रहा है...",
         "newDestination": "नया गंतव्य",
-        "edit": "संपादित करें"
+        "edit": "संपादित करें",
+        "update": "अपडेट",
+        "updating": "अपडेट हो रहा है...",
+        "addImage": "जोड़ें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -290,7 +295,9 @@
         "free": "मुफ्त",
         "paid": "सशुल्क",
         "inactive": "निष्क्रिय",
-        "noDestinationsFound": "कोई गंतव्य नहीं मिला"
+        "noDestinationsFound": "कोई गंतव्य नहीं मिला",
+        "existingImages": "मौजूदा छवियां",
+        "newImages": "नई छवियां"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
