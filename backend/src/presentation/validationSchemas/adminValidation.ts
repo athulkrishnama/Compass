@@ -206,7 +206,6 @@ export const updateDestinationValidationSchema = z.object({
         .mime(["image/jpeg", "image/png", "image/svg+xml", "image/webp"])
         .max(10 * 1024 * 1024),
     )
-    .min(4, { error: INTERNAL_ERROR_MESSAGES.MINIMUM_IMAGES_REQUIRED })
     .optional(),
   country: z.string().optional(),
   city: z.string().optional(),
@@ -270,7 +269,7 @@ export const updateDestinationValidationSchema = z.object({
       z.boolean({ error: INTERNAL_ERROR_MESSAGES.IS_ACTIVE_MISSING }),
     )
     .optional(),
-  entryFee: z
+  entryFee: z.coerce
     .number({ error: INTERNAL_ERROR_MESSAGES.ENTRY_FEE_MISSING })
     .min(1, { message: INTERNAL_ERROR_MESSAGES.MINIMUM_ENTRY_FEE })
     .optional(),

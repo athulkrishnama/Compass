@@ -16,4 +16,6 @@ export enum Messages {
   EMAIL_CHANGED_SUCCESSFULLY = "emailChangedSuccessfully",
   DESTINATION_ADDED_SUCCESSFULLY = "destinationAddedSuccessfully",
   DESTINATION_UPDATED_SUCCESSFULLY = "destinationUpdatedSuccessfully",
+  DESTINATION_DELETED_SUCCESSFULLY = "destinationDeletedSuccessfully",
+  DESTINATION_IMAGE_DELETED_SUCCESSFULLY = "destinationImageDeletedSuccessfully",
 }

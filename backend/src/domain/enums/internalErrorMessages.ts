@@ -71,4 +71,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   TAGLINE_TOO_LONG = "taglineTooLong",
   DESCRIPTION_TOO_LONG = "descriptionTooLong",
   IS_ACTIVE_MISSING = "isActiveMissing",
+  INVALID_INDEX = "invalidIndex",
 }

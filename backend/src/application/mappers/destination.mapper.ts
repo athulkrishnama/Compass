@@ -1,4 +1,5 @@
 import { ICreateDestinationRequestDTO } from "@domain/dtos/admin/createDestination.dto";
+import { IFindDestinationByIdResponseDto } from "@domain/dtos/admin/findDestinationById.dto";
 import { IListDestinationResponseDTO } from "@domain/dtos/admin/listDestinations.dto";
 import { DestinationEntity } from "@domain/entities/destination/destination";
 
@@ -68,5 +69,39 @@ export class DestinationMapper {
     };
 
     return dto;
+  }
+
+  static toFindDestinationByIdResponseDTOfromEntity(
+    entity: DestinationEntity,
+  ): IFindDestinationByIdResponseDto {
+    return {
+      id: entity._id!,
+      name: entity.name,
+      tagline: entity.tagline,
+      description: entity.description,
+      coverImage: entity.coverImage,
+      images: entity.images,
+
+      country: entity.country,
+      city: entity.city,
+      pincode: entity.pincode,
+      coordinates: entity.coordinates,
+
+      type: entity.type,
+      activities: entity.activities,
+      bestTimeToVisit: entity.bestTimeToVisit,
+
+      isWheelChairAccessible: entity.isWheelChairAccessible,
+      isFree: entity.isFree,
+      isAlwaysOpen: entity.isAlwaysOpen,
+      isActive: entity.isActive,
+
+      entryFee: entity.entryFee,
+      currency: entity.currency,
+
+      openingTime: entity.openingTime,
+      closingTime: entity.closingTime,
+      closedDays: entity.closedDays,
+    };
   }
 }

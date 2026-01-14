@@ -27,6 +27,8 @@ import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 import { MulterFiles } from "@presentation/types/multerFilesType";
 import { IListDestinationsUseCase } from "@application/interfaces/useCase/admin/ListDestinationsUseCase.interface";
 import { IUpdateDestinationUseCase } from "@application/interfaces/useCase/admin/updateDestinationUseCase.interface";
+import { IFindDestinationByIdUseCase } from "@application/interfaces/useCase/admin/findDestinationByIdUseCase.interface";
+import { IDeleteDestinationImageUseCase } from "@application/interfaces/useCase/admin/deleteDestinationImageUseCase.interface";
 
 @injectable()
 export class AdminController {
@@ -48,6 +50,10 @@ export class AdminController {
     private _listDestinationUseCase: IListDestinationsUseCase,
     @inject("IUpdateDestinationUseCase")
     private _updateDestinationUseCase: IUpdateDestinationUseCase,
+    @inject("IFindDestinationByIdUseCase")
+    private _findDestinationByIdUseCase: IFindDestinationByIdUseCase,
+    @inject("IDeleteDestinationImageUseCase")
+    private _deleteDestinationImageUseCase: IDeleteDestinationImageUseCase,
   ) {}
 
   async handleGetUsers(req: Request, res: Response, next: NextFunction) {
@@ -300,6 +306,61 @@ export class AdminController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.DESTINATION_UPDATED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleFindDestinationById(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
+      }
+
+      const data = await this._findDestinationByIdUseCase.execute(id);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleDeleteDestinationImage(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+      const { index } = req.params;
+
+      if (!id) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
+      }
+
+      if (isNaN(+index)) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_INDEX);
+      }
+
+      await this._deleteDestinationImageUseCase.execute(id, +index);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DESTINATION_IMAGE_DELETED_SUCCESSFULLY,
       );
     } catch (error) {
       next(error);
