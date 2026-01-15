@@ -337,7 +337,10 @@
         "noHotelFound": "होटल नहीं मिला",
         "imagesUploaded": "छवियां अपलोड की गईं",
         "propertyId": "संपत्ति आईडी",
-        "fullAddress": "पूरा पता"
+        "fullAddress": "पूरा पता",
+        "perNight": "/ रात",
+        "basePrice": "आधार मूल्य",
+        "noRoomsAdded": "अभी तक कोई कमरा नहीं जोड़ा गया है।"
     },
     "tableHeaders": {
         "destination": "गंतव्य",

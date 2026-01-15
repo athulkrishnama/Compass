@@ -21,6 +21,15 @@ export class RoomRouter {
         roomController.handleCreateRoom(req, res, next);
       },
     );
+
+    this._router.get(
+      RoomRoutes.BY_HOTEL,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        roomController.handleListRoomsByHotelId(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

@@ -53,6 +53,7 @@ export default {
         occupancyBedding: "sections.occupancyBedding",
         pricingStatus: "sections.pricingStatus",
         amenitiesPolicies: "sections.amenitiesPolicies",
+        rooms: "sections.rooms",
     },
     errors: {
         minChar: "errors.minChar",
@@ -239,6 +240,8 @@ export default {
         editHotel: "button.editHotel",
         saveRoom: "button.saveRoom",
         saving: "button.saving",
+        addRoom: "button.addRoom",
+        viewDetails: "button.viewDetails",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -381,6 +384,9 @@ export default {
         imagesUploaded: "text.imagesUploaded",
         propertyId: "text.propertyId",
         fullAddress: "text.fullAddress",
+        perNight: "text.perNight",
+        basePrice: "text.basePrice",
+        noRoomsAdded: "text.noRoomsAdded",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",

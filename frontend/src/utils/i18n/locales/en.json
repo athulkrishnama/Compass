@@ -52,7 +52,8 @@
         "basicRoomInfo": "Basic Room Info",
         "occupancyBedding": "Occupancy & Bedding",
         "pricingStatus": "Pricing & Status",
-        "amenitiesPolicies": "Amenities & Policies"
+        "amenitiesPolicies": "Amenities & Policies",
+        "rooms": "Rooms"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -236,7 +237,9 @@
         "changeImage": "Change Image",
         "editHotel": "Edit Hotel",
         "saveRoom": "Save Room",
-        "saving": "Saving..."
+        "saving": "Saving...",
+        "addRoom": "ADD ROOM",
+        "viewDetails": "View Details"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -379,7 +382,10 @@
         "noHotelFound": "Hotel not found",
         "imagesUploaded": "images uploaded",
         "propertyId": "Property ID",
-        "fullAddress": "Full Address"
+        "fullAddress": "Full Address",
+        "perNight": "/ night",
+        "basePrice": "Base Price",
+        "noRoomsAdded": "No rooms added yet."
     },
     "tableHeaders": {
         "destination": "DESTINATION",

@@ -337,7 +337,10 @@
         "noHotelFound": "ஹோட்டல் கண்டறியவில்லை",
         "imagesUploaded": "படங்கள் பதிவேற்றப்பட்டன",
         "propertyId": "சொத்து ஐடி",
-        "fullAddress": "முழு முகவரி"
+        "fullAddress": "முழு முகவரி",
+        "perNight": "/ இரவு",
+        "basePrice": "அடிப்படை விலை",
+        "noRoomsAdded": "இன்னும் அறைகள் எதுவும் சேர்க்கப்படவில்லை."
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",

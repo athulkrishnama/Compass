@@ -7,12 +7,17 @@ import HotelCoverImage from "@/components/hotel/HotelDetails/HotelCoverImage";
 import GeneralInfoSection from "@/components/hotel/HotelDetails/GeneralInfoSection";
 import LocationAddressSection from "@/components/hotel/HotelDetails/LocationAddressSection";
 import PropertyGallerySection from "@/components/hotel/HotelDetails/PropertyGallerySection";
+import { createGetRoomByHotelIdQueryOptions } from "@/queryOptions/roomQueryOptions";
+import RoomsSection from "@/components/hotel/HotelDetails/RoomsSection";
 
 const routeApi = getRouteApi("/hotel/hotels/$hotelId");
 
 function HotelDetailsContent() {
     const { hotelId } = routeApi.useParams();
     const { data } = useSuspenseQuery(createGetHotelByIdQueryOptions(hotelId));
+    const { data: roomsData } = useSuspenseQuery(
+        createGetRoomByHotelIdQueryOptions(hotelId)
+    );
     const hotelData = data?.data;
 
     if (!hotelData) {
@@ -35,7 +40,12 @@ function HotelDetailsContent() {
                     name={hotelData.name}
                 />
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <RoomsSection
+                    hotelId={hotelId}
+                    rooms={roomsData?.data?.rooms ?? []}
+                />
+
+                <div className="space-y-6">
                     <GeneralInfoSection
                         name={hotelData.name}
                         description={hotelData.description}

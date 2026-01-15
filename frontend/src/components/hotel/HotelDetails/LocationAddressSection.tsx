@@ -38,13 +38,13 @@ function LocationAddressSection({
                 </h2>
             </div>
 
-            <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <div>
                         <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
                             {t(translationKey.form.country)}
                         </p>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-base font-medium text-gray-900">
                             {country}
                         </p>
                     </div>
@@ -52,50 +52,52 @@ function LocationAddressSection({
                         <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
                             {t(translationKey.form.city)}
                         </p>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-base font-medium text-gray-900">
                             {city}
+                        </p>
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
+                            {t(translationKey.form.landMark)}
+                        </p>
+                        <p className="text-base font-medium text-gray-900">
+                            {landMark}
+                        </p>
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
+                            {t(translationKey.form.pincode)}
+                        </p>
+                        <p className="text-base font-medium text-gray-900">
+                            {pinCode}
                         </p>
                     </div>
                 </div>
 
-                <div>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
-                        {t(translationKey.form.landMark)}
-                    </p>
-                    <p className="text-sm font-medium text-gray-900">
-                        {landMark}
-                    </p>
-                </div>
-
-                <div>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
-                        {t(translationKey.form.pincode)}
-                    </p>
-                    <p className="text-sm font-medium text-gray-900">
-                        {pinCode}
-                    </p>
-                </div>
-
-                <div>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
-                        {t(translationKey.text.fullAddress)}
-                    </p>
-                    <p className="text-sm text-gray-600">{fullAddress}</p>
-                </div>
-
-                {/* Map Preview */}
-                <div className="mt-4 aspect-square rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
-                    {latitude && longitude ? (
-                        <img
-                            src={`https://api.mapbox.com/styles/v1/mapbox/light-v11/static/pin-s+000(${longitude},${latitude})/${longitude},${latitude},14,0/300x300@2x?access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`}
-                            alt="Map location"
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
-                            <MapPin className="w-8 h-8" />
+                <div className="pt-4 border-t border-gray-50 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2">
+                        <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">
+                            {t(translationKey.text.fullAddress)}
+                        </p>
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                            {fullAddress}
+                        </p>
+                    </div>
+                    <div className="md:col-span-1">
+                        <div className="aspect-video rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
+                            {latitude && longitude ? (
+                                <img
+                                    src={`https://api.mapbox.com/styles/v1/mapbox/light-v11/static/pin-s+000(${longitude},${latitude})/${longitude},${latitude},14,0/300x300@2x?access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`}
+                                    alt="Map location"
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                    <MapPin className="w-8 h-8" />
+                                </div>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
         </motion.div>

@@ -337,7 +337,10 @@
         "noHotelFound": "ഹോട്ടൽ കണ്ടെത്തിയില്ല",
         "imagesUploaded": "ചിത്രങ്ങൾ അപ്‌ലോഡ് ചെയ്തു",
         "propertyId": "പ്രോപ്പർട്ടി ഐഡി",
-        "fullAddress": "പൂർണ്ണ വിലാസം"
+        "fullAddress": "പൂർണ്ണ വിലാസം",
+        "perNight": "/ രാത്രി",
+        "basePrice": "അടിസ്ഥാന വില",
+        "noRoomsAdded": "ഇതുവരെ മുറികളൊന്നും ചേർത്തിട്ടില്ല."
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",
