@@ -111,56 +111,63 @@ function AddHotelForm() {
     };
 
     return (
-        <div className="min-h-screen overflow-scroll bg-gray-50">
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="sticky top-0 z-10 bg-white/40 backdrop-blur-md border-b border-gray-200 shadow-sm"
-            >
-                <div className="max-w-5xl mx-auto px-6 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <button
-                                type="button"
-                                onClick={handleCancel}
-                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                            >
-                                <ArrowLeft className="w-5 h-5" />
-                            </button>
-                            <div>
-                                <h1 className="text-xl font-bold text-gray-900">
-                                    {t(translationKey.headings.addNewHotel)}
-                                </h1>
-                                <p className="text-sm text-gray-500">
-                                    {t(
-                                        translationKey.headings.addHotelSubtitle
-                                    )}
-                                </p>
+        <div className="min-h-screen overflow-scroll bg-gray-50 pb-20">
+            <div className="sticky top-6 z-50 px-6">
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mx-auto max-w-4xl rounded-2xl border border-gray-200/50 bg-white/50 backdrop-blur-xl shadow-lg"
+                >
+                    <div className="px-5 py-3">
+                        <div className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                                <button
+                                    type="button"
+                                    onClick={handleCancel}
+                                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    <ArrowLeft className="w-4 h-4" />
+                                </button>
+                                <div className="flex flex-col">
+                                    <h1 className="font-bold text-gray-900 text-sm sm:text-base">
+                                        {t(translationKey.headings.addNewHotel)}
+                                    </h1>
+                                    <p className="hidden sm:block text-[10px] text-gray-500 uppercase tracking-wider font-medium">
+                                        {t(
+                                            translationKey.headings
+                                                .addHotelSubtitle
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    onClick={handleCancel}
+                                    size="sm"
+                                    className="h-9 text-xs px-4"
+                                >
+                                    {t(translationKey.button.cancel)}
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    form="add-hotel-form"
+                                    disabled={isPending}
+                                    size="sm"
+                                    className="bg-gray-900 text-white hover:bg-gray-800 h-9 px-5 rounded-xl text-xs shadow-md transition-all active:scale-95"
+                                >
+                                    <Check className="w-3.5 h-3.5 mr-1.5" />
+                                    {isPending
+                                        ? t(translationKey.button.submiting)
+                                        : t(translationKey.button.submit)}
+                                </Button>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={handleCancel}
-                            >
-                                {t(translationKey.button.cancel)}
-                            </Button>
-                            <Button
-                                type="submit"
-                                form="add-hotel-form"
-                                className="bg-gray-900 text-white hover:bg-gray-800"
-                                disabled={isPending}
-                            >
-                                <Check className="w-4 h-4 mr-2" />
-                                {isPending
-                                    ? t(translationKey.button.submiting)
-                                    : t(translationKey.button.submit)}
-                            </Button>
-                        </div>
                     </div>
-                </div>
-            </motion.div>
+                </motion.div>
+            </div>
 
             <div className="max-w-5xl mx-auto px-6 py-8">
                 <form

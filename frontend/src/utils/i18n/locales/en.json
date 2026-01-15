@@ -29,7 +29,9 @@
         "editDestination": "Edit Destination",
         "editDestinationSubtitle": "Update the details for this destination listing",
         "addNewHotel": "Add New Hotel",
-        "addHotelSubtitle": "Configure the details for a new hotel listing"
+        "addHotelSubtitle": "Configure the details for a new hotel listing",
+        "hotelManagement": "Hotel Management",
+        "noPropertiesFound": "No Properties Found"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -181,7 +183,11 @@
         "update": "Update",
         "updating": "Updating...",
         "addImage": "Add",
-        "hotels": "Hotels"
+        "hotels": "Hotels",
+        "addHotel": "Add Hotel",
+        "editDetails": "Edit Details",
+        "addFirstHotel": "Add Your First Hotel",
+        "loadMoreProperties": "Load More Properties"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -314,7 +320,12 @@
         "clickToUploadCover": "Click to upload cover",
         "imagesSelected": "{{count}} image selected",
         "imagesSelected_plural": "{{count}} images selected",
-        "addImage": "Add Image"
+        "addImage": "Add Image",
+        "propertiesManaged": "Property Managed",
+        "propertiesManaged_plural": "Properties Managed",
+        "managed": "Managed",
+        "noHotelsDescription": "You haven't added any hotels yet. Start by adding your first property to manage it here.",
+        "showingHotelsOfTotal": "Showing {{count}} of {{total}} Managed Properties"
     },
     "tableHeaders": {
         "destination": "DESTINATION",

@@ -103,5 +103,6 @@
   "pincodeMissingOrInvalid": "அஞ்சல் குறியீடு தவறானது",
   "coordinatesMissingOrInvalid": "ஆள்கூறுகள் இல்லை அல்லது தவறானவை",
   "hotelAlreadyExists": "இந்த பெயரில் ஹோட்டல் ஏற்கனவே உள்ளது",
-  "hotelCreatedSuccessfully": "ஹோட்டல் வெற்றிகரமாக உருவாக்கப்பட்டது"
+  "hotelCreatedSuccessfully": "ஹோட்டல் வெற்றிகரமாக உருவாக்கப்பட்டது",
+  "hotelFetchedSuccessfully": "ஹோட்டல் தகவல்கள் வெற்றிகரமாக பெறப்பட்டது"
 }

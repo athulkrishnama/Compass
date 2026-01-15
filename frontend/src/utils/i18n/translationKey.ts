@@ -30,6 +30,8 @@ export default {
         editDestinationSubtitle: "headings.editDestinationSubtitle",
         addNewHotel: "headings.addNewHotel",
         addHotelSubtitle: "headings.addHotelSubtitle",
+        hotelManagement: "headings.hotelManagement",
+        noPropertiesFound: "headings.noPropertiesFound",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -184,6 +186,10 @@ export default {
         updating: "button.updating",
         addImage: "button.addImage",
         hotels: "button.hotels",
+        addHotel: "button.addHotel",
+        editDetails: "button.editDetails",
+        addFirstHotel: "button.addFirstHotel",
+        loadMoreProperties: "button.loadMoreProperties",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -317,6 +323,10 @@ export default {
         clickToUploadCover: "text.clickToUploadCover",
         imagesSelected: "text.imagesSelected",
         addImage: "text.addImage",
+        propertiesManaged: "text.propertiesManaged",
+        managed: "text.managed",
+        noHotelsDescription: "text.noHotelsDescription",
+        showingHotelsOfTotal: "text.showingHotelsOfTotal",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",

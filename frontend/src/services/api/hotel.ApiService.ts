@@ -13,3 +13,15 @@ export async function createHotel<T>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function getHotelsByUserId() {
+    try {
+        const response = await axiosInstance.get(HOTEL_ROUTES.INDEX);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

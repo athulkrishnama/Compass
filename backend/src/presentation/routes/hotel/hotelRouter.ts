@@ -21,6 +21,15 @@ export class HotelRouter {
         hotelController.handleCreateHotel(req, res, next);
       },
     );
+
+    this._router.get(
+      HotelRoutes.INDEX,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        hotelController.handleGetHotelsByUserId(req, res, next);
+      },
+    );
   }
 
   public getRouter() {
