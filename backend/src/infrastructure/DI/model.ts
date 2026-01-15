@@ -1,10 +1,12 @@
 import { cabModel } from "@infrastructure/repository/database configs/models/cabModel";
 import { destinationModel } from "@infrastructure/repository/database configs/models/destinationModel";
 import { hotelModel } from "@infrastructure/repository/database configs/models/hotelModel";
+import { roomModel } from "@infrastructure/repository/database configs/models/roomModel";
 import { userModel } from "@infrastructure/repository/database configs/models/userModel";
 import { ICabDocument } from "@infrastructure/repository/database configs/schemas/cabSchema";
 import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destinationSchema";
 import { IHotelDocument } from "@infrastructure/repository/database configs/schemas/hotelSchema";
+import { IRoomDocument } from "@infrastructure/repository/database configs/schemas/roomSchema";
 import { IUserDocument } from "@infrastructure/repository/database configs/schemas/userSchema";
 import { Model } from "mongoose";
 import { container } from "tsyringe";
@@ -21,5 +23,8 @@ export function registerModel() {
   });
   container.register<Model<IHotelDocument>>("IHotelModel", {
     useValue: hotelModel,
+  });
+  container.register<Model<IRoomDocument>>("IRoomModel", {
+    useValue: roomModel,
   });
 }
