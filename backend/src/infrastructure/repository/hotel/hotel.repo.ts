@@ -20,6 +20,17 @@ export class HotelRepo
     return hotel ? this.toEntity(hotel) : null;
   }
 
+  async create(entity: HotelEntity): Promise<string> {
+    const doc = this.toMongoDoc(entity);
+    const result = await this._model.create(doc);
+    return result._id.toString();
+  }
+
+  async update(entity: HotelEntity): Promise<void> {
+    const doc = this.toMongoDoc(entity);
+    await this._model.updateOne({ _id: entity._id }, doc);
+  }
+
   async getHotelsByUserId(
     userId: string,
   ): Promise<{ hotels: HotelEntity[]; count: number }> {

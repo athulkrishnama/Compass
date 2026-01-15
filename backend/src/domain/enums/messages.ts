@@ -21,4 +21,5 @@ export enum Messages {
   HOTEL_CREATED = "hotelCreatedSuccessfully",
   HOTEL_FETCHED = "hotelFetchedSuccessfully",
   HOTEL_EDITED = "hotelEditedSuccessfully",
+  HOTEL_IMAGE_DELETED_SUCCESSFULLY = "hotelImageDeletedSuccessfully",
 }

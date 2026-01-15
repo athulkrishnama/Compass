@@ -108,5 +108,6 @@
   "hotelFetchedSuccessfully": "Hotel fetched successfully",
   "hotelEditedSuccessfully": "Hotel edited successfully",
   "hotelNotFound": "Hotel not found",
-  "userIsNotAuthorized": "You are not authorized to perform this action"
+  "userIsNotAuthorized": "You are not authorized to perform this action",
+  "hotelImageDeletedSuccessfully": "Hotel image deleted successfully"
 }

@@ -31,7 +31,8 @@
         "addNewHotel": "Add New Hotel",
         "addHotelSubtitle": "Configure the details for a new hotel listing",
         "hotelManagement": "Hotel Management",
-        "noPropertiesFound": "No Properties Found"
+        "noPropertiesFound": "No Properties Found",
+        "editHotel": "Edit Hotel"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -128,7 +129,13 @@
         "isAlwaysOpen": "Always Open",
         "isAlwaysOpenHint": "Enable if the destination is open 24/7",
         "hotelName": "Hotel Name",
-        "landMark": "Street Address / Landmark"
+        "landMark": "Street Address / Landmark",
+        "hotelNamePlaceholder": "e.g. The Grand Monochrome Resort",
+        "descriptionPlaceholder": "Describe the unique features, ambiance, and history of the property.",
+        "cityPlaceholder": "City name",
+        "landMarkPlaceholder": "e.g. 123 Main St, Near Central Park",
+        "pincodePlaceholder": "10001",
+        "searchForLocation": "Search for location"
     },
     "button": {
         "submit": "Submit",
@@ -187,7 +194,9 @@
         "addHotel": "Add Hotel",
         "editDetails": "Edit Details",
         "addFirstHotel": "Add Your First Hotel",
-        "loadMoreProperties": "Load More Properties"
+        "loadMoreProperties": "Load More Properties",
+        "updateHotel": "Update Hotel",
+        "changeImage": "Change Image"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -325,7 +334,10 @@
         "propertiesManaged_plural": "Properties Managed",
         "managed": "Managed",
         "noHotelsDescription": "You haven't added any hotels yet. Start by adding your first property to manage it here.",
-        "showingHotelsOfTotal": "Showing {{count}} of {{total}} Managed Properties"
+        "showingHotelsOfTotal": "Showing {{count}} of {{total}} Managed Properties",
+        "existingEntry": "Existing Entry",
+        "noHotelFound": "Hotel not found",
+        "imagesUploaded": "images uploaded"
     },
     "tableHeaders": {
         "destination": "DESTINATION",

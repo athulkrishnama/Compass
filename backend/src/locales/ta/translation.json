@@ -107,5 +107,6 @@
   "hotelFetchedSuccessfully": "ஹோட்டல் தகவல்கள் வெற்றிகரமாக பெறப்பட்டது",
   "hotelEditedSuccessfully": "ஹோட்டல் விவரங்கள் வெற்றிகரமாக திருத்தப்பட்டது",
   "hotelNotFound": "ஹோட்டல் கிடைக்கவில்லை",
-  "userIsNotAuthorized": "இந்த செயலை செய்ய உங்களுக்கு அனுமதி இல்லை"
+  "userIsNotAuthorized": "இந்த செயலை செய்ய உங்களுக்கு அனுமதி இல்லை",
+  "hotelImageDeletedSuccessfully": "ஹோட்டல் படம் வெற்றிகரமாக நீக்கப்பட்டது"
 }

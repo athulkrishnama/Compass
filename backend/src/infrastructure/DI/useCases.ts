@@ -65,6 +65,10 @@ import { IGetHotelsByUserIdUseCase } from "@application/interfaces/useCase/hotel
 import { GetHotelsByUserIdUseCase } from "@useCases/hotel/getHotelsByUserIdUseCase";
 import { IEditHotelUseCase } from "@application/interfaces/useCase/hotel/editHotelUseCase.interface";
 import { EditHotelUseCase } from "@useCases/hotel/editHotelUseCase";
+import { IGetHotelByIdUseCase } from "@application/interfaces/useCase/hotel/getHotelByIdUseCase.interface";
+import { GetHotelByIdUseCase } from "@useCases/hotel/getHoteByIdUseCase";
+import { IDeleteHotelImageUseCase } from "@application/interfaces/useCase/hotel/deleteHotelImageUseCase.interface";
+import { DeleteHotelImageUseCase } from "@useCases/hotel/deleteHotelImageUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -192,5 +196,13 @@ export function registerUsecases() {
   container.registerSingleton<IEditHotelUseCase>(
     "IEditHotelUseCase",
     EditHotelUseCase,
+  );
+  container.registerSingleton<IGetHotelByIdUseCase>(
+    "IGetHotelByIdUseCase",
+    GetHotelByIdUseCase,
+  );
+  container.registerSingleton<IDeleteHotelImageUseCase>(
+    "IDeleteHotelImageUseCase",
+    DeleteHotelImageUseCase,
   );
 }

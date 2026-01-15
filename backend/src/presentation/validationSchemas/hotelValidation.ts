@@ -60,16 +60,18 @@ export const editHotelValidationSchema = z.object({
       error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING_OR_INVALID,
     })
     .optional(),
-  images: z.array(
-    z
-      .file({ error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID })
-      .max(1024 * 1024 * 10, {
-        error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
-      })
-      .mime(["image/jpeg", "image/png", "image/webp"], {
-        error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
-      }),
-  ),
+  images: z
+    .array(
+      z
+        .file({ error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID })
+        .max(1024 * 1024 * 10, {
+          error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
+        })
+        .mime(["image/jpeg", "image/png", "image/webp"], {
+          error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
+        }),
+    )
+    .optional(),
   coverImage: z
     .file({
       error: INTERNAL_ERROR_MESSAGES.COVER_IMAGE_MISSING_OR_INVALID,
@@ -79,7 +81,8 @@ export const editHotelValidationSchema = z.object({
     })
     .mime(["image/jpeg", "image/png", "image/webp", "image/svg+xml"], {
       error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
-    }),
+    })
+    .optional(),
   country: z
     .string({
       error: INTERNAL_ERROR_MESSAGES.COUNTRY_MISSING_OR_INVALID,

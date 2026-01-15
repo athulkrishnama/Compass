@@ -29,7 +29,8 @@
         "editDestination": "சேருமிடத்தை திருத்து",
         "editDestinationSubtitle": "இந்த சேருமிடப் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
         "hotelManagement": "ஹோட்டல் மேலாண்மை",
-        "noPropertiesFound": "பண்புகள் எதுவும் காணப்படவில்லை"
+        "noPropertiesFound": "பண்புகள் எதுவும் காணப்படவில்லை",
+        "editHotel": "ஹோட்டலை திருத்தவும்"
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -192,7 +193,15 @@
         "isFree": "இலவச நுழைவு",
         "isFreeHint": "நுழைவுக் கட்டணம் இல்லை என்றால் இயக்கவும்",
         "isAlwaysOpen": "எப்போதும் திறந்திருக்கும்",
-        "isAlwaysOpenHint": "சேருமிடம் 24/7 திறந்திருந்தால் இயக்கவும்"
+        "isAlwaysOpenHint": "சேருமிடம் 24/7 திறந்திருந்தால் இயக்கவும்",
+        "hotelName": "ஹோட்டல் பெயர்",
+        "landMark": "தெரு முகவரி / அடையாளம்",
+        "hotelNamePlaceholder": "எ.கா. தி கிராண்ட் மோனோக்ரோம் ரிசார்ட்",
+        "descriptionPlaceholder": "சொத்தின் தனித்துவமான அம்சங்கள், சூழல் மற்றும் வரலாறு பற்றி விவரிக்கவும்.",
+        "cityPlaceholder": "நகரத்தின் பெயர்",
+        "landMarkPlaceholder": "எ.கா. 123 மெயின் தெரு, சென்ட்ரல் பார்க் அருகில்",
+        "pincodePlaceholder": "10001",
+        "searchForLocation": "இருப்பிடத்தைத் தேடுங்கள்"
     },
     "button": {
         "submit": "சமர்ப்பிக்க",
@@ -251,7 +260,9 @@
         "addHotel": "ஹோட்டலைச் சேர்க்கவும்",
         "editDetails": "விவரங்களைத் திருத்தவும்",
         "addFirstHotel": "உங்கள் முதல் சொத்தைச் சேர்க்கவும்",
-        "loadMoreProperties": "மேலும் பண்புகளை ஏற்றவும்"
+        "loadMoreProperties": "மேலும் பண்புகளை ஏற்றவும்",
+        "updateHotel": "ஹோட்டலை புதுப்பிக்கவும்",
+        "changeImage": "படத்தை மாற்றவும்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -314,7 +325,10 @@
         "propertiesManaged_plural": "நிர்வகிக்கப்படும் சொத்துக்கள்",
         "managed": "நிர்வகிக்கப்படுகிறது",
         "noHotelsDescription": "நீங்கள் இன்னும் ஹோட்டல்கள் எதையும் சேர்க்கவில்லை. இங்கே நிர்வகிக்க உங்கள் முதல் சொத்தைச் சேர்ப்பதன் மூலம் தொடங்கவும்.",
-        "showingHotelsOfTotal": "{{total}} நிர்வகிக்கப்படும் சொத்துக்களில் {{count}} காட்டுகிறது"
+        "showingHotelsOfTotal": "{{total}} நிர்வகிக்கப்படும் சொத்துக்களில் {{count}} காட்டுகிறது",
+        "existingEntry": "ஏற்கனவே உள்ள நுழைவு",
+        "noHotelFound": "ஹோட்டல் கண்டறியவில்லை",
+        "imagesUploaded": "படங்கள் பதிவேற்றப்பட்டன"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",
