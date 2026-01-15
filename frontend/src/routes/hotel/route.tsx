@@ -34,11 +34,13 @@ function RouteComponent() {
     const routes = [
         { name: t(translationKey.button.home), route: "/hotel" },
 
+        { name: t(translationKey.button.hotels), route: "/hotel/hotels" },
         {
             name: t(translationKey.button.upcomingBookings),
             route: "/hotel/upcomingBookings",
         },
         { name: t(translationKey.button.history), route: "/hotel/history" },
+
         { name: t(translationKey.button.profile), route: "/hotel/profile" },
     ];
     return (

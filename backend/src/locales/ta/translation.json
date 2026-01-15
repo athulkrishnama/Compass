@@ -91,5 +91,17 @@
   "nameTooLong": "சேருமிடத்தின் பெயர் 100 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
   "taglineTooLong": "குறிப்புரை 100 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
   "descriptionTooLong": "விளக்கம் 1000 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்",
-  "isActiveMissing": "செயலில் உள்ள நிலை தேவை"
+  "isActiveMissing": "செயலில் உள்ள நிலை தேவை",
+  "userIdMissingOrInvalid": "பயனர் ஐடி இல்லை அல்லது தவறானது",
+  "nameMissingOrInvalid": "பெயர் இல்லை அல்லது தவறானது",
+  "descriptionMissingOrInvalid": "விளக்கம் இல்லை அல்லது தவறானது",
+  "imagesMissingOrInvalid": "படங்கள் இல்லை அல்லது தவறானவை",
+  "coverImageMissingOrInvalid": "அட்டைப் படம் இல்லை அல்லது தவறானது",
+  "countryMissingOrInvalid": "நாடு இல்லை அல்லது தவறானது",
+  "cityMissingOrInvalid": "நகரம் இல்லை அல்லது தவறானது",
+  "landmarkMissingOrInvalid": "அடையாளக் குறி இல்லை அல்லது தவறானது",
+  "pincodeMissingOrInvalid": "அஞ்சல் குறியீடு தவறானது",
+  "coordinatesMissingOrInvalid": "ஆள்கூறுகள் இல்லை அல்லது தவறானவை",
+  "hotelAlreadyExists": "இந்த பெயரில் ஹோட்டல் ஏற்கனவே உள்ளது",
+  "hotelCreatedSuccessfully": "ஹோட்டல் வெற்றிகரமாக உருவாக்கப்பட்டது"
 }

@@ -5,6 +5,8 @@ import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interf
 import { CabRepo } from "@infrastructure/repository/cab/cab.repo";
 import { IDestinationRepo } from "@application/interfaces/repository/destination/destination.repo.interface";
 import { DestinationRepo } from "@infrastructure/repository/destination/destination.repo";
+import { HotelRepo } from "@infrastructure/repository/hotel/hotel.repo";
+import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
@@ -13,4 +15,5 @@ export function registerRepositories() {
     "IDestinationRepo",
     DestinationRepo,
   );
+  container.registerSingleton<IHotelRepo>("IHotelRepo", HotelRepo);
 }

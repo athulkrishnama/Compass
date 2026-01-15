@@ -15,6 +15,7 @@ import "@config/i18nConfig";
 import middleware from "i18next-http-middleware";
 import i18next from "i18next";
 import { CabRouter } from "@presentation/routes/cab/cabRouter";
+import { HotelRouter } from "@presentation/routes/hotel/hotelRouter";
 
 export class Server {
   private _app: Express;
@@ -26,6 +27,7 @@ export class Server {
     this._setAuthRouter();
     this._setAdminRouter();
     this._setCabRouter();
+    this._setHotelRouter();
     this._setErrorHandlingMiddleware();
   }
 
@@ -42,6 +44,11 @@ export class Server {
   private _setCabRouter() {
     const cabRouter = new CabRouter();
     this._app.use(Routes.CAB, cabRouter.getRouter());
+  }
+
+  private _setHotelRouter() {
+    const hotelRouter = new HotelRouter();
+    this._app.use(Routes.HOTEL, hotelRouter.getRouter());
   }
 
   private _setMiddlewares() {

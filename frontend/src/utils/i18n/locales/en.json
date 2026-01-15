@@ -27,7 +27,9 @@
         "destinationList": "Destination List",
         "destinationListSubtitle": "Manage destinations, pricing, and availability status.",
         "editDestination": "Edit Destination",
-        "editDestinationSubtitle": "Update the details for this destination listing"
+        "editDestinationSubtitle": "Update the details for this destination listing",
+        "addNewHotel": "Add New Hotel",
+        "addHotelSubtitle": "Configure the details for a new hotel listing"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -36,7 +38,10 @@
         "detailsAndClassification": "Details & Classification",
         "visitingHours": "Visiting Hours",
         "accessibility": "Accessibility",
-        "entryFee": "Entry Fee"
+        "entryFee": "Entry Fee",
+        "hotelIdentity": "Hotel Identity",
+        "visualAssets": "Visual Assets",
+        "addressLocation": "Address & Location"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -76,7 +81,10 @@
         "coordinatesRequired": "Please select a location from the search",
         "minImagesRequired": "At least {{count}} images are required",
         "destinationTypeRequired": "Please select a destination type",
-        "closingTimeAfterOpeningTime": "Closing time must be after opening time"
+        "closingTimeAfterOpeningTime": "Closing time must be after opening time",
+        "hotelNameMinLength": "Hotel name must be at least 3 characters",
+        "hotelNameMaxLength": "Hotel name must be less than 100 characters",
+        "landmarkRequired": "Street address or landmark is required"
     },
     "form": {
         "fullname": "Full Name",
@@ -116,7 +124,9 @@
         "isFree": "Free Entry",
         "isFreeHint": "Enable if there is no entry fee",
         "isAlwaysOpen": "Always Open",
-        "isAlwaysOpenHint": "Enable if the destination is open 24/7"
+        "isAlwaysOpenHint": "Enable if the destination is open 24/7",
+        "hotelName": "Hotel Name",
+        "landMark": "Street Address / Landmark"
     },
     "button": {
         "submit": "Submit",
@@ -170,7 +180,8 @@
         "edit": "Edit",
         "update": "Update",
         "updating": "Updating...",
-        "addImage": "Add"
+        "addImage": "Add",
+        "hotels": "Hotels"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -298,7 +309,12 @@
         "inactive": "Inactive",
         "noDestinationsFound": "No destinations found",
         "existingImages": "Existing Images",
-        "newImages": "New Images"
+        "newImages": "New Images",
+        "coverImageRequirements": "Ratio 16:9 • Max 5MB",
+        "clickToUploadCover": "Click to upload cover",
+        "imagesSelected": "{{count}} image selected",
+        "imagesSelected_plural": "{{count}} images selected",
+        "addImage": "Add Image"
     },
     "tableHeaders": {
         "destination": "DESTINATION",

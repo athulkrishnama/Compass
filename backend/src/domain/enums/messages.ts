@@ -18,4 +18,5 @@ export enum Messages {
   DESTINATION_UPDATED_SUCCESSFULLY = "destinationUpdatedSuccessfully",
   DESTINATION_DELETED_SUCCESSFULLY = "destinationDeletedSuccessfully",
   DESTINATION_IMAGE_DELETED_SUCCESSFULLY = "destinationImageDeletedSuccessfully",
+  HOTEL_CREATED = "hotelCreatedSuccessfully",
 }
