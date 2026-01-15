@@ -32,7 +32,8 @@
         "addHotelSubtitle": "Configure the details for a new hotel listing",
         "hotelManagement": "Hotel Management",
         "noPropertiesFound": "No Properties Found",
-        "editHotel": "Edit Hotel"
+        "editHotel": "Edit Hotel",
+        "addNewRoom": "Add New Room"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -47,7 +48,11 @@
         "addressLocation": "Address & Location",
         "generalInformation": "General Information",
         "locationAddress": "Location & Address",
-        "propertyGallery": "Property Image Gallery"
+        "propertyGallery": "Property Image Gallery",
+        "basicRoomInfo": "Basic Room Info",
+        "occupancyBedding": "Occupancy & Bedding",
+        "pricingStatus": "Pricing & Status",
+        "amenitiesPolicies": "Amenities & Policies"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -90,7 +95,19 @@
         "closingTimeAfterOpeningTime": "Closing time must be after opening time",
         "hotelNameMinLength": "Hotel name must be at least 3 characters",
         "hotelNameMaxLength": "Hotel name must be less than 100 characters",
-        "landmarkRequired": "Street address or landmark is required"
+        "landmarkRequired": "Street address or landmark is required",
+        "roomNameMinLength": "Room name must be at least 3 characters",
+        "roomNameMaxLength": "Room name must be less than 100 characters",
+        "roomCodeRequired": "Room code is required",
+        "roomCodeMaxLength": "Room code must be less than 20 characters",
+        "baseOccupancyRequired": "Base occupancy is required",
+        "maxOccupancyRequired": "Maximum occupancy is required",
+        "bedTypeRequired": "Please select a bed type",
+        "bedCountRequired": "Bed count is required",
+        "basePriceRequired": "Base price is required",
+        "statusRequired": "Please select a room status",
+        "checkInTimeRequired": "Check-in time is required",
+        "checkOutTimeRequired": "Check-out time is required"
     },
     "form": {
         "fullname": "Full Name",
@@ -138,7 +155,24 @@
         "cityPlaceholder": "City name",
         "landMarkPlaceholder": "e.g. 123 Main St, Near Central Park",
         "pincodePlaceholder": "10001",
-        "searchForLocation": "Search for location"
+        "searchForLocation": "Search for location",
+        "roomName": "Room Name",
+        "roomCode": "Room Code",
+        "roomNamePlaceholder": "e.g. Deluxe King Suite",
+        "roomCodePlaceholder": "e.g. DKS-01",
+        "roomDescriptionPlaceholder": "Enter detailed room description...",
+        "baseOccupancy": "Base Occupancy",
+        "maxOccupancy": "Max Occupancy",
+        "bedType": "Bed Type",
+        "bedCount": "Bed Count",
+        "basePrice": "Base Price (Per Night)",
+        "roomStatus": "Room Status",
+        "roomAmenities": "Room Amenities",
+        "smokingAllowed": "Smoking Allowed",
+        "petsAllowed": "Pets Allowed",
+        "checkInOut": "Check-in / Check-out",
+        "checkIn": "Check-In",
+        "checkOut": "Check-Out"
     },
     "button": {
         "submit": "Submit",
@@ -200,7 +234,9 @@
         "loadMoreProperties": "Load More Properties",
         "updateHotel": "Update Hotel",
         "changeImage": "Change Image",
-        "editHotel": "Edit Hotel"
+        "editHotel": "Edit Hotel",
+        "saveRoom": "Save Room",
+        "saving": "Saving..."
     },
     "activities": {
         "HIKING": "Hiking",
@@ -350,5 +386,22 @@
         "type": "TYPE",
         "fee": "FEE",
         "status": "STATUS"
+    },
+    "room": {
+        "bedTypeKing": "King Bed",
+        "bedTypeQueen": "Queen Bed",
+        "bedTypeTwin": "Twin Beds",
+        "bedTypeDouble": "Double Bed",
+        "bedTypeSingle": "Single Bed",
+        "bedTypeBunk": "Bunk Beds",
+        "statusActive": "Available",
+        "statusInactive": "Unavailable",
+        "statusMaintenance": "Under Maintenance",
+        "amenityWifi": "Free Wi-Fi",
+        "amenityAc": "Air Conditioning",
+        "amenityTv": "Smart TV",
+        "amenityMinibar": "Mini Bar",
+        "amenityCoffee": "Coffee Machine",
+        "amenitySafe": "In-room Safe"
     }
 }
