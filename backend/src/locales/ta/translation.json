@@ -104,5 +104,8 @@
   "coordinatesMissingOrInvalid": "ஆள்கூறுகள் இல்லை அல்லது தவறானவை",
   "hotelAlreadyExists": "இந்த பெயரில் ஹோட்டல் ஏற்கனவே உள்ளது",
   "hotelCreatedSuccessfully": "ஹோட்டல் வெற்றிகரமாக உருவாக்கப்பட்டது",
-  "hotelFetchedSuccessfully": "ஹோட்டல் தகவல்கள் வெற்றிகரமாக பெறப்பட்டது"
+  "hotelFetchedSuccessfully": "ஹோட்டல் தகவல்கள் வெற்றிகரமாக பெறப்பட்டது",
+  "hotelEditedSuccessfully": "ஹோட்டல் விவரங்கள் வெற்றிகரமாக திருத்தப்பட்டது",
+  "hotelNotFound": "ஹோட்டல் கிடைக்கவில்லை",
+  "userIsNotAuthorized": "இந்த செயலை செய்ய உங்களுக்கு அனுமதி இல்லை"
 }
