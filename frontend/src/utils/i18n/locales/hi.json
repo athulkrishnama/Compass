@@ -29,7 +29,8 @@
         "editDestination": "गंतव्य संपादित करें",
         "editDestinationSubtitle": "इस गंतव्य सूची के लिए विवरण अपडेट करें",
         "hotelManagement": "होटल प्रबंधन",
-        "noPropertiesFound": "कोई संपत्ति नहीं मिली"
+        "noPropertiesFound": "कोई संपत्ति नहीं मिली",
+        "editHotel": "होटल संपादित करें"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -192,7 +193,15 @@
         "isFree": "मुफ्त प्रवेश",
         "isFreeHint": "यदि कोई प्रवेश शुल्क नहीं है तो सक्षम करें",
         "isAlwaysOpen": "हमेशा खुला",
-        "isAlwaysOpenHint": "यदि गंतव्य 24/7 खुला है तो सक्षम करें"
+        "isAlwaysOpenHint": "यदि गंतव्य 24/7 खुला है तो सक्षम करें",
+        "hotelName": "होटल का नाम",
+        "landMark": "सड़क का पता / लैंडमार्क",
+        "hotelNamePlaceholder": "उदा. द ग्रैंड मोनोक्रोम रिसॉर्ट",
+        "descriptionPlaceholder": "संपत्ति की अनूठी विशेषताओं, माहौल और इतिहास का वर्णन करें।",
+        "cityPlaceholder": "शहर का नाम",
+        "landMarkPlaceholder": "उदा. 123 मुख्य सड़क, सेंट्रल पार्क के पास",
+        "pincodePlaceholder": "10001",
+        "searchForLocation": "स्थान खोजें"
     },
     "button": {
         "submit": "सबमिट करें",
@@ -251,7 +260,9 @@
         "addHotel": "होटल जोड़ें",
         "editDetails": "विवरण संपादित करें",
         "addFirstHotel": "अपनी पहली संपत्ति जोड़ें",
-        "loadMoreProperties": "अधिक संपत्तियां लोड करें"
+        "loadMoreProperties": "अधिक संपत्तियां लोड करें",
+        "updateHotel": "होटल अपडेट करें",
+        "changeImage": "छवि बदलें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -314,7 +325,10 @@
         "propertiesManaged_plural": "संपत्तियां प्रबंधित",
         "managed": "प्रबंधित",
         "noHotelsDescription": "आपने अभी तक कोई होटल नहीं जोड़ा है। यहां प्रबंधित करने के लिए अपनी पहली संपत्ति जोड़कर शुरू करें।",
-        "showingHotelsOfTotal": "{{total}} प्रबंधित संपत्तियों में से {{count}} दिखा रहा है"
+        "showingHotelsOfTotal": "{{total}} प्रबंधित संपत्तियों में से {{count}} दिखा रहा है",
+        "existingEntry": "मौजूदा एंट्री",
+        "noHotelFound": "होटल नहीं मिला",
+        "imagesUploaded": "छवियां अपलोड की गईं"
     },
     "tableHeaders": {
         "destination": "गंतव्य",

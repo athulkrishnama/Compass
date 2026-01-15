@@ -32,6 +32,7 @@ export default {
         addHotelSubtitle: "headings.addHotelSubtitle",
         hotelManagement: "headings.hotelManagement",
         noPropertiesFound: "headings.noPropertiesFound",
+        editHotel: "headings.editHotel",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -131,6 +132,12 @@ export default {
         isAlwaysOpenHint: "form.isAlwaysOpenHint",
         hotelName: "form.hotelName",
         landMark: "form.landMark",
+        hotelNamePlaceholder: "form.hotelNamePlaceholder",
+        descriptionPlaceholder: "form.descriptionPlaceholder",
+        cityPlaceholder: "form.cityPlaceholder",
+        landMarkPlaceholder: "form.landMarkPlaceholder",
+        pincodePlaceholder: "form.pincodePlaceholder",
+        searchForLocation: "form.searchForLocation",
     },
     button: {
         submit: "button.submit",
@@ -190,6 +197,8 @@ export default {
         editDetails: "button.editDetails",
         addFirstHotel: "button.addFirstHotel",
         loadMoreProperties: "button.loadMoreProperties",
+        updateHotel: "button.updateHotel",
+        changeImage: "button.changeImage",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -327,6 +336,9 @@ export default {
         managed: "text.managed",
         noHotelsDescription: "text.noHotelsDescription",
         showingHotelsOfTotal: "text.showingHotelsOfTotal",
+        existingEntry: "text.existingEntry",
+        noHotelFound: "text.noHotelFound",
+        imagesUploaded: "text.imagesUploaded",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",

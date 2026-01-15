@@ -30,6 +30,34 @@ export class HotelRouter {
         hotelController.handleGetHotelsByUserId(req, res, next);
       },
     );
+
+    this._router.patch(
+      `${HotelRoutes.INDEX}:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
+      (req: Request, res: Response, next: NextFunction) => {
+        hotelController.handleEditHotel(req, res, next);
+      },
+    );
+
+    this._router.get(
+      `${HotelRoutes.INDEX}:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        hotelController.handleGetHotelById(req, res, next);
+      },
+    );
+
+    this._router.delete(
+      HotelRoutes.IMAGE,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        hotelController.handleDeleteHotelImage(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

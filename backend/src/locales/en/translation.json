@@ -105,5 +105,9 @@
   "coordinatesMissingOrInvalid": "Coordinates are missing or invalid",
   "hotelAlreadyExists": "Hotel already exists with this name",
   "hotelCreatedSuccessfully": "Hotel created successfully",
-  "hotelFetchedSuccessfully": "Hotel fetched successfully"
+  "hotelFetchedSuccessfully": "Hotel fetched successfully",
+  "hotelEditedSuccessfully": "Hotel edited successfully",
+  "hotelNotFound": "Hotel not found",
+  "userIsNotAuthorized": "You are not authorized to perform this action",
+  "hotelImageDeletedSuccessfully": "Hotel image deleted successfully"
 }

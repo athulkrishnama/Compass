@@ -104,5 +104,9 @@
   "coordinatesMissingOrInvalid": "निर्देशांक गायब हैं या अमान्य हैं",
   "hotelAlreadyExists": "इस नाम से होटल पहले से मौजूद है",
   "hotelCreatedSuccessfully": "होटल सफलतापूर्वक बनाया गया",
-  "hotelFetchedSuccessfully": "होटल सफलतापूर्वक प्राप्त किया गया"
+  "hotelFetchedSuccessfully": "होटल सफलतापूर्वक प्राप्त किया गया",
+  "hotelEditedSuccessfully": "होटल सफलतापूर्वक संपादित किया गया",
+  "hotelNotFound": "होटल नहीं मिला",
+  "userIsNotAuthorized": "आपको यह कार्य करने की अनुमति नहीं है",
+  "hotelImageDeletedSuccessfully": "होटल की छवि सफलतापूर्वक हटा दी गई"
 }

@@ -1,5 +1,6 @@
 import { IHotelListingResponseDTO } from "@domain/dtos/admin/hotelListing.dto";
 import { ICreateHotelRequestDTO } from "@domain/dtos/hotel/createHotel.dto";
+import { IGetHotelByIdResponseDTO } from "@domain/dtos/hotel/getHotelById.dto";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 
 export class HotelMapper {
@@ -39,6 +40,23 @@ export class HotelMapper {
         coverImage: hotel.coverImage,
       })),
       count,
+    };
+  }
+
+  static toGetHotelByIdResponseDTOfromEntity(
+    entity: HotelEntity,
+  ): IGetHotelByIdResponseDTO {
+    return {
+      id: entity._id!,
+      name: entity.name,
+      description: entity.description,
+      coverImage: entity.coverImage,
+      images: entity.images,
+      country: entity.address.country,
+      city: entity.address.city,
+      landMark: entity.address.landMark,
+      pinCode: entity.address.pinCode,
+      coordinates: entity.address.coordinates,
     };
   }
 }

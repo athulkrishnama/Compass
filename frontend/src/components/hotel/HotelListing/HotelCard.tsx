@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import type { Hotel } from "@/types/api/responses/getHotelsByUserId";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import { Link } from "@tanstack/react-router";
 
 interface HotelCardProps {
     hotel: Hotel;
@@ -48,11 +49,17 @@ export function HotelCard({ hotel }: HotelCardProps) {
                 </CardContent>
                 <CardFooter className="p-8 pt-0">
                     <Button
+                        asChild
                         variant="outline"
                         className="w-full h-12 rounded-full border-muted-foreground/20 hover:bg-accent group text-base font-semibold"
                     >
-                        <SquarePen className="mr-2 h-5 w-5 transition-transform group-hover:rotate-12" />
-                        {t(translationKey.button.editDetails)}
+                        <Link
+                            to="/hotel/hotels/edit/$hotelId"
+                            params={{ hotelId: hotel.id }}
+                        >
+                            <SquarePen className="mr-2 h-5 w-5 transition-transform group-hover:rotate-12" />
+                            {t(translationKey.button.editDetails)}
+                        </Link>
                     </Button>
                 </CardFooter>
             </Card>

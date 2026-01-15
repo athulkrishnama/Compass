@@ -104,5 +104,9 @@
   "coordinatesMissingOrInvalid": "കോർഡിനേറ്റുകൾ ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
   "hotelAlreadyExists": "ഈ പേരിൽ ഒരു ഹോട്ടൽ നിലവിലുണ്ട്",
   "hotelCreatedSuccessfully": "ഹോട്ടൽ വിജയകരമായി സൃഷ്ടിച്ചു",
-  "hotelFetchedSuccessfully": "ഹോട്ടൽ വിവരങ്ങൾ വിജയകരമായി ലഭിച്ചു"
+  "hotelFetchedSuccessfully": "ഹോട്ടൽ വിവരങ്ങൾ വിജയകരമായി ലഭിച്ചു",
+  "hotelEditedSuccessfully": "ഹോട്ടൽ വിവരങ്ങൾ വിജയകരമായി എഡിറ്റുചെയ്തു",
+  "hotelNotFound": "ഹോട്ടൽ കണ്ടെത്താനായില്ല",
+  "userIsNotAuthorized": "ഈ പ്രവർത്തനം ചെയ്യാൻ നിങ്ങൾക്ക് അധികാരമില്ല",
+  "hotelImageDeletedSuccessfully": "ഹോട്ടൽ ചിത്രം വിജയകരമായി ഇല്ലാതാക്കി"
 }

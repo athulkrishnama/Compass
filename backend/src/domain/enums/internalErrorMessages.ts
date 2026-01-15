@@ -83,4 +83,6 @@ export enum INTERNAL_ERROR_MESSAGES {
   PINCODE_MISSING_OR_INVALID = "pincodeMissingOrInvalid",
   COORDINATES_MISSING_OR_INVALID = "coordinatesMissingOrInvalid",
   HOTEL_ALREADY_EXISTS = "hotelAlreadyExists",
+  HOTEL_NOT_FOUND = "hotelNotFound",
+  USER_IS_NOT_AUTHORIZED = "userIsNotAuthorized",
 }

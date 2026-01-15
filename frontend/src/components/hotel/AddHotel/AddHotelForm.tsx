@@ -19,6 +19,8 @@ import { createGetUserProfileQueryOptions } from "@/queryOptions/authQueryOption
 import HotelIdentitySection from "./HotelIdentitySection";
 import VisualAssetsSection from "./VisualAssetsSection";
 import AddressLocationSection from "./AddressLocationSection";
+import { queryClient } from "@/config/tanstackQueryConfig";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 
 function AddHotelForm() {
     const { t } = useTranslation();
@@ -83,6 +85,9 @@ function AddHotelForm() {
             mutate(formData, {
                 onSuccess: (result) => {
                     toast.success(result.message);
+                    queryClient.invalidateQueries({
+                        queryKey: [QUERY_KEYS.HOTEL],
+                    });
                     navigate({ to: "/hotel/hotels" });
                     res("success");
                 },

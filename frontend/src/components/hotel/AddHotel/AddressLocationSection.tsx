@@ -160,7 +160,9 @@ function AddressLocationSection({ form }: AddressLocationSectionProps) {
                             </Label>
                             <Input
                                 id="city"
-                                placeholder="City name"
+                                placeholder={t(
+                                    translationKey.form.cityPlaceholder
+                                )}
                                 {...register("city")}
                                 className="h-10 bg-gray-50"
                                 readOnly
@@ -186,7 +188,9 @@ function AddressLocationSection({ form }: AddressLocationSectionProps) {
                         </Label>
                         <Input
                             id="landMark"
-                            placeholder="e.g. 123 Main St, Near Central Park"
+                            placeholder={t(
+                                translationKey.form.landMarkPlaceholder
+                            )}
                             {...register("landMark")}
                             className="h-10"
                         />
@@ -210,7 +214,9 @@ function AddressLocationSection({ form }: AddressLocationSectionProps) {
                         </Label>
                         <Input
                             id="pinCode"
-                            placeholder="10001"
+                            placeholder={t(
+                                translationKey.form.pincodePlaceholder
+                            )}
                             {...register("pinCode")}
                             className="h-10 bg-gray-50"
                             readOnly
@@ -240,7 +246,11 @@ function AddressLocationSection({ form }: AddressLocationSectionProps) {
                                 <div className="text-center text-gray-400">
                                     <MapPin className="w-8 h-8 mx-auto mb-2" />
                                     <p className="text-sm">
-                                        {country || "Search for location"}
+                                        {country ||
+                                            t(
+                                                translationKey.form
+                                                    .searchForLocation
+                                            )}
                                     </p>
                                 </div>
                             </div>
