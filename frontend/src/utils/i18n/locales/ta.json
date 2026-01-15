@@ -27,7 +27,9 @@
         "destinationList": "சேருமிடப் பட்டியல்",
         "destinationListSubtitle": "சேருமிடங்கள், விலை நிர்ணயம் மற்றும் கிடைக்கும் நிலை ஆகியவற்றை நிர்வகிக்கவும்.",
         "editDestination": "சேருமிடத்தை திருத்து",
-        "editDestinationSubtitle": "இந்த சேருமிடப் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்"
+        "editDestinationSubtitle": "இந்த சேருமிடப் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
+        "hotelManagement": "ஹோட்டல் மேலாண்மை",
+        "noPropertiesFound": "பண்புகள் எதுவும் காணப்படவில்லை"
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -245,7 +247,11 @@
         "update": "புதுப்பி",
         "updating": "புதுப்பிக்கிறது...",
         "addImage": "சேர்க்க",
-        "hotels": "ஹோட்டல்கள்"
+        "hotels": "ஹோட்டல்கள்",
+        "addHotel": "ஹோட்டலைச் சேர்க்கவும்",
+        "editDetails": "விவரங்களைத் திருத்தவும்",
+        "addFirstHotel": "உங்கள் முதல் சொத்தைச் சேர்க்கவும்",
+        "loadMoreProperties": "மேலும் பண்புகளை ஏற்றவும்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -303,7 +309,12 @@
         "clickToUploadCover": "கவர் பதிவேற்ற கிளிக் செய்யவும்",
         "imagesSelected": "{{count}} படம் தேர்ந்தெடுக்கப்பட்டது",
         "imagesSelected_plural": "{{count}} படங்கள் தேர்ந்தெடுக்கப்பட்டன",
-        "addImage": "படம் சேர்க்க"
+        "addImage": "படம் சேர்க்க",
+        "propertiesManaged": "நிர்வகிக்கப்படும் சொத்து",
+        "propertiesManaged_plural": "நிர்வகிக்கப்படும் சொத்துக்கள்",
+        "managed": "நிர்வகிக்கப்படுகிறது",
+        "noHotelsDescription": "நீங்கள் இன்னும் ஹோட்டல்கள் எதையும் சேர்க்கவில்லை. இங்கே நிர்வகிக்க உங்கள் முதல் சொத்தைச் சேர்ப்பதன் மூலம் தொடங்கவும்.",
+        "showingHotelsOfTotal": "{{total}} நிர்வகிக்கப்படும் சொத்துக்களில் {{count}} காட்டுகிறது"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",

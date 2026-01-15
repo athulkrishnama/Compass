@@ -3,12 +3,16 @@ import { Button } from "@/components/ui/button";
 import { MapPin, SquarePen, ImageIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Hotel } from "@/types/api/responses/getHotelsByUserId";
+import { useTranslation } from "react-i18next";
+import translationKey from "@/utils/i18n/translationKey";
 
 interface HotelCardProps {
     hotel: Hotel;
 }
 
 export function HotelCard({ hotel }: HotelCardProps) {
+    const { t } = useTranslation();
+
     return (
         <motion.div
             whileHover={{ y: -5 }}
@@ -48,7 +52,7 @@ export function HotelCard({ hotel }: HotelCardProps) {
                         className="w-full h-12 rounded-full border-muted-foreground/20 hover:bg-accent group text-base font-semibold"
                     >
                         <SquarePen className="mr-2 h-5 w-5 transition-transform group-hover:rotate-12" />
-                        Edit Details
+                        {t(translationKey.button.editDetails)}
                     </Button>
                 </CardFooter>
             </Card>

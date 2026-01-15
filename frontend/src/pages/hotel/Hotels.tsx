@@ -6,8 +6,11 @@ import { EmptyHotelState } from "@/components/hotel/HotelListing/EmptyHotelState
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import translationKey from "@/utils/i18n/translationKey";
 
 function Hotels() {
+    const { t } = useTranslation();
     const {
         data: { data },
     } = useSuspenseQuery(createGetHotelsByUserIdQueryOptions());
@@ -36,11 +39,19 @@ function Hotels() {
                                     className="rounded-full px-8 bg-muted/30 border-muted-foreground/10 hover:bg-muted/50"
                                 >
                                     <ChevronDown className="mr-2 h-4 w-4" />
-                                    Load More Properties
+                                    {t(
+                                        translationKey.button.loadMoreProperties
+                                    )}
                                 </Button>
                                 <p className="text-xs text-muted-foreground">
-                                    Showing {hotels.length} of {count} Managed
-                                    Properties
+                                    {t(
+                                        translationKey.text
+                                            .showingHotelsOfTotal,
+                                        {
+                                            count: hotels.length,
+                                            total: count,
+                                        }
+                                    )}
                                 </p>
                             </motion.div>
                         )}

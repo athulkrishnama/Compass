@@ -27,7 +27,9 @@
         "destinationList": "गंतव्य सूची",
         "destinationListSubtitle": "गंतव्य, मूल्य निर्धारण और उपलब्धता स्थिति प्रबंधित करें।",
         "editDestination": "गंतव्य संपादित करें",
-        "editDestinationSubtitle": "इस गंतव्य सूची के लिए विवरण अपडेट करें"
+        "editDestinationSubtitle": "इस गंतव्य सूची के लिए विवरण अपडेट करें",
+        "hotelManagement": "होटल प्रबंधन",
+        "noPropertiesFound": "कोई संपत्ति नहीं मिली"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -245,7 +247,11 @@
         "update": "अपडेट",
         "updating": "अपडेट हो रहा है...",
         "addImage": "जोड़ें",
-        "hotels": "होटल"
+        "hotels": "होटल",
+        "addHotel": "होटल जोड़ें",
+        "editDetails": "विवरण संपादित करें",
+        "addFirstHotel": "अपनी पहली संपत्ति जोड़ें",
+        "loadMoreProperties": "अधिक संपत्तियां लोड करें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -303,7 +309,12 @@
         "clickToUploadCover": "कवर अपलोड करने के लिए क्लिक करें",
         "imagesSelected": "{{count}} छवि चयनित",
         "imagesSelected_plural": "{{count}} छवियाँ चयनित",
-        "addImage": "छवि जोड़ें"
+        "addImage": "छवि जोड़ें",
+        "propertiesManaged": "संपत्ति प्रबंधित",
+        "propertiesManaged_plural": "संपत्तियां प्रबंधित",
+        "managed": "प्रबंधित",
+        "noHotelsDescription": "आपने अभी तक कोई होटल नहीं जोड़ा है। यहां प्रबंधित करने के लिए अपनी पहली संपत्ति जोड़कर शुरू करें।",
+        "showingHotelsOfTotal": "{{total}} प्रबंधित संपत्तियों में से {{count}} दिखा रहा है"
     },
     "tableHeaders": {
         "destination": "गंतव्य",

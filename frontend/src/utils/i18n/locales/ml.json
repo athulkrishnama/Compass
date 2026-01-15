@@ -27,7 +27,9 @@
         "destinationList": "ലക്ഷ്യസ്ഥാനങ്ങളുടെ പട്ടിക",
         "destinationListSubtitle": "ലക്ഷ്യസ്ഥാനങ്ങൾ, വിലനിർണ്ണയം, ലഭ്യത എന്നിവ നിയന്ത്രിക്കുക.",
         "editDestination": "ലക്ഷ്യസ്ഥാനം എഡിറ്റ് ചെയ്യുക",
-        "editDestinationSubtitle": "ഈ ലക്ഷ്യസ്ഥാന ലിസ്റ്റിംഗിന്റെ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക"
+        "editDestinationSubtitle": "ഈ ലക്ഷ്യസ്ഥാന ലിസ്റ്റിംഗിന്റെ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക",
+        "hotelManagement": "ഹോട്ടൽ മാനേജ്‌മെന്റ്",
+        "noPropertiesFound": "പ്രോപ്പർട്ടികൾ ഒന്നും കണ്ടെത്തിയില്ല"
     },
     "sections": {
         "basicInformation": "അടിസ്ഥാന വിവരങ്ങൾ",
@@ -245,7 +247,11 @@
         "update": "അപ്ഡേറ്റ് ചെയ്യുക",
         "updating": "അപ്ഡേറ്റ് ചെയ്യുന്നു...",
         "addImage": "ചേർക്കുക",
-        "hotels": "ഹോട്ടലുകൾ"
+        "hotels": "ഹോട്ടലുകൾ",
+        "addHotel": "ഹോട്ടൽ ചേർക്കുക",
+        "editDetails": "വിവരങ്ങൾ മാറ്റുക",
+        "addFirstHotel": "ആദ്യത്തെ ഹോട്ടൽ ചേർക്കുക",
+        "loadMoreProperties": "കൂടുതൽ പ്രോപ്പർട്ടികൾ കാണുക"
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -303,7 +309,12 @@
         "clickToUploadCover": "കവർ അപ്‌ലോഡ് ചെയ്യാൻ ക്ലിക്ക് ചെയ്യുക",
         "imagesSelected": "{{count}} ചിത്രം തിരഞ്ഞെടുത്തു",
         "imagesSelected_plural": "{{count}} ചിത്രങ്ങൾ തിരഞ്ഞെടുത്തു",
-        "addImage": "ചിത്രം ചേർക്കുക"
+        "addImage": "ചിത്രം ചേർക്കുക",
+        "propertiesManaged": "പ്രോപ്പർട്ടി മാനേജ് ചെയ്തു",
+        "propertiesManaged_plural": "പ്രോപ്പർട്ടികൾ മാനേജ് ചെയ്തു",
+        "managed": "മാനേജ് ചെയ്തു",
+        "noHotelsDescription": "നിങ്ങൾ ഇതുവരെ ഹോട്ടലുകളൊന്നും ചേർത്തിട്ടില്ല. ഇവിടെ മാനേജ് ചെയ്യുന്നതിനായി നിങ്ങളുടെ ആദ്യത്തെ പ്രോപ്പർട്ടി ചേർത്ത് തുടങ്ങുക.",
+        "showingHotelsOfTotal": "{{total}} പ്രോപ്പർട്ടികളിൽ {{count}} എണ്ണം കാണിക്കുന്നു"
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",
