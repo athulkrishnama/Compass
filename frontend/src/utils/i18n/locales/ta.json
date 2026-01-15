@@ -39,7 +39,13 @@
         "detailsAndClassification": "விவரங்கள் & வகைப்பாடு",
         "visitingHours": "விஜயிக்கும் நேரங்கள்",
         "accessibility": "அணுகல்தன்மை",
-        "entryFee": "நுழைவுக் கட்டணம்"
+        "entryFee": "நுழைவுக் கட்டணம்",
+        "hotelIdentity": "ஹோட்டல் அடையாளம்",
+        "visualAssets": "பட சொத்துக்கள்",
+        "addressLocation": "முகவரி & இருப்பிடம்",
+        "generalInformation": "பொதுவான தகவல்",
+        "locationAddress": "இருப்பிடம் & முகவரி",
+        "propertyGallery": "சொத்து படக் காட்சியகம்"
     },
     "errors": {
         "minChar": "குறைந்தபட்ச எழுத்துகள் {{count}} தேவை",
@@ -262,7 +268,8 @@
         "addFirstHotel": "உங்கள் முதல் சொத்தைச் சேர்க்கவும்",
         "loadMoreProperties": "மேலும் பண்புகளை ஏற்றவும்",
         "updateHotel": "ஹோட்டலை புதுப்பிக்கவும்",
-        "changeImage": "படத்தை மாற்றவும்"
+        "changeImage": "படத்தை மாற்றவும்",
+        "editHotel": "ஹோட்டலைத் திருத்தவும்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -328,7 +335,12 @@
         "showingHotelsOfTotal": "{{total}} நிர்வகிக்கப்படும் சொத்துக்களில் {{count}} காட்டுகிறது",
         "existingEntry": "ஏற்கனவே உள்ள நுழைவு",
         "noHotelFound": "ஹோட்டல் கண்டறியவில்லை",
-        "imagesUploaded": "படங்கள் பதிவேற்றப்பட்டன"
+        "imagesUploaded": "படங்கள் பதிவேற்றப்பட்டன",
+        "propertyId": "சொத்து ஐடி",
+        "fullAddress": "முழு முகவரி",
+        "perNight": "/ இரவு",
+        "basePrice": "அடிப்படை விலை",
+        "noRoomsAdded": "இன்னும் அறைகள் எதுவும் சேர்க்கப்படவில்லை."
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",

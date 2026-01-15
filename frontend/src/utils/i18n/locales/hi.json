@@ -39,7 +39,13 @@
         "detailsAndClassification": "विवरण और वर्गीकरण",
         "visitingHours": "दर्शन का समय",
         "accessibility": "सुलभता",
-        "entryFee": "प्रवेश शुल्क"
+        "entryFee": "प्रवेश शुल्क",
+        "hotelIdentity": "होटल पहचान",
+        "visualAssets": "दृश्य संपत्ति",
+        "addressLocation": "पता और स्थान",
+        "generalInformation": "सामान्य जानकारी",
+        "locationAddress": "स्थान और पता",
+        "propertyGallery": "संपत्ति छवि गैलरी"
     },
     "errors": {
         "minChar": "न्यूनतम {{count}} अक्षर आवश्यक हैं",
@@ -262,7 +268,8 @@
         "addFirstHotel": "अपनी पहली संपत्ति जोड़ें",
         "loadMoreProperties": "अधिक संपत्तियां लोड करें",
         "updateHotel": "होटल अपडेट करें",
-        "changeImage": "छवि बदलें"
+        "changeImage": "छवि बदलें",
+        "editHotel": "होटल संपादित करें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -328,7 +335,12 @@
         "showingHotelsOfTotal": "{{total}} प्रबंधित संपत्तियों में से {{count}} दिखा रहा है",
         "existingEntry": "मौजूदा एंट्री",
         "noHotelFound": "होटल नहीं मिला",
-        "imagesUploaded": "छवियां अपलोड की गईं"
+        "imagesUploaded": "छवियां अपलोड की गईं",
+        "propertyId": "संपत्ति आईडी",
+        "fullAddress": "पूरा पता",
+        "perNight": "/ रात",
+        "basePrice": "आधार मूल्य",
+        "noRoomsAdded": "अभी तक कोई कमरा नहीं जोड़ा गया है।"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
