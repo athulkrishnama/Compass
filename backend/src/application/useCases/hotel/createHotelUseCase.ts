@@ -1,6 +1,4 @@
 import { ICreateHotelRequestDTO } from "@domain/dtos/hotel/createHotel.dto";
-import { ICreateUserUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
-import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { inject, injectable } from "tsyringe";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
@@ -11,9 +9,11 @@ import {
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { StorageFolderNames } from "@application/constants/storageFolderNames";
 import { HotelMapper } from "@mappers/hotel.mapper";
+import { ICreateHotelUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
+import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 
 @injectable()
-export class CreateHotelUseCase implements ICreateUserUseCase {
+export class CreateHotelUseCase implements ICreateHotelUseCase {
   constructor(
     @inject("IHotelRepo") private _hotelRepository: IHotelRepo,
     @inject("IUserRepo") private _userRepository: IUserRepo,

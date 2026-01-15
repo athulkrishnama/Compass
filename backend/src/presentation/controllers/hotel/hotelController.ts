@@ -6,20 +6,24 @@ import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { createHotelValidation } from "@presentation/validationSchemas/hotelValidation";
 import { Request, Response, NextFunction } from "express";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import { ICreateHotelUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
 
 @injectable()
 export class HotelController {
-  constructor() {}
+  constructor(
+    @inject("ICreateHotelUseCase")
+    private _createHotelUseCase: ICreateHotelUseCase,
+  ) {}
 
   async handleCreateHotel(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.user;
 
-      const files = req.files as MulterFiles<"images" | "coverImages">;
+      const files = req.files as MulterFiles<"images" | "coverImage">;
 
-      const coverImage = files.coverImages
-        ? mutlterFileToFileconverter(files.coverImages[0])
+      const coverImage = files.coverImage
+        ? mutlterFileToFileconverter(files.coverImage[0])
         : undefined;
 
       const images = files.images
@@ -36,6 +40,8 @@ export class HotelController {
       if (data.error) {
         throw new InvalideDataException(data.error.issues[0].message);
       }
+
+      await this._createHotelUseCase.execute(data.data);
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,

@@ -28,6 +28,8 @@ export default {
         destinationListSubtitle: "headings.destinationListSubtitle",
         editDestination: "headings.editDestination",
         editDestinationSubtitle: "headings.editDestinationSubtitle",
+        addNewHotel: "headings.addNewHotel",
+        addHotelSubtitle: "headings.addHotelSubtitle",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -37,6 +39,9 @@ export default {
         visitingHours: "sections.visitingHours",
         accessibility: "sections.accessibility",
         entryFee: "sections.entryFee",
+        hotelIdentity: "sections.hotelIdentity",
+        visualAssets: "sections.visualAssets",
+        addressLocation: "sections.addressLocation",
     },
     errors: {
         minChar: "errors.minChar",
@@ -79,6 +84,9 @@ export default {
         minImagesRequired: "errors.minImagesRequired",
         destinationTypeRequired: "errors.destinationTypeRequired",
         closingTimeAfterOpeningTime: "errors.closingTimeAfterOpeningTime",
+        hotelNameMinLength: "errors.hotelNameMinLength",
+        hotelNameMaxLength: "errors.hotelNameMaxLength",
+        landmarkRequired: "errors.landmarkRequired",
     },
     form: {
         fullname: "form.fullname",
@@ -119,6 +127,8 @@ export default {
         isFreeHint: "form.isFreeHint",
         isAlwaysOpen: "form.isAlwaysOpen",
         isAlwaysOpenHint: "form.isAlwaysOpenHint",
+        hotelName: "form.hotelName",
+        landMark: "form.landMark",
     },
     button: {
         submit: "button.submit",
@@ -173,6 +183,7 @@ export default {
         update: "button.update",
         updating: "button.updating",
         addImage: "button.addImage",
+        hotels: "button.hotels",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -302,6 +313,10 @@ export default {
         noDestinationsFound: "text.noDestinationsFound",
         existingImages: "text.existingImages",
         newImages: "text.newImages",
+        coverImageRequirements: "text.coverImageRequirements",
+        clickToUploadCover: "text.clickToUploadCover",
+        imagesSelected: "text.imagesSelected",
+        addImage: "text.addImage",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",

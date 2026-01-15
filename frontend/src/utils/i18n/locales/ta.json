@@ -244,7 +244,8 @@
         "edit": "திருத்து",
         "update": "புதுப்பி",
         "updating": "புதுப்பிக்கிறது...",
-        "addImage": "சேர்க்க"
+        "addImage": "சேர்க்க",
+        "hotels": "ஹோட்டல்கள்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -297,7 +298,12 @@
         "inactive": "செயலில் இல்லை",
         "noDestinationsFound": "சேருமிடங்கள் எதுவும் இல்லை",
         "existingImages": "ஏற்கனவே உள்ள படங்கள்",
-        "newImages": "புதிய படங்கள்"
+        "newImages": "புதிய படங்கள்",
+        "coverImageRequirements": "விகிதம் 16:9 • அதிகபட்சம் 5MB",
+        "clickToUploadCover": "கவர் பதிவேற்ற கிளிக் செய்யவும்",
+        "imagesSelected": "{{count}} படம் தேர்ந்தெடுக்கப்பட்டது",
+        "imagesSelected_plural": "{{count}} படங்கள் தேர்ந்தெடுக்கப்பட்டன",
+        "addImage": "படம் சேர்க்க"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",

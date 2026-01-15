@@ -244,7 +244,8 @@
         "edit": "എഡിറ്റ് ചെയ്യുക",
         "update": "അപ്ഡേറ്റ് ചെയ്യുക",
         "updating": "അപ്ഡേറ്റ് ചെയ്യുന്നു...",
-        "addImage": "ചേർക്കുക"
+        "addImage": "ചേർക്കുക",
+        "hotels": "ഹോട്ടലുകൾ"
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -297,7 +298,12 @@
         "inactive": "നിഷ്ക്രിയം",
         "noDestinationsFound": "ലക്ഷ്യസ്ഥാനങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
         "existingImages": "നിലവിലുള്ള ചിത്രങ്ങൾ",
-        "newImages": "പുതിയ ചിത്രങ്ങൾ"
+        "newImages": "പുതിയ ചിത്രങ്ങൾ",
+        "coverImageRequirements": "അനുപാതം 16:9 • പരമാവധി 5MB",
+        "clickToUploadCover": "കവർ അപ്‌ലോഡ് ചെയ്യാൻ ക്ലിക്ക് ചെയ്യുക",
+        "imagesSelected": "{{count}} ചിത്രം തിരഞ്ഞെടുത്തു",
+        "imagesSelected_plural": "{{count}} ചിത്രങ്ങൾ തിരഞ്ഞെടുത്തു",
+        "addImage": "ചിത്രം ചേർക്കുക"
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",

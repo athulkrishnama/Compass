@@ -59,6 +59,8 @@ import { IFindDestinationByIdUseCase } from "@application/interfaces/useCase/adm
 import { FindDestinationByIdUseCase } from "@useCases/admin/findDestinationByIdUseCase";
 import { IDeleteDestinationImageUseCase } from "@application/interfaces/useCase/admin/deleteDestinationImageUseCase.interface";
 import { DelteDestinationImageUseCase } from "@useCases/admin/deleteDestinationImageUseCase";
+import { CreateHotelUseCase } from "@useCases/hotel/createHotelUseCase";
+import { ICreateHotelUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -174,5 +176,9 @@ export function registerUsecases() {
   container.registerSingleton<IDeleteDestinationImageUseCase>(
     "IDeleteDestinationImageUseCase",
     DelteDestinationImageUseCase,
+  );
+  container.registerSingleton<ICreateHotelUseCase>(
+    "ICreateHotelUseCase",
+    CreateHotelUseCase,
   );
 }

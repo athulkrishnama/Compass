@@ -11,7 +11,7 @@ export class HotelRepo
   extends BaseRepository<HotelEntity, IHotelDocument>
   implements IHotelRepo
 {
-  constructor(@inject("HotelModel") protected _model: Model<IHotelDocument>) {
+  constructor(@inject("IHotelModel") protected _model: Model<IHotelDocument>) {
     super(_model);
   }
 

@@ -1,5 +1,5 @@
 import { ICreateHotelRequestDTO } from "@domain/dtos/hotel/createHotel.dto";
 
-export interface ICreateUserUseCase {
+export interface ICreateHotelUseCase {
   execute(data: ICreateHotelRequestDTO): Promise<void>;
 }

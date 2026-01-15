@@ -244,7 +244,8 @@
         "edit": "संपादित करें",
         "update": "अपडेट",
         "updating": "अपडेट हो रहा है...",
-        "addImage": "जोड़ें"
+        "addImage": "जोड़ें",
+        "hotels": "होटल"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -297,7 +298,12 @@
         "inactive": "निष्क्रिय",
         "noDestinationsFound": "कोई गंतव्य नहीं मिला",
         "existingImages": "मौजूदा छवियां",
-        "newImages": "नई छवियां"
+        "newImages": "नई छवियाँ",
+        "coverImageRequirements": "अनुपात 16:9 • अधिकतम 5MB",
+        "clickToUploadCover": "कवर अपलोड करने के लिए क्लिक करें",
+        "imagesSelected": "{{count}} छवि चयनित",
+        "imagesSelected_plural": "{{count}} छवियाँ चयनित",
+        "addImage": "छवि जोड़ें"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
