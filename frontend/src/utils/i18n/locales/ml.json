@@ -39,7 +39,13 @@
         "detailsAndClassification": "വിശദാംശങ്ങളും വർഗ്ഗീകരണവും",
         "visitingHours": "സന്ദർശന സമയം",
         "accessibility": "പ്രവേശനക്ഷമത",
-        "entryFee": "പ്രവേശന ഫീസ്"
+        "entryFee": "പ്രവേശന ഫീസ്",
+        "hotelIdentity": "ഹോട്ടൽ ഐഡന്റിറ്റി",
+        "visualAssets": "വിഷ്വൽ അസറ്റ്സ്",
+        "addressLocation": "വിലാസം & സ്ഥലം",
+        "generalInformation": "സാമാന്യ വിവരങ്ങൾ",
+        "locationAddress": "സ്ഥലം & വിലാസം",
+        "propertyGallery": "പ്രോപ്പർട്ടി ചിത്ര ഗാലറി"
     },
     "errors": {
         "minChar": "കുറഞ്ഞത് {{count}} അക്ഷരങ്ങൾ ആവശ്യമാണ്",
@@ -262,7 +268,8 @@
         "addFirstHotel": "ആദ്യത്തെ ഹോട്ടൽ ചേർക്കുക",
         "loadMoreProperties": "കൂടുതൽ പ്രോപ്പർട്ടികൾ കാണുക",
         "updateHotel": "ഹോട്ടൽ അപ്ഡേറ്റ് ചെയ്യുക",
-        "changeImage": "ചിത്രം മാറ്റുക"
+        "changeImage": "ചിത്രം മാറ്റുക",
+        "editHotel": "ഹോട്ടൽ എഡിറ്റ് ചെയ്യുക"
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -328,7 +335,9 @@
         "showingHotelsOfTotal": "{{total}} പ്രോപ്പർട്ടികളിൽ {{count}} എണ്ണം കാണിക്കുന്നു",
         "existingEntry": "നിലവിലുള്ള എന്റ്രി",
         "noHotelFound": "ഹോട്ടൽ കണ്ടെത്തിയില്ല",
-        "imagesUploaded": "ചിത്രങ്ങൾ അപ്‌ലോഡ് ചെയ്തു"
+        "imagesUploaded": "ചിത്രങ്ങൾ അപ്‌ലോഡ് ചെയ്തു",
+        "propertyId": "പ്രോപ്പർട്ടി ഐഡി",
+        "fullAddress": "പൂർണ്ണ വിലാസം"
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",

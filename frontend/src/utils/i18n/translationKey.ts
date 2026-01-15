@@ -45,6 +45,9 @@ export default {
         hotelIdentity: "sections.hotelIdentity",
         visualAssets: "sections.visualAssets",
         addressLocation: "sections.addressLocation",
+        generalInformation: "sections.generalInformation",
+        locationAddress: "sections.locationAddress",
+        propertyGallery: "sections.propertyGallery",
     },
     errors: {
         minChar: "errors.minChar",
@@ -199,6 +202,7 @@ export default {
         loadMoreProperties: "button.loadMoreProperties",
         updateHotel: "button.updateHotel",
         changeImage: "button.changeImage",
+        editHotel: "button.editHotel",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -339,6 +343,8 @@ export default {
         existingEntry: "text.existingEntry",
         noHotelFound: "text.noHotelFound",
         imagesUploaded: "text.imagesUploaded",
+        propertyId: "text.propertyId",
+        fullAddress: "text.fullAddress",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",

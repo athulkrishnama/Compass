@@ -44,7 +44,10 @@
         "entryFee": "Entry Fee",
         "hotelIdentity": "Hotel Identity",
         "visualAssets": "Visual Assets",
-        "addressLocation": "Address & Location"
+        "addressLocation": "Address & Location",
+        "generalInformation": "General Information",
+        "locationAddress": "Location & Address",
+        "propertyGallery": "Property Image Gallery"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -196,7 +199,8 @@
         "addFirstHotel": "Add Your First Hotel",
         "loadMoreProperties": "Load More Properties",
         "updateHotel": "Update Hotel",
-        "changeImage": "Change Image"
+        "changeImage": "Change Image",
+        "editHotel": "Edit Hotel"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -337,7 +341,9 @@
         "showingHotelsOfTotal": "Showing {{count}} of {{total}} Managed Properties",
         "existingEntry": "Existing Entry",
         "noHotelFound": "Hotel not found",
-        "imagesUploaded": "images uploaded"
+        "imagesUploaded": "images uploaded",
+        "propertyId": "Property ID",
+        "fullAddress": "Full Address"
     },
     "tableHeaders": {
         "destination": "DESTINATION",
