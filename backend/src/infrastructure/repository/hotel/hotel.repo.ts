@@ -20,6 +20,16 @@ export class HotelRepo
     return hotel ? this.toEntity(hotel) : null;
   }
 
+  async getHotelsByUserId(
+    userId: string,
+  ): Promise<{ hotels: HotelEntity[]; count: number }> {
+    const hotels = await this._model.find({ userId });
+    return {
+      hotels: hotels.map((hotel) => this.toEntity(hotel)),
+      count: hotels.length,
+    };
+  }
+
   toMongoDoc(entity: HotelEntity): IHotelDocument {
     const doc = new this._model({
       _id: new Types.ObjectId(entity._id),

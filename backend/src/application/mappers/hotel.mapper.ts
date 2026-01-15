@@ -1,3 +1,4 @@
+import { IHotelListingResponseDTO } from "@domain/dtos/admin/hotelListing.dto";
 import { ICreateHotelRequestDTO } from "@domain/dtos/hotel/createHotel.dto";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 
@@ -21,6 +22,23 @@ export class HotelMapper {
         pinCode: data.pinCode,
         coordinates: data.coordinates,
       },
+    };
+  }
+
+  static toHotelListingResponseDTOFromEntity(
+    hotels: HotelEntity[],
+    count: number,
+  ): IHotelListingResponseDTO {
+    return {
+      hotels: hotels.map((hotel) => ({
+        id: hotel._id!,
+        name: hotel.name,
+        description: hotel.description,
+        city: hotel.address.city,
+        country: hotel.address.country,
+        coverImage: hotel.coverImage,
+      })),
+      count,
     };
   }
 }

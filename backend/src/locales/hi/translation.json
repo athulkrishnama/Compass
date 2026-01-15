@@ -103,5 +103,6 @@
   "pincodeMissingOrInvalid": "पिनकोड अमान्य है",
   "coordinatesMissingOrInvalid": "निर्देशांक गायब हैं या अमान्य हैं",
   "hotelAlreadyExists": "इस नाम से होटल पहले से मौजूद है",
-  "hotelCreatedSuccessfully": "होटल सफलतापूर्वक बनाया गया"
+  "hotelCreatedSuccessfully": "होटल सफलतापूर्वक बनाया गया",
+  "hotelFetchedSuccessfully": "होटल सफलतापूर्वक प्राप्त किया गया"
 }

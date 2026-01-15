@@ -104,5 +104,6 @@
   "pincodeMissingOrInvalid": "Pincode is invalid",
   "coordinatesMissingOrInvalid": "Coordinates are missing or invalid",
   "hotelAlreadyExists": "Hotel already exists with this name",
-  "hotelCreatedSuccessfully": "Hotel created successfully"
+  "hotelCreatedSuccessfully": "Hotel created successfully",
+  "hotelFetchedSuccessfully": "Hotel fetched successfully"
 }

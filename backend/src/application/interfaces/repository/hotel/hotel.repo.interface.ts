@@ -5,4 +5,7 @@ import { IHotelDocument } from "@infrastructure/repository/database configs/sche
 export interface IHotelRepo
   extends BaseRepository<HotelEntity, IHotelDocument> {
   findHotelByName(name: string): Promise<HotelEntity | null>;
+  getHotelsByUserId(
+    userId: string,
+  ): Promise<{ hotels: HotelEntity[]; count: number }>;
 }
