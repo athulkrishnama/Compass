@@ -1,5 +1,9 @@
-import { ResourceNotFoundException } from "@application/constants/Exceptions";
+import {
+  InvalidOperationException,
+  ResourceNotFoundException,
+} from "@application/constants/Exceptions";
 import { StorageFolderNames } from "@application/constants/storageFolderNames";
+import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
@@ -11,9 +15,11 @@ import { inject, injectable } from "tsyringe";
 export class EditRoomUseCase implements IEditRoomUseCase {
   constructor(
     @inject("IRoomRepo")
-    private readonly _roomRepository: IRoomRepo,
+    private _roomRepository: IRoomRepo,
     @inject("IStorageService")
-    private readonly _storageService: IStorageService,
+    private _storageService: IStorageService,
+    @inject("IHotelRepo")
+    private _hotelRepository: IHotelRepo,
   ) {}
 
   async execute(data: IEditRoomRequestDTO): Promise<void> {
@@ -21,6 +27,19 @@ export class EditRoomUseCase implements IEditRoomUseCase {
     if (!room) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.ROOM_NOT_FOUND,
+      );
+    }
+
+    const hotel = await this._hotelRepository.findById(room.hotelId);
+    if (!hotel) {
+      throw new ResourceNotFoundException(
+        INTERNAL_ERROR_MESSAGES.HOTEL_NOT_FOUND,
+      );
+    }
+
+    if (hotel.userId !== data.userId) {
+      throw new InvalidOperationException(
+        INTERNAL_ERROR_MESSAGES.USER_IS_NOT_AUTHORIZED,
       );
     }
 

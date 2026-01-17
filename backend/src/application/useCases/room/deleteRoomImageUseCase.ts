@@ -25,7 +25,6 @@ export class DeleteRoomImageUseCase implements IDeleteRoomImageUseCase {
       );
     }
 
-    // Verify the room belongs to a hotel owned by this user
     const hotel = await this._hotelRepo.findById(room.hotelId);
     if (!hotel) {
       throw new ResourceNotFoundException(

@@ -105,9 +105,12 @@ export class RoomController {
         ? files.images.map((image) => mutlterFileToFileconverter(image))
         : [];
 
+      const userId = req.user.id;
+
       const data = editRoomValidation.safeParse({
         ...req.body,
         roomId: req.params.id,
+        userId,
         coverImage,
         images,
       });

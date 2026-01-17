@@ -109,6 +109,9 @@ export const editRoomValidation = z.object({
   roomId: z.string({
     error: INTERNAL_ERROR_MESSAGES.ROOM_ID_MISSING_OR_INVALID,
   }),
+  userId: z.string({
+    error: INTERNAL_ERROR_MESSAGES.USER_ID_MISSING_OR_INVALID,
+  }),
   name: z
     .string({
       error: INTERNAL_ERROR_MESSAGES.ROOM_NAME_MISSING_OR_INVALID,

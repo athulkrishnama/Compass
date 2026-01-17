@@ -4,6 +4,7 @@ import { RoomStatus } from "@domain/enums/roomStatus";
 
 export interface IEditRoomRequestDTO {
   roomId: string;
+  userId: string;
   name?: string;
   description?: string;
   baseOccupancy?: number;
