@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BedDouble, MoveRight, Plus } from "lucide-react";
+import { BedDouble, Pencil, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import type { RoomListingItem } from "@/types/api/responses/roomListingResponse";
@@ -74,13 +74,17 @@ export default function RoomsSection({ hotelId, rooms }: RoomsSectionProps) {
                                 </p>
                             </div>
                             <div className="flex justify-end">
-                                <button
-                                    className="flex items-center gap-2 text-[10px] font-medium text-gray-500 hover:text-gray-900 uppercase tracking-wider transition-colors bg-transparent border-none cursor-not-allowed"
-                                    disabled
+                                <Link
+                                    to="/hotel/hotels/$hotelId_/rooms/$roomId/edit"
+                                    params={{
+                                        hotelId_: hotelId,
+                                        roomId: room.id,
+                                    }}
+                                    className="flex items-center gap-2 text-[10px] font-medium text-gray-700 hover:text-gray-900 uppercase tracking-wider transition-colors"
                                 >
-                                    {t(translationKey.button.viewDetails)}
-                                    <MoveRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                                </button>
+                                    <Pencil className="w-3 h-3" />
+                                    {t(translationKey.button.edit)}
+                                </Link>
                             </div>
                         </div>
                     </div>
