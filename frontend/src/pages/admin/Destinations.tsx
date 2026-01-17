@@ -4,10 +4,6 @@ import SearchBar, {
 import DestinationsTable from "@/components/admin/Destinations/DestinationsTable";
 import Pagination from "@/components/shared/Pagination/Pagination";
 import { Button } from "@/components/ui/button";
-import {
-    createFindDestinationsQueryOption,
-    createUpdateDestinationMutationOption,
-} from "@/queryOptions/adminQueryOptions";
 import translationKey from "@/utils/i18n/translationKey";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
@@ -20,6 +16,10 @@ import { queryClient } from "@/config/tanstackQueryConfig";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type { HttpResponse } from "@/types/api/responseType";
 import type { IFindDestinationsResponse } from "@/types/api/responses/findDestinationAdminResponse";
+import {
+    createFindDestinationsQueryOption,
+    createUpdateDestinationMutationOption,
+} from "@/queryOptions/destinationQueryOptions";
 
 function Destinations() {
     const { t } = useTranslation();
@@ -48,7 +48,7 @@ function Destinations() {
             {
                 onSuccess: (res) => {
                     queryClient.setQueryData(
-                        [QUERY_KEYS.DESTINATIONS, ...Object.values(filter)],
+                        [QUERY_KEYS.DESTINATIONS, filter],
                         (prevData: HttpResponse<IFindDestinationsResponse>) => {
                             const clone = structuredClone(prevData);
 

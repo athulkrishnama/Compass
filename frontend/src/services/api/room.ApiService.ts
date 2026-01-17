@@ -11,7 +11,7 @@ export async function createRoom({
 }) {
     try {
         const response = await axiosInstance.post(
-            ROOM_ROUTES.CREATE.replace(":hotelId", hotelId),
+            ROOM_ROUTES.BY_HOTEL.replace(":hotelId", hotelId),
             data
         );
         return response.data;

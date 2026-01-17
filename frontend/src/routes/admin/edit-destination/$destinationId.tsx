@@ -1,5 +1,5 @@
 import EditDestination from "@/pages/admin/EditDestination";
-import { createFindDestinationByIdQueryOption } from "@/queryOptions/adminQueryOptions";
+import { createFindDestinationByIdQueryOption } from "@/queryOptions/destinationQueryOptions";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin/edit-destination/$destinationId")({
