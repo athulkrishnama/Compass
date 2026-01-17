@@ -18,9 +18,9 @@ import VisitingHoursSection from "./VisitingHoursSection";
 import AccessibilitySection from "./AccessibilitySection";
 import EntryFeeSection from "./EntryFeeSection";
 import { toast } from "sonner";
-import { createAddDestinationMutationOption } from "@/queryOptions/adminQueryOptions";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { createAddDestinationMutationOption } from "@/queryOptions/destinationQueryOptions";
 
 function AddDestinationForm() {
     const { t } = useTranslation();

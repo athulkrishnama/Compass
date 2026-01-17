@@ -2,7 +2,6 @@ import { adminController, authMiddleware } from "@infrastructure/DI/resolve";
 import { ROLES } from "@domain/enums/roles";
 import { AdminRoutes } from "presentation/constants/routes/adminRoutes";
 import { NextFunction, Request, Response, Router } from "express";
-import { uploadMiddleware } from "@presentation/middlewares/multer";
 
 export class AdminRouter {
   private _router: Router;
@@ -64,53 +63,6 @@ export class AdminRouter {
       authMiddleware.authorizeRole([ROLES.ADMIN]),
       (req: Request, res: Response, next: NextFunction) => {
         adminController.handleRejectUser(req, res, next);
-      },
-    );
-
-    this._router.post(
-      AdminRoutes.DESTINATIONS,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.ADMIN]),
-      uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
-      (req: Request, res: Response, next: NextFunction) => {
-        adminController.handleCreateDestination(req, res, next);
-      },
-    );
-
-    this._router.get(
-      AdminRoutes.DESTINATIONS,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.ADMIN]),
-      (req: Request, res: Response, next: NextFunction) => {
-        adminController.handleListDestinations(req, res, next);
-      },
-    );
-
-    this._router.patch(
-      `${AdminRoutes.DESTINATIONS}/:id`,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.ADMIN]),
-      uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
-      (req: Request, res: Response, next: NextFunction) => {
-        adminController.handleUpdateDestination(req, res, next);
-      },
-    );
-
-    this._router.get(
-      `${AdminRoutes.DESTINATIONS}/:id`,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.ADMIN]),
-      (req: Request, res: Response, next: NextFunction) => {
-        adminController.handleFindDestinationById(req, res, next);
-      },
-    );
-
-    this._router.delete(
-      AdminRoutes.DESTINATION_IMAGE,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.ADMIN]),
-      (req: Request, res: Response, next: NextFunction) => {
-        adminController.handleDeleteDestinationImage(req, res, next);
       },
     );
   }

@@ -4,6 +4,4 @@ export enum AdminRoutes {
   VERIFICATION = "/users/verification",
   REJECT_USER = "/users/verification/:id/reject",
   APPROVE_USER = "/users/verification/:id/approve",
-  DESTINATIONS = "/destinations",
-  DESTINATION_IMAGE = "/destinations/:id/images/:index",
 }

@@ -1,6 +1,6 @@
 import { EditDestinationForm } from "@/components/admin/EditDestination";
 import Loading from "@/components/shared/loading/Loading";
-import { createFindDestinationByIdQueryOption } from "@/queryOptions/adminQueryOptions";
+import { createFindDestinationByIdQueryOption } from "@/queryOptions/destinationQueryOptions";
 import translationKey from "@/utils/i18n/translationKey";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";

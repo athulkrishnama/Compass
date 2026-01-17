@@ -20,13 +20,13 @@ import EditImageGallerySection from "./EditImageGallerySection";
 import type { IFindDestinationResponseDTO } from "@/types/api/responses/findDestinationResponse";
 import type { DESTINATION_TYPES } from "@/constants/destinationConstants/destinationType";
 import { useMutation } from "@tanstack/react-query";
-import {
-    createDeleteDestinationImageMutationOption,
-    createUpdateDestinationMutationOption,
-} from "@/queryOptions/adminQueryOptions";
 import { toast } from "sonner";
 import { arrayEquals } from "@/utils/array";
 import { useNavigate } from "@tanstack/react-router";
+import {
+    createDeleteDestinationImageMutationOption,
+    createUpdateDestinationMutationOption,
+} from "@/queryOptions/destinationQueryOptions";
 
 interface EditDestinationFormProps {
     destinationData: IFindDestinationResponseDTO;
