@@ -73,6 +73,12 @@ import { ICreateRoomUseCase } from "@application/interfaces/useCase/room/createR
 import { CreateRoomUseCase } from "@useCases/room/createRoomUseCase";
 import { IListRoomsByHotelIdUseCase } from "@application/interfaces/useCase/room/listRoomsByHotelIdUseCase.interface";
 import { ListRoomsByHotelIdUseCase } from "@useCases/room/listRoomsByHotelIdUseCase";
+import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
+import { EditRoomUseCase } from "@useCases/room/editRoomUseCase";
+import { IGetRoomByIdUseCase } from "@application/interfaces/useCase/room/getRoomByIdUseCase.interface";
+import { GetRoomByIdUseCase } from "@useCases/room/getRoomByIdUseCase";
+import { IDeleteRoomImageUseCase } from "@application/interfaces/useCase/room/deleteRoomImageUseCase.interface";
+import { DeleteRoomImageUseCase } from "@useCases/room/deleteRoomImageUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -216,5 +222,17 @@ export function registerUsecases() {
   container.registerSingleton<IListRoomsByHotelIdUseCase>(
     "IListRoomsByHotelIdUseCase",
     ListRoomsByHotelIdUseCase,
+  );
+  container.registerSingleton<IEditRoomUseCase>(
+    "IEditRoomUseCase",
+    EditRoomUseCase,
+  );
+  container.registerSingleton<IGetRoomByIdUseCase>(
+    "IGetRoomByIdUseCase",
+    GetRoomByIdUseCase,
+  );
+  container.registerSingleton<IDeleteRoomImageUseCase>(
+    "IDeleteRoomImageUseCase",
+    DeleteRoomImageUseCase,
   );
 }

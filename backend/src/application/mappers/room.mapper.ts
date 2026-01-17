@@ -1,4 +1,5 @@
 import { ICreateRoomRequestDTO } from "@domain/dtos/room/createRoom.dto";
+import { IRoomDetailResponseDTO } from "@domain/dtos/room/getRoomDetail.dto";
 import { IRoomListingResponseDTO } from "@domain/dtos/room/roomListing.dto";
 import { RoomEntity } from "@domain/entities/room/room.entity";
 import { RoomStatus } from "@domain/enums/roomStatus";
@@ -47,6 +48,33 @@ export class RoomMapper {
       coverImage: data.coverImage,
       images: data.images,
       status: RoomStatus.ACTIVE,
+    };
+  }
+
+  static toRoomDetailResponseDTO(room: RoomEntity): IRoomDetailResponseDTO {
+    return {
+      id: room._id!,
+      hotelId: room.hotelId,
+      name: room.name,
+      code: room.code,
+      description: room.description,
+      baseOccupancy: room.baseOccupancy,
+      maxOccupancy: room.maxOccupancy,
+      bedConfig: {
+        type: room.bedConfig.type,
+        count: room.bedConfig.count,
+      },
+      amenities: room.amenities,
+      policies: {
+        smokingAllowed: room.policies.smokingAllowed,
+        petsAllowed: room.policies.petsAllowed,
+        checkInTime: room.policies.checkInTime,
+        checkOutTime: room.policies.checkOutTime,
+      },
+      basePrice: room.basePrice,
+      coverImage: room.coverImage,
+      images: room.images,
+      status: room.status,
     };
   }
 }

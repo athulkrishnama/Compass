@@ -102,4 +102,6 @@ export enum INTERNAL_ERROR_MESSAGES {
   BASE_PRICE_MISSING_OR_INVALID = "basePriceMissingOrInvalid",
   ROOM_ALREADY_EXISTS = "roomAlreadyExists",
   ROOM_NOT_FOUND = "roomNotFound",
+  ROOM_ID_MISSING_OR_INVALID = "roomIdMissingOrInvalid",
+  STATUS_MISSING_OR_INVALID = "statusMissingOrInvalid",
 }

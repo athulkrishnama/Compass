@@ -34,6 +34,8 @@ export default {
         noPropertiesFound: "headings.noPropertiesFound",
         editHotel: "headings.editHotel",
         addNewRoom: "headings.addNewRoom",
+        editRoom: "headings.editRoom",
+        editRoomSubtitle: "headings.editRoomSubtitle",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -242,6 +244,7 @@ export default {
         saving: "button.saving",
         addRoom: "button.addRoom",
         viewDetails: "button.viewDetails",
+        updateRoom: "button.updateRoom",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -387,6 +390,7 @@ export default {
         perNight: "text.perNight",
         basePrice: "text.basePrice",
         noRoomsAdded: "text.noRoomsAdded",
+        noRoomFound: "text.noRoomFound",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",
