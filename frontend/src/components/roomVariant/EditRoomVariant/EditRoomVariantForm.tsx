@@ -9,7 +9,6 @@ import {
     type RoomVariantFormValues,
     type RoomVariantFormType,
     BedTypes,
-    RoomVariantStatuses,
     RoomAmenities,
 } from "@/components/shared/validations/roomVariantSchema";
 import {
@@ -56,15 +55,12 @@ function EditRoomVariantForm({
         resolver: zodResolver(createRoomVariantValidationSchema()) as never,
         values: {
             name: roomVariantData.name,
-            code: roomVariantData.code,
             description: roomVariantData.description,
-            baseOccupancy: roomVariantData.baseOccupancy,
             maxOccupancy: roomVariantData.maxOccupancy,
             bedType: roomVariantData.bedConfig
                 .type as (typeof BedTypes)[number],
             bedCount: roomVariantData.bedConfig.count,
             basePrice: roomVariantData.basePrice,
-            status: roomVariantData.status as (typeof RoomVariantStatuses)[number],
             amenities:
                 roomVariantData.amenities as (typeof RoomAmenities)[number][],
             smokingAllowed: roomVariantData.policies.smokingAllowed,
@@ -79,18 +75,12 @@ function EditRoomVariantForm({
 
         if (data.name !== roomVariantData.name)
             formData.append("name", data.name);
-        if (data.code !== roomVariantData.code)
-            formData.append("code", data.code);
         if (data.description !== roomVariantData.description)
             formData.append("description", data.description);
-        if (data.baseOccupancy !== roomVariantData.baseOccupancy)
-            formData.append("baseOccupancy", data.baseOccupancy.toString());
         if (data.maxOccupancy !== roomVariantData.maxOccupancy)
             formData.append("maxOccupancy", data.maxOccupancy.toString());
         if (data.basePrice !== roomVariantData.basePrice)
             formData.append("basePrice", data.basePrice.toString());
-        if (data.status !== roomVariantData.status)
-            formData.append("status", data.status);
 
         if (
             data.bedType !== roomVariantData.bedConfig.type ||

@@ -30,9 +30,9 @@ export class CreateRoomVariantUseCase implements ICreateRoomVariantUseCase {
       );
     }
 
-    const existingRoomVariant = await this._roomVariantRepository.findByCode(
+    const existingRoomVariant = await this._roomVariantRepository.findByName(
       data.hotelId,
-      data.code,
+      data.name,
     );
 
     if (existingRoomVariant) {

@@ -1,6 +1,5 @@
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
-import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 interface BedConfig {
   type: BedType;
@@ -18,9 +17,7 @@ export interface RoomVariantEntity {
   _id?: string;
   hotelId: string;
   name: string;
-  code: string;
   description: string;
-  baseOccupancy: number;
   maxOccupancy: number;
   bedConfig: BedConfig;
   amenities: RoomAmenity[];
@@ -28,5 +25,4 @@ export interface RoomVariantEntity {
   basePrice: number;
   coverImage: string;
   images: string[];
-  status: RoomVariantStatus;
 }

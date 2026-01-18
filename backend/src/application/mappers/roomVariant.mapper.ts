@@ -2,7 +2,6 @@ import { ICreateRoomVariantRequestDTO } from "@domain/dtos/roomVariant/createRoo
 import { IRoomVariantDetailResponseDTO } from "@domain/dtos/roomVariant/getRoomVariantDetail.dto";
 import { IRoomVariantListingResponseDTO } from "@domain/dtos/roomVariant/roomVariantListing.dto";
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
-import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 export class RoomVariantMapper {
   static toRoomVariantListingResponseDTO(
@@ -12,7 +11,6 @@ export class RoomVariantMapper {
       roomVariants: roomVariants.map((roomVariant) => ({
         id: roomVariant._id!,
         name: roomVariant.name,
-        code: roomVariant.code,
         coverImage: roomVariant.coverImage,
         basePrice: roomVariant.basePrice,
       })),
@@ -29,9 +27,7 @@ export class RoomVariantMapper {
     return {
       hotelId: data.hotelId,
       name: data.name,
-      code: data.code,
       description: data.description,
-      baseOccupancy: data.baseOccupancy,
       maxOccupancy: data.maxOccupancy,
       bedConfig: {
         type: data.bedConfig.type,
@@ -47,7 +43,6 @@ export class RoomVariantMapper {
       basePrice: data.basePrice,
       coverImage: data.coverImage,
       images: data.images,
-      status: RoomVariantStatus.ACTIVE,
     };
   }
 
@@ -58,9 +53,7 @@ export class RoomVariantMapper {
       id: roomVariant._id!,
       hotelId: roomVariant.hotelId,
       name: roomVariant.name,
-      code: roomVariant.code,
       description: roomVariant.description,
-      baseOccupancy: roomVariant.baseOccupancy,
       maxOccupancy: roomVariant.maxOccupancy,
       bedConfig: {
         type: roomVariant.bedConfig.type,
@@ -76,7 +69,6 @@ export class RoomVariantMapper {
       basePrice: roomVariant.basePrice,
       coverImage: roomVariant.coverImage,
       images: roomVariant.images,
-      status: roomVariant.status,
     };
   }
 }

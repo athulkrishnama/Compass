@@ -51,42 +51,22 @@ function OccupancyBeddingSection({ form }: OccupancyBeddingSectionProps) {
             </div>
 
             <div className="space-y-5">
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label className="text-xs text-gray-500 uppercase tracking-wider">
-                            {t(translationKey.form.baseOccupancy)}
-                        </Label>
-                        <Input
-                            type="number"
-                            {...register("baseOccupancy", {
-                                valueAsNumber: true,
-                            })}
-                            className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors"
-                        />
-                        {errors.baseOccupancy && (
-                            <p className="text-xs text-red-500">
-                                {errors.baseOccupancy.message}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label className="text-xs text-gray-500 uppercase tracking-wider">
-                            {t(translationKey.form.maxOccupancy)}
-                        </Label>
-                        <Input
-                            type="number"
-                            {...register("maxOccupancy", {
-                                valueAsNumber: true,
-                            })}
-                            className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors"
-                        />
-                        {errors.maxOccupancy && (
-                            <p className="text-xs text-red-500">
-                                {errors.maxOccupancy.message}
-                            </p>
-                        )}
-                    </div>
+                <div className="space-y-2">
+                    <Label className="text-xs text-gray-500 uppercase tracking-wider">
+                        {t(translationKey.form.maxOccupancy)}
+                    </Label>
+                    <Input
+                        type="number"
+                        {...register("maxOccupancy", {
+                            valueAsNumber: true,
+                        })}
+                        className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors"
+                    />
+                    {errors.maxOccupancy && (
+                        <p className="text-xs text-red-500">
+                            {errors.maxOccupancy.message}
+                        </p>
+                    )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

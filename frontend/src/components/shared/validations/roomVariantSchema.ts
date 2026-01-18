@@ -12,12 +12,6 @@ export const BedTypes = [
     "BUNK",
 ] as const;
 
-export const RoomVariantStatuses = [
-    "ACTIVE",
-    "INACTIVE",
-    "MAINTENANCE",
-] as const;
-
 export const RoomAmenities = [
     "WIFI",
     "AIR_CONDITIONING",
@@ -47,17 +41,10 @@ export const createRoomVariantValidationSchema = () => {
             .string()
             .min(3, t(translationKey.errors.roomNameMinLength))
             .max(100, t(translationKey.errors.roomNameMaxLength)),
-        code: z
-            .string()
-            .min(2, t(translationKey.errors.roomCodeRequired))
-            .max(20, t(translationKey.errors.roomCodeMaxLength)),
         description: z
             .string()
             .min(10, t(translationKey.errors.descriptionMinLength))
             .max(2000, t(translationKey.errors.descriptionMaxLength)),
-        baseOccupancy: z
-            .number()
-            .min(1, t(translationKey.errors.baseOccupancyRequired)),
         maxOccupancy: z
             .number()
             .min(1, t(translationKey.errors.maxOccupancyRequired)),
@@ -68,9 +55,6 @@ export const createRoomVariantValidationSchema = () => {
         basePrice: z
             .number()
             .min(1, t(translationKey.errors.basePriceRequired)),
-        status: z.enum(RoomVariantStatuses, {
-            message: t(translationKey.errors.statusRequired),
-        }),
         amenities: z.array(z.enum(RoomAmenities)),
         smokingAllowed: z.boolean(),
         petsAllowed: z.boolean(),

@@ -40,14 +40,11 @@ function AddRoomVariantForm() {
         resolver: zodResolver(createRoomVariantValidationSchema()) as never,
         values: {
             name: "",
-            code: "",
             description: "",
-            baseOccupancy: 1,
             maxOccupancy: 2,
             bedType: "KING",
             bedCount: 1,
             basePrice: 0,
-            status: "ACTIVE",
             amenities: [],
             smokingAllowed: false,
             petsAllowed: false,
@@ -69,9 +66,7 @@ function AddRoomVariantForm() {
         const formData = new FormData();
 
         formData.append("name", data.name);
-        formData.append("code", data.code);
         formData.append("description", data.description);
-        formData.append("baseOccupancy", data.baseOccupancy.toString());
         formData.append("maxOccupancy", data.maxOccupancy.toString());
         formData.append(
             "bedConfig",

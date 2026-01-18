@@ -70,7 +70,6 @@ export class EditRoomVariantUseCase implements IEditRoomVariantUseCase {
       ...roomVariant,
       name: data.name ?? roomVariant.name,
       description: data.description ?? roomVariant.description,
-      baseOccupancy: data.baseOccupancy ?? roomVariant.baseOccupancy,
       maxOccupancy: data.maxOccupancy ?? roomVariant.maxOccupancy,
       bedConfig: data.bedConfig ?? roomVariant.bedConfig,
       amenities: data.amenities ?? roomVariant.amenities,
@@ -78,7 +77,6 @@ export class EditRoomVariantUseCase implements IEditRoomVariantUseCase {
       basePrice: data.basePrice ?? roomVariant.basePrice,
       coverImage: coverImageUrl,
       images: galleryImages,
-      status: data.status ?? roomVariant.status,
     };
 
     await this._roomVariantRepository.update(

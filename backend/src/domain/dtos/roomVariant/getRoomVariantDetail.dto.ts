@@ -1,14 +1,11 @@
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
-import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 export interface IRoomVariantDetailResponseDTO {
   id: string;
   hotelId: string;
   name: string;
-  code: string;
   description: string;
-  baseOccupancy: number;
   maxOccupancy: number;
   bedConfig: {
     type: BedType;
@@ -24,5 +21,4 @@ export interface IRoomVariantDetailResponseDTO {
   basePrice: number;
   coverImage: string;
   images: string[];
-  status: RoomVariantStatus;
 }

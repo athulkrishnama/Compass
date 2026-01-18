@@ -35,42 +35,20 @@ function BasicRoomVariantInfoSection({
             </div>
 
             <div className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label className="text-xs text-gray-500 uppercase tracking-wider">
-                            {t(translationKey.form.roomName)}
-                        </Label>
-                        <Input
-                            {...register("name")}
-                            placeholder={t(
-                                translationKey.form.roomNamePlaceholder
-                            )}
-                            className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors"
-                        />
-                        {errors.name && (
-                            <p className="text-xs text-red-500">
-                                {errors.name.message}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label className="text-xs text-gray-500 uppercase tracking-wider">
-                            {t(translationKey.form.roomCode)}
-                        </Label>
-                        <Input
-                            {...register("code")}
-                            placeholder={t(
-                                translationKey.form.roomCodePlaceholder
-                            )}
-                            className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors uppercase"
-                        />
-                        {errors.code && (
-                            <p className="text-xs text-red-500">
-                                {errors.code.message}
-                            </p>
-                        )}
-                    </div>
+                <div className="space-y-2">
+                    <Label className="text-xs text-gray-500 uppercase tracking-wider">
+                        {t(translationKey.form.roomName)}
+                    </Label>
+                    <Input
+                        {...register("name")}
+                        placeholder={t(translationKey.form.roomNamePlaceholder)}
+                        className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors"
+                    />
+                    {errors.name && (
+                        <p className="text-xs text-red-500">
+                            {errors.name.message}
+                        </p>
+                    )}
                 </div>
 
                 <div className="space-y-2">

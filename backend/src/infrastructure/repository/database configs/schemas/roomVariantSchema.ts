@@ -1,15 +1,12 @@
 import { Document, Types, Schema } from "mongoose";
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
-import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 export interface IRoomVariantDocument extends Document {
   _id: Types.ObjectId;
   hotelId: Types.ObjectId;
   name: string;
-  code: string;
   description: string;
-  baseOccupancy: number;
   maxOccupancy: number;
   bedConfig: {
     type: BedType;
@@ -25,7 +22,6 @@ export interface IRoomVariantDocument extends Document {
   basePrice: number;
   coverImage: string;
   images: string[];
-  status: RoomVariantStatus;
 }
 
 export const roomVariantSchema = new Schema<IRoomVariantDocument>(
@@ -39,18 +35,9 @@ export const roomVariantSchema = new Schema<IRoomVariantDocument>(
       type: String,
       required: true,
     },
-    code: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       required: true,
-    },
-    baseOccupancy: {
-      type: Number,
-      required: true,
-      min: 1,
     },
     maxOccupancy: {
       type: Number,
@@ -105,15 +92,10 @@ export const roomVariantSchema = new Schema<IRoomVariantDocument>(
       type: [String],
       default: [],
     },
-    status: {
-      type: String,
-      enum: Object.values(RoomVariantStatus),
-      default: RoomVariantStatus.ACTIVE,
-    },
   },
   {
     timestamps: true,
   },
 );
 
-roomVariantSchema.index({ hotelId: 1, code: 1 }, { unique: true });
+roomVariantSchema.index({ hotelId: 1, name: 1 }, { unique: true });

@@ -5,5 +5,5 @@ import { IRoomVariantDocument } from "@infrastructure/repository/database config
 export interface IRoomVariantRepo
   extends BaseRepository<RoomVariantEntity, IRoomVariantDocument> {
   findByHotelId(hotelId: string): Promise<RoomVariantEntity[]>;
-  findByCode(hotelId: string, code: string): Promise<RoomVariantEntity | null>;
+  findByName(hotelId: string, name: string): Promise<RoomVariantEntity | null>;
 }

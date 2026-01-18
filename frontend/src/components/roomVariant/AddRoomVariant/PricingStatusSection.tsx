@@ -3,17 +3,8 @@ import { motion } from "framer-motion";
 import { IndianRupee } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import translationKey from "@/utils/i18n/translationKey";
 import type { RoomVariantFormType } from "@/components/shared/validations/roomVariantSchema";
-import { RoomVariantStatuses } from "@/components/shared/validations/roomVariantSchema";
-import { Controller } from "react-hook-form";
 
 interface PricingStatusSectionProps {
     form: RoomVariantFormType;
@@ -23,15 +14,8 @@ function PricingStatusSection({ form }: PricingStatusSectionProps) {
     const { t } = useTranslation();
     const {
         register,
-        control,
         formState: { errors },
     } = form;
-
-    const statusLabels: Record<string, string> = {
-        ACTIVE: t(translationKey.room.statusActive),
-        INACTIVE: t(translationKey.room.statusInactive),
-        MAINTENANCE: t(translationKey.room.statusMaintenance),
-    };
 
     return (
         <motion.div
@@ -67,38 +51,6 @@ function PricingStatusSection({ form }: PricingStatusSectionProps) {
                     {errors.basePrice && (
                         <p className="text-xs text-red-500">
                             {errors.basePrice.message}
-                        </p>
-                    )}
-                </div>
-
-                <div className="space-y-2">
-                    <Label className="text-xs text-gray-500 uppercase tracking-wider">
-                        {t(translationKey.form.roomStatus)}
-                    </Label>
-                    <Controller
-                        name="status"
-                        control={control}
-                        render={({ field }) => (
-                            <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                            >
-                                <SelectTrigger className="h-12 rounded-xl bg-gray-50 border-gray-200">
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {RoomVariantStatuses.map((status) => (
-                                        <SelectItem key={status} value={status}>
-                                            {statusLabels[status] || status}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        )}
-                    />
-                    {errors.status && (
-                        <p className="text-xs text-red-500">
-                            {errors.status.message}
                         </p>
                     )}
                 </div>

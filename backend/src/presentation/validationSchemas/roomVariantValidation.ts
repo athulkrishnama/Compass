@@ -2,7 +2,6 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
 import z from "zod";
-import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 export const createRoomVariantValidation = z.object({
   hotelId: z.string({
@@ -11,22 +10,9 @@ export const createRoomVariantValidation = z.object({
   name: z.string({
     error: INTERNAL_ERROR_MESSAGES.ROOM_NAME_MISSING_OR_INVALID,
   }),
-  code: z.string({
-    error: INTERNAL_ERROR_MESSAGES.ROOM_CODE_MISSING_OR_INVALID,
-  }),
   description: z.string({
     error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING_OR_INVALID,
   }),
-  baseOccupancy: z.preprocess(
-    (value) => (typeof value === "string" ? parseInt(value, 10) : value),
-    z
-      .number({
-        error: INTERNAL_ERROR_MESSAGES.BASE_OCCUPANCY_MISSING_OR_INVALID,
-      })
-      .min(1, {
-        error: INTERNAL_ERROR_MESSAGES.BASE_OCCUPANCY_MISSING_OR_INVALID,
-      }),
-  ),
   maxOccupancy: z.preprocess(
     (value) => (typeof value === "string" ? parseInt(value, 10) : value),
     z
@@ -122,18 +108,6 @@ export const editRoomVariantValidation = z.object({
       error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING_OR_INVALID,
     })
     .optional(),
-  baseOccupancy: z
-    .preprocess(
-      (value) => (typeof value === "string" ? parseInt(value, 10) : value),
-      z
-        .number({
-          error: INTERNAL_ERROR_MESSAGES.BASE_OCCUPANCY_MISSING_OR_INVALID,
-        })
-        .min(1, {
-          error: INTERNAL_ERROR_MESSAGES.BASE_OCCUPANCY_MISSING_OR_INVALID,
-        }),
-    )
-    .optional(),
   maxOccupancy: z
     .preprocess(
       (value) => (typeof value === "string" ? parseInt(value, 10) : value),
@@ -224,10 +198,5 @@ export const editRoomVariantValidation = z.object({
           error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
         }),
     )
-    .optional(),
-  status: z
-    .nativeEnum(RoomVariantStatus, {
-      error: INTERNAL_ERROR_MESSAGES.STATUS_MISSING_OR_INVALID,
-    })
     .optional(),
 });
