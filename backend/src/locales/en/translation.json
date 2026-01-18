@@ -139,6 +139,6 @@
   "roomVariantFetchedSuccessfully": "Room variant fetched successfully",
   "roomVariantUpdatedSuccessfully": "Room variant updated successfully",
   "roomVariantImageDeletedSuccessfully": "Room variant image deleted successfully",
-  "statusMissingOrInvalid": "Status is missing or invalid"
+  "statusMissingOrInvalid": "Status is missing or invalid",
+  "floorMissingOrInvalid": "Floor is missing or invalid"
 }
-

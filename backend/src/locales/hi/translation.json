@@ -138,6 +138,6 @@
   "roomVariantFetchedSuccessfully": "कमरा वैरिएंट सफलतापूर्वक प्राप्त किया गया",
   "roomVariantUpdatedSuccessfully": "कमरा वैरिएंट सफलतापूर्वक अपडेट किया गया",
   "roomVariantImageDeletedSuccessfully": "कमरा वैरिएंट की छवि सफलतापूर्वक हटा दी गई",
-  "statusMissingOrInvalid": "स्थिति गायब है या अमान्य है"
+  "statusMissingOrInvalid": "स्थिति गायब है या अमान्य है",
+  "floorMissingOrInvalid": "फ़्लोर गायब है या अमान्य है"
 }
-

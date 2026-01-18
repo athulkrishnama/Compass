@@ -1,4 +1,5 @@
 import { ResourceNotFoundException } from "@application/constants/Exceptions";
+import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { IGetRoomVariantByIdUseCase } from "@application/interfaces/useCase/roomVariant/getRoomVariantByIdUseCase.interface";
@@ -15,11 +16,16 @@ export class GetRoomVariantByIdUseCase implements IGetRoomVariantByIdUseCase {
     private readonly _roomVariantRepository: IRoomVariantRepo,
     @inject("IStorageService")
     private readonly _storageService: IStorageService,
+    @inject("IRoomRepo")
+    private readonly _roomRepo: IRoomRepo,
   ) {}
 
   async execute(roomVariantId: string): Promise<IRoomVariantDetailResponseDTO> {
-    const roomVariant =
-      await this._roomVariantRepository.findById(roomVariantId);
+    const [roomVariant, rooms] = await Promise.all([
+      this._roomVariantRepository.findById(roomVariantId),
+      this._roomRepo.findByVariantId(roomVariantId),
+    ]);
+
     if (!roomVariant) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.ROOM_VARIANT_NOT_FOUND,
@@ -34,6 +40,6 @@ export class GetRoomVariantByIdUseCase implements IGetRoomVariantByIdUseCase {
         this._storageService.createSignedUrl(image, env.SIGNED_URL_EXPIRY),
       ),
     );
-    return RoomVariantMapper.toRoomVariantDetailResponseDTO(roomVariant);
+    return RoomVariantMapper.toRoomVariantDetailResponseDTO(roomVariant, rooms);
   }
 }

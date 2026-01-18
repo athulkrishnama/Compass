@@ -18,6 +18,7 @@ import { CabRouter } from "@presentation/routes/cab/cabRouter";
 import { HotelRouter } from "@presentation/routes/hotel/hotelRouter";
 import { RoomVariantRouter } from "@presentation/routes/roomVariant/roomVariantRouter";
 import { DestinationRouter } from "@presentation/routes/destination/destinationRouter";
+import { RoomRouter } from "@presentation/routes/room/roomRouter";
 
 export class Server {
   private _app: Express;
@@ -31,6 +32,7 @@ export class Server {
     this._setCabRouter();
     this._setHotelRouter();
     this._setRoomVariantRouter();
+    this._setRoomRouter();
     this._setDestinationRouter();
     this._setErrorHandlingMiddleware();
   }
@@ -58,6 +60,11 @@ export class Server {
   private _setRoomVariantRouter() {
     const roomVariantRouter = new RoomVariantRouter();
     this._app.use(Routes.ROOM_VARIANT, roomVariantRouter.getRouter());
+  }
+
+  private _setRoomRouter() {
+    const roomRouter = new RoomRouter();
+    this._app.use(Routes.ROOM, roomRouter.getRouter());
   }
 
   private _setDestinationRouter() {

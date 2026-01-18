@@ -10,6 +10,7 @@ interface header<data> {
 interface propType<data> {
     headers: header<data>[];
     data: data[];
+    containerClassName?: string;
 }
 
 const rowVariants = {
@@ -22,9 +23,11 @@ const rowVariants = {
     exit: { opacity: 0, height: 0, transition: { duration: 0.25 } },
 };
 
-function Table<T>({ headers, data }: propType<T>) {
+function Table<T>({ headers, data, containerClassName = "" }: propType<T>) {
     return (
-        <div className="w-full overflow-x-auto rounded-xl border border-gray-200 shadow-sm hide-scroll-bar">
+        <div
+            className={`w-full overflow-x-auto rounded-xl border border-gray-200 shadow-sm hide-scroll-bar ${containerClassName}`}
+        >
             <table className="w-full border-collapse text-sm text-left table-fixed ">
                 <thead className="bg-gray-50 text-gray-600 text-[13px] font-semibold uppercase tracking-wider border-b border-gray-200">
                     <tr>

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import translationKey from "@/utils/i18n/translationKey";
 import type { RoomVariantFormType } from "@/components/shared/validations/roomVariantSchema";
-import { BedTypes } from "@/components/shared/validations/roomVariantSchema";
+import { BED_TYPE_WITH_TRANSLATION } from "@/constants/roomConstants/bedTypeWithTranslation";
 import { Controller } from "react-hook-form";
 
 interface OccupancyBeddingSectionProps {
@@ -26,15 +26,6 @@ function OccupancyBeddingSection({ form }: OccupancyBeddingSectionProps) {
         control,
         formState: { errors },
     } = form;
-
-    const bedTypeLabels: Record<string, string> = {
-        KING: t(translationKey.room.bedTypeKing),
-        QUEEN: t(translationKey.room.bedTypeQueen),
-        TWIN: t(translationKey.room.bedTypeTwin),
-        DOUBLE: t(translationKey.room.bedTypeDouble),
-        SINGLE: t(translationKey.room.bedTypeSingle),
-        BUNK: t(translationKey.room.bedTypeBunk),
-    };
 
     return (
         <motion.div
@@ -86,11 +77,16 @@ function OccupancyBeddingSection({ form }: OccupancyBeddingSectionProps) {
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {BedTypes.map((type) => (
-                                            <SelectItem key={type} value={type}>
-                                                {bedTypeLabels[type] || type}
-                                            </SelectItem>
-                                        ))}
+                                        {BED_TYPE_WITH_TRANSLATION.map(
+                                            (type) => (
+                                                <SelectItem
+                                                    key={type.value}
+                                                    value={type.value}
+                                                >
+                                                    {t(type.labelKey)}
+                                                </SelectItem>
+                                            )
+                                        )}
                                     </SelectContent>
                                 </Select>
                             )}

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BedDouble, Pencil, Plus } from "lucide-react";
+import { BedDouble, Eye, Pencil, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import type { RoomVariantListingItem } from "@/types/api/responses/roomVariantListingResponse";
@@ -48,21 +48,13 @@ export default function RoomVariantsSection({
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 flex-1 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 items-center">
                             <div>
                                 <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
                                     {t(translationKey.form.roomName)}
                                 </p>
                                 <p className="text-sm font-medium text-gray-900">
                                     {roomVariant.name}
-                                </p>
-                            </div>
-                            <div>
-                                <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
-                                    {t(translationKey.form.roomCode)}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    {roomVariant.code}
                                 </p>
                             </div>
                             <div>
@@ -76,7 +68,18 @@ export default function RoomVariantsSection({
                                     </span>
                                 </p>
                             </div>
-                            <div className="flex justify-end">
+                            <div className="flex justify-end gap-4">
+                                <Link
+                                    to="/hotel/hotels/$hotelId/room-variants/$roomVariantId"
+                                    params={{
+                                        hotelId: hotelId,
+                                        roomVariantId: roomVariant.id,
+                                    }}
+                                    className="flex items-center gap-2 text-[10px] font-medium text-gray-700 hover:text-gray-900 uppercase tracking-wider transition-colors"
+                                >
+                                    <Eye className="w-3 h-3" />
+                                    {t(translationKey.button.view)}
+                                </Link>
                                 <Link
                                     to="/hotel/hotels/$hotelId/room-variants/$roomVariantId/edit"
                                     params={{

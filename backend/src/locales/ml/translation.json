@@ -138,6 +138,6 @@
   "roomVariantFetchedSuccessfully": "റൂം വേരിയന്റ് വിവരങ്ങൾ വിജയകരമായി ലഭിച്ചു",
   "roomVariantUpdatedSuccessfully": "റൂം വേരിയന്റ് വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
   "roomVariantImageDeletedSuccessfully": "റൂം വേരിയന്റ് ചിത്രം വിജയകരമായി ഇല്ലാതാക്കി",
-  "statusMissingOrInvalid": "സ്റ്റാറ്റസ് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്"
+  "statusMissingOrInvalid": "സ്റ്റാറ്റസ് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "floorMissingOrInvalid": "ഫ്ലോർ വിവരങ്ങൾ ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്"
 }
-

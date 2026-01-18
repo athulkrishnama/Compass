@@ -1,6 +1,7 @@
 import { ICreateRoomVariantRequestDTO } from "@domain/dtos/roomVariant/createRoomVariant.dto";
 import { IRoomVariantDetailResponseDTO } from "@domain/dtos/roomVariant/getRoomVariantDetail.dto";
 import { IRoomVariantListingResponseDTO } from "@domain/dtos/roomVariant/roomVariantListing.dto";
+import { RoomEntity } from "@domain/entities/room/roomEntity";
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
 
 export class RoomVariantMapper {
@@ -48,6 +49,7 @@ export class RoomVariantMapper {
 
   static toRoomVariantDetailResponseDTO(
     roomVariant: RoomVariantEntity,
+    rooms: RoomEntity[],
   ): IRoomVariantDetailResponseDTO {
     return {
       id: roomVariant._id!,
@@ -69,6 +71,12 @@ export class RoomVariantMapper {
       basePrice: roomVariant.basePrice,
       coverImage: roomVariant.coverImage,
       images: roomVariant.images,
+      rooms: rooms.map((room) => ({
+        id: room._id!,
+        roomCode: room.roomCode,
+        floor: room.floor,
+        status: room.status,
+      })),
     };
   }
 }

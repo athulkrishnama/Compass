@@ -138,6 +138,6 @@
   "roomVariantFetchedSuccessfully": "அறை வகை வெற்றிகரமாக பெறப்பட்டது",
   "roomVariantUpdatedSuccessfully": "அறை வகை வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
   "roomVariantImageDeletedSuccessfully": "அறை வகை படம் வெற்றிகரமாக நீக்கப்பட்டது",
-  "statusMissingOrInvalid": "நிலை இல்லை அல்லது தவறானது"
+  "statusMissingOrInvalid": "நிலை இல்லை அல்லது தவறானது",
+  "floorMissingOrInvalid": "தளம் விடுபட்டுள்ளது அல்லது தவறானது"
 }
-

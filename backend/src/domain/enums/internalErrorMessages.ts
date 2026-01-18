@@ -107,4 +107,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   ROOM_VARIANT_NOT_FOUND = "roomVariantNotFound",
   ROOM_VARIANT_ID_MISSING_OR_INVALID = "roomVariantIdMissingOrInvalid",
   STATUS_MISSING_OR_INVALID = "statusMissingOrInvalid",
+  FLOOR_MISSING_OR_INVALID = "floorMissingOrInvalid",
 }
