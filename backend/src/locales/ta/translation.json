@@ -130,5 +130,14 @@
   "roomCreatedSuccessfully": "அறை வெற்றிகரமாக உருவாக்கப்பட்டது",
   "roomFetchedSuccessfully": "அறை வெற்றிகரமாக பெறப்பட்டது",
   "roomUpdatedSuccessfully": "அறை வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
+  "roomImageDeletedSuccessfully": "அறை படம் வெற்றிகரமாக நீக்கப்பட்டது",
+  "roomVariantAlreadyExists": "இந்த பெயரில் அல்லது குறியீட்டில் அறை வகை ஏற்கனவே உள்ளது",
+  "roomVariantNotFound": "அறை வகை கிடைக்கவில்லை",
+  "roomVariantIdMissingOrInvalid": "அறை வகை ஐடி இல்லை அல்லது தவறானது",
+  "roomVariantCreatedSuccessfully": "அறை வகை வெற்றிகரமாக உருவாக்கப்பட்டது",
+  "roomVariantFetchedSuccessfully": "அறை வகை வெற்றிகரமாக பெறப்பட்டது",
+  "roomVariantUpdatedSuccessfully": "அறை வகை வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
+  "roomVariantImageDeletedSuccessfully": "அறை வகை படம் வெற்றிகரமாக நீக்கப்பட்டது",
   "statusMissingOrInvalid": "நிலை இல்லை அல்லது தவறானது"
 }
+

@@ -30,7 +30,13 @@
         "editDestinationSubtitle": "இந்த சேருமிடப் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
         "hotelManagement": "ஹோட்டல் மேலாண்மை",
         "noPropertiesFound": "பண்புகள் எதுவும் காணப்படவில்லை",
-        "editHotel": "ஹோட்டலை திருத்தவும்"
+        "editHotel": "ஹோட்டலை திருத்தவும்",
+        "addNewRoom": "புதிய அறையை சேர்க்கவும்",
+        "editRoom": "அறையை திருத்தவும்",
+        "editRoomSubtitle": "இந்த அறை பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
+        "addNewRoomVariant": "புதிய ரூம் வேரியன்ட் சேர்க்கவும்",
+        "editRoomVariant": "ரூம் வேரியன்ட் திருத்தவும்",
+        "editRoomVariantSubtitle": "இந்த ரூம் வேரியன்ட் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்"
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -45,7 +51,13 @@
         "addressLocation": "முகவரி & இருப்பிடம்",
         "generalInformation": "பொதுவான தகவல்",
         "locationAddress": "இருப்பிடம் & முகவரி",
-        "propertyGallery": "சொத்து படக் காட்சியகம்"
+        "propertyGallery": "சொத்து படக் காட்சியகம்",
+        "basicRoomInfo": "அறையின் அடிப்படை தகவல்",
+        "occupancyBedding": "அதிபொகம் மற்றும் கிடக்கை",
+        "pricingStatus": "விலை நிர்ணயம் மற்றும் நிலை",
+        "amenitiesPolicies": "சேவைகள் மற்றும் கொள்கைகள்",
+        "rooms": "அறைகள்",
+        "roomVariants": "ரூம் வேரியன்ட்கள்"
     },
     "errors": {
         "minChar": "குறைந்தபட்ச எழுத்துகள் {{count}} தேவை",
@@ -269,7 +281,15 @@
         "loadMoreProperties": "மேலும் பண்புகளை ஏற்றவும்",
         "updateHotel": "ஹோட்டலை புதுப்பிக்கவும்",
         "changeImage": "படத்தை மாற்றவும்",
-        "editHotel": "ஹோட்டலைத் திருத்தவும்"
+        "editHotel": "ஹோட்டலைத் திருத்தவும்",
+        "saveRoom": "அறையை சேமிக்கவும்",
+        "saving": "சேமிக்கப்படுகிறது...",
+        "addRoom": "அறையை சேர்க்கவும்",
+        "viewDetails": "விவரங்களை பார்க்கவும்",
+        "updateRoom": "அறையை புதுப்பிக்கவும்",
+        "saveRoomVariant": "ரூம் வேரியன்ட் சேமிக்கவும்",
+        "addRoomVariant": "ரூம் வேரியன்ட் சேர்க்கவும்",
+        "updateRoomVariant": "ரூம் வேரியன்ட் புதுப்பிக்கவும்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",

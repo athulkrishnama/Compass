@@ -130,5 +130,14 @@
   "roomCreatedSuccessfully": "റൂം വിജയകരമായി സൃഷ്ടിച്ചു",
   "roomFetchedSuccessfully": "റൂം വിവരങ്ങൾ വിജയകരമായി ലഭിച്ചു",
   "roomUpdatedSuccessfully": "റൂം വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
+  "roomImageDeletedSuccessfully": "റൂം ചിത്രം വിജയകരമായി ഇല്ലാതാക്കി",
+  "roomVariantAlreadyExists": "ഈ പേരിൽ അല്ലെങ്കിൽ കോഡിൽ ഒരു റൂം വേരിയന്റ് നിലവിലുണ്ട്",
+  "roomVariantNotFound": "റൂം വേരിയന്റ് കണ്ടെത്താനായില്ല",
+  "roomVariantIdMissingOrInvalid": "റൂം വേരിയന്റ് ഐഡി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "roomVariantCreatedSuccessfully": "റൂം വേരിയന്റ് വിജയകരമായി സൃഷ്ടിച്ചു",
+  "roomVariantFetchedSuccessfully": "റൂം വേരിയന്റ് വിവരങ്ങൾ വിജയകരമായി ലഭിച്ചു",
+  "roomVariantUpdatedSuccessfully": "റൂം വേരിയന്റ് വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു",
+  "roomVariantImageDeletedSuccessfully": "റൂം വേരിയന്റ് ചിത്രം വിജയകരമായി ഇല്ലാതാക്കി",
   "statusMissingOrInvalid": "സ്റ്റാറ്റസ് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്"
 }
+

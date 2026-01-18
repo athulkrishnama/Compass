@@ -36,6 +36,9 @@ export default {
         addNewRoom: "headings.addNewRoom",
         editRoom: "headings.editRoom",
         editRoomSubtitle: "headings.editRoomSubtitle",
+        addNewRoomVariant: "headings.addNewRoomVariant",
+        editRoomVariant: "headings.editRoomVariant",
+        editRoomVariantSubtitle: "headings.editRoomVariantSubtitle",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -56,6 +59,7 @@ export default {
         pricingStatus: "sections.pricingStatus",
         amenitiesPolicies: "sections.amenitiesPolicies",
         rooms: "sections.rooms",
+        roomVariants: "sections.roomVariants",
     },
     errors: {
         minChar: "errors.minChar",
@@ -245,6 +249,9 @@ export default {
         addRoom: "button.addRoom",
         viewDetails: "button.viewDetails",
         updateRoom: "button.updateRoom",
+        saveRoomVariant: "button.saveRoomVariant",
+        addRoomVariant: "button.addRoomVariant",
+        updateRoomVariant: "button.updateRoomVariant",
     },
     activities: {
         HIKING: "activities.HIKING",

@@ -8,4 +8,6 @@ export enum StorageFolderNames {
   HOTEL_IMAGE = "hotel",
   ROOM_COVER_IMAGE = "roomCover",
   ROOM_IMAGE = "room",
+  ROOM_VARIANT_COVER_IMAGE = "roomVariantCover",
+  ROOM_VARIANT_IMAGE = "roomVariant",
 }

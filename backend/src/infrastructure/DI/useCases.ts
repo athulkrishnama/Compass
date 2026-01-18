@@ -69,16 +69,16 @@ import { IGetHotelByIdUseCase } from "@application/interfaces/useCase/hotel/getH
 import { GetHotelByIdUseCase } from "@useCases/hotel/getHoteByIdUseCase";
 import { IDeleteHotelImageUseCase } from "@application/interfaces/useCase/hotel/deleteHotelImageUseCase.interface";
 import { DeleteHotelImageUseCase } from "@useCases/hotel/deleteHotelImageUseCase";
-import { ICreateRoomUseCase } from "@application/interfaces/useCase/room/createRoomUseCase.interface";
-import { CreateRoomUseCase } from "@useCases/room/createRoomUseCase";
-import { IListRoomsByHotelIdUseCase } from "@application/interfaces/useCase/room/listRoomsByHotelIdUseCase.interface";
-import { ListRoomsByHotelIdUseCase } from "@useCases/room/listRoomsByHotelIdUseCase";
-import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
-import { EditRoomUseCase } from "@useCases/room/editRoomUseCase";
-import { IGetRoomByIdUseCase } from "@application/interfaces/useCase/room/getRoomByIdUseCase.interface";
-import { GetRoomByIdUseCase } from "@useCases/room/getRoomByIdUseCase";
-import { IDeleteRoomImageUseCase } from "@application/interfaces/useCase/room/deleteRoomImageUseCase.interface";
-import { DeleteRoomImageUseCase } from "@useCases/room/deleteRoomImageUseCase";
+import { ICreateRoomVariantUseCase } from "@application/interfaces/useCase/roomVariant/createRoomVariantUseCase.interface";
+import { CreateRoomVariantUseCase } from "@useCases/roomVariant/createRoomVariantUseCase";
+import { IListRoomVariantsByHotelIdUseCase } from "@application/interfaces/useCase/roomVariant/listRoomVariantsByHotelIdUseCase.interface";
+import { ListRoomVariantsByHotelIdUseCase } from "@useCases/roomVariant/listRoomVariantsByHotelIdUseCase";
+import { IEditRoomVariantUseCase } from "@application/interfaces/useCase/roomVariant/editRoomVariantUseCase.interface";
+import { EditRoomVariantUseCase } from "@useCases/roomVariant/editRoomVariantUseCase";
+import { IGetRoomVariantByIdUseCase } from "@application/interfaces/useCase/roomVariant/getRoomVariantByIdUseCase.interface";
+import { GetRoomVariantByIdUseCase } from "@useCases/roomVariant/getRoomVariantByIdUseCase";
+import { IDeleteRoomVariantImageUseCase } from "@application/interfaces/useCase/roomVariant/deleteRoomVariantImageUseCase.interface";
+import { DeleteRoomVariantImageUseCase } from "@useCases/roomVariant/deleteRoomVariantImageUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -215,24 +215,24 @@ export function registerUsecases() {
     "IDeleteHotelImageUseCase",
     DeleteHotelImageUseCase,
   );
-  container.registerSingleton<ICreateRoomUseCase>(
-    "ICreateRoomUseCase",
-    CreateRoomUseCase,
+  container.registerSingleton<ICreateRoomVariantUseCase>(
+    "ICreateRoomVariantUseCase",
+    CreateRoomVariantUseCase,
   );
-  container.registerSingleton<IListRoomsByHotelIdUseCase>(
-    "IListRoomsByHotelIdUseCase",
-    ListRoomsByHotelIdUseCase,
+  container.registerSingleton<IListRoomVariantsByHotelIdUseCase>(
+    "IListRoomVariantsByHotelIdUseCase",
+    ListRoomVariantsByHotelIdUseCase,
   );
-  container.registerSingleton<IEditRoomUseCase>(
-    "IEditRoomUseCase",
-    EditRoomUseCase,
+  container.registerSingleton<IEditRoomVariantUseCase>(
+    "IEditRoomVariantUseCase",
+    EditRoomVariantUseCase,
   );
-  container.registerSingleton<IGetRoomByIdUseCase>(
-    "IGetRoomByIdUseCase",
-    GetRoomByIdUseCase,
+  container.registerSingleton<IGetRoomVariantByIdUseCase>(
+    "IGetRoomVariantByIdUseCase",
+    GetRoomVariantByIdUseCase,
   );
-  container.registerSingleton<IDeleteRoomImageUseCase>(
-    "IDeleteRoomImageUseCase",
-    DeleteRoomImageUseCase,
+  container.registerSingleton<IDeleteRoomVariantImageUseCase>(
+    "IDeleteRoomVariantImageUseCase",
+    DeleteRoomVariantImageUseCase,
   );
 }

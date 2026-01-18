@@ -35,7 +35,10 @@
         "editHotel": "Edit Hotel",
         "addNewRoom": "Add New Room",
         "editRoom": "Edit Room",
-        "editRoomSubtitle": "Update the details for this room listing"
+        "editRoomSubtitle": "Update the details for this room listing",
+        "addNewRoomVariant": "Add New Room Variant",
+        "editRoomVariant": "Edit Room Variant",
+        "editRoomVariantSubtitle": "Update the details for this room variant listing"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -55,7 +58,8 @@
         "occupancyBedding": "Occupancy & Bedding",
         "pricingStatus": "Pricing & Status",
         "amenitiesPolicies": "Amenities & Policies",
-        "rooms": "Rooms"
+        "rooms": "Rooms",
+        "roomVariants": "Room Variants"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -242,7 +246,10 @@
         "saving": "Saving...",
         "addRoom": "ADD ROOM",
         "viewDetails": "View Details",
-        "updateRoom": "Update Room"
+        "updateRoom": "Update Room",
+        "saveRoomVariant": "Save Room Variant",
+        "addRoomVariant": "ADD ROOM VARIANT",
+        "updateRoomVariant": "Update Room Variant"
     },
     "activities": {
         "HIKING": "Hiking",

@@ -130,5 +130,14 @@
   "roomCreatedSuccessfully": "कमरा सफलतापूर्वक बनाया गया",
   "roomFetchedSuccessfully": "कमरा सफलतापूर्वक प्राप्त किया गया",
   "roomUpdatedSuccessfully": "कमरा सफलतापूर्वक अपडेट किया गया",
+  "roomImageDeletedSuccessfully": "कमरे की छवि सफलतापूर्वक हटा दी गई",
+  "roomVariantAlreadyExists": "इस नाम या कोड वाला कमरा वैरिएंट पहले से मौजूद है",
+  "roomVariantNotFound": "कमरा वैरिएंट नहीं मिला",
+  "roomVariantIdMissingOrInvalid": "कमरा वैरिएंट आईडी गायब है या अमान्य है",
+  "roomVariantCreatedSuccessfully": "कमरा वैरिएंट सफलतापूर्वक बनाया गया",
+  "roomVariantFetchedSuccessfully": "कमरा वैरिएंट सफलतापूर्वक प्राप्त किया गया",
+  "roomVariantUpdatedSuccessfully": "कमरा वैरिएंट सफलतापूर्वक अपडेट किया गया",
+  "roomVariantImageDeletedSuccessfully": "कमरा वैरिएंट की छवि सफलतापूर्वक हटा दी गई",
   "statusMissingOrInvalid": "स्थिति गायब है या अमान्य है"
 }
+

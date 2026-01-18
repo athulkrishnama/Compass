@@ -103,5 +103,8 @@ export enum INTERNAL_ERROR_MESSAGES {
   ROOM_ALREADY_EXISTS = "roomAlreadyExists",
   ROOM_NOT_FOUND = "roomNotFound",
   ROOM_ID_MISSING_OR_INVALID = "roomIdMissingOrInvalid",
+  ROOM_VARIANT_ALREADY_EXISTS = "roomVariantAlreadyExists",
+  ROOM_VARIANT_NOT_FOUND = "roomVariantNotFound",
+  ROOM_VARIANT_ID_MISSING_OR_INVALID = "roomVariantIdMissingOrInvalid",
   STATUS_MISSING_OR_INVALID = "statusMissingOrInvalid",
 }

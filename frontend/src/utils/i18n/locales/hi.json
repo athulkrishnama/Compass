@@ -30,7 +30,13 @@
         "editDestinationSubtitle": "इस गंतव्य सूची के लिए विवरण अपडेट करें",
         "hotelManagement": "होटल प्रबंधन",
         "noPropertiesFound": "कोई संपत्ति नहीं मिली",
-        "editHotel": "होटल संपादित करें"
+        "editHotel": "होटल संपादित करें",
+        "addNewRoom": "नया कमरा जोड़ें",
+        "editRoom": "कमरा संपादित करें",
+        "editRoomSubtitle": "इस कमरे की सूची के लिए विवरण अपडेट करें",
+        "addNewRoomVariant": "नया रूम वैरिएंट जोड़ें",
+        "editRoomVariant": "रूम वैरिएंट संपादित करें",
+        "editRoomVariantSubtitle": "इस रूम वैरिएंट सूची के लिए विवरण अपडेट करें"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -45,7 +51,13 @@
         "addressLocation": "पता और स्थान",
         "generalInformation": "सामान्य जानकारी",
         "locationAddress": "स्थान और पता",
-        "propertyGallery": "संपत्ति छवि गैलरी"
+        "propertyGallery": "संपत्ति छवि गैलरी",
+        "basicRoomInfo": "कमरे की बुनियादी जानकारी",
+        "occupancyBedding": "अधिभोग और बिस्तर",
+        "pricingStatus": "मूल्य निर्धारण और स्थिति",
+        "amenitiesPolicies": "सुविधाएं और नीतियां",
+        "rooms": "कमरे",
+        "roomVariants": "रूम वैरिएंट"
     },
     "errors": {
         "minChar": "न्यूनतम {{count}} अक्षर आवश्यक हैं",
@@ -269,7 +281,15 @@
         "loadMoreProperties": "अधिक संपत्तियां लोड करें",
         "updateHotel": "होटल अपडेट करें",
         "changeImage": "छवि बदलें",
-        "editHotel": "होटल संपादित करें"
+        "editHotel": "होटल संपादित करें",
+        "saveRoom": "कमरा सहेजें",
+        "saving": "सहेजा जा रहा है...",
+        "addRoom": "कमरा जोड़ें",
+        "viewDetails": "विवरण देखें",
+        "updateRoom": "कमरा अपडेट करें",
+        "saveRoomVariant": "रूम वैरिएंट सहेजें",
+        "addRoomVariant": "रूम वैरिएंट जोड़ें",
+        "updateRoomVariant": "रूम वैरिएंट अपडेट करें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",

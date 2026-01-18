@@ -7,8 +7,8 @@ import { IDestinationRepo } from "@application/interfaces/repository/destination
 import { DestinationRepo } from "@infrastructure/repository/destination/destination.repo";
 import { HotelRepo } from "@infrastructure/repository/hotel/hotel.repo";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
-import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
-import { RoomRepo } from "@infrastructure/repository/room/room.repo";
+import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
+import { RoomVariantRepo } from "@infrastructure/repository/roomVariant/roomVariant.repo";
 
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
@@ -18,5 +18,8 @@ export function registerRepositories() {
     DestinationRepo,
   );
   container.registerSingleton<IHotelRepo>("IHotelRepo", HotelRepo);
-  container.registerSingleton<IRoomRepo>("IRoomRepo", RoomRepo);
+  container.registerSingleton<IRoomVariantRepo>(
+    "IRoomVariantRepo",
+    RoomVariantRepo,
+  );
 }
