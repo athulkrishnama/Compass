@@ -1,10 +1,12 @@
-import { Eye, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import type { IRoomInstance } from "@/types/api/responses/roomVariantDetailResponse";
 import AddRoomModal from "@/components/room/AddRoomModal";
+import EditRoomModal from "@/components/room/EditRoomModal";
 import Table from "@/components/shared/Table/Table";
 import { ROOM_STATUS_WITH_ICON_AND_TRANSLATION } from "@/constants/roomConstants/roomStatusWithIconAndTranslation";
+import { useState } from "react";
 
 interface RoomInstancesSectionProps {
     hotelId: string;
@@ -18,6 +20,15 @@ export default function RoomInstancesSection({
     rooms,
 }: RoomInstancesSectionProps) {
     const { t } = useTranslation();
+    const [editingRoom, setEditingRoom] = useState<IRoomInstance | null>(null);
+
+    const handleEdit = (room: IRoomInstance) => {
+        setEditingRoom(room);
+    };
+
+    const closeEditModal = () => {
+        setEditingRoom(null);
+    };
 
     const getStatusBadge = (status: string) => {
         const config = ROOM_STATUS_WITH_ICON_AND_TRANSLATION.find(
@@ -79,17 +90,12 @@ export default function RoomInstancesSection({
         {
             id: "actions",
             label: t(translationKey.tableHeaders.actions),
-            render: () => (
+            render: (room: IRoomInstance) => (
                 <div className="flex items-center gap-2">
                     <button
                         className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                        title={t(translationKey.button.view)}
-                    >
-                        <Eye className="w-4 h-4" />
-                    </button>
-                    <button
-                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                         title={t(translationKey.button.edit)}
+                        onClick={() => handleEdit(room)}
                     >
                         <Pencil className="w-4 h-4" />
                     </button>
@@ -116,6 +122,15 @@ export default function RoomInstancesSection({
                 data={rooms}
                 containerClassName="border-none shadow-none rounded-none"
             />
+
+            {editingRoom && (
+                <EditRoomModal
+                    isOpen={!!editingRoom}
+                    onClose={closeEditModal}
+                    room={editingRoom}
+                    roomVariantId={roomVariantId}
+                />
+            )}
         </div>
     );
 }

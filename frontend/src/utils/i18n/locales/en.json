@@ -41,6 +41,7 @@
         "editRoomVariantSubtitle": "Update the details for this room variant listing",
         "roomVariantDetails": "Room Variant Details",
         "addRoomInstance": "Add Room Instance",
+        "editRoomInstance": "Edit Room Instance",
         "addRoomInstanceSubtitle": "Configure the details for a new physical room unit to expand your property inventory"
     },
     "sections": {

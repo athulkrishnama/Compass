@@ -17,6 +17,12 @@ export class RoomRouter {
       authMiddleware.authorizeRole([ROLES.HOTEL]),
       roomController.handleCreateRoom,
     );
+    this._router.patch(
+      `${ROOM_ROUTES.INDEX}:id`,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      roomController.handleEditRoom,
+    );
   }
 
   getRouter() {

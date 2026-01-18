@@ -81,6 +81,8 @@ import { IDeleteRoomVariantImageUseCase } from "@application/interfaces/useCase/
 import { DeleteRoomVariantImageUseCase } from "@useCases/roomVariant/deleteRoomVariantImageUseCase";
 import { ICreateRoomUseCase } from "@application/interfaces/useCase/room/createRoomUseCase.interface";
 import { CreateRoomUseCase } from "@useCases/room/createRoomUseCase";
+import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
+import { EditRoomUseCase } from "@useCases/room/editRoomUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -240,5 +242,9 @@ export function registerUsecases() {
   container.registerSingleton<ICreateRoomUseCase>(
     "ICreateRoomUseCase",
     CreateRoomUseCase,
+  );
+  container.registerSingleton<IEditRoomUseCase>(
+    "IEditRoomUseCase",
+    EditRoomUseCase,
   );
 }

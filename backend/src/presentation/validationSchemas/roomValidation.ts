@@ -26,7 +26,23 @@ export const createRoomValidationSchema = z.object({
   floor: z.number({
     message: INTERNAL_ERROR_MESSAGES.FLOOR_MISSING_OR_INVALID,
   }),
-  status: z.nativeEnum(RoomVariantStatus, {
+  status: z.enum(RoomVariantStatus, {
     message: INTERNAL_ERROR_MESSAGES.STATUS_MISSING_OR_INVALID,
   }),
+});
+
+export const editRoomValidationSchema = z.object({
+  id: z.string({
+    message: INTERNAL_ERROR_MESSAGES.ID_MISSING,
+  }),
+  userId: z.string({
+    message: INTERNAL_ERROR_MESSAGES.USER_ID_MISSING_OR_INVALID,
+  }),
+  roomCode: z
+    .string()
+    .min(1, { message: INTERNAL_ERROR_MESSAGES.ROOM_CODE_MISSING_OR_INVALID })
+    .max(255)
+    .optional(),
+  floor: z.number().optional(),
+  status: z.enum(RoomVariantStatus).optional(),
 });

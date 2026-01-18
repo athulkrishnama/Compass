@@ -41,6 +41,7 @@ export default {
         editRoomVariantSubtitle: "headings.editRoomVariantSubtitle",
         roomVariantDetails: "headings.roomVariantDetails",
         addRoomInstance: "headings.addRoomInstance",
+        editRoomInstance: "headings.editRoomInstance",
         addRoomInstanceSubtitle: "headings.addRoomInstanceSubtitle",
     },
     sections: {

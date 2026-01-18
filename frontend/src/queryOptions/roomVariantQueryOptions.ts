@@ -1,3 +1,4 @@
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
     createRoomVariant,
     deleteRoomVariantImage,
@@ -22,14 +23,14 @@ export function createRoomVariantMutationOptions() {
 
 export function createGetRoomVariantByHotelIdQueryOptions(hotelId: string) {
     return queryOptions<HttpResponse<IRoomVariantListingResponse>>({
-        queryKey: ["roomVariants", hotelId],
+        queryKey: [QUERY_KEYS.ROOM_VARIANT, hotelId],
         queryFn: () => getRoomVariantByHotelId(hotelId),
     });
 }
 
 export function createGetRoomVariantByIdQueryOptions(roomVariantId: string) {
     return queryOptions<HttpResponse<IRoomVariantDetailResponse>>({
-        queryKey: ["roomVariant", roomVariantId],
+        queryKey: [QUERY_KEYS.ROOM_VARIANT, roomVariantId],
         queryFn: () => getRoomVariantById(roomVariantId),
     });
 }

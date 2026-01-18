@@ -10,9 +10,30 @@ export interface CreateRoomData {
     status: string;
 }
 
+export interface EditRoomData {
+    roomCode?: string;
+    floor?: number;
+    status?: string;
+}
+
 export async function createRoom(data: CreateRoomData) {
     try {
         const response = await axiosInstance.post(ROOM_ROUTES.INDEX, data);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function editRoom(roomId: string, data: EditRoomData) {
+    try {
+        const response = await axiosInstance.patch(
+            `${ROOM_ROUTES.INDEX}/${roomId}`,
+            data
+        );
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
