@@ -395,5 +395,26 @@
         "occupied": "व्याप्त",
         "repair": "रखरखाव",
         "blocked": "अवरुद्ध"
+    },
+    "destinationDetail": {
+        "backToExplore": "एक्सप्लोर पर वापस",
+        "theExperience": "अनुभव",
+        "entryFee": "प्रवेश शुल्क",
+        "day": "दिन",
+        "visitingHours": "दर्शन का समय",
+        "open24Hours": "24 घंटे खुला",
+        "bestVisitBetween": "सुबह 6:00 - शाम 6:00 के बीच सबसे अच्छा समय",
+        "closedDays": "बंद दिन",
+        "none": "कोई नहीं",
+        "location": "स्थान",
+        "wheelchairAccessible": "व्हीलचेयर सुलभ",
+        "bookExperience": "अनुभव बुक करें",
+        "quoteText": "पहाड़ बुला रहे हैं और मुझे जाना होगा।",
+        "bestTimeToVisit": "घूमने का सबसे अच्छा समय",
+        "weatherNote": "रंग आदर्श मौसम की स्थिति दर्शाता है",
+        "curatedActivities": "क्यूरेटेड गतिविधियां",
+        "photoGallery": "फोटो गैलरी",
+        "rightsReserved": "सभी अधिकार सुरक्षित",
+        "openInMaps": "मैप में खोलें"
     }
 }

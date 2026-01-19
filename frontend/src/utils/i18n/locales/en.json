@@ -457,5 +457,26 @@
         "occupied": "Occupied",
         "repair": "Maintenance",
         "blocked": "Blocked"
+    },
+    "destinationDetail": {
+        "backToExplore": "Back to Explore",
+        "theExperience": "The Experience",
+        "entryFee": "Entry Fee",
+        "day": "day",
+        "visitingHours": "Visiting Hours",
+        "open24Hours": "Open 24 Hours",
+        "bestVisitBetween": "Best visited between 6:00 AM - 6:00 PM for optimal lighting",
+        "closedDays": "Closed Days",
+        "none": "None",
+        "location": "Location",
+        "wheelchairAccessible": "Wheelchair Accessible",
+        "bookExperience": "Book Experience",
+        "quoteText": "The mountains are calling and I must go.",
+        "bestTimeToVisit": "Best Time to Visit",
+        "weatherNote": "Color indicates ideal weather conditions",
+        "curatedActivities": "Curated Activities",
+        "photoGallery": "Photo Gallery",
+        "rightsReserved": "All rights reserved",
+        "openInMaps": "Open in Maps"
     }
 }

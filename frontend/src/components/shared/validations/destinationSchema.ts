@@ -5,7 +5,6 @@ import { DESTINATION_TYPES } from "@/constants/destinationConstants/destinationT
 import { ACTIVITY_TYPE } from "@/constants/destinationConstants/activityType";
 import { MONTH } from "@/constants/destinationConstants/months";
 import { WEEKDAY } from "@/constants/destinationConstants/weekdays";
-import { CURRENCY } from "@/constants/destinationConstants/currency";
 
 const destinationTypes = Object.values(DESTINATION_TYPES) as [
     string,
@@ -14,7 +13,6 @@ const destinationTypes = Object.values(DESTINATION_TYPES) as [
 const activityTypes = Object.values(ACTIVITY_TYPE) as [string, ...string[]];
 const months = Object.values(MONTH) as [string, ...string[]];
 const weekdays = Object.values(WEEKDAY) as [string, ...string[]];
-const currencies = Object.values(CURRENCY) as [string, ...string[]];
 
 export const createDestinationValidationSchema = () => {
     return z
@@ -56,7 +54,6 @@ export const createDestinationValidationSchema = () => {
             wheelchairAccessible: z.boolean().default(false),
             isFree: z.boolean().default(true),
             entryFeeAmount: z.number().min(0).optional(),
-            entryFeeCurrency: z.enum(currencies).optional(),
         })
         .refine(
             (data) => {

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { IFindDestinationsResponse } from "@/types/api/responses/findDestinationAdminResponse";
 import { destinationTypeIcons } from "@/constants/destinationConstants/destinationTypeIcons";
-import { currencyIcons } from "@/constants/destinationConstants/currencyIcons";
 import translationKey from "@/utils/i18n/translationKey";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -101,14 +100,10 @@ function DestinationsTable({
                                     </Badge>
                                 );
                             }
-                            const CurrencyIcon = currencyIcons[row.currency];
                             return (
-                                <div className="flex items-center gap-1 text-gray-800">
-                                    {CurrencyIcon && (
-                                        <CurrencyIcon className="w-4 h-4" />
-                                    )}
-                                    <span>{row.entryFee.toFixed(2)}</span>
-                                </div>
+                                <span className="text-gray-800">
+                                    {row.entryFee.toFixed(2)}
+                                </span>
                             );
                         },
                     },
