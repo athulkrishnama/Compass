@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
 import { MapPin, ExternalLink } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { env } from "@/config/env";
+import translationKey from "@/utils/i18n/translationKey";
 
 interface DestinationMapSectionProps {
     coordinates: [number, number];
 }
 
 function DestinationMapSection({ coordinates }: DestinationMapSectionProps) {
+    const { t } = useTranslation();
     const [lat, lng] = coordinates;
 
     const formatCoordinate = (value: number, isLatitude: boolean) => {
@@ -60,7 +63,7 @@ function DestinationMapSection({ coordinates }: DestinationMapSectionProps) {
                         className="bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-lg"
                     >
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Open in Maps
+                        {t(translationKey.destinationDetail.openInMaps)}
                     </Button>
                 </div>
             </div>
