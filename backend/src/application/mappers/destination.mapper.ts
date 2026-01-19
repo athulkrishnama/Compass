@@ -33,7 +33,6 @@ export class DestinationMapper {
       isActive: true,
 
       entryFee: data.entryFee,
-      currency: data.currency,
 
       openingTime: data.openingTime,
       closingTime: data.closingTime,
@@ -64,7 +63,6 @@ export class DestinationMapper {
           isActive: entity.isActive,
 
           entryFee: entity.entryFee,
-          currency: entity.currency,
         };
       }),
     };
@@ -98,7 +96,6 @@ export class DestinationMapper {
       isActive: entity.isActive,
 
       entryFee: entity.entryFee,
-      currency: entity.currency,
 
       openingTime: entity.openingTime,
       closingTime: entity.closingTime,
@@ -136,7 +133,6 @@ export class DestinationMapper {
           isActive: entity.isActive,
 
           entryFee: entity.entryFee,
-          currency: entity.currency,
 
           openingTime: entity.openingTime,
           closingTime: entity.closingTime,

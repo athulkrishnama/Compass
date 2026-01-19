@@ -1,5 +1,4 @@
 import { ACTIVITY_TYPE } from "@domain/enums/activityType";
-import { CURRENCY } from "@domain/enums/currency";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 import { MONTH } from "@domain/enums/months";
 import { WEEKDAY } from "@domain/enums/weekdays";
@@ -28,7 +27,6 @@ export interface IDestinationDocument extends Document {
   isAlwaysOpen: boolean;
 
   entryFee?: number;
-  currency?: CURRENCY;
 
   openingTime?: string;
   closingTime?: string;
@@ -113,11 +111,6 @@ export const destinationSchema = new Schema<IDestinationDocument>({
 
   entryFee: {
     type: Number,
-    required: false,
-  },
-  currency: {
-    type: String,
-    enum: Object.values(CURRENCY),
     required: false,
   },
   openingTime: {

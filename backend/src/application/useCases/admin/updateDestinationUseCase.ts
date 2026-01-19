@@ -68,8 +68,6 @@ export class UpdateDestinationUseCase implements IUpdateDestinationUseCase {
     if (typeof requestDto.isActive !== "undefined")
       destination.isActive = requestDto.isActive;
 
-    if (typeof requestDto.currency !== "undefined")
-      destination.currency = requestDto.currency;
     if (typeof requestDto.openingTime !== "undefined")
       destination.openingTime = requestDto.openingTime;
     if (typeof requestDto.closingTime !== "undefined")

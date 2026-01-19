@@ -172,7 +172,6 @@ export class DestinationRepo
       isFree: entity.isFree,
 
       entryFee: entity.entryFee,
-      currency: entity.currency,
       openingTime: entity.openingTime,
       closingTime: entity.closingTime,
       closedDays: entity.closedDays,
@@ -209,7 +208,6 @@ export class DestinationRepo
       isFree: doc.isFree,
 
       entryFee: doc.entryFee,
-      currency: doc.currency,
       openingTime: doc.openingTime,
       closingTime: doc.closingTime,
       closedDays: doc.closedDays,
