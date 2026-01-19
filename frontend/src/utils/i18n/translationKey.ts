@@ -258,6 +258,7 @@ export default {
         addRoomVariant: "button.addRoomVariant",
         updateRoomVariant: "button.updateRoomVariant",
         createInstance: "button.createInstance",
+        destinations: "button.destinations",
         viewRoomVariant: "button.viewRoomVariant",
     },
     activities: {

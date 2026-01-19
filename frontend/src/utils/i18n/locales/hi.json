@@ -295,7 +295,8 @@
         "addRoomVariant": "रूम वैरिएंट जोड़ें",
         "updateRoomVariant": "रूम वैरिएंट अपडेट करें",
         "createInstance": "इंस्टेंस बनाएं",
-        "viewRoomVariant": "रूम वैरिएंट देखें"
+        "viewRoomVariant": "रूम वैरिएंट देखें",
+        "destinations": "गंतव्य"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",

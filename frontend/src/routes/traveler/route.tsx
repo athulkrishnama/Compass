@@ -33,6 +33,10 @@ function RouteComponent() {
     const routes = [
         { name: t(translationKey.button.home), route: "/traveler" },
         {
+            name: t(translationKey.button.destinations),
+            route: "/traveler/destinations",
+        },
+        {
             name: t(translationKey.button.bookings),
             route: "/traveler/bookings",
         },

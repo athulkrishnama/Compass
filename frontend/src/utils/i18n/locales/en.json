@@ -256,7 +256,8 @@
         "addRoomVariant": "ADD ROOM VARIANT",
         "updateRoomVariant": "Update Room Variant",
         "createInstance": "Create Instance",
-        "viewRoomVariant": "View Room Variant"
+        "viewRoomVariant": "View Room Variant",
+        "destinations": "Destinations"
     },
     "activities": {
         "HIKING": "Hiking",

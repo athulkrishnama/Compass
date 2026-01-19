@@ -1,5 +1,4 @@
 import type { ACTIVITY_TYPE } from "@/constants/destinationConstants/activityType";
-import type { CURRENCY } from "@/constants/destinationConstants/currency";
 import type { DESTINATION_TYPES } from "@/constants/destinationConstants/destinationType";
 import type { MONTH } from "@/constants/destinationConstants/months";
 import type { WEEKDAY } from "@/constants/destinationConstants/weekdays";
@@ -27,7 +26,6 @@ export interface IFindDestinationResponseDTO {
     isAlwaysOpen: boolean;
 
     entryFee?: number;
-    currency?: CURRENCY;
 
     openingTime?: string;
     closingTime?: string;
