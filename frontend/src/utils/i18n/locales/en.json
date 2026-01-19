@@ -414,7 +414,16 @@
         "baseOccupancy": "Base Occ.",
         "maxOccupancy": "Max Occ.",
         "bedding": "Bedding",
-        "configureRoomDetails": "Configure the details for a new physical room unit to expand your property inventory."
+        "configureRoomDetails": "Configure the details for a new physical room unit to expand your property inventory.",
+        "allActivities": "All Activities",
+        "priceRange": "Price Range (₹)",
+        "minPrice": "Min",
+        "maxPrice": "Max",
+        "proximityRadius": "Proximity Radius",
+        "cityHubSearch": "City Hub Search",
+        "enterCityName": "Enter city name...",
+        "loadingMoreDestinations": "Loading more destinations...",
+        "noMoreDestinations": "You've reached the end"
     },
     "tableHeaders": {
         "destination": "DESTINATION",

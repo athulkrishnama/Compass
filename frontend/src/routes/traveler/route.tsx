@@ -48,9 +48,9 @@ function RouteComponent() {
             ].includes(pathname) ? (
                 <Outlet />
             ) : (
-                <div className="h-full w-full flex flex-col">
+                <div className="h-full max-h-screen w-full flex flex-col">
                     <Navbar routes={routes} logoutRoute="/traveler/login" />
-                    <div className="grow">
+                    <div className="grow overflow-y-auto hide-scroll-bar">
                         <Outlet />
                     </div>
                 </div>
