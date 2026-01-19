@@ -16,10 +16,16 @@ export const Route = createFileRoute("/traveler")({
             "/traveler/login",
             "/traveler/signup",
             "/traveler/forgetPassword",
+            "/traveler/destinations",
         ];
+
+        const isAllowedRoute =
+            allowedRoutes.includes(location.pathname as keyof FileRoutesByTo) ||
+            location.pathname.startsWith("/traveler/destination/");
+
         if (
             (!context.isLoggedin() || !context.checkRole(ROLES.TRAVELER)) &&
-            !allowedRoutes.includes(location.pathname as keyof FileRoutesByTo)
+            !isAllowedRoute
         ) {
             throw redirect({ to: "/traveler/login", replace: true });
         }
@@ -43,13 +49,20 @@ function RouteComponent() {
         { name: t(translationKey.button.history), route: "/traveler/history" },
         { name: t(translationKey.button.profile), route: "/traveler/profile" },
     ];
+
+    // Routes that should not show the navbar
+    const noNavbarRoutes = [
+        "/traveler/login",
+        "/traveler/signup",
+        "/traveler/forgetPassword",
+    ];
+    const hideNavbar =
+        noNavbarRoutes.includes(pathname) ||
+        pathname.startsWith("/traveler/destination/");
+
     return (
         <div className="h-full w-full">
-            {[
-                "/traveler/login",
-                "/traveler/signup",
-                "/traveler/forgetPassword",
-            ].includes(pathname) ? (
+            {hideNavbar ? (
                 <Outlet />
             ) : (
                 <div className="h-full max-h-screen w-full flex flex-col">
