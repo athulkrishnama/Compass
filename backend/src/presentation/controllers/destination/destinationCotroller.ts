@@ -4,6 +4,7 @@ import { IDeleteDestinationImageUseCase } from "@application/interfaces/useCase/
 import { IFindDestinationByIdUseCase } from "@application/interfaces/useCase/admin/findDestinationByIdUseCase.interface";
 import { IListDestinationsUseCase } from "@application/interfaces/useCase/admin/ListDestinationsUseCase.interface";
 import { IUpdateDestinationUseCase } from "@application/interfaces/useCase/admin/updateDestinationUseCase.interface";
+import { IGetDestinationUseCase } from "@application/interfaces/useCase/destination/getDestinationUseCase.interface";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
@@ -15,6 +16,7 @@ import {
   listDestinationsValidationSchema,
   updateDestinationValidationSchema,
 } from "@presentation/validationSchemas/adminValidation";
+import { getDestinationValidationSchema } from "@presentation/validationSchemas/destinationValidation";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 
@@ -31,6 +33,8 @@ export class DestinationController {
     private _findDestinationByIdUseCase: IFindDestinationByIdUseCase,
     @inject("IDeleteDestinationImageUseCase")
     private _deleteDestinationImageUseCase: IDeleteDestinationImageUseCase,
+    @inject("IGetDestinationUseCase")
+    private _getDestinationUseCase: IGetDestinationUseCase,
   ) {}
   async handleCreateDestination(
     req: Request,
@@ -181,6 +185,27 @@ export class DestinationController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.DESTINATION_IMAGE_DELETED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetDestination(req: Request, res: Response, next: NextFunction) {
+    try {
+      const query = getDestinationValidationSchema.safeParse(req.query);
+      if (query.error) {
+        throw new InvalideDataException(query.error.issues[0].message);
+      }
+
+      const data = await this._getDestinationUseCase.execute(query.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        data,
       );
     } catch (error) {
       next(error);

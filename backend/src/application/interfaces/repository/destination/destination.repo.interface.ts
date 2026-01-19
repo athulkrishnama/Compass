@@ -2,6 +2,7 @@ import { DestinationEntity } from "@domain/entities/destination/destination";
 import { IBaseRepository } from "../base/base.repo.interface";
 import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destinationSchema";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
+import { ACTIVITY_TYPE } from "@domain/enums/activityType";
 
 export interface IDestinationRepo
   extends IBaseRepository<DestinationEntity, IDestinationDocument> {
@@ -16,5 +17,19 @@ export interface IDestinationRepo
     totalDestinations: number;
     pageNo: number;
     totalPages: number;
+  }>;
+
+  advancedFindByQuery(filter: {
+    pageNo: number;
+    queryString?: string;
+    type?: DESTINATION_TYPES[];
+    activities?: ACTIVITY_TYPE[];
+    isActive?: boolean;
+    minPrice?: number;
+    maxPrice?: number;
+    city?: [number, number];
+    proximityRadius?: number;
+  }): Promise<{
+    destinations: DestinationEntity[];
   }>;
 }

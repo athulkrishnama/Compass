@@ -1,6 +1,7 @@
 import { ICreateDestinationRequestDTO } from "@domain/dtos/admin/createDestination.dto";
 import { IFindDestinationByIdResponseDto } from "@domain/dtos/admin/findDestinationById.dto";
 import { IListDestinationResponseDTO } from "@domain/dtos/admin/listDestinations.dto";
+import { IGetDestinationResponseDTO } from "@domain/dtos/destination/getDestination.dto";
 import { DestinationEntity } from "@domain/entities/destination/destination";
 
 export class DestinationMapper {
@@ -102,6 +103,46 @@ export class DestinationMapper {
       openingTime: entity.openingTime,
       closingTime: entity.closingTime,
       closedDays: entity.closedDays,
+    };
+  }
+
+  static toGetDestinationResponseDTOfromEntity(
+    entities: DestinationEntity[],
+    pageCount: number,
+  ): IGetDestinationResponseDTO {
+    return {
+      page: pageCount,
+      destinations: entities.map((entity) => {
+        return {
+          id: entity._id!,
+          name: entity.name,
+          tagline: entity.tagline,
+          description: entity.description,
+          coverImage: entity.coverImage,
+          images: entity.images,
+
+          country: entity.country,
+          city: entity.city,
+          pincode: entity.pincode,
+          coordinates: entity.coordinates,
+
+          type: entity.type,
+          activities: entity.activities,
+          bestTimeToVisit: entity.bestTimeToVisit,
+
+          isWheelChairAccessible: entity.isWheelChairAccessible,
+          isFree: entity.isFree,
+          isAlwaysOpen: entity.isAlwaysOpen,
+          isActive: entity.isActive,
+
+          entryFee: entity.entryFee,
+          currency: entity.currency,
+
+          openingTime: entity.openingTime,
+          closingTime: entity.closingTime,
+          closedDays: entity.closedDays,
+        };
+      }),
     };
   }
 }
