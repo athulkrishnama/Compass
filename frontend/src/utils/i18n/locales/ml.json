@@ -30,7 +30,16 @@
         "editDestinationSubtitle": "ഈ ലക്ഷ്യസ്ഥാന ലിസ്റ്റിംഗിന്റെ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക",
         "hotelManagement": "ഹോട്ടൽ മാനേജ്‌മെന്റ്",
         "noPropertiesFound": "പ്രോപ്പർട്ടികൾ ഒന്നും കണ്ടെത്തിയില്ല",
-        "editHotel": "ഹോട്ടൽ എഡിറ്റ് ചെയ്യുക"
+        "editHotel": "ഹോട്ടൽ എഡിറ്റ് ചെയ്യുക",
+        "addNewRoom": "പുതിയ മുറി ചേർക്കുക",
+        "editRoom": "മുറി എഡിറ്റ് ചെയ്യുക",
+        "editRoomSubtitle": "ഈ മുറി ലിസ്റ്റിംഗിന്റെ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക",
+        "addNewRoomVariant": "പുതിയ റൂം വെരിയന്റ് ചേർക്കുക",
+        "editRoomVariant": "റൂം വെരിയന്റ് എഡിറ്റ് ചെയ്യുക",
+        "editRoomVariantSubtitle": "ഈ റൂം വെരിയന്റ് ലിസ്റ്റിംഗിന്റെ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക",
+        "roomVariantDetails": "റൂം വെരിയന്റ് വിശദാംശങ്ങൾ",
+        "addRoomInstance": "മുറി ഇൻസ്റൻസ് ചേർക്കുക",
+        "addRoomInstanceSubtitle": "നിങ്ങളുടെ പ്രോപ്പർട്ടി സൂചി വിസ്തരിക്കാൻ പുതിയ ഭൗതിക മുറി ഇക്കയുടെ വിശദാംശങ്ങൾ കോൺഫിഗർ ചെയ്യുക"
     },
     "sections": {
         "basicInformation": "അടിസ്ഥാന വിവരങ്ങൾ",
@@ -45,7 +54,13 @@
         "addressLocation": "വിലാസം & സ്ഥലം",
         "generalInformation": "സാമാന്യ വിവരങ്ങൾ",
         "locationAddress": "സ്ഥലം & വിലാസം",
-        "propertyGallery": "പ്രോപ്പർട്ടി ചിത്ര ഗാലറി"
+        "propertyGallery": "പ്രോപ്പർട്ടി ചിത്ര ഗാലറി",
+        "basicRoomInfo": "മുറിയുടെ അടിസ്ഥാന വിവരങ്ങൾ",
+        "occupancyBedding": "അധിഭോഗവും കിടക്കയും",
+        "pricingStatus": "വില നിർണ്ണയവും നിലയും",
+        "amenitiesPolicies": "സൗകര്യങ്ങളും നയങ്ങളും",
+        "rooms": "മുറികൾ",
+        "roomVariants": "റൂം വെരിയന്റുകൾ"
     },
     "errors": {
         "minChar": "കുറഞ്ഞത് {{count}} അക്ഷരങ്ങൾ ആവശ്യമാണ്",
@@ -84,7 +99,8 @@
         "coordinatesRequired": "ദയവായി തിരയലിൽ നിന്ന് ഒരു സ്ഥലം തിരഞ്ഞെടുക്കുക",
         "minImagesRequired": "കുറഞ്ഞത് {{count}} ചിത്രങ്ങളെങ്കിലും ആവശ്യമാണ്",
         "destinationTypeRequired": "ദയവായി ഒരു ലക്ഷ്യസ്ഥാന തരം തിരഞ്ഞെടുക്കുക",
-        "closingTimeAfterOpeningTime": "അവസാന സമയം തുറക്കുന്ന സമയത്തിന് ശേഷമായിരിക്കണം"
+        "closingTimeAfterOpeningTime": "അവസാന സമയം തുറക്കുന്ന സമയത്തിന് ശേഷമായിരിക്കണം",
+        "floorNumberRequired": "ഫ്ലോർ നമ്പർ ആവശ്യമാണ്"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -269,7 +285,17 @@
         "loadMoreProperties": "കൂടുതൽ പ്രോപ്പർട്ടികൾ കാണുക",
         "updateHotel": "ഹോട്ടൽ അപ്ഡേറ്റ് ചെയ്യുക",
         "changeImage": "ചിത്രം മാറ്റുക",
-        "editHotel": "ഹോട്ടൽ എഡിറ്റ് ചെയ്യുക"
+        "editHotel": "ഹോട്ടൽ എഡിറ്റ് ചെയ്യുക",
+        "saveRoom": "മുറി സേവ് ചെയ്യുക",
+        "saving": "സേവ് ചെയ്യുന്നു...",
+        "addRoom": "മുറി ചേർക്കുക",
+        "viewDetails": "വിശദാംശങ്ങൾ കാണുക",
+        "updateRoom": "മുറി അപ്ഡേറ്റ് ചെയ്യുക",
+        "saveRoomVariant": "റൂം വെരിയന്റ് സേവ് ചെയ്യുക",
+        "addRoomVariant": "റൂം വെരിയന്റ് ചേർക്കുക",
+        "updateRoomVariant": "റൂം വെരിയന്റ് അപ്ഡേറ്റ് ചെയ്യുക",
+        "createInstance": "ഇൻസ്റൻസ് സൃഷ്ടിക്കുക",
+        "viewRoomVariant": "റൂം വെരിയന്റ് കാണുക"
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -340,12 +366,33 @@
         "fullAddress": "പൂർണ്ണ വിലാസം",
         "perNight": "/ രാത്രി",
         "basePrice": "അടിസ്ഥാന വില",
-        "noRoomsAdded": "ഇതുവരെ മുറികളൊന്നും ചേർത്തിട്ടില്ല."
+        "noRoomsAdded": "ഇതുവരെ മുറികളൊന്നും ചേർത്തിട്ടില്ല.",
+        "noRoomFound": "മുറി കണ്ടെത്തിയില്ല",
+        "roomInstances": "മുറി ഇൻസ്റൻസുകൾ",
+        "total": "ആകെ",
+        "showingInstancesOfTotal": "{{total}} ഇൻസ്റൻസുകളിൽ {{count}} എണ്ണം കാണിക്കുന്നു",
+        "floorNumber": "നില നമ്പർ",
+        "variantId": "വെരിയന്റ് ഐഡി",
+        "actions": "ക്രിയകൾ",
+        "currentStatus": "നിലവിലെ നില",
+        "baseOccupancy": "അടിസ്ഥാന അധിഭോഗം",
+        "maxOccupancy": "പരമാവധി അധിഭോഗം",
+        "bedding": "കിടക്ക",
+        "configureRoomDetails": "നിങ്ങളുടെ പ്രോപ്പർട്ടി സൂചി വിസ്തരിക്കാൻ പുതിയ ഭൗതിക മുറി ഇക്കയുടെ വിശദാംശങ്ങൾ കോൺഫിഗർ ചെയ്യുക."
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",
         "type": "തരം",
         "fee": "ഫീസ്",
-        "status": "നില"
+        "status": "നില",
+        "roomCode": "മുറി കോഡ്",
+        "floorNumber": "നില നമ്പർ",
+        "actions": "ക്രിയകൾ"
+    },
+    "roomStatus": {
+        "available": "ലഭ്യമാണ്",
+        "occupied": "അധിവസിച്ചിരിക്കുന്നു",
+        "repair": "പരിപാലനം",
+        "blocked": "തടഞ്ഞിരിക്കുന്നു"
     }
 }

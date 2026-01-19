@@ -1,36 +1,31 @@
 import {
+  ConflictException,
   InvalidOperationException,
   ResourceNotFoundException,
 } from "@application/constants/Exceptions";
-import { StorageFolderNames } from "@application/constants/storageFolderNames";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
-import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
-import { IEditRoomRequestDTO } from "@domain/dtos/room/editRoom.dto";
+import { IEditRoomRequestDTO } from "@domain/dtos/room/editroomDTO";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class EditRoomUseCase implements IEditRoomUseCase {
   constructor(
-    @inject("IRoomRepo")
-    private _roomRepository: IRoomRepo,
-    @inject("IStorageService")
-    private _storageService: IStorageService,
-    @inject("IHotelRepo")
-    private _hotelRepository: IHotelRepo,
+    @inject("IRoomRepo") private _roomRepo: IRoomRepo,
+    @inject("IHotelRepo") private _hotelRepo: IHotelRepo,
   ) {}
 
   async execute(data: IEditRoomRequestDTO): Promise<void> {
-    const room = await this._roomRepository.findById(data.roomId);
+    const room = await this._roomRepo.findById(data.id);
     if (!room) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.ROOM_NOT_FOUND,
       );
     }
 
-    const hotel = await this._hotelRepository.findById(room.hotelId);
+    const hotel = await this._hotelRepo.findById(room.hotelId);
     if (!hotel) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.HOTEL_NOT_FOUND,
@@ -43,42 +38,25 @@ export class EditRoomUseCase implements IEditRoomUseCase {
       );
     }
 
-    let coverImageUrl = room.coverImage;
-    if (data.coverImage) {
-      await this._storageService.delete(room.coverImage);
-      coverImageUrl = await this._storageService.upload(
-        data.coverImage,
-        `${StorageFolderNames.ROOM_COVER_IMAGE}/${Date.now()}`,
+    if (data.floor) {
+      room.floor = data.floor;
+    }
+    if (data.status) {
+      room.status = data.status;
+    }
+    if (data.roomCode) {
+      const existingRoomCode = await this._roomRepo.findRoomByVariantAndCode(
+        room.variantId,
+        data.roomCode,
       );
+      if (existingRoomCode && existingRoomCode._id !== room._id) {
+        throw new ConflictException(
+          INTERNAL_ERROR_MESSAGES.ROOM_ALREADY_EXISTS,
+        );
+      }
+      room.roomCode = data.roomCode;
     }
 
-    let galleryImages = room.images;
-    if (data.images && data.images.length > 0) {
-      const promises = data.images.map((img, i) =>
-        this._storageService.upload(
-          img,
-          `${StorageFolderNames.ROOM_IMAGE}/${Date.now()}-${i}`,
-        ),
-      );
-      const newImages = await Promise.all(promises);
-      galleryImages = [...room.images, ...newImages];
-    }
-
-    const updatedRoom = {
-      ...room,
-      name: data.name ?? room.name,
-      description: data.description ?? room.description,
-      baseOccupancy: data.baseOccupancy ?? room.baseOccupancy,
-      maxOccupancy: data.maxOccupancy ?? room.maxOccupancy,
-      bedConfig: data.bedConfig ?? room.bedConfig,
-      amenities: data.amenities ?? room.amenities,
-      policies: data.policies ?? room.policies,
-      basePrice: data.basePrice ?? room.basePrice,
-      coverImage: coverImageUrl,
-      images: galleryImages,
-      status: data.status ?? room.status,
-    };
-
-    await this._roomRepository.update(updatedRoom, data.roomId);
+    await this._roomRepo.update(room, room._id!);
   }
 }

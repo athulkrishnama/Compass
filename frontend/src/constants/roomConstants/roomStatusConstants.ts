@@ -1,0 +1,5 @@
+export enum ROOM_STATUS {
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE",
+    MAINTENANCE = "MAINTENANCE",
+}

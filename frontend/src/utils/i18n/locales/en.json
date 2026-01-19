@@ -35,7 +35,14 @@
         "editHotel": "Edit Hotel",
         "addNewRoom": "Add New Room",
         "editRoom": "Edit Room",
-        "editRoomSubtitle": "Update the details for this room listing"
+        "editRoomSubtitle": "Update the details for this room listing",
+        "addNewRoomVariant": "Add New Room Variant",
+        "editRoomVariant": "Edit Room Variant",
+        "editRoomVariantSubtitle": "Update the details for this room variant listing",
+        "roomVariantDetails": "Room Variant Details",
+        "addRoomInstance": "Add Room Instance",
+        "editRoomInstance": "Edit Room Instance",
+        "addRoomInstanceSubtitle": "Configure the details for a new physical room unit to expand your property inventory"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -55,7 +62,8 @@
         "occupancyBedding": "Occupancy & Bedding",
         "pricingStatus": "Pricing & Status",
         "amenitiesPolicies": "Amenities & Policies",
-        "rooms": "Rooms"
+        "rooms": "Rooms",
+        "roomVariants": "Room Variants"
     },
     "errors": {
         "minChar": "Minimum character limit is {{count}}",
@@ -110,7 +118,8 @@
         "basePriceRequired": "Base price is required",
         "statusRequired": "Please select a room status",
         "checkInTimeRequired": "Check-in time is required",
-        "checkOutTimeRequired": "Check-out time is required"
+        "checkOutTimeRequired": "Check-out time is required",
+        "floorNumberRequired": "Floor number is required"
     },
     "form": {
         "fullname": "Full Name",
@@ -242,7 +251,12 @@
         "saving": "Saving...",
         "addRoom": "ADD ROOM",
         "viewDetails": "View Details",
-        "updateRoom": "Update Room"
+        "updateRoom": "Update Room",
+        "saveRoomVariant": "Save Room Variant",
+        "addRoomVariant": "ADD ROOM VARIANT",
+        "updateRoomVariant": "Update Room Variant",
+        "createInstance": "Create Instance",
+        "viewRoomVariant": "View Room Variant"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -389,13 +403,27 @@
         "perNight": "/ night",
         "basePrice": "Base Price",
         "noRoomsAdded": "No rooms added yet.",
-        "noRoomFound": "Room not found"
+        "noRoomFound": "Room not found",
+        "roomInstances": "Room Instances",
+        "total": "Total",
+        "showingInstancesOfTotal": "Showing {{count}} of {{total}} instances",
+        "floorNumber": "Floor Number",
+        "variantId": "Variant ID",
+        "actions": "Actions",
+        "currentStatus": "Current Status",
+        "baseOccupancy": "Base Occ.",
+        "maxOccupancy": "Max Occ.",
+        "bedding": "Bedding",
+        "configureRoomDetails": "Configure the details for a new physical room unit to expand your property inventory."
     },
     "tableHeaders": {
         "destination": "DESTINATION",
         "type": "TYPE",
         "fee": "FEE",
-        "status": "STATUS"
+        "status": "STATUS",
+        "roomCode": "ROOM CODE",
+        "floorNumber": "FLOOR NUMBER",
+        "actions": "ACTIONS"
     },
     "room": {
         "bedTypeKing": "King Bed",
@@ -413,5 +441,11 @@
         "amenityMinibar": "Mini Bar",
         "amenityCoffee": "Coffee Machine",
         "amenitySafe": "In-room Safe"
+    },
+    "roomStatus": {
+        "available": "Available",
+        "occupied": "Occupied",
+        "repair": "Maintenance",
+        "blocked": "Blocked"
     }
 }

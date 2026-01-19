@@ -30,7 +30,16 @@
         "editDestinationSubtitle": "இந்த சேருமிடப் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
         "hotelManagement": "ஹோட்டல் மேலாண்மை",
         "noPropertiesFound": "பண்புகள் எதுவும் காணப்படவில்லை",
-        "editHotel": "ஹோட்டலை திருத்தவும்"
+        "editHotel": "ஹோட்டலை திருத்தவும்",
+        "addNewRoom": "புதிய அறையை சேர்க்கவும்",
+        "editRoom": "அறையை திருத்தவும்",
+        "editRoomSubtitle": "இந்த அறை பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
+        "addNewRoomVariant": "புதிய ரூம் வேரியன்ட் சேர்க்கவும்",
+        "editRoomVariant": "ரூம் வேரியன்ட் திருத்தவும்",
+        "editRoomVariantSubtitle": "இந்த ரூம் வேரியன்ட் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
+        "roomVariantDetails": "ரூம் வேரியன்ட் விவரங்கள்",
+        "addRoomInstance": "அறை இன்ஸ்டன்ஸ் சேர்க்கவும்",
+        "addRoomInstanceSubtitle": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்"
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -45,7 +54,13 @@
         "addressLocation": "முகவரி & இருப்பிடம்",
         "generalInformation": "பொதுவான தகவல்",
         "locationAddress": "இருப்பிடம் & முகவரி",
-        "propertyGallery": "சொத்து படக் காட்சியகம்"
+        "propertyGallery": "சொத்து படக் காட்சியகம்",
+        "basicRoomInfo": "அறையின் அடிப்படை தகவல்",
+        "occupancyBedding": "அதிபொகம் மற்றும் கிடக்கை",
+        "pricingStatus": "விலை நிர்ணயம் மற்றும் நிலை",
+        "amenitiesPolicies": "சேவைகள் மற்றும் கொள்கைகள்",
+        "rooms": "அறைகள்",
+        "roomVariants": "ரூம் வேரியன்ட்கள்"
     },
     "errors": {
         "minChar": "குறைந்தபட்ச எழுத்துகள் {{count}} தேவை",
@@ -84,7 +99,8 @@
         "coordinatesRequired": "தேடலிலிருந்து ஒரு இடத்தைத் தேர்ந்தெடுக்கவும்",
         "minImagesRequired": "குறைந்தது {{count}} படங்கள் தேவை",
         "destinationTypeRequired": "சேருமிட வகையைத் தேர்ந்தெடுக்கவும்",
-        "closingTimeAfterOpeningTime": "முடிவு நேரம் தொடக்க நேரத்திற்கு பிறகு இருக்க வேண்டும்"
+        "closingTimeAfterOpeningTime": "முடிவு நேரம் தொடக்க நேரத்திற்கு பிறகு இருக்க வேண்டும்",
+        "floorNumberRequired": "தள எண் தேவை"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -269,7 +285,17 @@
         "loadMoreProperties": "மேலும் பண்புகளை ஏற்றவும்",
         "updateHotel": "ஹோட்டலை புதுப்பிக்கவும்",
         "changeImage": "படத்தை மாற்றவும்",
-        "editHotel": "ஹோட்டலைத் திருத்தவும்"
+        "editHotel": "ஹோட்டலைத் திருத்தவும்",
+        "saveRoom": "அறையை சேமிக்கவும்",
+        "saving": "சேமிக்கப்படுகிறது...",
+        "addRoom": "அறையை சேர்க்கவும்",
+        "viewDetails": "விவரங்களை பார்க்கவும்",
+        "updateRoom": "அறையை புதுப்பிக்கவும்",
+        "saveRoomVariant": "ரூம் வேரியன்ட் சேமிக்கவும்",
+        "addRoomVariant": "ரூம் வேரியன்ட் சேர்க்கவும்",
+        "updateRoomVariant": "ரூம் வேரியன்ட் புதுப்பிக்கவும்",
+        "createInstance": "இன்ஸ்டன்ஸ் உருவாக்கவும்",
+        "viewRoomVariant": "ரூம் வேரியன்ட் பார்க்கவும்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",
@@ -340,12 +366,33 @@
         "fullAddress": "முழு முகவரி",
         "perNight": "/ இரவு",
         "basePrice": "அடிப்படை விலை",
-        "noRoomsAdded": "இன்னும் அறைகள் எதுவும் சேர்க்கப்படவில்லை."
+        "noRoomsAdded": "இன்னும் அறைகள் எதுவும் சேர்க்கப்படவில்லை.",
+        "noRoomFound": "அறை கண்டறியவில்லை",
+        "roomInstances": "அறை இன்ஸ்டன்ஸ்கள்",
+        "total": "மொத்தம்",
+        "showingInstancesOfTotal": "{{total}} இன்ஸ்டன்ஸ்களில் {{count}} எண்ணிக்கை காட்டுகிறது",
+        "floorNumber": "தள எண்",
+        "variantId": "வேரியன்ட் ஐடி",
+        "actions": "செயல்கள்",
+        "currentStatus": "தற்போதைய நிலை",
+        "baseOccupancy": "அடிப்படை அதிபொகம்",
+        "maxOccupancy": "அதிகபட்ச அதிபொகம்",
+        "bedding": "கிடக்கை",
+        "configureRoomDetails": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்."
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",
         "type": "வகை",
         "fee": "கட்டணம்",
-        "status": "நிலை"
+        "status": "நிலை",
+        "roomCode": "அறை குறியீடு",
+        "floorNumber": "தள எண்",
+        "actions": "செயல்கள்"
+    },
+    "roomStatus": {
+        "available": "கிடைக்கும்",
+        "occupied": "ஆக்கிரமிக்கப்பட்டுள்ளது",
+        "repair": "பராமரிப்பு",
+        "blocked": "தடுக்கப்பட்டுள்ளது"
     }
 }

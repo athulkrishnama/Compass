@@ -131,5 +131,14 @@
   "roomCreatedSuccessfully": "Room created successfully",
   "roomFetchedSuccessfully": "Room fetched successfully",
   "roomUpdatedSuccessfully": "Room updated successfully",
-  "statusMissingOrInvalid": "Status is missing or invalid"
+  "roomImageDeletedSuccessfully": "Room image deleted successfully",
+  "roomVariantAlreadyExists": "Room variant already exists with this name or code",
+  "roomVariantNotFound": "Room variant not found",
+  "roomVariantIdMissingOrInvalid": "Room variant ID is missing or invalid",
+  "roomVariantCreatedSuccessfully": "Room variant created successfully",
+  "roomVariantFetchedSuccessfully": "Room variant fetched successfully",
+  "roomVariantUpdatedSuccessfully": "Room variant updated successfully",
+  "roomVariantImageDeletedSuccessfully": "Room variant image deleted successfully",
+  "statusMissingOrInvalid": "Status is missing or invalid",
+  "floorMissingOrInvalid": "Floor is missing or invalid"
 }

@@ -1,6 +1,3 @@
-export enum RoomRoutes {
+export enum ROOM_ROUTES {
   INDEX = "/",
-  BY_HOTEL = "/hotel/:hotelId",
-  BY_ID = "/:id",
-  IMAGE = "/:id/images/:index",
 }

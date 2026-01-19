@@ -1,4 +1,4 @@
 import { model } from "mongoose";
-import { roomSchema, IRoomDocument } from "../schemas/roomSchema";
+import { roomSchema } from "../schemas/roomSchema";
 
-export const roomModel = model<IRoomDocument>("room", roomSchema);
+export const roomModel = model("room", roomSchema);

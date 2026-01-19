@@ -26,4 +26,8 @@ export enum Messages {
   ROOM_FETCHED = "roomFetchedSuccessfully",
   ROOM_UPDATED = "roomUpdatedSuccessfully",
   ROOM_IMAGE_DELETED_SUCCESSFULLY = "roomImageDeletedSuccessfully",
+  ROOM_VARIANT_CREATED = "roomVariantCreatedSuccessfully",
+  ROOM_VARIANT_FETCHED = "roomVariantFetchedSuccessfully",
+  ROOM_VARIANT_UPDATED = "roomVariantUpdatedSuccessfully",
+  ROOM_VARIANT_IMAGE_DELETED_SUCCESSFULLY = "roomVariantImageDeletedSuccessfully",
 }

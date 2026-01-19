@@ -1,0 +1,82 @@
+import { ICreateRoomVariantRequestDTO } from "@domain/dtos/roomVariant/createRoomVariant.dto";
+import { IRoomVariantDetailResponseDTO } from "@domain/dtos/roomVariant/getRoomVariantDetail.dto";
+import { IRoomVariantListingResponseDTO } from "@domain/dtos/roomVariant/roomVariantListing.dto";
+import { RoomEntity } from "@domain/entities/room/roomEntity";
+import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
+
+export class RoomVariantMapper {
+  static toRoomVariantListingResponseDTO(
+    roomVariants: RoomVariantEntity[],
+  ): IRoomVariantListingResponseDTO {
+    return {
+      roomVariants: roomVariants.map((roomVariant) => ({
+        id: roomVariant._id!,
+        name: roomVariant.name,
+        coverImage: roomVariant.coverImage,
+        basePrice: roomVariant.basePrice,
+      })),
+      count: roomVariants.length,
+    };
+  }
+
+  static toEntityFromCreateRoomVariantDTO(
+    data: Omit<ICreateRoomVariantRequestDTO, "coverImage" | "images"> & {
+      coverImage: string;
+      images: string[];
+    },
+  ): RoomVariantEntity {
+    return {
+      hotelId: data.hotelId,
+      name: data.name,
+      description: data.description,
+      maxOccupancy: data.maxOccupancy,
+      bedConfig: {
+        type: data.bedConfig.type,
+        count: data.bedConfig.count,
+      },
+      amenities: data.amenities,
+      policies: {
+        smokingAllowed: data.policies.smokingAllowed,
+        petsAllowed: data.policies.petsAllowed,
+        checkInTime: data.policies.checkInTime,
+        checkOutTime: data.policies.checkOutTime,
+      },
+      basePrice: data.basePrice,
+      coverImage: data.coverImage,
+      images: data.images,
+    };
+  }
+
+  static toRoomVariantDetailResponseDTO(
+    roomVariant: RoomVariantEntity,
+    rooms: RoomEntity[],
+  ): IRoomVariantDetailResponseDTO {
+    return {
+      id: roomVariant._id!,
+      hotelId: roomVariant.hotelId,
+      name: roomVariant.name,
+      description: roomVariant.description,
+      maxOccupancy: roomVariant.maxOccupancy,
+      bedConfig: {
+        type: roomVariant.bedConfig.type,
+        count: roomVariant.bedConfig.count,
+      },
+      amenities: roomVariant.amenities,
+      policies: {
+        smokingAllowed: roomVariant.policies.smokingAllowed,
+        petsAllowed: roomVariant.policies.petsAllowed,
+        checkInTime: roomVariant.policies.checkInTime,
+        checkOutTime: roomVariant.policies.checkOutTime,
+      },
+      basePrice: roomVariant.basePrice,
+      coverImage: roomVariant.coverImage,
+      images: roomVariant.images,
+      rooms: rooms.map((room) => ({
+        id: room._id!,
+        roomCode: room.roomCode,
+        floor: room.floor,
+        status: room.status,
+      })),
+    };
+  }
+}

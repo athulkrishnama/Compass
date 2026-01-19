@@ -2,18 +2,23 @@ import { axiosInstance } from "@/axios/instance";
 import { ROOM_ROUTES } from "@/constants/routes/roomRoutes";
 import { AxiosError } from "axios";
 
-export async function createRoom({
-    hotelId,
-    data,
-}: {
+export interface CreateRoomData {
     hotelId: string;
-    data: FormData;
-}) {
+    variantId: string;
+    roomCode: string;
+    floor: number;
+    status: string;
+}
+
+export interface EditRoomData {
+    roomCode?: string;
+    floor?: number;
+    status?: string;
+}
+
+export async function createRoom(data: CreateRoomData) {
     try {
-        const response = await axiosInstance.post(
-            ROOM_ROUTES.BY_HOTEL.replace(":hotelId", hotelId),
-            data
-        );
+        const response = await axiosInstance.post(ROOM_ROUTES.INDEX, data);
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
@@ -23,65 +28,11 @@ export async function createRoom({
     }
 }
 
-export async function getRoomByHotelId(hotelId: string) {
-    try {
-        const response = await axiosInstance.get(
-            ROOM_ROUTES.BY_HOTEL.replace(":hotelId", hotelId)
-        );
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.message);
-        }
-        throw new Error("something went wrong");
-    }
-}
-
-export async function getRoomById(roomId: string) {
-    try {
-        const response = await axiosInstance.get(
-            ROOM_ROUTES.BY_ID.replace(":id", roomId)
-        );
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.message);
-        }
-        throw new Error("something went wrong");
-    }
-}
-
-export async function updateRoom({
-    roomId,
-    data,
-}: {
-    roomId: string;
-    data: FormData;
-}) {
+export async function editRoom(roomId: string, data: EditRoomData) {
     try {
         const response = await axiosInstance.patch(
-            ROOM_ROUTES.BY_ID.replace(":id", roomId),
+            `${ROOM_ROUTES.INDEX}/${roomId}`,
             data
-        );
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            throw new Error(error.response?.data.message);
-        }
-        throw new Error("something went wrong");
-    }
-}
-
-export async function deleteRoomImage({
-    roomId,
-    index,
-}: {
-    roomId: string;
-    index: number;
-}) {
-    try {
-        const response = await axiosInstance.delete(
-            `${ROOM_ROUTES.BY_ID.replace(":id", roomId)}/images/${index}`
         );
         return response.data;
     } catch (error) {

@@ -5,8 +5,9 @@ import { AuthMiddleware } from "presentation/middlewares/authMiddleware";
 import { AdminController } from "presentation/controllers/admin/adminController";
 import { CabController } from "@presentation/controllers/cab/cabController";
 import { HotelController } from "@presentation/controllers/hotel/hotelController";
-import { RoomController } from "@presentation/controllers/room/roomController";
+import { RoomVariantController } from "@presentation/controllers/roomVariant/roomVariantController";
 import { DestinationController } from "@presentation/controllers/destination/destinationCotroller";
+import { RoomController } from "@presentation/controllers/room/roomController";
 
 registerDI();
 export const authController = container.resolve(AuthController);
@@ -15,4 +16,5 @@ export const authMiddleware = container.resolve(AuthMiddleware);
 export const cabController = container.resolve(CabController);
 export const destinationController = container.resolve(DestinationController);
 export const hotelController = container.resolve(HotelController);
+export const roomVariantController = container.resolve(RoomVariantController);
 export const roomController = container.resolve(RoomController);

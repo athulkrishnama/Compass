@@ -1,8 +1,11 @@
-import { RoomEntity } from "@domain/entities/room/room.entity";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
+import { RoomEntity } from "@domain/entities/room/roomEntity";
 import { IRoomDocument } from "@infrastructure/repository/database configs/schemas/roomSchema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IRoomRepo extends BaseRepository<RoomEntity, IRoomDocument> {
-  findByHotelId(hotelId: string): Promise<RoomEntity[]>;
-  findByCode(hotelId: string, code: string): Promise<RoomEntity | null>;
+export interface IRoomRepo extends IBaseRepository<RoomEntity, IRoomDocument> {
+  findByVariantId(variantId: string): Promise<RoomEntity[]>;
+  findRoomByVariantAndCode(
+    variantId: string,
+    roomCode: string,
+  ): Promise<RoomEntity | null>;
 }

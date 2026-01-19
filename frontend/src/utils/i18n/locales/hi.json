@@ -30,7 +30,16 @@
         "editDestinationSubtitle": "इस गंतव्य सूची के लिए विवरण अपडेट करें",
         "hotelManagement": "होटल प्रबंधन",
         "noPropertiesFound": "कोई संपत्ति नहीं मिली",
-        "editHotel": "होटल संपादित करें"
+        "editHotel": "होटल संपादित करें",
+        "addNewRoom": "नया कमरा जोड़ें",
+        "editRoom": "कमरा संपादित करें",
+        "editRoomSubtitle": "इस कमरे की सूची के लिए विवरण अपडेट करें",
+        "addNewRoomVariant": "नया रूम वैरिएंट जोड़ें",
+        "editRoomVariant": "रूम वैरिएंट संपादित करें",
+        "editRoomVariantSubtitle": "इस रूम वैरिएंट सूची के लिए विवरण अपडेट करें",
+        "roomVariantDetails": "रूम वैरिएंट विवरण",
+        "addRoomInstance": "कमरा इंस्टेंस जोड़ें",
+        "addRoomInstanceSubtitle": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -45,7 +54,13 @@
         "addressLocation": "पता और स्थान",
         "generalInformation": "सामान्य जानकारी",
         "locationAddress": "स्थान और पता",
-        "propertyGallery": "संपत्ति छवि गैलरी"
+        "propertyGallery": "संपत्ति छवि गैलरी",
+        "basicRoomInfo": "कमरे की बुनियादी जानकारी",
+        "occupancyBedding": "अधिभोग और बिस्तर",
+        "pricingStatus": "मूल्य निर्धारण और स्थिति",
+        "amenitiesPolicies": "सुविधाएं और नीतियां",
+        "rooms": "कमरे",
+        "roomVariants": "रूम वैरिएंट"
     },
     "errors": {
         "minChar": "न्यूनतम {{count}} अक्षर आवश्यक हैं",
@@ -84,7 +99,8 @@
         "coordinatesRequired": "कृपया खोज से एक स्थान चुनें",
         "minImagesRequired": "कम से कम {{count}} छवियों की आवश्यकता है",
         "destinationTypeRequired": "कृपया एक गंतव्य प्रकार चुनें",
-        "closingTimeAfterOpeningTime": "समापन समय उद्घाटन समय के बाद होना चाहिए"
+        "closingTimeAfterOpeningTime": "समापन समय उद्घाटन समय के बाद होना चाहिए",
+        "floorNumberRequired": "मंजिल संख्या आवश्यक है"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -269,7 +285,17 @@
         "loadMoreProperties": "अधिक संपत्तियां लोड करें",
         "updateHotel": "होटल अपडेट करें",
         "changeImage": "छवि बदलें",
-        "editHotel": "होटल संपादित करें"
+        "editHotel": "होटल संपादित करें",
+        "saveRoom": "कमरा सहेजें",
+        "saving": "सहेजा जा रहा है...",
+        "addRoom": "कमरा जोड़ें",
+        "viewDetails": "विवरण देखें",
+        "updateRoom": "कमरा अपडेट करें",
+        "saveRoomVariant": "रूम वैरिएंट सहेजें",
+        "addRoomVariant": "रूम वैरिएंट जोड़ें",
+        "updateRoomVariant": "रूम वैरिएंट अपडेट करें",
+        "createInstance": "इंस्टेंस बनाएं",
+        "viewRoomVariant": "रूम वैरिएंट देखें"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -340,12 +366,33 @@
         "fullAddress": "पूरा पता",
         "perNight": "/ रात",
         "basePrice": "आधार मूल्य",
-        "noRoomsAdded": "अभी तक कोई कमरा नहीं जोड़ा गया है।"
+        "noRoomsAdded": "अभी तक कोई कमरा नहीं जोड़ा गया है।",
+        "noRoomFound": "कमरा नहीं मिला",
+        "roomInstances": "कमरा इंस्टेंस",
+        "total": "कुल",
+        "showingInstancesOfTotal": "{{total}} में से {{count}} इंस्टेंस दिखाया जा रहा है",
+        "floorNumber": "मंजिल संख्या",
+        "variantId": "वैरिएंट आईडी",
+        "actions": "कार्रवाई",
+        "currentStatus": "वर्तमान स्थिति",
+        "baseOccupancy": "आधार अधिभोग",
+        "maxOccupancy": "अधिकतम अधिभोग",
+        "bedding": "बिस्तर",
+        "configureRoomDetails": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें।"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
         "type": "प्रकार",
         "fee": "शुल्क",
-        "status": "स्थिति"
+        "status": "स्थिति",
+        "roomCode": "कमरा कोड",
+        "floorNumber": "मंजिल संख्या",
+        "actions": "कार्रवाई"
+    },
+    "roomStatus": {
+        "available": "उपलब्ध",
+        "occupied": "व्याप्त",
+        "repair": "रखरखाव",
+        "blocked": "अवरुद्ध"
     }
 }

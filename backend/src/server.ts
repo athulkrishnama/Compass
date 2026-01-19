@@ -16,8 +16,9 @@ import middleware from "i18next-http-middleware";
 import i18next from "i18next";
 import { CabRouter } from "@presentation/routes/cab/cabRouter";
 import { HotelRouter } from "@presentation/routes/hotel/hotelRouter";
-import { RoomRouter } from "@presentation/routes/room/roomRouter";
+import { RoomVariantRouter } from "@presentation/routes/roomVariant/roomVariantRouter";
 import { DestinationRouter } from "@presentation/routes/destination/destinationRouter";
+import { RoomRouter } from "@presentation/routes/room/roomRouter";
 
 export class Server {
   private _app: Express;
@@ -30,6 +31,7 @@ export class Server {
     this._setAdminRouter();
     this._setCabRouter();
     this._setHotelRouter();
+    this._setRoomVariantRouter();
     this._setRoomRouter();
     this._setDestinationRouter();
     this._setErrorHandlingMiddleware();
@@ -53,6 +55,11 @@ export class Server {
   private _setHotelRouter() {
     const hotelRouter = new HotelRouter();
     this._app.use(Routes.HOTEL, hotelRouter.getRouter());
+  }
+
+  private _setRoomVariantRouter() {
+    const roomVariantRouter = new RoomVariantRouter();
+    this._app.use(Routes.ROOM_VARIANT, roomVariantRouter.getRouter());
   }
 
   private _setRoomRouter() {

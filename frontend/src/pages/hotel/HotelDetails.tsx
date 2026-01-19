@@ -7,16 +7,16 @@ import HotelCoverImage from "@/components/hotel/HotelDetails/HotelCoverImage";
 import GeneralInfoSection from "@/components/hotel/HotelDetails/GeneralInfoSection";
 import LocationAddressSection from "@/components/hotel/HotelDetails/LocationAddressSection";
 import PropertyGallerySection from "@/components/hotel/HotelDetails/PropertyGallerySection";
-import { createGetRoomByHotelIdQueryOptions } from "@/queryOptions/roomQueryOptions";
-import RoomsSection from "@/components/hotel/HotelDetails/RoomsSection";
+import { createGetRoomVariantByHotelIdQueryOptions } from "@/queryOptions/roomVariantQueryOptions";
+import RoomVariantsSection from "@/components/hotel/HotelDetails/RoomVariantsSection";
 
 const routeApi = getRouteApi("/hotel/hotels/$hotelId");
 
 function HotelDetailsContent() {
     const { hotelId } = routeApi.useParams();
     const { data } = useSuspenseQuery(createGetHotelByIdQueryOptions(hotelId));
-    const { data: roomsData } = useSuspenseQuery(
-        createGetRoomByHotelIdQueryOptions(hotelId)
+    const { data: roomVariantsData } = useSuspenseQuery(
+        createGetRoomVariantByHotelIdQueryOptions(hotelId)
     );
     const hotelData = data?.data;
 
@@ -40,9 +40,9 @@ function HotelDetailsContent() {
                     name={hotelData.name}
                 />
 
-                <RoomsSection
+                <RoomVariantsSection
                     hotelId={hotelId}
-                    rooms={roomsData?.data?.rooms ?? []}
+                    roomVariants={roomVariantsData?.data?.roomVariants ?? []}
                 />
 
                 <div className="space-y-6">

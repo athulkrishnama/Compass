@@ -1,66 +1,31 @@
-import { NextFunction, Request, Response, Router } from "express";
-import { authMiddleware, roomController } from "@infrastructure/DI/resolve";
-import { RoomRoutes } from "@presentation/constants/routes/roomRoutes";
 import { ROLES } from "@domain/enums/roles";
-import { uploadMiddleware } from "@presentation/middlewares/multer";
+import { authMiddleware, roomController } from "@infrastructure/DI/resolve";
+import { ROOM_ROUTES } from "@presentation/constants/routes/roomRoutes";
+import { Router } from "express";
 
 export class RoomRouter {
   private _router: Router;
   constructor() {
     this._router = Router();
-    this._setRoute();
+    this._setRoutes();
   }
 
-  _setRoute() {
+  _setRoutes() {
     this._router.post(
-      RoomRoutes.BY_HOTEL,
+      ROOM_ROUTES.INDEX,
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.HOTEL]),
-      uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
-      (req: Request, res: Response, next: NextFunction) => {
-        roomController.handleCreateRoom(req, res, next);
-      },
+      roomController.handleCreateRoom,
     );
-
-    this._router.get(
-      RoomRoutes.BY_HOTEL,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN]),
-      (req: Request, res: Response, next: NextFunction) => {
-        roomController.handleListRoomsByHotelId(req, res, next);
-      },
-    );
-
-    this._router.get(
-      RoomRoutes.BY_ID,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN]),
-      (req: Request, res: Response, next: NextFunction) => {
-        roomController.handleGetRoomById(req, res, next);
-      },
-    );
-
     this._router.patch(
-      RoomRoutes.BY_ID,
+      `${ROOM_ROUTES.INDEX}:id`,
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.HOTEL]),
-      uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
-      (req: Request, res: Response, next: NextFunction) => {
-        roomController.handleEditRoom(req, res, next);
-      },
-    );
-
-    this._router.delete(
-      RoomRoutes.IMAGE,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL]),
-      (req: Request, res: Response, next: NextFunction) => {
-        roomController.handleDeleteRoomImage(req, res, next);
-      },
+      roomController.handleEditRoom,
     );
   }
 
-  public getRouter() {
+  getRouter() {
     return this._router;
   }
 }
