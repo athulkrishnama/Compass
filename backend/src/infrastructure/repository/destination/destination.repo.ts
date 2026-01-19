@@ -95,7 +95,7 @@ export class DestinationRepo
       pincode: entity.pincode,
       coordinates: {
         type: "Point",
-        coordinates: entity.coordinates,
+        coordinates: [entity.coordinates[1], entity.coordinates[0]],
       },
 
       type: entity.type,
@@ -131,8 +131,8 @@ export class DestinationRepo
       city: doc.city,
       pincode: doc.pincode,
       coordinates: [
-        doc.coordinates.coordinates[0],
         doc.coordinates.coordinates[1],
+        doc.coordinates.coordinates[0],
       ],
 
       type: doc.type,

@@ -142,3 +142,5 @@ export const destinationSchema = new Schema<IDestinationDocument>({
     default: new Date(),
   },
 });
+
+destinationSchema.index({ coordinates: "2dsphere" });
