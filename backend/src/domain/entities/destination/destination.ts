@@ -1,5 +1,4 @@
 import { ACTIVITY_TYPE } from "@domain/enums/activityType";
-import { CURRENCY } from "@domain/enums/currency";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 import { MONTH } from "@domain/enums/months";
 import { WEEKDAY } from "@domain/enums/weekdays";
@@ -27,7 +26,6 @@ export interface DestinationEntity {
   isAlwaysOpen: boolean;
 
   entryFee?: number;
-  currency?: CURRENCY;
 
   openingTime?: string;
   closingTime?: string;

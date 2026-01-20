@@ -1,5 +1,4 @@
 import { ACTIVITY_TYPE } from "@domain/enums/activityType";
-import { CURRENCY } from "@domain/enums/currency";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { MONTH } from "@domain/enums/months";
@@ -121,11 +120,6 @@ export const addDestinationValidationSchema = z.object({
       .min(1, { message: INTERNAL_ERROR_MESSAGES.MINIMUM_ENTRY_FEE })
       .optional(),
   ),
-  currency: z
-    .enum(CURRENCY, {
-      error: INTERNAL_ERROR_MESSAGES.CURRENCY_MISSING_OR_INVALID,
-    })
-    .optional(),
 
   openingTime: z
     .string({
@@ -272,11 +266,6 @@ export const updateDestinationValidationSchema = z.object({
   entryFee: z.coerce
     .number({ error: INTERNAL_ERROR_MESSAGES.ENTRY_FEE_MISSING })
     .min(1, { message: INTERNAL_ERROR_MESSAGES.MINIMUM_ENTRY_FEE })
-    .optional(),
-  currency: z
-    .enum(CURRENCY, {
-      error: INTERNAL_ERROR_MESSAGES.CURRENCY_MISSING_OR_INVALID,
-    })
     .optional(),
   openingTime: z
     .string({ error: INTERNAL_ERROR_MESSAGES.OPENING_TIME_MISSING })

@@ -41,7 +41,10 @@ export class CabRepo
         city: entity.baseLocation.city,
         coordinates: {
           type: "Point",
-          coordinates: entity.baseLocation.coordinates,
+          coordinates: [
+            entity.baseLocation.coordinates[1],
+            entity.baseLocation.coordinates[0],
+          ],
         },
       };
     }
@@ -61,7 +64,10 @@ export class CabRepo
     if (doc.baseLocation) {
       entity.baseLocation = {
         city: doc.baseLocation.city,
-        coordinates: doc.baseLocation.coordinates.coordinates,
+        coordinates: [
+          doc.baseLocation.coordinates.coordinates[1],
+          doc.baseLocation.coordinates.coordinates[0],
+        ],
       };
     }
     return entity;

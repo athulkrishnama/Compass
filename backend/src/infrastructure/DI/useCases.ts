@@ -83,6 +83,8 @@ import { ICreateRoomUseCase } from "@application/interfaces/useCase/room/createR
 import { CreateRoomUseCase } from "@useCases/room/createRoomUseCase";
 import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
 import { EditRoomUseCase } from "@useCases/room/editRoomUseCase";
+import { IGetDestinationUseCase } from "@application/interfaces/useCase/destination/getDestinationUseCase.interface";
+import { GetDestinationUseCase } from "@useCases/destination/getDestinationUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -246,5 +248,9 @@ export function registerUsecases() {
   container.registerSingleton<IEditRoomUseCase>(
     "IEditRoomUseCase",
     EditRoomUseCase,
+  );
+  container.registerSingleton<IGetDestinationUseCase>(
+    "IGetDestinationUseCase",
+    GetDestinationUseCase,
   );
 }

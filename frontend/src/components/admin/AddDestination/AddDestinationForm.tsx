@@ -51,7 +51,6 @@ function AddDestinationForm() {
             wheelchairAccessible: false,
             isFree: true,
             entryFeeAmount: undefined,
-            entryFeeCurrency: undefined,
         },
     }) as unknown as DestinationFormType;
 
@@ -113,7 +112,6 @@ function AddDestinationForm() {
 
             if (!data.isFree) {
                 formData.append("entryFee", `${data.entryFeeAmount}`);
-                formData.append("currency", `${data.entryFeeCurrency}`);
             }
 
             mutate(formData, {

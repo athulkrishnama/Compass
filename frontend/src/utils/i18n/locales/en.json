@@ -256,7 +256,8 @@
         "addRoomVariant": "ADD ROOM VARIANT",
         "updateRoomVariant": "Update Room Variant",
         "createInstance": "Create Instance",
-        "viewRoomVariant": "View Room Variant"
+        "viewRoomVariant": "View Room Variant",
+        "destinations": "Destinations"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -414,7 +415,16 @@
         "baseOccupancy": "Base Occ.",
         "maxOccupancy": "Max Occ.",
         "bedding": "Bedding",
-        "configureRoomDetails": "Configure the details for a new physical room unit to expand your property inventory."
+        "configureRoomDetails": "Configure the details for a new physical room unit to expand your property inventory.",
+        "allActivities": "All Activities",
+        "priceRange": "Price Range (₹)",
+        "minPrice": "Min",
+        "maxPrice": "Max",
+        "proximityRadius": "Proximity Radius",
+        "cityHubSearch": "City Hub Search",
+        "enterCityName": "Enter city name...",
+        "loadingMoreDestinations": "Loading more destinations...",
+        "noMoreDestinations": "You've reached the end"
     },
     "tableHeaders": {
         "destination": "DESTINATION",
@@ -447,5 +457,26 @@
         "occupied": "Occupied",
         "repair": "Maintenance",
         "blocked": "Blocked"
+    },
+    "destinationDetail": {
+        "backToExplore": "Back to Explore",
+        "theExperience": "The Experience",
+        "entryFee": "Entry Fee",
+        "day": "day",
+        "visitingHours": "Visiting Hours",
+        "open24Hours": "Open 24 Hours",
+        "bestVisitBetween": "Best visited between 6:00 AM - 6:00 PM for optimal lighting",
+        "closedDays": "Closed Days",
+        "none": "None",
+        "location": "Location",
+        "wheelchairAccessible": "Wheelchair Accessible",
+        "bookExperience": "Book Experience",
+        "quoteText": "The mountains are calling and I must go.",
+        "bestTimeToVisit": "Best Time to Visit",
+        "weatherNote": "Color indicates ideal weather conditions",
+        "curatedActivities": "Curated Activities",
+        "photoGallery": "Photo Gallery",
+        "rightsReserved": "All rights reserved",
+        "openInMaps": "Open in Maps"
     }
 }

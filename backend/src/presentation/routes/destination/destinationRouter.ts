@@ -46,9 +46,14 @@ export class DestinationRouter {
     );
 
     this._router.get(
+      DESTINATION_ROUTES.LIST,
+      (req: Request, res: Response, next: NextFunction) => {
+        destinationController.handleGetDestination(req, res, next);
+      },
+    );
+
+    this._router.get(
       `${DESTINATION_ROUTES.INDEX}:id`,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.ADMIN]),
       (req: Request, res: Response, next: NextFunction) => {
         destinationController.handleFindDestinationById(req, res, next);
       },

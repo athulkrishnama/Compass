@@ -1,6 +1,7 @@
 import { axiosInstance } from "@/axios/instance";
 import { DESTINATION_ROUTES } from "@/constants/routes/destinationRoutes";
 import type { IFindDestinationsRequest } from "@/types/api/requests/adminRequest";
+import type { IListDestinationRequestDTO } from "@/types/api/requests/destinationRequest";
 import { AxiosError } from "axios";
 
 export async function addDestination<T>(data: T) {
@@ -84,6 +85,34 @@ export async function DeleteDestinationImage(id: string, index: number) {
                 "##index##",
                 String(index)
             )
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function getDestinations(data: IListDestinationRequestDTO) {
+    try {
+        const params = {
+            pageNo: data.pageNo,
+            queryString: data.queryString,
+            type: JSON.stringify(data.type),
+            isActive: JSON.stringify(data.isActive),
+            activities: JSON.stringify(data.activities),
+            minPrice: data.minPrice,
+            maxPrice: data.maxPrice,
+            city: JSON.stringify(data.city),
+            proximityRadius: data.proximityRadius,
+        };
+        const response = await axiosInstance.get(
+            DESTINATION_ROUTES.DESTINATION_LIST,
+            {
+                params,
+            }
         );
         return response.data;
     } catch (error) {

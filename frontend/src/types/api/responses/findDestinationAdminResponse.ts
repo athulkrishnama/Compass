@@ -1,4 +1,3 @@
-import type { CURRENCY } from "@/constants/destinationConstants/currency";
 import type { DESTINATION_TYPES } from "@/constants/destinationConstants/destinationType";
 
 interface Destination {
@@ -10,7 +9,6 @@ interface Destination {
     isFree: boolean;
     isActive: boolean;
     entryFee: number;
-    currency: CURRENCY;
 }
 export interface IFindDestinationsResponse {
     totalDestinations: number;

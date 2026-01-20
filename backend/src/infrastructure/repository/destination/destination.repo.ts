@@ -6,6 +6,7 @@ import { Model, RootFilterQuery, Types } from "mongoose";
 import { inject, injectable } from "tsyringe";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 import { VALUES } from "@presentation/constants/values";
+import { ACTIVITY_TYPE } from "@domain/enums/activityType";
 
 @injectable()
 export class DestinationRepo
@@ -80,6 +81,69 @@ export class DestinationRepo
     const doc = this.toMongoDoc(entity);
     await this.model.findByIdAndUpdate(id, doc);
   }
+  async advancedFindByQuery(filter: {
+    pageNo: number;
+    queryString?: string;
+    type?: DESTINATION_TYPES[];
+    isActive?: boolean;
+    minPrice?: number;
+    maxPrice?: number;
+    city?: [number, number];
+    proximityRadius?: number;
+    activities?: ACTIVITY_TYPE[];
+  }): Promise<{ destinations: DestinationEntity[] }> {
+    const query: RootFilterQuery<IDestinationDocument> = {};
+
+    if (filter.queryString) {
+      query.$or = [
+        { name: { $regex: filter.queryString, $options: "i" } },
+        { tagline: { $regex: filter.queryString, $options: "i" } },
+        { description: { $regex: filter.queryString, $options: "i" } },
+        { country: { $regex: filter.queryString, $options: "i" } },
+        { city: { $regex: filter.queryString, $options: "i" } },
+      ];
+    }
+
+    if (filter.type?.length) {
+      query.type = { $in: filter.type };
+    }
+
+    if (typeof filter.isActive === "boolean") {
+      query.isActive = filter.isActive;
+
+      if (filter.activities?.length) {
+        query.activities = { $all: filter.activities };
+      }
+    }
+
+    if (filter.minPrice) {
+      query.isFree = false;
+      query.entryFee = { $gte: filter.minPrice };
+    }
+
+    if (filter.maxPrice) {
+      query.isFree = false;
+      query.entryFee = { $lte: filter.maxPrice };
+    }
+
+    if (filter.city && filter.proximityRadius) {
+      query.coordinates = {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: filter.city,
+          },
+          $maxDistance: filter.proximityRadius * 1000,
+        },
+      };
+    }
+
+    const docs = await this.model
+      .find(query)
+      .skip((filter.pageNo - 1) * VALUES.DESTINATIONS_LIMIT)
+      .limit(VALUES.DESTINATIONS_LIMIT);
+    return { destinations: docs.map((doc) => this.toEntity(doc)) };
+  }
 
   toMongoDoc(entity: DestinationEntity): IDestinationDocument {
     return new this._model({
@@ -95,7 +159,7 @@ export class DestinationRepo
       pincode: entity.pincode,
       coordinates: {
         type: "Point",
-        coordinates: entity.coordinates,
+        coordinates: [entity.coordinates[1], entity.coordinates[0]],
       },
 
       type: entity.type,
@@ -108,7 +172,6 @@ export class DestinationRepo
       isFree: entity.isFree,
 
       entryFee: entity.entryFee,
-      currency: entity.currency,
       openingTime: entity.openingTime,
       closingTime: entity.closingTime,
       closedDays: entity.closedDays,
@@ -131,8 +194,8 @@ export class DestinationRepo
       city: doc.city,
       pincode: doc.pincode,
       coordinates: [
-        doc.coordinates.coordinates[0],
         doc.coordinates.coordinates[1],
+        doc.coordinates.coordinates[0],
       ],
 
       type: doc.type,
@@ -145,7 +208,6 @@ export class DestinationRepo
       isFree: doc.isFree,
 
       entryFee: doc.entryFee,
-      currency: doc.currency,
       openingTime: doc.openingTime,
       closingTime: doc.closingTime,
       closedDays: doc.closedDays,

@@ -68,7 +68,6 @@ function EditDestinationForm({ destinationData }: EditDestinationFormProps) {
             wheelchairAccessible: destinationData.isWheelChairAccessible,
             isFree: destinationData.isFree,
             entryFeeAmount: destinationData.entryFee,
-            entryFeeCurrency: destinationData.currency,
         },
     }) as unknown as DestinationFormType;
 
@@ -127,9 +126,6 @@ function EditDestinationForm({ destinationData }: EditDestinationFormProps) {
             }),
             ...(data.entryFeeAmount !== destinationData.entryFee && {
                 entryFee: data.entryFeeAmount,
-            }),
-            ...(data.entryFeeCurrency !== destinationData.currency && {
-                currency: data.entryFeeCurrency,
             }),
 
             ...(newCoverImage && { coverImage: newCoverImage }),

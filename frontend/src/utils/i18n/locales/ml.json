@@ -295,7 +295,8 @@
         "addRoomVariant": "റൂം വെരിയന്റ് ചേർക്കുക",
         "updateRoomVariant": "റൂം വെരിയന്റ് അപ്ഡേറ്റ് ചെയ്യുക",
         "createInstance": "ഇൻസ്റൻസ് സൃഷ്ടിക്കുക",
-        "viewRoomVariant": "റൂം വെരിയന്റ് കാണുക"
+        "viewRoomVariant": "റൂം വെരിയന്റ് കാണുക",
+        "destinations": "ലക്ഷ്യസ്ഥാനങ്ങൾ"
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",
@@ -394,5 +395,26 @@
         "occupied": "അധിവസിച്ചിരിക്കുന്നു",
         "repair": "പരിപാലനം",
         "blocked": "തടഞ്ഞിരിക്കുന്നു"
+    },
+    "destinationDetail": {
+        "backToExplore": "എക്സ്പ്ലോറിലേക്ക് മടങ്ങുക",
+        "theExperience": "അനുഭവം",
+        "entryFee": "പ്രവേശന ഫീസ്",
+        "day": "ദിവസം",
+        "visitingHours": "സന്ദർശന സമയം",
+        "open24Hours": "24 മണിക്കൂറും തുറന്നിരിക്കും",
+        "bestVisitBetween": "രാവിലെ 6:00 - വൈകിട്ട് 6:00 സന്ദർശനത്തിന് ഉത്തമം",
+        "closedDays": "അടച്ചിരിക്കുന്ന ദിവസങ്ങൾ",
+        "none": "ഒന്നുമില്ല",
+        "location": "സ്ഥലം",
+        "wheelchairAccessible": "വീൽചെയർ പ്രവേശനക്ഷമം",
+        "bookExperience": "അനുഭവം ബുക്ക് ചെയ്യുക",
+        "quoteText": "മലകൾ വിളിക്കുന്നു, എനിക്ക് പോകണം.",
+        "bestTimeToVisit": "സന്ദർശിക്കാൻ ഏറ്റവും നല്ല സമയം",
+        "weatherNote": "നിറം ആദർശ കാലാവസ്ഥ സൂചിപ്പിക്കുന്നു",
+        "curatedActivities": "ക്യൂറേറ്റഡ് പ്രവർത്തനങ്ങൾ",
+        "photoGallery": "ഫോട്ടോ ഗാലറി",
+        "rightsReserved": "എല്ലാ അവകാശങ്ങളും സംരക്ഷിതം",
+        "openInMaps": "മാപ്പിൽ തുറക്കുക"
     }
 }
