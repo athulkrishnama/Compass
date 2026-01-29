@@ -108,4 +108,11 @@ export enum INTERNAL_ERROR_MESSAGES {
   ROOM_VARIANT_ID_MISSING_OR_INVALID = "roomVariantIdMissingOrInvalid",
   STATUS_MISSING_OR_INVALID = "statusMissingOrInvalid",
   FLOOR_MISSING_OR_INVALID = "floorMissingOrInvalid",
+  QUERY_STRING_INVALID = "queryStringInvalid",
+  PROXIMITY_RADIUS_INVALID = "proximityRadiusInvalid",
+  CHECK_IN_DATE_INVALID = "checkInDateInvalid",
+  CHECK_OUT_DATE_INVALID = "checkOutDateInvalid",
+  GUESTS_INVALID = "guestsInvalid",
+  MAX_PRICE_INVALID = "maxPriceInvalid",
+  MIN_PRICE_INVALID = "minPriceInvalid",
 }

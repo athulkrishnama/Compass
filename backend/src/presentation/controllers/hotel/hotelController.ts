@@ -7,6 +7,7 @@ import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import {
   createHotelValidation,
   editHotelValidationSchema,
+  hotelSearchValidationSchema,
 } from "@presentation/validationSchemas/hotelValidation";
 import { Request, Response, NextFunction } from "express";
 import { inject, injectable } from "tsyringe";
@@ -16,6 +17,7 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { IEditHotelUseCase } from "@application/interfaces/useCase/hotel/editHotelUseCase.interface";
 import { IGetHotelByIdUseCase } from "@application/interfaces/useCase/hotel/getHotelByIdUseCase.interface";
 import { IDeleteHotelImageUseCase } from "@application/interfaces/useCase/hotel/deleteHotelImageUseCase.interface";
+import { IHotelSearchUseCase } from "@application/interfaces/useCase/hotel/hotelSearchUseCase.interface";
 
 @injectable()
 export class HotelController {
@@ -30,6 +32,8 @@ export class HotelController {
     private _getHotelByIdUseCase: IGetHotelByIdUseCase,
     @inject("IDeleteHotelImageUseCase")
     private _deleteHotelImageUseCase: IDeleteHotelImageUseCase,
+    @inject("IHotelSearchUseCase")
+    private _hotelSearchUseCase: IHotelSearchUseCase,
   ) {}
 
   async handleCreateHotel(req: Request, res: Response, next: NextFunction) {
@@ -181,6 +185,28 @@ export class HotelController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.HOTEL_IMAGE_DELETED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleHotelSearch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = hotelSearchValidationSchema.safeParse(req.query);
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      const result = await this._hotelSearchUseCase.search(data.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.HOTEL_FETCHED,
+        result,
       );
     } catch (error) {
       next(error);

@@ -119,7 +119,8 @@
         "statusRequired": "Please select a room status",
         "checkInTimeRequired": "Check-in time is required",
         "checkOutTimeRequired": "Check-out time is required",
-        "floorNumberRequired": "Floor number is required"
+        "floorNumberRequired": "Floor number is required",
+        "somethingWentWrong": "Something went wrong. Please try again."
     },
     "form": {
         "fullname": "Full Name",
@@ -478,5 +479,24 @@
         "photoGallery": "Photo Gallery",
         "rightsReserved": "All rights reserved",
         "openInMaps": "Open in Maps"
+    },
+    "hotelSearch": {
+        "whereTo": "Where to?",
+        "dates": "Dates",
+        "guests": "Guests",
+        "guest": "Guest",
+        "checkIn": "Check-in",
+        "checkOut": "Check-out",
+        "staysIn": "Stays in {{location}}",
+        "propertiesAvailable": "{{count}} properties available for your selection",
+        "moreFilters": "More Filters",
+        "availableRoomVariants": "Available Room Variants",
+        "noHotelsFound": "No hotels found",
+        "max": "Max",
+        "perNight": "/ night",
+        "searchHotels": "Search Hotels",
+        "noMoreHotels": "You've reached the end",
+        "loadingMore": "Loading more...",
+        "maxGuests": "Max {{count}} guests"
     }
 }

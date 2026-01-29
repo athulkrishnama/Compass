@@ -1,4 +1,5 @@
-export enum VALUES {
-  GET_USERS_LIMIT = 7,
-  DESTINATIONS_LIMIT = 5,
-}
+export const VALUES = {
+  GET_USERS_LIMIT: 7,
+  DESTINATIONS_LIMIT: 5,
+  HOTELS_LIMIT: 5,
+};

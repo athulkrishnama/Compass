@@ -100,7 +100,8 @@
         "minImagesRequired": "कम से कम {{count}} छवियों की आवश्यकता है",
         "destinationTypeRequired": "कृपया एक गंतव्य प्रकार चुनें",
         "closingTimeAfterOpeningTime": "समापन समय उद्घाटन समय के बाद होना चाहिए",
-        "floorNumberRequired": "मंजिल संख्या आवश्यक है"
+        "floorNumberRequired": "मंजिल संख्या आवश्यक है",
+        "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -416,5 +417,24 @@
         "photoGallery": "फोटो गैलरी",
         "rightsReserved": "सभी अधिकार सुरक्षित",
         "openInMaps": "मैप में खोलें"
+    },
+    "hotelSearch": {
+        "whereTo": "कहाँ जाना है?",
+        "dates": "तारीख",
+        "guests": "मेहमान",
+        "guest": "मेहमान",
+        "checkIn": "चेक-इन",
+        "checkOut": "चेक-आउट",
+        "staysIn": "{{location}} में रुकें",
+        "propertiesAvailable": "आपके चयन के लिए {{count}} संपत्तियां उपलब्ध",
+        "moreFilters": "अधिक फ़िल्टर",
+        "availableRoomVariants": "उपलब्ध कमरे के प्रकार",
+        "noHotelsFound": "कोई होटल नहीं मिला",
+        "max": "अधिकतम",
+        "perNight": "/ रात",
+        "searchHotels": "होटल खोजें",
+        "noMoreHotels": "आपने सभी होटल देख लिए हैं",
+        "loadingMore": "और लोड हो रहा है...",
+        "maxGuests": "अधिकतम {{count}} मेहमान"
     }
 }

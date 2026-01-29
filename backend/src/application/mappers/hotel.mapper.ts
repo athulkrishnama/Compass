@@ -1,6 +1,10 @@
 import { IHotelListingResponseDTO } from "@domain/dtos/admin/hotelListing.dto";
 import { ICreateHotelRequestDTO } from "@domain/dtos/hotel/createHotel.dto";
 import { IGetHotelByIdResponseDTO } from "@domain/dtos/hotel/getHotelById.dto";
+import {
+  IHotelSearchResponseDTO,
+  IHotelWithAggregatedRoomVariantDTO,
+} from "@domain/dtos/hotel/hotelSearch.dto";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 
 export class HotelMapper {
@@ -58,5 +62,28 @@ export class HotelMapper {
       pinCode: entity.address.pinCode,
       coordinates: entity.address.coordinates,
     };
+  }
+
+  static toHotelSearchResponseDTOFromIHotelWithAggregatedRoomVariantDTO(
+    data: IHotelWithAggregatedRoomVariantDTO,
+    pageNo: number,
+  ): IHotelSearchResponseDTO {
+    const hotels = data.hotels.map((h) => {
+      return {
+        name: h.name,
+        description: h.description,
+        coverImage: h.coverImage,
+        city: h.address.city,
+        roomVariants: h.roomVariants.map((rv) => {
+          return {
+            name: rv.name,
+            price: rv.basePrice,
+            maxOccupancy: rv.maxOccupancy,
+            coverImage: rv.coverImage,
+          };
+        }),
+      };
+    });
+    return { hotels, pageNo };
   }
 }

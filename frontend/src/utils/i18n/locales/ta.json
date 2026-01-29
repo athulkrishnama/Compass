@@ -100,7 +100,8 @@
         "minImagesRequired": "குறைந்தது {{count}} படங்கள் தேவை",
         "destinationTypeRequired": "சேருமிட வகையைத் தேர்ந்தெடுக்கவும்",
         "closingTimeAfterOpeningTime": "முடிவு நேரம் தொடக்க நேரத்திற்கு பிறகு இருக்க வேண்டும்",
-        "floorNumberRequired": "தள எண் தேவை"
+        "floorNumberRequired": "தள எண் தேவை",
+        "somethingWentWrong": "ஏதோ தவறு நடந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
     },
     "activities": {
         "HIKING": "Hiking",
@@ -416,5 +417,24 @@
         "photoGallery": "புகைப்பட காட்சியகம்",
         "rightsReserved": "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை",
         "openInMaps": "வரைபடத்தில் திறக்கவும்"
+    },
+    "hotelSearch": {
+        "whereTo": "எங்கு?",
+        "dates": "தேதிகள்",
+        "guests": "விருந்தினர்கள்",
+        "guest": "விருந்தினர்",
+        "checkIn": "செக்-இன்",
+        "checkOut": "செக்-அவுட்",
+        "staysIn": "{{location}}-ல் தங்குதல்",
+        "propertiesAvailable": "உங்கள் தேர்வுக்கு {{count}} சொத்துக்கள் கிடைக்கும்",
+        "moreFilters": "மேலும் வடிகட்டிகள்",
+        "availableRoomVariants": "கிடைக்கும் அறை வகைகள்",
+        "noHotelsFound": "ஹோட்டல்கள் இல்லை",
+        "max": "அதிகபட்சம்",
+        "perNight": "/ இரவு",
+        "searchHotels": "ஹோட்டல்களைத் தேடு",
+        "noMoreHotels": "நீங்கள் முடிவை அடைந்துவிட்டீர்கள்",
+        "loadingMore": "மேலும் ஏற்றுகிறது...",
+        "maxGuests": "அதிகபட்சம் {{count}} விருந்தினர்கள்"
     }
 }

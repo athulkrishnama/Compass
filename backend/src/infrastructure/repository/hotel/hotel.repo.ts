@@ -1,10 +1,13 @@
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { BaseRepository } from "../base/base.repo";
 import { inject, injectable } from "tsyringe";
-import { Model } from "mongoose";
+import { Model, PipelineStage, RootFilterQuery } from "mongoose";
 import { IHotelDocument } from "../database configs/schemas/hotelSchema";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 import { Types } from "mongoose";
+import { IHotelWithAggregatedRoomVariantDTO } from "@domain/dtos/hotel/hotelSearch.dto";
+import { IRoomVariantDocument } from "../database configs/schemas/roomVariantSchema";
+import { VALUES } from "@presentation/constants/values";
 
 @injectable()
 export class HotelRepo
@@ -38,6 +41,95 @@ export class HotelRepo
     return {
       hotels: hotels.map((hotel) => this.toEntity(hotel)),
       count: hotels.length,
+    };
+  }
+
+  async hotelSearch(filter: {
+    queryString?: string;
+    city?: [number, number];
+    proximityRadius?: number;
+    checkInDate?: Date;
+    checkOutDate?: Date;
+    guests?: number;
+    maxPrice?: number;
+    minPrice?: number;
+    pageNo: number;
+  }): Promise<IHotelWithAggregatedRoomVariantDTO> {
+    const query: RootFilterQuery<IHotelDocument> = {};
+
+    if (filter.queryString) {
+      query.$or = [
+        { name: { $regex: filter.queryString, $options: "i" } },
+        { description: { $regex: filter.queryString, $options: "i" } },
+        { "address.city": { $regex: filter.queryString, $options: "i" } },
+        { "address.country": { $regex: filter.queryString, $options: "i" } },
+        { "address.landMark": { $regex: filter.queryString, $options: "i" } },
+      ];
+    }
+
+    if (filter.city && filter.proximityRadius) {
+      query.address = {
+        coordinates: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: filter.city,
+            },
+            $maxDistance: filter.proximityRadius * 1000,
+          },
+        },
+      };
+    }
+
+    const aggregationPipeline: PipelineStage[] = [];
+
+    aggregationPipeline.push({ $match: query });
+
+    aggregationPipeline.push({
+      $lookup: {
+        from: "roomvariants",
+        localField: "_id",
+        foreignField: "hotelId",
+        as: "roomVariant",
+      },
+    });
+
+    aggregationPipeline.push({
+      $skip: (filter.pageNo - 1) * VALUES.HOTELS_LIMIT,
+    });
+
+    aggregationPipeline.push({
+      $limit: VALUES.HOTELS_LIMIT,
+    });
+
+    const result = await this._model.aggregate(aggregationPipeline);
+    return {
+      hotels: result.map((hotel) =>
+        this.toEntityFromHotelWithAggregatedRoomVariant(hotel),
+      ),
+    };
+  }
+
+  toEntityFromHotelWithAggregatedRoomVariant(
+    doc: IHotelDocument & { roomVariant: IRoomVariantDocument[] },
+  ): IHotelWithAggregatedRoomVariantDTO["hotels"][number] {
+    return {
+      ...this.toEntity(doc),
+      roomVariants:
+        doc.roomVariant?.map((roomVariant: IRoomVariantDocument) => ({
+          _id: roomVariant._id.toString(),
+          hotelId: roomVariant.hotelId.toString(),
+          description: roomVariant.description,
+          bedConfig: roomVariant.bedConfig,
+          amenities: roomVariant.amenities,
+          basePrice: roomVariant.basePrice,
+          images: roomVariant.images,
+          policies: roomVariant.policies,
+          name: roomVariant.name,
+          price: roomVariant.basePrice,
+          maxOccupancy: roomVariant.maxOccupancy,
+          coverImage: roomVariant.coverImage,
+        })) || [],
     };
   }
 

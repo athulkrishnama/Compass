@@ -100,7 +100,8 @@
         "minImagesRequired": "കുറഞ്ഞത് {{count}} ചിത്രങ്ങളെങ്കിലും ആവശ്യമാണ്",
         "destinationTypeRequired": "ദയവായി ഒരു ലക്ഷ്യസ്ഥാന തരം തിരഞ്ഞെടുക്കുക",
         "closingTimeAfterOpeningTime": "അവസാന സമയം തുറക്കുന്ന സമയത്തിന് ശേഷമായിരിക്കണം",
-        "floorNumberRequired": "ഫ്ലോർ നമ്പർ ആവശ്യമാണ്"
+        "floorNumberRequired": "ഫ്ലോർ നമ്പർ ആവശ്യമാണ്",
+        "somethingWentWrong": "എന്തോ തെറ്റ് സംഭവിച്ചു. ദയവായി വീണ്ടും ശ്രമിക്കുക."
     },
     "activities": {
         "HIKING": "Hiking",
@@ -416,5 +417,24 @@
         "photoGallery": "ഫോട്ടോ ഗാലറി",
         "rightsReserved": "എല്ലാ അവകാശങ്ങളും സംരക്ഷിതം",
         "openInMaps": "മാപ്പിൽ തുറക്കുക"
+    },
+    "hotelSearch": {
+        "whereTo": "എവിടേക്ക്?",
+        "dates": "തീയതികൾ",
+        "guests": "അതിഥികൾ",
+        "guest": "അതിഥി",
+        "checkIn": "ചെക്ക്-ഇൻ",
+        "checkOut": "ചെക്ക്-ഔട്ട്",
+        "staysIn": "{{location}}-ൽ താമസം",
+        "propertiesAvailable": "നിങ്ങളുടെ തിരഞ്ഞെടുപ്പിന് {{count}} പ്രോപ്പർട്ടികൾ ലഭ്യമാണ്",
+        "moreFilters": "കൂടുതൽ ഫിൽട്ടറുകൾ",
+        "availableRoomVariants": "ലഭ്യമായ മുറി തരങ്ങൾ",
+        "noHotelsFound": "ഹോട്ടലുകൾ കണ്ടെത്തിയില്ല",
+        "max": "പരമാവധി",
+        "perNight": "/ രാത്രി",
+        "searchHotels": "ഹോട്ടലുകൾ തിരയുക",
+        "noMoreHotels": "നിങ്ങൾ അവസാനം എത്തിയിരിക്കുന്നു",
+        "loadingMore": "കൂടുതൽ ലോഡ് ചെയ്യുന്നു...",
+        "maxGuests": "പരമാവധി {{count}} അതിഥികൾ"
     }
 }
