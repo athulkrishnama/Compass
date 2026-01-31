@@ -35,22 +35,29 @@ function ImageCropper({ ratio, image, onCropComplete }: ImageCropperProps) {
         const scaleY = imageEl.naturalHeight / imageEl.height;
 
         const canvas = document.createElement("canvas");
-        canvas.width = crop.width;
-        canvas.height = crop.height;
+
+        const pixelWidth = Math.round(crop.width * scaleX);
+        const pixelHeight = Math.round(crop.height * scaleY);
+
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
 
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
 
         ctx.drawImage(
             imageEl,
             crop.x * scaleX,
             crop.y * scaleY,
-            crop.width * scaleX,
-            crop.height * scaleY,
+            pixelWidth,
+            pixelHeight,
             0,
             0,
-            crop.width,
-            crop.height
+            pixelWidth,
+            pixelHeight
         );
 
         canvas.toBlob((blob) => {
