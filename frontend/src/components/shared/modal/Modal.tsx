@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react";
+import { useEffect, type PropsWithChildren } from "react";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -7,12 +7,25 @@ interface propType extends PropsWithChildren {
     isOpen: boolean;
 }
 function Modal({ isOpen, children, handleClose }: propType) {
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                handleClose();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [handleClose]);
     return (
         <AnimatePresence>
             {isOpen && (
                 <>
                     <motion.div
-                        className="fixed inset-0 bg-white/30 backdrop-blur-sm z-40"
+                        className="fixed inset-0 bg-white/30 backdrop-blur-sm z-50"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -30,8 +43,12 @@ function Modal({ isOpen, children, handleClose }: propType) {
                             stiffness: 300,
                             damping: 25,
                         }}
+                        onClick={handleClose}
                     >
-                        <div className="relative w-full max-w-lg min-w-[25%] max-h-[80vh] rounded-2xl overflow-visible hide-scroll-bar shadow-2xl bg-white">
+                        <div
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-full max-w-lg min-w-[25%] max-h-[80vh] rounded-2xl overflow-visible hide-scroll-bar shadow-2xl bg-white"
+                        >
                             <div className="absolute inset-0 z-0">
                                 <div className="w-full h-full bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl" />
                             </div>
