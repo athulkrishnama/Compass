@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ImageOff, MapPin } from "lucide-react";
+import { ImageOff, MapPin, Accessibility } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +20,7 @@ export interface DestinationCardProps {
     isFree: boolean;
     entryFee: number;
     isActive: boolean;
+    isWheelChairAccessible: boolean;
 }
 
 function DestinationCard({
@@ -33,6 +34,7 @@ function DestinationCard({
     isFree,
     entryFee,
     isActive,
+    isWheelChairAccessible,
 }: DestinationCardProps) {
     const { t } = useTranslation();
     const TypeIcon = destinationTypeIcons[type];
@@ -74,6 +76,12 @@ function DestinationCard({
                                 : t(translationKey.text.inactive)}
                         </Badge>
                     </div>
+
+                    {isWheelChairAccessible && (
+                        <div className="absolute top-3 right-12 p-2 bg-white/90 rounded-full">
+                            <Accessibility className="w-4 h-4 text-blue-600" />
+                        </div>
+                    )}
 
                     {TypeIcon && (
                         <div className="absolute top-3 right-3 p-2 bg-white/90 rounded-full">
