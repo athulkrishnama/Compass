@@ -11,6 +11,8 @@ import { RoomVariantMapper } from "@mappers/roomVariant.mapper";
 import { ICreateRoomVariantUseCase } from "@application/interfaces/useCase/roomVariant/createRoomVariantUseCase.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
+import { VALUES } from "@presentation/constants/values";
 
 @injectable()
 export class CreateRoomVariantUseCase implements ICreateRoomVariantUseCase {
@@ -41,17 +43,27 @@ export class CreateRoomVariantUseCase implements ICreateRoomVariantUseCase {
       );
     }
 
-    const coverImage = await this._storageService.upload(
+    const resizedImage = await fileResizer(
       data.coverImage,
+      VALUES.HOTEL_ROOM_COVER_IMAGE_MAX_WIDTH,
+    );
+    const webpImage = await webpConverter(resizedImage);
+    const coverImage = await this._storageService.upload(
+      webpImage,
       `${StorageFolderNames.ROOM_VARIANT_COVER_IMAGE}/${Date.now()}`,
     );
 
-    const promises = data.images.map((img, i) =>
-      this._storageService.upload(
+    const promises = data.images.map(async (img, i) => {
+      const resizedImage = await fileResizer(
         img,
+        VALUES.HOTEL_ROOM_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
+      return this._storageService.upload(
+        webpImage,
         `${StorageFolderNames.ROOM_VARIANT_IMAGE}/${Date.now()}-${i}`,
-      ),
-    );
+      );
+    });
 
     const images = await Promise.all(promises);
 

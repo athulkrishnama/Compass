@@ -9,6 +9,8 @@ import { IStorageService } from "@application/interfaces/service/storageService.
 import { IEditRoomVariantUseCase } from "@application/interfaces/useCase/roomVariant/editRoomVariantUseCase.interface";
 import { IEditRoomVariantRequestDTO } from "@domain/dtos/roomVariant/editRoomVariant.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { VALUES } from "@presentation/constants/values";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -47,21 +49,31 @@ export class EditRoomVariantUseCase implements IEditRoomVariantUseCase {
 
     let coverImageUrl = roomVariant.coverImage;
     if (data.coverImage) {
+      const resizedImage = await fileResizer(
+        data.coverImage,
+        VALUES.HOTEL_ROOM_COVER_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
       await this._storageService.delete(roomVariant.coverImage);
       coverImageUrl = await this._storageService.upload(
-        data.coverImage,
+        webpImage,
         `${StorageFolderNames.ROOM_VARIANT_COVER_IMAGE}/${Date.now()}`,
       );
     }
 
     let galleryImages = roomVariant.images;
     if (data.images && data.images.length > 0) {
-      const promises = data.images.map((img, i) =>
-        this._storageService.upload(
+      const promises = data.images.map(async (img, i) => {
+        const resizedImage = await fileResizer(
           img,
+          VALUES.HOTEL_ROOM_IMAGE_MAX_WIDTH,
+        );
+        const webpImage = await webpConverter(resizedImage);
+        return this._storageService.upload(
+          webpImage,
           `${StorageFolderNames.ROOM_VARIANT_IMAGE}/${Date.now()}-${i}`,
-        ),
-      );
+        );
+      });
       const newImages = await Promise.all(promises);
       galleryImages = [...roomVariant.images, ...newImages];
     }

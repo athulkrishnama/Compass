@@ -11,6 +11,8 @@ import { StorageFolderNames } from "@application/constants/storageFolderNames";
 import { HotelMapper } from "@mappers/hotel.mapper";
 import { ICreateHotelUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
+import { VALUES } from "@presentation/constants/values";
 
 @injectable()
 export class CreateHotelUseCase implements ICreateHotelUseCase {
@@ -35,17 +37,27 @@ export class CreateHotelUseCase implements ICreateHotelUseCase {
       throw new ConflictException(INTERNAL_ERROR_MESSAGES.HOTEL_ALREADY_EXISTS);
     }
 
-    const coverImage = await this._storageService.upload(
+    const resizedImage = await fileResizer(
       data.coverImage,
+      VALUES.HOTEL_COVER_IMAGE_MAX_WIDTH,
+    );
+    const webpImage = await webpConverter(resizedImage);
+    const coverImage = await this._storageService.upload(
+      webpImage,
       `${StorageFolderNames.HOTEL_COVER_IMAGE}/${Date.now()}`,
     );
 
-    const promises = data.images.map((img, i) =>
-      this._storageService.upload(
+    const promises = data.images.map(async (img, i) => {
+      const resizedImage = await fileResizer(
         img,
+        VALUES.HOTEL_GALLERY_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
+      return this._storageService.upload(
+        webpImage,
         `${StorageFolderNames.HOTEL_IMAGE}/${Date.now()}-${i}`,
-      ),
-    );
+      );
+    });
 
     const images = await Promise.all(promises);
 

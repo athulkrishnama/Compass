@@ -8,6 +8,8 @@ import { IStorageService } from "@application/interfaces/service/storageService.
 import { IEditHotelUseCase } from "@application/interfaces/useCase/hotel/editHotelUseCase.interface";
 import { IEditHotelRequestDTO } from "@domain/dtos/hotel/editHotel.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { VALUES } from "@presentation/constants/values";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -38,18 +40,28 @@ export class EditHotelUseCase implements IEditHotelUseCase {
 
     if (dto.images) {
       const imageKeys = await Promise.all(
-        dto.images.map((image, i) =>
-          this._storageService.upload(
+        dto.images.map(async (image, i) => {
+          const resizedImage = await fileResizer(
             image,
+            VALUES.HOTEL_GALLERY_IMAGE_MAX_WIDTH,
+          );
+          const webpImage = await webpConverter(resizedImage);
+          return this._storageService.upload(
+            webpImage,
             `${StorageFolderNames.HOTEL_IMAGE}/${Date.now()}-${i}`,
-          ),
-        ),
+          );
+        }),
       );
       hotel.images = [...hotel.images, ...imageKeys];
     }
     if (dto.coverImage) {
-      const imageKey = await this._storageService.upload(
+      const resizedImage = await fileResizer(
         dto.coverImage,
+        VALUES.HOTEL_COVER_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
+      const imageKey = await this._storageService.upload(
+        webpImage,
         `${StorageFolderNames.HOTEL_COVER_IMAGE}/${Date.now()}`,
       );
       hotel.coverImage = imageKey;

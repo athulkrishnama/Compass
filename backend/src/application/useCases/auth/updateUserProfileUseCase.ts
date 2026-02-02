@@ -6,6 +6,8 @@ import { IUpdateUserProfileUseCase } from "@application/interfaces/useCase/auth/
 import { IUpdateUserProfileRequestDTO } from "@domain/dtos/auth/updateUserProfile.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
+import { VALUES } from "@presentation/constants/values";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -30,8 +32,13 @@ export class UpdateUserProfileUseCase implements IUpdateUserProfileUseCase {
     if (mobile) user.mobile = mobile;
     if (date_of_birth) user.date_of_birth = date_of_birth;
     if (profile_image) {
-      user.profile_image = await this._storageService.upload(
+      const resizedImage = await fileResizer(
         profile_image,
+        VALUES.PROFILE_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
+      user.profile_image = await this._storageService.upload(
+        webpImage,
         StorageFolderNames.PROFILE_IMAGE + "/" + id + Date.now(),
       );
     }
@@ -42,8 +49,13 @@ export class UpdateUserProfileUseCase implements IUpdateUserProfileUseCase {
         user.is_verified === VERIFICATION_STATUSES.REJECTED)
     ) {
       user.is_verified = VERIFICATION_STATUSES.PENDING;
-      user.verfication_id_image = await this._storageService.upload(
+      const resizedImage = await fileResizer(
         verification_id_image,
+        VALUES.VERIFICATION_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
+      user.verfication_id_image = await this._storageService.upload(
+        webpImage,
         StorageFolderNames.VERIFICATION_DOCUMENT + "/" + id + Date.now(),
       );
     }

@@ -5,6 +5,8 @@ import { IStorageService } from "@application/interfaces/service/storageService.
 import { IDestinationRepo } from "@application/interfaces/repository/destination/destination.repo.interface";
 import { StorageFolderNames } from "@application/constants/storageFolderNames";
 import { DestinationMapper } from "@mappers/destination.mapper";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
+import { VALUES } from "@presentation/constants/values";
 
 @injectable()
 export class CreateDestinationUseCase implements ICreateDestinationUseCase {
@@ -14,16 +16,26 @@ export class CreateDestinationUseCase implements ICreateDestinationUseCase {
     private _destinationRepository: IDestinationRepo,
   ) {}
   async create(data: ICreateDestinationRequestDTO): Promise<void> {
-    const uploadPromises = data.images.map((image, i) =>
-      this._storageService.upload(
+    const uploadPromises = data.images.map(async (image, i) => {
+      const resizedImage = await fileResizer(
         image,
+        VALUES.DESTINATION_GALLERY_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
+      return await this._storageService.upload(
+        webpImage,
         `${StorageFolderNames.DESTINATION_IMAGE}/${Date.now()}-${i}`,
-      ),
-    );
+      );
+    });
     const imageKeys = await Promise.all(uploadPromises);
 
-    const coverImage = await this._storageService.upload(
+    const resizedImage = await fileResizer(
       data.coverImage,
+      VALUES.DESTINATION_COVER_IMAGE_MAX_WIDTH,
+    );
+    const webpImage = await webpConverter(resizedImage);
+    const coverImage = await this._storageService.upload(
+      webpImage,
       `${StorageFolderNames.DESTINATION_COVER_IMAGE}/${Date.now()}`,
     );
 
