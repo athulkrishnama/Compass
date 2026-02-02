@@ -28,30 +28,29 @@ function ImageCropper({ ratio, image, onCropComplete }: ImageCropperProps) {
     const throttledHandleCrop = useThrottle((c: Crop) => setCrop(c), 50);
 
     async function handleCropComplete() {
-        if (!imgRef.current || !crop.width || !crop.height) return;
+        if (!imgRef.current || !crop?.width || !crop?.height) return;
 
-        const imageEl = imgRef.current;
-        const scaleX = imageEl.naturalWidth / imageEl.width;
-        const scaleY = imageEl.naturalHeight / imageEl.height;
+        const image = imgRef.current;
 
-        const canvas = document.createElement("canvas");
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
 
+        const pixelX = Math.round(crop.x * scaleX);
+        const pixelY = Math.round(crop.y * scaleY);
         const pixelWidth = Math.round(crop.width * scaleX);
         const pixelHeight = Math.round(crop.height * scaleY);
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
         canvas.width = pixelWidth;
         canvas.height = pixelHeight;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
-
         ctx.drawImage(
-            imageEl,
-            crop.x * scaleX,
-            crop.y * scaleY,
+            image,
+            pixelX,
+            pixelY,
             pixelWidth,
             pixelHeight,
             0,
@@ -60,12 +59,16 @@ function ImageCropper({ ratio, image, onCropComplete }: ImageCropperProps) {
             pixelHeight
         );
 
-        canvas.toBlob((blob) => {
-            if (!blob) return;
-            onCropComplete(
-                new File([blob], "CroppedImage.png", { type: "image/png" })
-            );
-        }, "image/png");
+        canvas.toBlob(
+            (blob) => {
+                if (!blob) return;
+                onCropComplete(
+                    new File([blob], "cropped.webp", { type: "image/webp" })
+                );
+            },
+            "image/webp",
+            0.85
+        );
     }
 
     return (

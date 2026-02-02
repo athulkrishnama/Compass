@@ -39,6 +39,7 @@ export class UpdateDestinationUseCase implements IUpdateDestinationUseCase {
       const webpImage = await webpConverter(resizedImage);
       const imageKey = `${StorageFolderNames.DESTINATION_COVER_IMAGE}/${Date.now()}`;
       await this._storageService.upload(webpImage, imageKey);
+      await this._storageService.delete(destination.coverImage);
       destination.coverImage = imageKey;
     }
 

@@ -114,7 +114,6 @@ function EditImageGallerySection({
                 title={t(translationKey.sections.imageGallery)}
             >
                 <div className="space-y-6">
-                    {/* Cover Image Section */}
                     <div className="space-y-2">
                         <p className="text-sm font-medium text-gray-700">
                             {t(translationKey.form.coverImage)}
