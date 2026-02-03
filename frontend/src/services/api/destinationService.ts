@@ -27,6 +27,8 @@ export async function findDestinations(data: IFindDestinationsRequest) {
             type: JSON.stringify(data.type),
             isFree: JSON.stringify(data.isFree),
             isActive: JSON.stringify(data.isActive),
+            sortBy: data.sortBy,
+            sortOrder: data.sortOrder,
         };
         const response = await axiosInstance.get(
             DESTINATION_ROUTES.DESTINATIONS,

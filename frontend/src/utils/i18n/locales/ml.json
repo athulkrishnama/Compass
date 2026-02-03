@@ -101,7 +101,9 @@
         "destinationTypeRequired": "ദയവായി ഒരു ലക്ഷ്യസ്ഥാന തരം തിരഞ്ഞെടുക്കുക",
         "closingTimeAfterOpeningTime": "അവസാന സമയം തുറക്കുന്ന സമയത്തിന് ശേഷമായിരിക്കണം",
         "floorNumberRequired": "ഫ്ലോർ നമ്പർ ആവശ്യമാണ്",
-        "somethingWentWrong": "എന്തോ തെറ്റ് സംഭവിച്ചു. ദയവായി വീണ്ടും ശ്രമിക്കുക."
+        "somethingWentWrong": "എന്തോ തെറ്റ് സംഭവിച്ചു. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
+        "otpLength": "OTP {{count}} അക്ഷരങ്ങൾ ആയിരിക്കണം",
+        "otpNumbersOnly": "OTP അക്കങ്ങൾ മാത്രമായിരിക്കണം"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -224,7 +226,11 @@
         "cityPlaceholder": "നഗരത്തിന്റെ പേര്",
         "landMarkPlaceholder": "ഉദാ. 123 മെയിൻ സ്ട്രീറ്റ്, സെൻട്രൽ പാർക്കിന് സമീപം",
         "pincodePlaceholder": "10001",
-        "searchForLocation": "സ്ഥലം തിരയുക"
+        "searchForLocation": "സ്ഥലം തിരയുക",
+        "searchLabel": "തിരയുക",
+        "typeLabel": "തരം",
+        "priceLabel": "വില",
+        "statusLabel": "നില"
     },
     "button": {
         "submit": "സമർപ്പിക്കുക",
@@ -256,6 +262,7 @@
         "search": "തിരയുക",
         "selected": "തിരഞ്ഞെടുത്തു",
         "cancel": "റദ്ദാക്കുക",
+        "filters": "ഫിൽട്ടറുകൾ",
         "updateProfile": "പ്രൊഫൈൽ അപ്ഡേറ്റ് ചെയ്യുക",
         "close": "അടയ്ക്കുക",
         "upload": "അപ്ലോഡ് ചെയ്യുക",
@@ -345,6 +352,8 @@
         "allTypes": "എല്ലാ തരങ്ങളും",
         "isFree": "സൗജന്യമാണ്",
         "isActive": "സജീവമാണ്",
+        "onlyFree": "സൗജന്യമായവ മാത്രം",
+        "wheelchairAccessible": "വീൽചെയർ പ്രവേശനക്ഷമം",
         "free": "സൗജന്യം",
         "paid": "പണമടയ്ക്കണം",
         "inactive": "നിഷ്ക്രിയം",
@@ -380,7 +389,19 @@
         "baseOccupancy": "അടിസ്ഥാന അധിഭോഗം",
         "maxOccupancy": "പരമാവധി അധിഭോഗം",
         "bedding": "കിടക്ക",
-        "configureRoomDetails": "നിങ്ങളുടെ പ്രോപ്പർട്ടി സൂചി വിസ്തരിക്കാൻ പുതിയ ഭൗതിക മുറി ഇക്കയുടെ വിശദാംശങ്ങൾ കോൺഫിഗർ ചെയ്യുക."
+        "configureRoomDetails": "നിങ്ങളുടെ പ്രോപ്പർട്ടി സൂചി വിസ്തരിക്കാൻ പുതിയ ഭൗതിക മുറി ഇക്കയുടെ വിശദാംശങ്ങൾ കോൺഫിഗർ ചെയ്യുക.",
+        "showMoreFilters": "കൂടുതൽ ഫിൽട്ടറുകൾ കാണിക്കുക",
+        "clearAllFilters": "എല്ലാ ഫിൽട്ടറുകളും ഒഴിവാക്കുക",
+        "activeStatus": "സജീവ അവസ്ഥ",
+        "liveAvailabilityOnly": "ലഭ്യത മാത്രം",
+        "freeEntryOnly": "സൗജന്യ പ്രവേശനം മാത്രം",
+        "sortConfiguration": "ക്രമീകരണം",
+        "sortBy": "അനുസരിച്ച് ക്രമീകരിക്കുക",
+        "sortOrder": "ക്രമം",
+        "sortOrderAsc": "ആരോഹണം",
+        "sortOrderDesc": "അവരോഹണം",
+        "sortByName": "പേര്",
+        "sortByPrice": "വില"
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",

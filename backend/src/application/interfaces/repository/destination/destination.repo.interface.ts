@@ -12,6 +12,8 @@ export interface IDestinationRepo
     isActive?: boolean;
     isFree?: boolean;
     pageNo: number;
+    sortBy?: "name" | "entryFee";
+    sortOrder?: "asc" | "desc";
   }): Promise<{
     destinations: DestinationEntity[];
     totalDestinations: number;

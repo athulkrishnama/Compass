@@ -115,4 +115,6 @@ export enum INTERNAL_ERROR_MESSAGES {
   GUESTS_INVALID = "guestsInvalid",
   MAX_PRICE_INVALID = "maxPriceInvalid",
   MIN_PRICE_INVALID = "minPriceInvalid",
+  INVALID_SORT_BY = "invalidSortBy",
+  INVALID_SORT_ORDER = "invalidSortOrder",
 }

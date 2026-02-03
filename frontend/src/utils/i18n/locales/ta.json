@@ -101,7 +101,9 @@
         "destinationTypeRequired": "சேருமிட வகையைத் தேர்ந்தெடுக்கவும்",
         "closingTimeAfterOpeningTime": "முடிவு நேரம் தொடக்க நேரத்திற்கு பிறகு இருக்க வேண்டும்",
         "floorNumberRequired": "தள எண் தேவை",
-        "somethingWentWrong": "ஏதோ தவறு நடந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
+        "somethingWentWrong": "ஏதோ தவறு நடந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.",
+        "otpLength": "OTP {{count}} எழுத்துகளாக இருக்க வேண்டும்",
+        "otpNumbersOnly": "OTP எண்கள் மட்டுமே இருக்க வேண்டும்"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -224,7 +226,11 @@
         "cityPlaceholder": "நகரத்தின் பெயர்",
         "landMarkPlaceholder": "எ.கா. 123 மெயின் தெரு, சென்ட்ரல் பார்க் அருகில்",
         "pincodePlaceholder": "10001",
-        "searchForLocation": "இருப்பிடத்தைத் தேடுங்கள்"
+        "searchForLocation": "இருப்பிடத்தைத் தேடுங்கள்",
+        "searchLabel": "தேடல்",
+        "typeLabel": "வகை",
+        "priceLabel": "விலை",
+        "statusLabel": "நிலை"
     },
     "button": {
         "submit": "சமர்ப்பிக்க",
@@ -236,6 +242,7 @@
         "signup": "சைன் அப்",
         "sendOtp": "OTP அனுப்பவும்",
         "reset": "மீட்டமை",
+        "filters": "வடிகட்டிகள்",
         "logout": "லாக்அவுட்",
         "dashboard": "டாஷ்போர்டு",
         "reports": "அறிக்கைகள்",
@@ -345,6 +352,8 @@
         "allTypes": "அனைத்து வகைகள்",
         "isFree": "இலவசமா",
         "isActive": "செயலில் உள்ளதா",
+        "onlyFree": "இலவசம் மட்டும்",
+        "wheelchairAccessible": "சக்கர நாற்காலி அணுகக்கூடியது",
         "free": "இலவசம்",
         "paid": "கட்டணம்",
         "inactive": "செயலில் இல்லை",
@@ -380,7 +389,19 @@
         "baseOccupancy": "அடிப்படை அதிபொகம்",
         "maxOccupancy": "அதிகபட்ச அதிபொகம்",
         "bedding": "கிடக்கை",
-        "configureRoomDetails": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்."
+        "configureRoomDetails": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்.",
+        "showMoreFilters": "மேலும் வடிகட்டிகளை காட்டவும்",
+        "clearAllFilters": "அனைத்து வடிகட்டிகளையும் நீக்கவும்",
+        "activeStatus": "செயலில் உள்ள நிலை",
+        "liveAvailabilityOnly": "நேரடி வசதி மட்டும்",
+        "freeEntryOnly": "இலவச அனுமதி மட்டும்",
+        "sortConfiguration": "வரிசைப்படுத்தல் அமைப்பு",
+        "sortBy": "வரிசையிட",
+        "sortOrder": "வரிசை",
+        "sortOrderAsc": "மேலேற்றம்",
+        "sortOrderDesc": "கீழேற்றம்",
+        "sortByName": "பெயர்",
+        "sortByPrice": "விலை"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",

@@ -101,7 +101,9 @@
         "destinationTypeRequired": "कृपया एक गंतव्य प्रकार चुनें",
         "closingTimeAfterOpeningTime": "समापन समय उद्घाटन समय के बाद होना चाहिए",
         "floorNumberRequired": "मंजिल संख्या आवश्यक है",
-        "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।"
+        "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
+        "otpLength": "OTP {{count}} अक्षरों का होना चाहिए",
+        "otpNumbersOnly": "OTP केवल अंक होना चाहिए"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -224,7 +226,11 @@
         "cityPlaceholder": "शहर का नाम",
         "landMarkPlaceholder": "उदा. 123 मुख्य सड़क, सेंट्रल पार्क के पास",
         "pincodePlaceholder": "10001",
-        "searchForLocation": "स्थान खोजें"
+        "searchForLocation": "स्थान खोजें",
+        "searchLabel": "खोज",
+        "typeLabel": "प्रकार",
+        "priceLabel": "मूल्य निर्धारण",
+        "statusLabel": "स्थिति"
     },
     "button": {
         "submit": "सबमिट करें",
@@ -236,6 +242,7 @@
         "signup": "साइन अप",
         "sendOtp": "OTP भेजें",
         "reset": "रीसेट करें",
+        "filters": "फ़िल्टर",
         "logout": "लॉग आउट",
         "dashboard": "डैशबोर्ड",
         "reports": "रिपोर्ट्स",
@@ -345,6 +352,8 @@
         "allTypes": "सभी प्रकार",
         "isFree": "मुफ्त है",
         "isActive": "सक्रिय है",
+        "onlyFree": "केवल मुफ़्त",
+        "wheelchairAccessible": "व्हीलचेयर सुलभ",
         "free": "मुफ्त",
         "paid": "सशुल्क",
         "inactive": "निष्क्रिय",
@@ -380,7 +389,19 @@
         "baseOccupancy": "आधार अधिभोग",
         "maxOccupancy": "अधिकतम अधिभोग",
         "bedding": "बिस्तर",
-        "configureRoomDetails": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें।"
+        "configureRoomDetails": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें।",
+        "showMoreFilters": "अधिक फ़िल्टर दिखाएं",
+        "clearAllFilters": "सभी फ़िल्टर साफ़ करें",
+        "activeStatus": "सक्रिय स्थिति",
+        "liveAvailabilityOnly": "केवल लाइव उपलब्धता",
+        "freeEntryOnly": "केवल निःशुल्क प्रवेश",
+        "sortConfiguration": "क्रमबद्ध कॉन्फ़िगरेशन",
+        "sortBy": "इसके अनुसार क्रमबद्ध करें",
+        "sortOrder": "क्रम",
+        "sortOrderAsc": "आरोही",
+        "sortOrderDesc": "अवरोही",
+        "sortByName": "नाम",
+        "sortByPrice": "कीमत"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
