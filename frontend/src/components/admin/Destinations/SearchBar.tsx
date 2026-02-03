@@ -22,7 +22,7 @@ import {
     CheckCircle2,
     XCircle,
 } from "lucide-react";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState, useEffect, type Dispatch, type SetStateAction } from "react";
 import { destinationTypeIcons } from "@/constants/destinationConstants/destinationTypeIcons";
 import {
     Popover,
@@ -30,6 +30,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useThrottledCallback } from "@tanstack/react-pacer";
 
 export interface DestinationsFilter {
     pageNo: number;
@@ -69,6 +70,14 @@ function SearchBar({ filter, setFilter }: SearchBarProps) {
             ...localFilter,
         });
     }
+
+    const throttledHandleSearch = useThrottledCallback(handleSearch, {
+        wait: 500,
+    });
+
+    useEffect(() => {
+        throttledHandleSearch();
+    }, [localFilter, throttledHandleSearch]);
 
     function handleReset() {
         const resetState = {
@@ -361,15 +370,7 @@ function SearchBar({ filter, setFilter }: SearchBarProps) {
                 custom={5}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-            >
-                <Button
-                    onClick={handleSearch}
-                    className="flex items-center gap-2 bg-black text-white hover:bg-gray-900 transition-colors"
-                >
-                    <Search className="w-4 h-4" />
-                    {t(translationKey.button.search)}
-                </Button>
-            </motion.div>
+            ></motion.div>
         </motion.div>
     );
 }
