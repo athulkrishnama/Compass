@@ -80,3 +80,25 @@ export async function deleteHotelImage({
         throw new Error("something went wrong");
     }
 }
+
+export async function searchHotels<T extends object>(data: T) {
+    try {
+        const paramsData: Record<string, string | number> = {};
+        for (const key in data) {
+            if (typeof data[key] === "object") {
+                paramsData[key] = JSON.stringify(data[key]);
+            } else {
+                paramsData[key] = data[key] as string | number;
+            }
+        }
+        const response = await axiosInstance.get(HOTEL_ROUTES.SEARCH, {
+            params: paramsData,
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

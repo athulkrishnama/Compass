@@ -28,37 +28,47 @@ function ImageCropper({ ratio, image, onCropComplete }: ImageCropperProps) {
     const throttledHandleCrop = useThrottle((c: Crop) => setCrop(c), 50);
 
     async function handleCropComplete() {
-        if (!imgRef.current || !crop.width || !crop.height) return;
+        if (!imgRef.current || !crop?.width || !crop?.height) return;
 
-        const imageEl = imgRef.current;
-        const scaleX = imageEl.naturalWidth / imageEl.width;
-        const scaleY = imageEl.naturalHeight / imageEl.height;
+        const image = imgRef.current;
+
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+
+        const pixelX = Math.round(crop.x * scaleX);
+        const pixelY = Math.round(crop.y * scaleY);
+        const pixelWidth = Math.round(crop.width * scaleX);
+        const pixelHeight = Math.round(crop.height * scaleY);
 
         const canvas = document.createElement("canvas");
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+
         ctx.drawImage(
-            imageEl,
-            crop.x * scaleX,
-            crop.y * scaleY,
-            crop.width * scaleX,
-            crop.height * scaleY,
+            image,
+            pixelX,
+            pixelY,
+            pixelWidth,
+            pixelHeight,
             0,
             0,
-            crop.width,
-            crop.height
+            pixelWidth,
+            pixelHeight
         );
 
-        canvas.toBlob((blob) => {
-            if (!blob) return;
-            onCropComplete(
-                new File([blob], "CroppedImage.png", { type: "image/png" })
-            );
-        }, "image/png");
+        canvas.toBlob(
+            (blob) => {
+                if (!blob) return;
+                onCropComplete(
+                    new File([blob], "cropped.webp", { type: "image/webp" })
+                );
+            },
+            "image/webp",
+            0.85
+        );
     }
 
     return (

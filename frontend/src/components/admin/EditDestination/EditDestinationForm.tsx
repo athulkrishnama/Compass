@@ -164,6 +164,10 @@ function EditDestinationForm({ destinationData }: EditDestinationFormProps) {
     };
 
     const handleNewCoverImageChange = (file: File | null) => {
+        if (file && file.size > 10 * 1024 * 1024) {
+            toast.error(t(translationKey.errors.maxFileSize, { size: "10MB" }));
+            return;
+        }
         setNewCoverImage(file);
     };
 

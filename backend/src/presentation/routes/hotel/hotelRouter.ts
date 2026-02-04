@@ -12,6 +12,13 @@ export class HotelRouter {
   }
 
   _setRoute() {
+    this._router.get(
+      HotelRoutes.SEARCH,
+      (req: Request, res: Response, next: NextFunction) => {
+        hotelController.handleHotelSearch(req, res, next);
+      },
+    );
+
     this._router.post(
       HotelRoutes.INDEX,
       authMiddleware.check,
@@ -44,7 +51,7 @@ export class HotelRouter {
     this._router.get(
       `${HotelRoutes.INDEX}:id`,
       authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.TRAVELER]),
       (req: Request, res: Response, next: NextFunction) => {
         hotelController.handleGetHotelById(req, res, next);
       },

@@ -27,6 +27,8 @@ export async function findDestinations(data: IFindDestinationsRequest) {
             type: JSON.stringify(data.type),
             isFree: JSON.stringify(data.isFree),
             isActive: JSON.stringify(data.isActive),
+            sortBy: data.sortBy,
+            sortOrder: data.sortOrder,
         };
         const response = await axiosInstance.get(
             DESTINATION_ROUTES.DESTINATIONS,
@@ -101,12 +103,26 @@ export async function getDestinations(data: IListDestinationRequestDTO) {
             pageNo: data.pageNo,
             queryString: data.queryString,
             type: JSON.stringify(data.type),
-            isActive: JSON.stringify(data.isActive),
             activities: JSON.stringify(data.activities),
             minPrice: data.minPrice,
             maxPrice: data.maxPrice,
             city: JSON.stringify(data.city),
             proximityRadius: data.proximityRadius,
+            ...(data.isWheelchairAccessible && {
+                isWheelchairAccessible: data.isWheelchairAccessible,
+            }),
+            ...(data.isActive && {
+                isActive: data.isActive,
+            }),
+            ...(data.onlyFree && {
+                onlyFree: data.onlyFree,
+            }),
+            ...(data.sortBy && {
+                sortBy: data.sortBy,
+            }),
+            ...(data.sortOrder && {
+                sortOrder: data.sortOrder,
+            }),
         };
         const response = await axiosInstance.get(
             DESTINATION_ROUTES.DESTINATION_LIST,

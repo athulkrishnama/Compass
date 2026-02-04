@@ -11,4 +11,8 @@ export interface IListDestinationRequestDTO {
     maxPrice?: number;
     city?: [number, number];
     proximityRadius?: number;
+    onlyFree?: boolean;
+    isWheelchairAccessible?: boolean;
+    sortBy?: "name" | "entryFee";
+    sortOrder?: "asc" | "desc";
 }

@@ -17,6 +17,7 @@ export const Route = createFileRoute("/traveler")({
             "/traveler/signup",
             "/traveler/forgetPassword",
             "/traveler/destinations",
+            "/traveler/hotels",
         ];
 
         const isAllowedRoute =
@@ -43,6 +44,10 @@ function RouteComponent() {
             route: "/traveler/destinations",
         },
         {
+            name: t(translationKey.button.hotels),
+            route: "/traveler/hotels",
+        },
+        {
             name: t(translationKey.button.bookings),
             route: "/traveler/bookings",
         },
@@ -50,15 +55,12 @@ function RouteComponent() {
         { name: t(translationKey.button.profile), route: "/traveler/profile" },
     ];
 
-    // Routes that should not show the navbar
     const noNavbarRoutes = [
         "/traveler/login",
         "/traveler/signup",
         "/traveler/forgetPassword",
     ];
-    const hideNavbar =
-        noNavbarRoutes.includes(pathname) ||
-        pathname.startsWith("/traveler/destination/");
+    const hideNavbar = noNavbarRoutes.includes(pathname);
 
     return (
         <div className="h-full w-full">

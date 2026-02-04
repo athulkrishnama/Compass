@@ -15,6 +15,7 @@ interface Destination {
     isFree: boolean;
     entryFee: number;
     isActive: boolean;
+    isWheelChairAccessible: boolean;
 }
 
 export interface IGetDestinationResponseDTO {

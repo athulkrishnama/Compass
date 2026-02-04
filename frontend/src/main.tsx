@@ -14,6 +14,8 @@ import { Toaster } from "sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { isLoggedin, roleChecker } from "./utils/authChecker.ts";
 import { env } from "./config/env.ts";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { pacerDevtoolsPlugin } from "@tanstack/react-pacer-devtools";
 
 export const router = createRouter({
     routeTree,
@@ -29,6 +31,10 @@ declare module "@tanstack/react-router" {
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <GoogleOAuthProvider clientId={env.VITE_GOOGLE_CLIENT_ID}>
+            <TanStackDevtools
+                eventBusConfig={{ debug: false }}
+                plugins={[pacerDevtoolsPlugin()]}
+            />
             <QueryClientProvider client={queryClient}>
                 <Provider store={store}>
                     <PersistGate persistor={persistor}>

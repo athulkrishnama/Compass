@@ -6,6 +6,8 @@ import { ResourceNotFoundException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { StorageFolderNames } from "@application/constants/storageFolderNames";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
+import { VALUES } from "@presentation/constants/values";
 
 @injectable()
 export class UpdateDestinationUseCase implements IUpdateDestinationUseCase {
@@ -30,18 +32,29 @@ export class UpdateDestinationUseCase implements IUpdateDestinationUseCase {
       destination.description = requestDto.description;
 
     if (requestDto.coverImage) {
+      const resizedImage = await fileResizer(
+        requestDto.coverImage,
+        VALUES.DESTINATION_COVER_IMAGE_MAX_WIDTH,
+      );
+      const webpImage = await webpConverter(resizedImage);
       const imageKey = `${StorageFolderNames.DESTINATION_COVER_IMAGE}/${Date.now()}`;
-      await this._storageService.upload(requestDto.coverImage, imageKey);
+      await this._storageService.upload(webpImage, imageKey);
+      await this._storageService.delete(destination.coverImage);
       destination.coverImage = imageKey;
     }
 
     if (requestDto.images) {
-      const uploadPromises = requestDto.images.map((image, i) =>
-        this._storageService.upload(
+      const uploadPromises = requestDto.images.map(async (image, i) => {
+        const resizedImage = await fileResizer(
           image,
+          VALUES.DESTINATION_GALLERY_IMAGE_MAX_WIDTH,
+        );
+        const webpImage = await webpConverter(resizedImage);
+        return this._storageService.upload(
+          webpImage,
           `${StorageFolderNames.DESTINATION_IMAGE}/${Date.now()}-${i}`,
-        ),
-      );
+        );
+      });
       const imageKeys = await Promise.all(uploadPromises);
       destination.images = [...destination.images, ...imageKeys];
     }

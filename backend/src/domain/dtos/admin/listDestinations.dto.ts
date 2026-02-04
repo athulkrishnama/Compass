@@ -6,6 +6,8 @@ export interface IListDestinationRequestDTO {
   isActive?: boolean;
   isFree?: boolean;
   pageNo: number;
+  sortBy?: "name" | "entryFee";
+  sortOrder?: "asc" | "desc";
 }
 
 interface Destination {

@@ -1,4 +1,7 @@
-import React, { type ChangeEvent, type RefObject } from "react";
+import React, { useCallback, type ChangeEvent, type RefObject } from "react";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import translationKey from "../../../utils/i18n/translationKey";
 
 interface propType {
     count: number;
@@ -8,6 +11,7 @@ interface propType {
 }
 
 function OTP({ count, handleComplete, disabled, rootRef }: propType) {
+    const { t } = useTranslation();
     const handleSubmit = () => {
         const index = rootRef.current.findIndex((ref) => {
             if (ref) {
@@ -51,6 +55,31 @@ function OTP({ count, handleComplete, disabled, rootRef }: propType) {
             }
         }
     };
+
+    const handlePaste = useCallback(
+        (text?: string) => {
+            if (!text) return;
+            if (text.length !== count) {
+                toast.error(t(translationKey.errors.otpLength, { count }));
+                return;
+            }
+
+            for (const char of text) {
+                if (isNaN(Number(char))) {
+                    toast.error(t(translationKey.errors.otpNumbersOnly));
+                    return;
+                }
+            }
+
+            rootRef.current.forEach((ref, i) => {
+                if (ref) {
+                    ref.value = text[i];
+                }
+            });
+        },
+        [count, t, rootRef]
+    );
+
     return (
         <div className="flex items-center justify-center gap-3">
             {Array(count)
@@ -60,6 +89,10 @@ function OTP({ count, handleComplete, disabled, rootRef }: propType) {
                         key={i}
                         onChange={onData}
                         onKeyUp={handleKeyDown}
+                        onPaste={(e) => {
+                            e.preventDefault();
+                            handlePaste(e.clipboardData.getData("text"));
+                        }}
                         data-index={i}
                         type="number"
                         disabled={disabled}

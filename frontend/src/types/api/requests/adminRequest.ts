@@ -15,4 +15,6 @@ export interface IFindDestinationsRequest {
     isActive?: boolean;
     type?: DESTINATION_TYPES[];
     isFree?: boolean;
+    sortBy?: "name" | "entryFee";
+    sortOrder?: "asc" | "desc";
 }

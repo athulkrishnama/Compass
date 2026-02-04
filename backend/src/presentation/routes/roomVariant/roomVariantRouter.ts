@@ -28,7 +28,7 @@ export class RoomVariantRouter {
     this._router.get(
       RoomVariantRoutes.BY_HOTEL,
       authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN]),
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN, ROLES.TRAVELER]),
       (req: Request, res: Response, next: NextFunction) => {
         roomVariantController.handleListRoomVariantsByHotelId(req, res, next);
       },
@@ -37,7 +37,7 @@ export class RoomVariantRouter {
     this._router.get(
       RoomVariantRoutes.BY_ID,
       authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN]),
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN, ROLES.TRAVELER]),
       (req: Request, res: Response, next: NextFunction) => {
         roomVariantController.handleGetRoomVariantById(req, res, next);
       },
@@ -46,7 +46,7 @@ export class RoomVariantRouter {
     this._router.patch(
       RoomVariantRoutes.BY_ID,
       authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.TRAVELER]),
       uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
       (req: Request, res: Response, next: NextFunction) => {
         roomVariantController.handleEditRoomVariant(req, res, next);

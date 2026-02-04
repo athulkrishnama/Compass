@@ -14,6 +14,7 @@ export class RoomVariantMapper {
         name: roomVariant.name,
         coverImage: roomVariant.coverImage,
         basePrice: roomVariant.basePrice,
+        maxOccupancy: roomVariant.maxOccupancy,
       })),
       count: roomVariants.length,
     };

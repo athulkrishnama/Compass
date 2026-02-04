@@ -140,5 +140,7 @@
   "roomVariantUpdatedSuccessfully": "Room variant updated successfully",
   "roomVariantImageDeletedSuccessfully": "Room variant image deleted successfully",
   "statusMissingOrInvalid": "Status is missing or invalid",
-  "floorMissingOrInvalid": "Floor is missing or invalid"
+  "floorMissingOrInvalid": "Floor is missing or invalid",
+  "invalidSortBy": "Invalid sort by field",
+  "invalidSortOrder": "Invalid sort order"
 }

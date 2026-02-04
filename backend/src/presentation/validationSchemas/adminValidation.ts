@@ -169,6 +169,16 @@ export const listDestinationsValidationSchema = z.object({
     )
     .optional(),
   pageNo: z.coerce.number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO }),
+  sortBy: z
+    .enum(["name", "entryFee"], {
+      error: INTERNAL_ERROR_MESSAGES.INVALID_SORT_BY,
+    })
+    .optional(),
+  sortOrder: z
+    .enum(["asc", "desc"], {
+      error: INTERNAL_ERROR_MESSAGES.INVALID_SORT_ORDER,
+    })
+    .optional(),
 });
 
 export const updateDestinationValidationSchema = z.object({

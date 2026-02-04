@@ -110,3 +110,44 @@ export const editHotelValidationSchema = z.object({
       .optional(),
   ),
 });
+
+export const hotelSearchValidationSchema = z.object({
+  queryString: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.QUERY_STRING_INVALID })
+    .optional(),
+  city: z.preprocess(
+    (v) => (typeof v === "string" ? JSON.parse(v) : v),
+    z
+      .tuple([z.number(), z.number()], {
+        error: INTERNAL_ERROR_MESSAGES.CITY_MISSING_OR_INVALID,
+      })
+      .optional(),
+  ),
+  proximityRadius: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.PROXIMITY_RADIUS_INVALID })
+    .positive({ error: INTERNAL_ERROR_MESSAGES.PROXIMITY_RADIUS_INVALID })
+    .optional(),
+  checkInDate: z.coerce
+    .date({ error: INTERNAL_ERROR_MESSAGES.CHECK_IN_DATE_INVALID })
+    .optional(),
+  checkOutDate: z.coerce
+    .date({ error: INTERNAL_ERROR_MESSAGES.CHECK_OUT_DATE_INVALID })
+    .optional(),
+  pageNo: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO })
+    .int({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO })
+    .positive({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO }),
+  guests: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.GUESTS_INVALID })
+    .int({ error: INTERNAL_ERROR_MESSAGES.GUESTS_INVALID })
+    .positive({ error: INTERNAL_ERROR_MESSAGES.GUESTS_INVALID })
+    .optional(),
+  maxPrice: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.MAX_PRICE_INVALID })
+    .positive({ error: INTERNAL_ERROR_MESSAGES.MAX_PRICE_INVALID })
+    .optional(),
+  minPrice: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.MIN_PRICE_INVALID })
+    .nonnegative({ error: INTERNAL_ERROR_MESSAGES.MIN_PRICE_INVALID })
+    .optional(),
+});

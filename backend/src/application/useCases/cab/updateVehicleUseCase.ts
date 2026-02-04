@@ -8,6 +8,8 @@ import { IStorageService } from "@application/interfaces/service/storageService.
 import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updateVehicleUseCase.interface";
 import { IUpdateVehicleRequestDTO } from "@domain/dtos/cab/updateVehicle.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { VALUES } from "@presentation/constants/values";
+import { fileResizer, webpConverter } from "@presentation/utils/Fileconverter";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -52,12 +54,17 @@ export class UpdateVehicleUseCase implements IUpdateVehicleUseCase {
     if (dto.images?.length) {
       const timestamp = Date.now();
       const keys = await Promise.all(
-        dto.images.map((image, index) =>
-          this._storageService.upload(
+        dto.images.map(async (image, index) => {
+          const resizedImage = await fileResizer(
             image,
+            VALUES.CAB_IMAGE_MAX_WIDTH,
+          );
+          const webpImage = await webpConverter(resizedImage);
+          return this._storageService.upload(
+            webpImage,
             `${StorageFolderNames.CAB_VEHICLE_IMAGE}/${dto.userId}/${timestamp}-${index}`,
-          ),
-        ),
+          );
+        }),
       );
 
       imageKeys = [...imageKeys, ...keys];

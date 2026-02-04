@@ -25,6 +25,8 @@ export class DestinationRepo
     isActive?: boolean;
     isFree?: boolean;
     pageNo: number;
+    sortBy?: "name" | "entryFee";
+    sortOrder?: "asc" | "desc";
   }): Promise<{
     destinations: DestinationEntity[];
     totalDestinations: number;
@@ -54,10 +56,17 @@ export class DestinationRepo
       query.isFree = filter.isFree;
     }
 
+    const sort: Record<string, 1 | -1> = {};
+    if (filter.sortBy) {
+      sort[filter.sortBy] = filter.sortOrder === "desc" ? -1 : 1;
+      sort["_id"] = 1;
+    }
+
     const totalDestinations = await this.model.countDocuments(query);
     const totalPages = Math.ceil(totalDestinations / VALUES.DESTINATIONS_LIMIT);
     const destinations = await this.model
       .find(query)
+      .sort(sort)
       .skip((filter.pageNo - 1) * VALUES.DESTINATIONS_LIMIT)
       .limit(VALUES.DESTINATIONS_LIMIT)
       .exec()
@@ -91,6 +100,10 @@ export class DestinationRepo
     city?: [number, number];
     proximityRadius?: number;
     activities?: ACTIVITY_TYPE[];
+    onlyFree?: boolean;
+    isWheelchairAccessible?: boolean;
+    sortBy?: "name" | "entryFee";
+    sortOrder?: "asc" | "desc";
   }): Promise<{ destinations: DestinationEntity[] }> {
     const query: RootFilterQuery<IDestinationDocument> = {};
 
@@ -108,6 +121,14 @@ export class DestinationRepo
       query.type = { $in: filter.type };
     }
 
+    if (typeof filter.onlyFree !== "undefined" && filter.onlyFree) {
+      query.isFree = true;
+    }
+
+    if (typeof filter.isWheelchairAccessible !== "undefined") {
+      query.isWheelChairAccessible = filter.isWheelchairAccessible;
+    }
+
     if (typeof filter.isActive === "boolean") {
       query.isActive = filter.isActive;
 
@@ -116,12 +137,12 @@ export class DestinationRepo
       }
     }
 
-    if (filter.minPrice) {
+    if (!filter.onlyFree && filter.minPrice) {
       query.isFree = false;
       query.entryFee = { $gte: filter.minPrice };
     }
 
-    if (filter.maxPrice) {
+    if (!filter.onlyFree && filter.maxPrice) {
       query.isFree = false;
       query.entryFee = { $lte: filter.maxPrice };
     }
@@ -138,8 +159,15 @@ export class DestinationRepo
       };
     }
 
+    const sort: Record<string, 1 | -1> = {};
+    if (filter.sortBy) {
+      sort[filter.sortBy] = filter.sortOrder === "desc" ? -1 : 1;
+      sort["_id"] = 1;
+    }
+
     const docs = await this.model
       .find(query)
+      .sort(sort)
       .skip((filter.pageNo - 1) * VALUES.DESTINATIONS_LIMIT)
       .limit(VALUES.DESTINATIONS_LIMIT);
     return { destinations: docs.map((doc) => this.toEntity(doc)) };
