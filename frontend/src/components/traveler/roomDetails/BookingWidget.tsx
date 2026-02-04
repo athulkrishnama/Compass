@@ -11,6 +11,15 @@ import {
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { format, differenceInDays } from "date-fns";
+import { type DateRange } from "react-day-picker";
+import { cn } from "@/lib/utils";
 
 interface BookingWidgetProps {
     basePrice: number;
@@ -23,9 +32,14 @@ export default function BookingWidget({
 }: BookingWidgetProps) {
     const { t } = useTranslation();
     const [guestCount, setGuestCount] = useState(1);
+    const [date, setDate] = useState<DateRange | undefined>({
+        from: new Date(),
+        to: new Date(new Date().setDate(new Date().getDate() + 2)),
+    });
 
-    const nights = 2;
-    const total = basePrice * nights;
+    const nights =
+        date?.from && date?.to ? differenceInDays(date.to, date.from) : 0;
+    const total = basePrice * Math.max(nights, 1);
 
     const handleIncrementGuests = () => {
         if (guestCount < maxOccupancy) {
@@ -59,29 +73,75 @@ export default function BookingWidget({
                     </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="p-3 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors cursor-pointer">
-                        <div className="flex items-center gap-2 text-gray-500">
-                            <CalendarDays className="w-4 h-4" />
-                            <span className="text-xs uppercase font-medium">
-                                {t(translationKey.hotelSearch.checkIn)}
-                            </span>
-                        </div>
-                        <p className="text-sm font-medium text-gray-400 mt-1">
-                            {t(translationKey.roomDetails.selectDate)}
-                        </p>
-                    </div>
-                    <div className="p-3 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors cursor-pointer">
-                        <div className="flex items-center gap-2 text-gray-500">
-                            <CalendarDays className="w-4 h-4" />
-                            <span className="text-xs uppercase font-medium">
-                                {t(translationKey.hotelSearch.checkOut)}
-                            </span>
-                        </div>
-                        <p className="text-sm font-medium text-gray-400 mt-1">
-                            {t(translationKey.roomDetails.selectDate)}
-                        </p>
-                    </div>
+                <div className="mb-4">
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <div className="grid grid-cols-2 gap-0 border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 transition-colors cursor-pointer">
+                                <div className="p-3 border-r border-gray-200">
+                                    <div className="flex items-center gap-2 text-gray-500 mb-1">
+                                        <CalendarDays className="w-4 h-4" />
+                                        <span className="text-[10px] uppercase font-bold tracking-wider">
+                                            {t(
+                                                translationKey.hotelSearch
+                                                    .checkIn
+                                            )}
+                                        </span>
+                                    </div>
+                                    <p
+                                        className={cn(
+                                            "text-sm font-semibold",
+                                            !date?.from && "text-gray-400"
+                                        )}
+                                    >
+                                        {date?.from
+                                            ? format(date.from, "LLL dd, y")
+                                            : t(
+                                                  translationKey.roomDetails
+                                                      .selectDate
+                                              )}
+                                    </p>
+                                </div>
+                                <div className="p-3">
+                                    <div className="flex items-center gap-2 text-gray-500 mb-1">
+                                        <CalendarDays className="w-4 h-4" />
+                                        <span className="text-[10px] uppercase font-bold tracking-wider">
+                                            {t(
+                                                translationKey.hotelSearch
+                                                    .checkOut
+                                            )}
+                                        </span>
+                                    </div>
+                                    <p
+                                        className={cn(
+                                            "text-sm font-semibold",
+                                            !date?.to && "text-gray-400"
+                                        )}
+                                    >
+                                        {date?.to
+                                            ? format(date.to, "LLL dd, y")
+                                            : t(
+                                                  translationKey.roomDetails
+                                                      .selectDate
+                                              )}
+                                    </p>
+                                </div>
+                            </div>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                                initialFocus
+                                mode="range"
+                                defaultMonth={date?.from}
+                                selected={date}
+                                onSelect={setDate}
+                                numberOfMonths={1}
+                                disabled={(d: Date) =>
+                                    d <
+                                    new Date(new Date().setHours(0, 0, 0, 0))
+                                }
+                            />
+                        </PopoverContent>
+                    </Popover>
                 </div>
 
                 <div className="p-3 border border-gray-200 rounded-xl mb-6">
@@ -133,12 +193,12 @@ export default function BookingWidget({
                         <span className="text-gray-600">
                             {t(translationKey.roomDetails.baseNights, {
                                 price: `₹${basePrice.toLocaleString("en-IN")}`,
-                                nights: nights,
+                                nights: Math.max(nights, 1),
                             })}
                         </span>
                         <span className="flex items-center text-gray-900">
                             <IndianRupee className="w-3 h-3" />
-                            {(basePrice * nights).toLocaleString("en-IN")}
+                            {total.toLocaleString("en-IN")}
                         </span>
                     </div>
                     <div className="flex justify-between font-semibold pt-3 border-t border-gray-100">
