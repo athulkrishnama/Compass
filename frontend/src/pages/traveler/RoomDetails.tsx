@@ -88,6 +88,7 @@ function RoomDetailsContent() {
 
                     <div className="lg:col-span-1">
                         <BookingWidget
+                            roomVariantId={roomVariantId}
                             basePrice={roomVariant.basePrice}
                             maxOccupancy={roomVariant.maxOccupancy}
                         />

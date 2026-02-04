@@ -7,6 +7,8 @@ import {
     Info,
     Plus,
     Minus,
+    DoorOpen,
+    Loader2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
@@ -20,13 +22,17 @@ import {
 import { format, differenceInDays } from "date-fns";
 import { type DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { createGetRoomVariantAvailabilityQueryOptions } from "@/queryOptions/roomVariantQueryOptions";
 
 interface BookingWidgetProps {
+    roomVariantId: string;
     basePrice: number;
     maxOccupancy: number;
 }
 
 export default function BookingWidget({
+    roomVariantId,
     basePrice,
     maxOccupancy,
 }: BookingWidgetProps) {
@@ -40,6 +46,20 @@ export default function BookingWidget({
     const nights =
         date?.from && date?.to ? differenceInDays(date.to, date.from) : 0;
     const total = basePrice * Math.max(nights, 1);
+
+    const { data: availabilityData, isLoading: isLoadingAvailability } =
+        useQuery({
+            ...createGetRoomVariantAvailabilityQueryOptions({
+                roomVariantId,
+                checkinDate: date?.from ?? new Date(),
+                checkoutDate:
+                    date?.to ??
+                    new Date(new Date().setDate(new Date().getDate() + 2)),
+            }),
+            enabled: !!date?.from && !!date?.to,
+        });
+
+    const availableRooms = availabilityData?.data?.available ?? 0;
 
     const handleIncrementGuests = () => {
         if (guestCount < maxOccupancy) {
@@ -179,7 +199,46 @@ export default function BookingWidget({
                     </p>
                 </div>
 
-                <Button className="w-full h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-medium rounded-xl shadow-lg">
+                <div className="p-3 border border-gray-200 rounded-xl mb-6">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <DoorOpen className="w-4 h-4" />
+                            <span className="text-sm font-medium">
+                                {t(translationKey.roomDetails.availability)}
+                            </span>
+                        </div>
+                        {isLoadingAvailability ? (
+                            <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                        ) : (
+                            <span
+                                className={cn(
+                                    "px-2.5 py-1 rounded-full text-xs font-semibold",
+                                    availableRooms > 0
+                                        ? "bg-green-100 text-green-700"
+                                        : "bg-red-100 text-red-700"
+                                )}
+                            >
+                                {availableRooms > 0
+                                    ? t(
+                                          translationKey.roomDetails
+                                              .roomsAvailable,
+                                          {
+                                              count: availableRooms,
+                                          }
+                                      )
+                                    : t(
+                                          translationKey.roomDetails
+                                              .noRoomsAvailable
+                                      )}
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                <Button
+                    className="w-full h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-medium rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={availableRooms <= 0 || isLoadingAvailability}
+                >
                     {t(translationKey.roomDetails.bookYourStay)}
                 </Button>
 

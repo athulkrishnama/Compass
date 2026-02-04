@@ -553,7 +553,11 @@
         "beds": "{{count}} {{type}}",
         "selectDate": "Select date",
         "selectGuests": "Select guests",
-        "noImagesFound": "No images available"
+        "noImagesFound": "No images available",
+        "availability": "Availability",
+        "roomsAvailable": "{{count}} room available",
+        "roomsAvailable_plural": "{{count}} rooms available",
+        "noRoomsAvailable": "No rooms available"
     },
     "roomAmenities": {
         "SEA_VIEW_BALCONY": "Sea View Balcony",

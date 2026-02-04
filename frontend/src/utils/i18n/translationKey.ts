@@ -555,6 +555,9 @@ export default {
         selectDate: "roomDetails.selectDate",
         selectGuests: "roomDetails.selectGuests",
         noImagesFound: "roomDetails.noImagesFound",
+        availability: "roomDetails.availability",
+        roomsAvailable: "roomDetails.roomsAvailable",
+        noRoomsAvailable: "roomDetails.noRoomsAvailable",
     },
     roomAmenities: {
         SEA_VIEW_BALCONY: "roomAmenities.SEA_VIEW_BALCONY",

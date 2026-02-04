@@ -490,7 +490,11 @@
         "cityView": "നഗര കാഴ്ച",
         "beds": "{{count}} {{type}}",
         "selectDate": "തീയതി തിരഞ്ഞെടുക്കുക",
-        "selectGuests": "അതിഥികളെ തിരഞ്ഞെടുക്കുക"
+        "selectGuests": "അതിഥികളെ തിരഞ്ഞെടുക്കുക",
+        "availability": "ലഭ്യത",
+        "roomsAvailable": "{{count}} മുറി ലഭ്യമാണ്",
+        "roomsAvailable_plural": "{{count}} മുറികൾ ലഭ്യമാണ്",
+        "noRoomsAvailable": "മുറികൾ ലഭ്യമല്ല"
     },
     "roomAmenities": {
         "SEA_VIEW_BALCONY": "കടൽ കാഴ്ച ബാൽക്കണി",
