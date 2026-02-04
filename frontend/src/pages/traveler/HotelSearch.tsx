@@ -1,11 +1,13 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useCallback, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 import { createSearchHotelInfiniteQueryOptions } from "@/queryOptions/hotelQueryOptions";
 import type { IHotelSearchRequestDTO } from "@/types/api/responses/hotelSearchResponse";
+import type { HotelSearchParams } from "@/schemas/hotelSearchParams";
 
 import {
     HotelSearchFilters,
@@ -14,57 +16,49 @@ import {
 } from "@/components/traveler/hotelSearch";
 import translationKey from "@/utils/i18n/translationKey";
 
-interface HotelFilterState {
-    searchQuery: string;
-    checkIn: string;
-    checkOut: string;
-    guests: number;
-    minPrice?: number;
-    maxPrice?: number;
-}
-
-const initialFilter: HotelFilterState = {
-    searchQuery: "",
-    checkIn: "",
-    checkOut: "",
-    guests: 1,
-};
-
 const HotelSearch = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const loadMoreRef = useRef<HTMLDivElement>(null);
 
-    const [filter, setFilter] = useState<HotelFilterState>(initialFilter);
-
-    const [appliedFilter, setAppliedFilter] =
-        useState<HotelFilterState>(initialFilter);
+    const searchParams = useSearch({ from: "/traveler/hotels" });
 
     const buildRequestDTO = useCallback((): Omit<
         IHotelSearchRequestDTO,
         "pageNo"
     > => {
         return {
-            queryString: appliedFilter.searchQuery || undefined,
-            checkInDate: appliedFilter.checkIn
-                ? new Date(appliedFilter.checkIn).toLocaleDateString("en-GB")
+            queryString: searchParams.q || undefined,
+            checkInDate: searchParams.checkIn
+                ? new Date(searchParams.checkIn).toLocaleDateString("en-GB")
                 : undefined,
-            checkOutDate: appliedFilter.checkOut
-                ? new Date(appliedFilter.checkOut).toLocaleDateString("en-GB")
+            checkOutDate: searchParams.checkOut
+                ? new Date(searchParams.checkOut).toLocaleDateString("en-GB")
                 : undefined,
-            guests: appliedFilter.guests,
-            minPrice: appliedFilter.minPrice,
-            maxPrice: appliedFilter.maxPrice,
+            guests: searchParams.guests,
+            minPrice: searchParams.minPrice,
+            maxPrice: searchParams.maxPrice,
         };
-    }, [appliedFilter]);
+    }, [searchParams]);
 
     const { data, fetchNextPage, isFetchingNextPage, isLoading, hasNextPage } =
         useInfiniteQuery(
             createSearchHotelInfiniteQueryOptions(buildRequestDTO())
         );
 
-    const handleSearch = useCallback(() => {
-        setAppliedFilter({ ...filter });
-    }, [filter]);
+    const handleFilterChange = useCallback(
+        (newFilters: Partial<HotelSearchParams>) => {
+            navigate({
+                to: "/traveler/hotels",
+                search: (prev) => ({
+                    ...prev,
+                    ...newFilters,
+                }),
+                replace: true,
+            });
+        },
+        [navigate]
+    );
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -85,8 +79,28 @@ const HotelSearch = () => {
 
     const hotels = data?.pages.flatMap((page) => page.data?.hotels || []) || [];
 
-    const handleFilterChange = (newFilters: Partial<HotelFilterState>) => {
-        setFilter((prev) => ({ ...prev, ...newFilters }));
+    const filters = {
+        searchQuery: searchParams.q || "",
+        checkIn: searchParams.checkIn || "",
+        checkOut: searchParams.checkOut || "",
+        guests: searchParams.guests,
+        minPrice: searchParams.minPrice,
+        maxPrice: searchParams.maxPrice,
+    };
+
+    const handleFiltersChange = (newFilters: Partial<typeof filters>) => {
+        const mappedFilters: Partial<HotelSearchParams> = {};
+        if ("searchQuery" in newFilters)
+            mappedFilters.q = newFilters.searchQuery;
+        if ("checkIn" in newFilters) mappedFilters.checkIn = newFilters.checkIn;
+        if ("checkOut" in newFilters)
+            mappedFilters.checkOut = newFilters.checkOut;
+        if ("guests" in newFilters) mappedFilters.guests = newFilters.guests;
+        if ("minPrice" in newFilters)
+            mappedFilters.minPrice = newFilters.minPrice;
+        if ("maxPrice" in newFilters)
+            mappedFilters.maxPrice = newFilters.maxPrice;
+        handleFilterChange(mappedFilters);
     };
 
     return (
@@ -109,9 +123,8 @@ const HotelSearch = () => {
                     className="mb-8"
                 >
                     <HotelSearchFilters
-                        filters={filter}
-                        onFilterChange={handleFilterChange}
-                        onSearch={handleSearch}
+                        filters={filters}
+                        onFilterChange={handleFiltersChange}
                     />
                 </motion.div>
 
@@ -124,7 +137,7 @@ const HotelSearch = () => {
                         [
                             ...hotels.map((hotel, index) => (
                                 <motion.div
-                                    key={hotel._id || index}
+                                    key={hotel.id || index}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.05 }}

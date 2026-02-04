@@ -95,6 +95,9 @@ export class HotelRepo
     });
 
     aggregationPipeline.push({
+      $match: { "roomVariant.0": { $exists: true } },
+    });
+    aggregationPipeline.push({
       $skip: (filter.pageNo - 1) * VALUES.HOTELS_LIMIT,
     });
 

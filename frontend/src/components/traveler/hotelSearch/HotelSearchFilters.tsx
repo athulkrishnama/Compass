@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import translationKey from "@/utils/i18n/translationKey";
 import { DateRangePicker, GuestSelector, HotelPriceRangeInput } from ".";
 
@@ -19,13 +18,11 @@ interface HotelFilters {
 interface HotelSearchFiltersProps {
     filters: HotelFilters;
     onFilterChange: (filters: Partial<HotelFilters>) => void;
-    onSearch: () => void;
 }
 
 export const HotelSearchFilters = ({
     filters,
     onFilterChange,
-    onSearch,
 }: HotelSearchFiltersProps) => {
     const { t } = useTranslation();
 
@@ -83,14 +80,6 @@ export const HotelSearchFilters = ({
                             onFilterChange({ maxPrice })
                         }
                     />
-
-                    <Button
-                        onClick={onSearch}
-                        className="h-12 bg-black hover:bg-zinc-800 text-white font-medium rounded-lg flex items-center justify-center gap-2 self-end"
-                    >
-                        <Search className="w-5 h-5" />
-                        {t(translationKey.hotelSearch.searchHotels)}
-                    </Button>
                 </div>
             </div>
         </motion.div>

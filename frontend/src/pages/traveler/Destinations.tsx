@@ -25,6 +25,11 @@ function Destinations() {
         city: undefined,
         cityName: undefined,
         proximityRadius: undefined,
+        onlyFree: undefined,
+        isWheelchairAccessible: undefined,
+        isActive: true,
+        sortBy: undefined,
+        sortOrder: undefined,
     });
 
     const buildRequestDTO = useCallback((): IListDestinationRequestDTO => {
@@ -37,7 +42,11 @@ function Destinations() {
             maxPrice: filter.maxPrice,
             city: filter.city,
             proximityRadius: filter.proximityRadius,
-            isActive: true,
+            isActive: filter.isActive,
+            onlyFree: filter.onlyFree,
+            isWheelchairAccessible: filter.isWheelchairAccessible,
+            sortBy: filter.sortBy,
+            sortOrder: filter.sortOrder,
         };
     }, [filter]);
 
@@ -127,6 +136,9 @@ function Destinations() {
                                         isFree={destination.isFree}
                                         entryFee={destination.entryFee}
                                         isActive={destination.isActive}
+                                        isWheelChairAccessible={
+                                            destination.isWheelChairAccessible
+                                        }
                                     />
                                 </motion.div>
                             )),

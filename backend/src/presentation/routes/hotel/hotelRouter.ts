@@ -51,7 +51,7 @@ export class HotelRouter {
     this._router.get(
       `${HotelRoutes.INDEX}:id`,
       authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.TRAVELER]),
       (req: Request, res: Response, next: NextFunction) => {
         hotelController.handleGetHotelById(req, res, next);
       },

@@ -14,7 +14,6 @@ import {
 import {
     createUpdateRoomVariantMutationOptions,
     createDeleteRoomVariantImageMutationOptions,
-    createGetRoomVariantByIdQueryOptions,
 } from "@/queryOptions/roomVariantQueryOptions";
 import type { IRoomVariantDetailResponse } from "@/types/api/responses/roomVariantDetailResponse";
 import BasicRoomVariantInfoSection from "../AddRoomVariant/BasicRoomVariantInfoSection";
@@ -25,6 +24,7 @@ import EditRoomVariantVisualAssetsSection from "./EditRoomVariantVisualAssetsSec
 import EditRoomVariantHeader from "./EditRoomVariantHeader";
 import { arrayEquals } from "@/utils/array";
 import { queryClient } from "@/config/tanstackQueryConfig";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 
 interface EditRoomVariantFormProps {
     roomVariantData: IRoomVariantDetailResponse;
@@ -118,9 +118,10 @@ function EditRoomVariantForm({
                 onSuccess: (result) => {
                     toast.success(result.message);
                     queryClient.invalidateQueries({
-                        queryKey: createGetRoomVariantByIdQueryOptions(
-                            roomVariantData.id
-                        ).queryKey,
+                        queryKey: [
+                            QUERY_KEYS.ROOM_VARIANT,
+                            roomVariantData.hotelId,
+                        ],
                     });
                     navigate({
                         to: "/hotel/hotels/$hotelId",

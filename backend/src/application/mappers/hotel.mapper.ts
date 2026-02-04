@@ -70,6 +70,7 @@ export class HotelMapper {
   ): IHotelSearchResponseDTO {
     const hotels = data.hotels.map((h) => {
       return {
+        id: h._id!,
         name: h.name,
         description: h.description,
         coverImage: h.coverImage,
@@ -80,6 +81,7 @@ export class HotelMapper {
             price: rv.basePrice,
             maxOccupancy: rv.maxOccupancy,
             coverImage: rv.coverImage,
+            id: rv._id!,
           };
         }),
       };

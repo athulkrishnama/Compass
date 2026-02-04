@@ -18,6 +18,7 @@ interface RoomVariant {
   price: number;
   maxOccupancy: number;
   coverImage: string;
+  id: string;
 }
 
 interface HotelWithRoomVariantDetails {

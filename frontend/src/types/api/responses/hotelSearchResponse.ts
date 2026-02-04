@@ -19,7 +19,7 @@ export interface RoomVariant {
 }
 
 export interface IHotelWithRoomVariantDetails {
-    _id?: string;
+    id: string;
     name: string;
     description: string;
     coverImage: string;
