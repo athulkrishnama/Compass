@@ -117,4 +117,6 @@ export enum INTERNAL_ERROR_MESSAGES {
   MIN_PRICE_INVALID = "minPriceInvalid",
   INVALID_SORT_BY = "invalidSortBy",
   INVALID_SORT_ORDER = "invalidSortOrder",
+  CHECKIN_DATE_MISSING_OR_INVALID = "checkinDateMissingOrInvalid",
+  CHECKOUT_DATE_MISSING_OR_INVALID = "checkoutDateMissingOrInvalid",
 }

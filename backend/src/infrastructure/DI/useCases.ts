@@ -87,6 +87,8 @@ import { IGetDestinationUseCase } from "@application/interfaces/useCase/destinat
 import { GetDestinationUseCase } from "@useCases/destination/getDestinationUseCase";
 import { IHotelSearchUseCase } from "@application/interfaces/useCase/hotel/hotelSearchUseCase.interface";
 import { HotelSearchUseCase } from "@useCases/hotel/hotelSearchUseCase";
+import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
+import { GetRoomAvailabilityUseCase } from "@useCases/roomVariant/getRoomAvailabilityUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -258,5 +260,9 @@ export function registerUsecases() {
   container.registerSingleton<IHotelSearchUseCase>(
     "IHotelSearchUseCase",
     HotelSearchUseCase,
+  );
+  container.registerSingleton<IGetRoomAvailabilityUseCase>(
+    "IGetRoomAvailabilityUseCase",
+    GetRoomAvailabilityUseCase,
   );
 }

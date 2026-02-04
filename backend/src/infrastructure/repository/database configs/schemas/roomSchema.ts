@@ -15,7 +15,7 @@ export interface IRoomDocument extends Document {
 export const roomSchema = new Schema<IRoomDocument>({
   hotelId: { type: String, required: true },
   variantId: { type: String, required: true },
-  roomCode: { type: String, required: true },
+  roomCode: { type: String, required: true, unique: true },
   floor: { type: Number, required: true },
   status: { type: String, enum: RoomVariantStatus, required: true },
   createdAt: { type: Date, default: Date.now },

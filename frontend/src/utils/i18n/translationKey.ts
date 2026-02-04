@@ -125,6 +125,8 @@ export default {
         somethingWentWrong: "errors.somethingWentWrong",
         otpLength: "errors.otpLength",
         otpNumbersOnly: "errors.otpNumbersOnly",
+        checkinDateMissingOrInvalid: "errors.checkinDateMissingOrInvalid",
+        checkoutDateMissingOrInvalid: "errors.checkoutDateMissingOrInvalid",
     },
     form: {
         fullname: "form.fullname",

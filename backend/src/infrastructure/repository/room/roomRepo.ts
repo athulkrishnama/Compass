@@ -52,4 +52,9 @@ export class RoomRepo
     const room = await this._model.findOne({ variantId, roomCode });
     return room ? this.toEntity(room) : null;
   }
+
+  async countRoomByVariantId(variantId: string): Promise<number> {
+    const count = await this._model.countDocuments({ variantId });
+    return count;
+  }
 }

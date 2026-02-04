@@ -200,3 +200,15 @@ export const editRoomVariantValidation = z.object({
     )
     .optional(),
 });
+
+export const getRoomAvailabilityValidation = z.object({
+  checkinDate: z.coerce.date({
+    error: INTERNAL_ERROR_MESSAGES.CHECKIN_DATE_MISSING_OR_INVALID,
+  }),
+  checkoutDate: z.coerce.date({
+    error: INTERNAL_ERROR_MESSAGES.CHECKOUT_DATE_MISSING_OR_INVALID,
+  }),
+  roomVariantId: z.string({
+    error: INTERNAL_ERROR_MESSAGES.ROOM_VARIANT_ID_MISSING_OR_INVALID,
+  }),
+});

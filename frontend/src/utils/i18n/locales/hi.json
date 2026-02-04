@@ -103,7 +103,9 @@
         "floorNumberRequired": "मंजिल संख्या आवश्यक है",
         "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
         "otpLength": "OTP {{count}} अक्षरों का होना चाहिए",
-        "otpNumbersOnly": "OTP केवल अंक होना चाहिए"
+        "otpNumbersOnly": "OTP केवल अंक होना चाहिए",
+        "checkinDateMissingOrInvalid": "चेक-इन तिथि गायब है या अमान्य है",
+        "checkoutDateMissingOrInvalid": "चेक-आउट तिथि गायब है या अमान्य है"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -513,4 +515,3 @@
         "SOUNDPROOFING": "साउंडप्रूफिंग"
     }
 }
-

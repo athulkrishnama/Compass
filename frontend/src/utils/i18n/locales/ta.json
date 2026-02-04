@@ -103,7 +103,9 @@
         "floorNumberRequired": "தள எண் தேவை",
         "somethingWentWrong": "ஏதோ தவறு நடந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.",
         "otpLength": "OTP {{count}} எழுத்துகளாக இருக்க வேண்டும்",
-        "otpNumbersOnly": "OTP எண்கள் மட்டுமே இருக்க வேண்டும்"
+        "otpNumbersOnly": "OTP எண்கள் மட்டுமே இருக்க வேண்டும்",
+        "checkinDateMissingOrInvalid": "செக்-இன் தேதி இல்லை அல்லது செல்லாது",
+        "checkoutDateMissingOrInvalid": "செக்-அவுட் தேதி இல்லை அல்லது செல்லாது"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -513,4 +515,3 @@
         "SOUNDPROOFING": "ஒலி எதிர்ப்பு"
     }
 }
-

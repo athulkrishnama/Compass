@@ -122,7 +122,9 @@
         "floorNumberRequired": "Floor number is required",
         "somethingWentWrong": "Something went wrong. Please try again.",
         "otpLength": "OTP must be {{count}} characters",
-        "otpNumbersOnly": "OTP must be numbers only"
+        "otpNumbersOnly": "OTP must be numbers only",
+        "checkinDateMissingOrInvalid": "Check-in date is missing or invalid",
+        "checkoutDateMissingOrInvalid": "Check-out date is missing or invalid"
     },
     "form": {
         "fullname": "Full Name",
@@ -576,4 +578,3 @@
         "SOUNDPROOFING": "Soundproofing"
     }
 }
-

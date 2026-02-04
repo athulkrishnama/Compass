@@ -103,7 +103,9 @@
         "floorNumberRequired": "ഫ്ലോർ നമ്പർ ആവശ്യമാണ്",
         "somethingWentWrong": "എന്തോ തെറ്റ് സംഭവിച്ചു. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
         "otpLength": "OTP {{count}} അക്ഷരങ്ങൾ ആയിരിക്കണം",
-        "otpNumbersOnly": "OTP അക്കങ്ങൾ മാത്രമായിരിക്കണം"
+        "otpNumbersOnly": "OTP അക്കങ്ങൾ മാത്രമായിരിക്കണം",
+        "checkinDateMissingOrInvalid": "ചെക്ക്-ഇൻ തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+        "checkoutDateMissingOrInvalid": "ചെക്ക്-ഔട്ട് തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -513,4 +515,3 @@
         "SOUNDPROOFING": "സൗണ്ട്പ്രൂഫിംഗ്"
     }
 }
-
