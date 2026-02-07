@@ -548,6 +548,7 @@
         "SOUNDPROOFING": "साउंडप्रूफिंग"
     },
     "messages": {
-        "paymentIntentCreated": "भुगतान आशय सफलतापूर्वक बनाया गया"
+        "paymentIntentCreated": "भुगतान आशय सफलतापूर्वक बनाया गया",
+        "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया"
     }
 }

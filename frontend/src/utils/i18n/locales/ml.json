@@ -552,6 +552,7 @@
         "SOUNDPROOFING": "സൗണ്ട്പ്രൂഫിംഗ്"
     },
     "messages": {
-        "paymentIntentCreated": "പേയ്‌മെന്റ് ഇന്റന്റ് വിജയകരമായി സൃഷ്ടിച്ചു"
+        "paymentIntentCreated": "പേയ്‌മെന്റ് ഇന്റന്റ് വിജയകരമായി സൃഷ്ടിച്ചു",
+        "paymentVerifiedSuccessfully": "പേയ്‌മെന്റ് വിജയകരമായി സ്ഥിരീകരിച്ചു"
     }
 }

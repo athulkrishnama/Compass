@@ -548,6 +548,7 @@
         "SOUNDPROOFING": "ஒலி எதிர்ப்பு"
     },
     "messages": {
-        "paymentIntentCreated": "கட்டண நோக்கம் வெற்றிகரமாக உருவாக்கப்பட்டது"
+        "paymentIntentCreated": "கட்டண நோக்கம் வெற்றிகரமாக உருவாக்கப்பட்டது",
+        "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது"
     }
 }

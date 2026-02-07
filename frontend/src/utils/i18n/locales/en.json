@@ -615,6 +615,7 @@
         "SOUNDPROOFING": "Soundproofing"
     },
     "messages": {
-        "paymentIntentCreated": "Payment intent created successfully"
+        "paymentIntentCreated": "Payment intent created successfully",
+        "paymentVerifiedSuccessfully": "Payment verified successfully"
     }
 }
