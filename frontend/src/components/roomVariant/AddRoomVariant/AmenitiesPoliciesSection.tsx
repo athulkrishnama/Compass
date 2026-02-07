@@ -1,15 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import {
-    Sparkles,
-    Clock,
-    Wifi,
-    Snowflake,
-    Tv,
-    Wine,
-    Coffee,
-    Shield,
-} from "lucide-react";
+import { Sparkles, Clock } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -17,20 +8,11 @@ import translationKey from "@/utils/i18n/translationKey";
 import type { RoomVariantFormType } from "@/components/shared/validations/roomVariantSchema";
 import { RoomAmenities } from "@/components/shared/validations/roomVariantSchema";
 import { Controller } from "react-hook-form";
-import type { LucideIcon } from "lucide-react";
+import { ROOM_AMENITY_WITH_ICON_AND_TRANSLATION } from "@/constants/roomConstants/roomAmenityWithIconAndTranslation";
 
 interface AmenitiesPoliciesSectionProps {
     form: RoomVariantFormType;
 }
-
-const amenityIcons: Record<string, LucideIcon> = {
-    WIFI: Wifi,
-    AIR_CONDITIONING: Snowflake,
-    SMART_TV: Tv,
-    MINI_BAR: Wine,
-    COFFEE_MAKER: Coffee,
-    IN_ROOM_SAFE: Shield,
-};
 
 function AmenitiesPoliciesSection({ form }: AmenitiesPoliciesSectionProps) {
     const { t } = useTranslation();
@@ -48,17 +30,6 @@ function AmenitiesPoliciesSection({ form }: AmenitiesPoliciesSectionProps) {
         } else {
             setValue("amenities", [...current, amenity]);
         }
-    };
-
-    const displayedAmenities = RoomAmenities.slice(0, 6);
-
-    const amenityLabels: Record<string, string> = {
-        WIFI: t(translationKey.room.amenityWifi),
-        AIR_CONDITIONING: t(translationKey.room.amenityAc),
-        SMART_TV: t(translationKey.room.amenityTv),
-        MINI_BAR: t(translationKey.room.amenityMinibar),
-        COFFEE_MAKER: t(translationKey.room.amenityCoffee),
-        IN_ROOM_SAFE: t(translationKey.room.amenitySafe),
     };
 
     return (
@@ -81,25 +52,32 @@ function AmenitiesPoliciesSection({ form }: AmenitiesPoliciesSectionProps) {
                         {t(translationKey.form.roomAmenities)}
                     </Label>
                     <div className="flex flex-wrap gap-2">
-                        {displayedAmenities.map((amenity) => {
-                            const IconComponent =
-                                amenityIcons[amenity] || Sparkles;
-                            return (
-                                <button
-                                    key={amenity}
-                                    type="button"
-                                    onClick={() => toggleAmenity(amenity)}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                                        selectedAmenities.includes(amenity)
-                                            ? "bg-gray-900 text-white"
-                                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                    }`}
-                                >
-                                    <IconComponent className="w-3 h-3" />
-                                    {amenityLabels[amenity] || amenity}
-                                </button>
-                            );
-                        })}
+                        {ROOM_AMENITY_WITH_ICON_AND_TRANSLATION.map(
+                            (amenity) => {
+                                const IconComponent = amenity.icon;
+                                const amenityValue =
+                                    amenity.value as (typeof RoomAmenities)[number];
+                                return (
+                                    <button
+                                        key={amenity.value}
+                                        type="button"
+                                        onClick={() =>
+                                            toggleAmenity(amenityValue)
+                                        }
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                                            selectedAmenities.includes(
+                                                amenityValue
+                                            )
+                                                ? "bg-gray-900 text-white"
+                                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                        }`}
+                                    >
+                                        <IconComponent className="w-3 h-3" />
+                                        {t(amenity.labelKey)}
+                                    </button>
+                                );
+                            }
+                        )}
                     </div>
                 </div>
 

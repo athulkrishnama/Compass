@@ -1,3 +1,5 @@
+import type { RoomAmenity } from "@/constants/roomConstants/roomAmenity";
+
 export interface IRoomInstance {
     id: string;
     roomCode: string;
@@ -16,7 +18,7 @@ export interface IRoomVariantDetailResponse {
         count: number;
     };
     basePrice: number;
-    amenities: string[];
+    amenities: RoomAmenity[];
     policies: {
         smokingAllowed: boolean;
         petsAllowed: boolean;

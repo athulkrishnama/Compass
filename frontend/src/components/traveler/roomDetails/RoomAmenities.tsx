@@ -1,58 +1,12 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
-import {
-    Waves,
-    Wind,
-    Wine,
-    Tv,
-    MonitorSmartphone,
-    Wifi,
-    Fan,
-    Lock,
-    Coffee,
-    ConciergeBell,
-    Shirt,
-    Bath,
-    ShowerHead,
-    SprayCan,
-    DoorOpen,
-    Building2,
-    Flower2,
-    Droplets,
-    Moon,
-    Volume2,
-} from "lucide-react";
+import { Wifi } from "lucide-react";
+import { getAmenityDetails } from "@/constants/roomConstants/roomAmenityWithIconAndTranslation";
 
 interface RoomAmenitiesProps {
     amenities: string[];
 }
-
-const amenityIcons: Record<
-    string,
-    React.ComponentType<{ className?: string }>
-> = {
-    SEA_VIEW_BALCONY: Waves,
-    AIR_CONDITIONING: Wind,
-    MINI_BAR: Wine,
-    SMART_TV: Tv,
-    WORK_DESK: MonitorSmartphone,
-    WIFI: Wifi,
-    HAIR_DRYER: Fan,
-    IN_ROOM_SAFE: Lock,
-    COFFEE_MAKER: Coffee,
-    ROOM_SERVICE: ConciergeBell,
-    IRON: Shirt,
-    BATHTUB: Bath,
-    SHOWER: ShowerHead,
-    TOILETRIES: SprayCan,
-    BALCONY: DoorOpen,
-    CITY_VIEW: Building2,
-    GARDEN_VIEW: Flower2,
-    POOL_VIEW: Droplets,
-    BLACKOUT_CURTAINS: Moon,
-    SOUNDPROOFING: Volume2,
-};
 
 export default function RoomAmenities({ amenities }: RoomAmenitiesProps) {
     const { t } = useTranslation();
@@ -74,9 +28,11 @@ export default function RoomAmenities({ amenities }: RoomAmenitiesProps) {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {amenities.map((amenity, index) => {
-                    const Icon = amenityIcons[amenity] || Wifi;
-                    const amenityKey =
-                        amenity as keyof typeof translationKey.roomAmenities;
+                    const amenityDetails = getAmenityDetails(amenity);
+                    const Icon = amenityDetails?.icon || Wifi;
+                    const label = amenityDetails
+                        ? t(amenityDetails.labelKey)
+                        : amenity.replace(/_/g, " ");
 
                     return (
                         <motion.div
@@ -90,13 +46,7 @@ export default function RoomAmenities({ amenities }: RoomAmenitiesProps) {
                                 <Icon className="w-4 h-4 text-gray-700" />
                             </div>
                             <span className="text-sm font-medium text-gray-700">
-                                {translationKey.roomAmenities[amenityKey]
-                                    ? t(
-                                          translationKey.roomAmenities[
-                                              amenityKey
-                                          ]
-                                      )
-                                    : amenity.replace(/_/g, " ")}
+                                {label}
                             </span>
                         </motion.div>
                     );
