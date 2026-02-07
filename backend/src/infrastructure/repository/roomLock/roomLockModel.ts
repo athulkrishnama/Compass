@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-import { roomLockSchema, IRoomLockDocument } from "../schemas/roomLockSchema";
+import { roomLockSchema, IRoomLockDocument } from "./roomLockSchema";
 
 export const roomLockModel = model<IRoomLockDocument>(
   "RoomLock",

@@ -2,7 +2,7 @@ import { model } from "mongoose";
 import {
   hotelBookingSchema,
   IHotelBookingDocument,
-} from "../schemas/hotelBookingSchema";
+} from "./hotelBookingSchema";
 
 export const hotelBookingModel = model<IHotelBookingDocument>(
   "HotelBooking",

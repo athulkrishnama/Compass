@@ -147,5 +147,6 @@
   "checkinDateMissingOrInvalid": "Check-in date is missing or invalid",
   "checkoutDateMissingOrInvalid": "Check-out date is missing or invalid",
   "roomUnavailable": "Selected room is not available for requested dates",
-  "paymentVerifiedSuccessfully": "Payment verified successfully"
+  "paymentVerifiedSuccessfully": "Payment verified successfully",
+  "unverified": "User is not verified"
 }

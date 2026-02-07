@@ -3,6 +3,7 @@ import {
   UserNotFoundException,
 } from "@application/constants/Exceptions";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
+import { ICacheService } from "@application/interfaces/service/cacheService.interface";
 import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/rejectUserVerificationRequestUseCase.interface";
 import { IRejectUserVerificationRequestRequestDTO } from "@domain/dtos/admin/rejectUserVerificationRequest.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
@@ -13,7 +14,10 @@ import { inject, injectable } from "tsyringe";
 export class RejectUserVerificationRequestUseCase
   implements IRejectUserVerificationRequestUseCase
 {
-  constructor(@inject("IUserRepo") private _userRepo: IUserRepo) {}
+  constructor(
+    @inject("IUserRepo") private _userRepo: IUserRepo,
+    @inject("ICacheService") private _cacheService: ICacheService,
+  ) {}
   async reject(dto: IRejectUserVerificationRequestRequestDTO): Promise<void> {
     const user = await this._userRepo.findById(dto.userId);
 
@@ -29,6 +33,8 @@ export class RejectUserVerificationRequestUseCase
 
     user.is_verified = VERIFICATION_STATUSES.REJECTED;
     user.rejection_reason = dto.reason;
+
+    this._cacheService.deleteValue(`USER_VERIFIED:${dto.userId}`);
 
     await this._userRepo.update(user, dto.userId);
   }

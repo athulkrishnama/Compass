@@ -6,8 +6,8 @@ import { HTTPResponseBuilder } from "presentation/utils/httpResponseBuilder";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
-import { UserIsBlockedException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { VERIFICATION_STATUSES } from "@domain/enums/verificationStatus";
 
 @injectable()
 export class AuthMiddleware {
@@ -84,10 +84,36 @@ export class AuthMiddleware {
       }
 
       if (userStatus === "blocked") {
-        throw new UserIsBlockedException(INTERNAL_ERROR_MESSAGES.BLOCKED);
+        next(new Error(INTERNAL_ERROR_MESSAGES.BLOCKED));
       }
 
       next();
     };
+  };
+
+  checkVerified = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.user;
+
+    let userStatus = await this._cacheService.getValue(`USER_VERIFIED:${id}`);
+
+    if (!userStatus) {
+      const user = await this._userRepo.findById(id);
+
+      userStatus =
+        user?.is_verified === VERIFICATION_STATUSES.APPROVED
+          ? "verified"
+          : "unverified";
+      await this._cacheService.setWithExpiry(
+        `USER_VERIFIED:${id}`,
+        userStatus,
+        60 * 15,
+      );
+    }
+
+    if (userStatus === "unverified") {
+      next(new Error(INTERNAL_ERROR_MESSAGES.UNVERIFIED));
+    }
+
+    next();
   };
 }
