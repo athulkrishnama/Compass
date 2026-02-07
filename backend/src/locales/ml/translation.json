@@ -141,5 +141,10 @@
   "statusMissingOrInvalid": "സ്റ്റാറ്റസ് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
   "floorMissingOrInvalid": "ഫ്ലോർ വിവരങ്ങൾ ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
   "invalidSortBy": "അസാധുവായ ഫീൽഡ്",
-  "invalidSortOrder": "അസാധുവായ ക്രമം"
+  "invalidSortOrder": "അസാധുവായ ക്രമം",
+  "paymentIntentCreated": "പേയ്‌മെന്റ് ഇന്റന്റ് വിജയകരമായി സൃഷ്ടിച്ചു",
+  "checkinDateMissingOrInvalid": "ചെക്ക്-ഇൻ തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "checkoutDateMissingOrInvalid": "ചെക്ക്-ഔട്ട് തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+  "roomUnavailable": "തിരഞ്ഞെടുത്ത മുറി ഈ തീയതികളിൽ ലഭ്യമല്ല",
+  "paymentVerifiedSuccessfully": "പേയ്‌മെന്റ് വിജയകരമായി സ്ഥിരീകരിച്ചു"
 }

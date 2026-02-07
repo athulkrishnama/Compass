@@ -22,6 +22,7 @@ export class RoomLockRepo
     beforeCheckOutDate?: Date;
     afterCheckOutDate?: Date;
     beforeCheckInDate?: Date;
+    paymentIntentId?: string;
   }): Promise<RoomLockEntity[]> {
     const filterQuery: RootFilterQuery<IRoomLockDocument> = {};
 
@@ -54,6 +55,9 @@ export class RoomLockRepo
         $lte: filter.beforeCheckInDate,
       };
     }
+    if (filter.paymentIntentId) {
+      filterQuery.paymentIntentId = filter.paymentIntentId;
+    }
     const result = await this._model.find(filterQuery).exec();
     return result.map((doc) => this.toEntity(doc));
   }
@@ -66,6 +70,7 @@ export class RoomLockRepo
     beforeCheckOutDate?: Date;
     afterCheckOutDate?: Date;
     beforeCheckInDate?: Date;
+    paymentIntentId?: string;
   }): Promise<number> {
     const filterQuery: RootFilterQuery<IRoomLockDocument> = {};
 
@@ -98,6 +103,9 @@ export class RoomLockRepo
         $lte: filter.beforeCheckInDate,
       };
     }
+    if (filter.paymentIntentId) {
+      filterQuery.paymentIntentId = filter.paymentIntentId;
+    }
     const result = await this._model.countDocuments(filterQuery).exec();
     return result;
   }
@@ -108,6 +116,8 @@ export class RoomLockRepo
       roomVariantId: doc.roomVariantId,
       checkinDate: doc.checkinDate,
       checkoutDate: doc.checkoutDate,
+      paymentIntentId: doc.paymentIntentId,
+      amount: doc.amount,
       expiresAt: doc.expiresAt,
     };
   }

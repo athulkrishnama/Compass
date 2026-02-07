@@ -22,8 +22,10 @@ import {
 import { format, differenceInDays } from "date-fns";
 import { type DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { createGetRoomVariantAvailabilityQueryOptions } from "@/queryOptions/roomVariantQueryOptions";
+import { createCreatePaymentIntentMutationOptions } from "@/queryOptions/paymentQueryOptions";
+import { useNavigate } from "@tanstack/react-router";
 
 interface BookingWidgetProps {
     roomVariantId: string;
@@ -37,6 +39,7 @@ export default function BookingWidget({
     maxOccupancy,
 }: BookingWidgetProps) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [guestCount, setGuestCount] = useState(1);
     const [date, setDate] = useState<DateRange | undefined>({
         from: new Date(),
@@ -61,6 +64,27 @@ export default function BookingWidget({
 
     const availableRooms = availabilityData?.data?.available ?? 0;
 
+    const { mutate: createPaymentIntent, isPending: isCreatingPaymentIntent } =
+        useMutation({
+            ...createCreatePaymentIntentMutationOptions(),
+            onSuccess: (data) => {
+                if (!date?.from || !date?.to || !data?.data) return;
+
+                navigate({
+                    to: "/traveler/booking-confirmation",
+                    search: {
+                        roomVariantId,
+                        checkInDate: date.from.toDateString(),
+                        checkOutDate: date.to.toDateString(),
+                        guests: guestCount,
+                        paymentIntentId: data.data.paymentIntentId,
+                        clientSecret: data.data.clientSecret,
+                        amount: data.data.amount,
+                    },
+                });
+            },
+        });
+
     const handleIncrementGuests = () => {
         if (guestCount < maxOccupancy) {
             setGuestCount(guestCount + 1);
@@ -71,6 +95,17 @@ export default function BookingWidget({
         if (guestCount > 1) {
             setGuestCount(guestCount - 1);
         }
+    };
+
+    const handleBooking = () => {
+        if (!date?.from || !date?.to) return;
+
+        createPaymentIntent({
+            roomVariantId,
+            checkInDate: date.from,
+            checkOutDate: date.to,
+            guests: guestCount,
+        });
     };
 
     return (
@@ -237,9 +272,18 @@ export default function BookingWidget({
 
                 <Button
                     className="w-full h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-medium rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={availableRooms <= 0 || isLoadingAvailability}
+                    disabled={
+                        availableRooms <= 0 ||
+                        isLoadingAvailability ||
+                        isCreatingPaymentIntent
+                    }
+                    onClick={handleBooking}
                 >
-                    {t(translationKey.roomDetails.bookYourStay)}
+                    {isCreatingPaymentIntent ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                        t(translationKey.roomDetails.bookYourStay)
+                    )}
                 </Button>
 
                 <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">

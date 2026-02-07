@@ -20,6 +20,8 @@ import { GoogleAuthService } from "@infrastructure/services/googleAuthService";
 import { IStorageService } from "@application/interfaces/service/storageService.interface";
 import { StorageService } from "@infrastructure/services/storageService";
 import { ChangeEmailTemplateGenerator } from "@infrastructure/services/emailTemplateGenerators/changeEmailTemplateGenerator";
+import { IPaymentService } from "@application/interfaces/service/paymentService.interface";
+import { PaymentService } from "@infrastructure/services/paymentService";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -51,5 +53,9 @@ export function registerServices() {
   container.registerSingleton<IStorageService>(
     "IStorageService",
     StorageService,
+  );
+  container.registerSingleton<IPaymentService>(
+    "IPaymentService",
+    PaymentService,
   );
 }

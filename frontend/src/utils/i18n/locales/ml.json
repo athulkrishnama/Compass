@@ -105,7 +105,40 @@
         "otpLength": "OTP {{count}} അക്ഷരങ്ങൾ ആയിരിക്കണം",
         "otpNumbersOnly": "OTP അക്കങ്ങൾ മാത്രമായിരിക്കണം",
         "checkinDateMissingOrInvalid": "ചെക്ക്-ഇൻ തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
-        "checkoutDateMissingOrInvalid": "ചെക്ക്-ഔട്ട് തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്"
+        "checkoutDateMissingOrInvalid": "ചെക്ക്-ഔട്ട് തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+        "roomUnavailable": "തിരഞ്ഞെടുത്ത മുറി ഈ തീയതികളിൽ ലഭ്യമല്ല",
+        "invalidRoomVariantId": "അസാധുവായ റൂം വെരിയന്റ്",
+        "invalidTraverlerId": "അസാധുവായ യാത്രികന്റെ വിവരങ്ങൾ",
+        "invalidCheckinDate": "സാധുവായ ചെക്ക്-ഇൻ തീയതി തിരഞ്ഞെടുക്കുക",
+        "invalidCheckoutDate": "സാധുവായ ചെക്ക്-ഔട്ട് തീയതി തിരഞ്ഞെടുക്കുക",
+        "invalidGuests": "സാധുവായ അതിഥികളുടെ എണ്ണം നൽകുക",
+        "paymentIntentCreationFailed": "പേയ്‌മെന്റ് ആരംഭിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.",
+        "paymentFailed": "പേയ്‌മെന്റ് പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
+        "invalidSignature": "അസാധുവായ വെബ്ഹുക്ക് സിഗ്നേച്ചർ",
+        "roomLockNotFound": "റൂം ലോക്ക് കണ്ടെത്താനായില്ല അല്ലെങ്കിൽ കാലാവധി കഴിഞ്ഞു"
+    },
+    "bookingConfirmation": {
+        "confirmAndPay": "സ്ഥിരീകരിച്ച് പണം അടയ്ക്കുക",
+        "reviewStayDetails": "നിങ്ങളുടെ താമസ വിവരങ്ങൾ അവലോകനം ചെയ്ത് പേയ്‌മെന്റ് പൂർത്തിയാക്കുക.",
+        "paymentSummary": "പേയ്‌മെന്റ് സംഗ്രഹം",
+        "basePrice": "അടിസ്ഥാന വില",
+        "perNight": "/ രാത്രി",
+        "duration": "കാലാവധി",
+        "nights": "രാത്രികൾ",
+        "subtotal": "ഉപ മൊത്തം",
+        "totalAmount": "മൊത്തം തുക",
+        "payNow": "ഇപ്പോൾ പണം അടയ്ക്കുക",
+        "secureTransaction": "സുരക്ഷിത എൻക്രിപ്റ്റഡ് ഇടപാട്",
+        "instantConfirmation": "തൽക്ഷണ സ്ഥിരീകരണം",
+        "bookingGuaranteed": "നിങ്ങളുടെ ബുക്കിംഗ് ഉടൻ ഉറപ്പാക്കപ്പെടും",
+        "hotelDetails": "ഹോട്ടൽ വിവരങ്ങൾ",
+        "roomSelection": "റൂം തിരഞ്ഞെടുപ്പ്",
+        "stayDetails": "താമസ വിവരങ്ങൾ",
+        "checkIn": "ചെക്ക്-ഇൻ",
+        "checkOut": "ചെക്ക്-ഔട്ട്",
+        "from": "{{time}} മുതൽ",
+        "until": "{{time}} വരെ",
+        "totalDuration": "മൊത്തം കാലാവധി"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -517,5 +550,8 @@
         "POOL_VIEW": "പൂൾ കാഴ്ച",
         "BLACKOUT_CURTAINS": "ബ്ലാക്കൗട്ട് കർട്ടനുകൾ",
         "SOUNDPROOFING": "സൗണ്ട്പ്രൂഫിംഗ്"
+    },
+    "messages": {
+        "paymentIntentCreated": "പേയ്‌മെന്റ് ഇന്റന്റ് വിജയകരമായി സൃഷ്ടിച്ചു"
     }
 }

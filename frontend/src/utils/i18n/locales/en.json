@@ -124,7 +124,40 @@
         "otpLength": "OTP must be {{count}} characters",
         "otpNumbersOnly": "OTP must be numbers only",
         "checkinDateMissingOrInvalid": "Check-in date is missing or invalid",
-        "checkoutDateMissingOrInvalid": "Check-out date is missing or invalid"
+        "checkoutDateMissingOrInvalid": "Check-out date is missing or invalid",
+        "roomUnavailable": "Selected room is not available for requested dates",
+        "invalidRoomVariantId": "Invalid room variant selected",
+        "invalidTraverlerId": "Invalid traveler information",
+        "invalidCheckinDate": "Please select a valid check-in date",
+        "invalidCheckoutDate": "Please select a valid check-out date",
+        "invalidGuests": "Please enter a valid number of guests",
+        "paymentIntentCreationFailed": "Failed to initialize payment. Please try again later.",
+        "paymentFailed": "Payment failed. Please try again.",
+        "invalidSignature": "Invalid webhook signature",
+        "roomLockNotFound": "Room lock not found or expired"
+    },
+    "bookingConfirmation": {
+        "confirmAndPay": "Confirm and Pay",
+        "reviewStayDetails": "Review your stay details and complete your payment.",
+        "paymentSummary": "Payment Summary",
+        "basePrice": "Base Price",
+        "perNight": "/ night",
+        "duration": "Duration",
+        "nights": "Nights",
+        "subtotal": "Subtotal",
+        "totalAmount": "Total Amount",
+        "payNow": "Pay Now",
+        "secureTransaction": "Secure Encrypted Transaction",
+        "instantConfirmation": "Instant Confirmation",
+        "bookingGuaranteed": "Your booking is guaranteed immediately",
+        "hotelDetails": "Hotel Details",
+        "roomSelection": "Room Selection",
+        "stayDetails": "Stay Details",
+        "checkIn": "Check-in",
+        "checkOut": "Check-out",
+        "from": "From {{time}}",
+        "until": "Until {{time}}",
+        "totalDuration": "Total Duration"
     },
     "form": {
         "fullname": "Full Name",
@@ -580,5 +613,8 @@
         "POOL_VIEW": "Pool View",
         "BLACKOUT_CURTAINS": "Blackout Curtains",
         "SOUNDPROOFING": "Soundproofing"
+    },
+    "messages": {
+        "paymentIntentCreated": "Payment intent created successfully"
     }
 }

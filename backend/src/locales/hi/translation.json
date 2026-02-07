@@ -141,5 +141,10 @@
   "statusMissingOrInvalid": "स्थिति गायब है या अमान्य है",
   "floorMissingOrInvalid": "फ़्लोर गायब है या अमान्य है",
   "invalidSortBy": "अमान्य फ़ील्ड",
-  "invalidSortOrder": "अमान्य क्रम"
+  "invalidSortOrder": "अमान्य क्रम",
+  "paymentIntentCreated": "भुगतान आशय सफलतापूर्वक बनाया गया",
+  "checkinDateMissingOrInvalid": "चेक-इन तिथि गायब है या अमान्य है",
+  "checkoutDateMissingOrInvalid": "चेक-आउट तिथि गायब है या अमान्य है",
+  "roomUnavailable": "चुना गया कमरा अनुरोधित तिथियों के लिए उपलब्ध नहीं है",
+  "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया"
 }

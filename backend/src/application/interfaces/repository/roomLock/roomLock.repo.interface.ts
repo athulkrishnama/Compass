@@ -12,6 +12,7 @@ export interface IRoomLockRepo
     beforeCheckOutDate?: Date;
     afterCheckOutDate?: Date;
     beforeCheckInDate?: Date;
+    paymentIntentId?: string;
   }): Promise<RoomLockEntity[]>;
 
   countRoomLock(filter: {
@@ -22,5 +23,6 @@ export interface IRoomLockRepo
     beforeCheckOutDate?: Date;
     afterCheckOutDate?: Date;
     beforeCheckInDate?: Date;
+    paymentIntentId?: string;
   }): Promise<number>;
 }

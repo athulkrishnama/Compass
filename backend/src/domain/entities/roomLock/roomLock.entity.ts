@@ -3,5 +3,7 @@ export interface RoomLockEntity {
   roomVariantId: string;
   checkinDate: Date;
   checkoutDate: Date;
+  amount: number;
   expiresAt: Date;
+  paymentIntentId: string;
 }

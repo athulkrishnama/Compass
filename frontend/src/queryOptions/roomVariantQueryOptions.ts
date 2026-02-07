@@ -80,6 +80,6 @@ export function createGetRoomVariantAvailabilityQueryOptions({
                 checkoutDate,
             }),
         refetchOnWindowFocus: true,
-        staleTime: 1000 * 5,
+        refetchInterval: 1000 * 5,
     });
 }

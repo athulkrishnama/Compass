@@ -34,4 +34,11 @@ export const envSchema = z.object({
   OTP_EXPIRATION_TIME: z.coerce.number({
     error: Errors.OTP_EXPIRATION_TIME_ERROR,
   }),
+  STRIPE_SECRET_KEY: z.string({ error: Errors.STRIPE_SECRET_KEY_ERROR }),
+  STRIPE_WEBHOOK_SECRET: z.string({
+    error: Errors.STRIPE_WEBHOOK_SECRET_ERROR,
+  }),
+  ROOM_LOCK_TIME: z.coerce.number({
+    error: Errors.ROOM_LOCK_EXPIRATION_TIME_ERROR,
+  }),
 });

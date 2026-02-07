@@ -146,6 +146,22 @@ export class HotelBookingRepo
     return result;
   }
 
+  async countMonthWise(filter: {
+    travelerId: string;
+    hotelId: string;
+    date: Date;
+  }): Promise<number> {
+    filter.date.setDate(filter.date.getDate() - 30);
+    const count = await this._model
+      .find({
+        travelerId: filter.travelerId,
+        hotelId: filter.hotelId,
+        createdAt: { $gt: filter.date },
+      })
+      .countDocuments();
+    return count;
+  }
+
   toEntity(doc: IHotelBookingDocument): HotelBookingEntity {
     return {
       _id: doc._id.toString(),

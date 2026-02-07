@@ -142,5 +142,10 @@
   "statusMissingOrInvalid": "Status is missing or invalid",
   "floorMissingOrInvalid": "Floor is missing or invalid",
   "invalidSortBy": "Invalid sort by field",
-  "invalidSortOrder": "Invalid sort order"
+  "invalidSortOrder": "Invalid sort order",
+  "paymentIntentCreated": "Payment intent created successfully",
+  "checkinDateMissingOrInvalid": "Check-in date is missing or invalid",
+  "checkoutDateMissingOrInvalid": "Check-out date is missing or invalid",
+  "roomUnavailable": "Selected room is not available for requested dates",
+  "paymentVerifiedSuccessfully": "Payment verified successfully"
 }
