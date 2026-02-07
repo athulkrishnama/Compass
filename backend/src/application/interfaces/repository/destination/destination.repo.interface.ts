@@ -1,6 +1,6 @@
 import { DestinationEntity } from "@domain/entities/destination/destination";
 import { IBaseRepository } from "../base/base.repo.interface";
-import { IDestinationDocument } from "@infrastructure/repository/database configs/schemas/destinationSchema";
+import { IDestinationDocument } from "@infrastructure/repository/destination/destinationSchema";
 import { DESTINATION_TYPES } from "@domain/enums/destinationType";
 import { ACTIVITY_TYPE } from "@domain/enums/activityType";
 

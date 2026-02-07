@@ -1,5 +1,5 @@
 import { RoomEntity } from "@domain/entities/room/roomEntity";
-import { IRoomDocument } from "@infrastructure/repository/database configs/schemas/roomSchema";
+import { IRoomDocument } from "@infrastructure/repository/room/roomSchema";
 import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
 export interface IRoomRepo extends IBaseRepository<RoomEntity, IRoomDocument> {

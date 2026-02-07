@@ -1,6 +1,6 @@
 import { HotelBookingEntity } from "@domain/entities/hotelBooking/hotelBooking.entity";
 import { BaseRepository } from "../base/base.repo";
-import { IHotelBookingDocument } from "../database configs/schemas/hotelBookingSchema";
+import { IHotelBookingDocument } from "./hotelBookingSchema";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";

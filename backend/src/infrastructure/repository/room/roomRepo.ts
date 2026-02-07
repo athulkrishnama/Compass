@@ -1,6 +1,6 @@
 import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
 import { BaseRepository } from "../base/base.repo";
-import { IRoomDocument } from "../database configs/schemas/roomSchema";
+import { IRoomDocument } from "./roomSchema";
 import { RoomEntity } from "@domain/entities/room/roomEntity";
 import { Model, Types } from "mongoose";
 import { inject, injectable } from "tsyringe";

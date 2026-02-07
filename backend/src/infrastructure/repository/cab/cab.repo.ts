@@ -1,6 +1,6 @@
 import { CabEntity } from "@domain/entities/cab/cab.entity";
 import { BaseRepository } from "../base/base.repo";
-import { ICabDocument } from "../database configs/schemas/cabSchema";
+import { ICabDocument } from "./cabSchema";
 import { inject, injectable } from "tsyringe";
 import { Model, Types } from "mongoose";
 import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";

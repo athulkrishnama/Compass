@@ -1,6 +1,6 @@
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { BaseRepository } from "../base/base.repo";
-import { IRoomLockDocument } from "../database configs/schemas/roomLockSchema";
+import { IRoomLockDocument } from "./roomLockSchema";
 import { RoomLockEntity } from "@domain/entities/roomLock/roomLock.entity";
 import { Model, RootFilterQuery } from "mongoose";
 import { inject, injectable } from "tsyringe";
