@@ -8,4 +8,5 @@ export interface IRoomRepo extends IBaseRepository<RoomEntity, IRoomDocument> {
     variantId: string,
     roomCode: string,
   ): Promise<RoomEntity | null>;
+  countRoomByVariantId(variantId: string): Promise<number>;
 }

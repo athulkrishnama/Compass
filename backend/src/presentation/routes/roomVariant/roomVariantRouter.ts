@@ -61,6 +61,15 @@ export class RoomVariantRouter {
         roomVariantController.handleDeleteRoomVariantImage(req, res, next);
       },
     );
+
+    this._router.get(
+      RoomVariantRoutes.AVAILABILITY,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL, ROLES.ADMIN, ROLES.TRAVELER]),
+      (req: Request, res: Response, next: NextFunction) => {
+        roomVariantController.handleGetRoomAvailability(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

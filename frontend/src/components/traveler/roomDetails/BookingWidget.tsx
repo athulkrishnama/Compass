@@ -7,6 +7,8 @@ import {
     Info,
     Plus,
     Minus,
+    DoorOpen,
+    Loader2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
@@ -20,17 +22,24 @@ import {
 import { format, differenceInDays } from "date-fns";
 import { type DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { createGetRoomVariantAvailabilityQueryOptions } from "@/queryOptions/roomVariantQueryOptions";
+import { createCreatePaymentIntentMutationOptions } from "@/queryOptions/paymentQueryOptions";
+import { useNavigate } from "@tanstack/react-router";
 
 interface BookingWidgetProps {
+    roomVariantId: string;
     basePrice: number;
     maxOccupancy: number;
 }
 
 export default function BookingWidget({
+    roomVariantId,
     basePrice,
     maxOccupancy,
 }: BookingWidgetProps) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [guestCount, setGuestCount] = useState(1);
     const [date, setDate] = useState<DateRange | undefined>({
         from: new Date(),
@@ -40,6 +49,41 @@ export default function BookingWidget({
     const nights =
         date?.from && date?.to ? differenceInDays(date.to, date.from) : 0;
     const total = basePrice * Math.max(nights, 1);
+
+    const { data: availabilityData, isLoading: isLoadingAvailability } =
+        useQuery({
+            ...createGetRoomVariantAvailabilityQueryOptions({
+                roomVariantId,
+                checkinDate: date?.from ?? new Date(),
+                checkoutDate:
+                    date?.to ??
+                    new Date(new Date().setDate(new Date().getDate() + 2)),
+            }),
+            enabled: !!date?.from && !!date?.to,
+        });
+
+    const availableRooms = availabilityData?.data?.available ?? 0;
+
+    const { mutate: createPaymentIntent, isPending: isCreatingPaymentIntent } =
+        useMutation({
+            ...createCreatePaymentIntentMutationOptions(),
+            onSuccess: (data) => {
+                if (!date?.from || !date?.to || !data?.data) return;
+
+                navigate({
+                    to: "/traveler/booking-confirmation",
+                    search: {
+                        roomVariantId,
+                        checkInDate: date.from.toDateString(),
+                        checkOutDate: date.to.toDateString(),
+                        guests: guestCount,
+                        paymentIntentId: data.data.paymentIntentId,
+                        clientSecret: data.data.clientSecret,
+                        amount: data.data.amount,
+                    },
+                });
+            },
+        });
 
     const handleIncrementGuests = () => {
         if (guestCount < maxOccupancy) {
@@ -51,6 +95,17 @@ export default function BookingWidget({
         if (guestCount > 1) {
             setGuestCount(guestCount - 1);
         }
+    };
+
+    const handleBooking = () => {
+        if (!date?.from || !date?.to) return;
+
+        createPaymentIntent({
+            roomVariantId,
+            checkInDate: date.from,
+            checkOutDate: date.to,
+            guests: guestCount,
+        });
     };
 
     return (
@@ -179,8 +234,56 @@ export default function BookingWidget({
                     </p>
                 </div>
 
-                <Button className="w-full h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-medium rounded-xl shadow-lg">
-                    {t(translationKey.roomDetails.bookYourStay)}
+                <div className="p-3 border border-gray-200 rounded-xl mb-6">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <DoorOpen className="w-4 h-4" />
+                            <span className="text-sm font-medium">
+                                {t(translationKey.roomDetails.availability)}
+                            </span>
+                        </div>
+                        {isLoadingAvailability ? (
+                            <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                        ) : (
+                            <span
+                                className={cn(
+                                    "px-2.5 py-1 rounded-full text-xs font-semibold",
+                                    availableRooms > 0
+                                        ? "bg-green-100 text-green-700"
+                                        : "bg-red-100 text-red-700"
+                                )}
+                            >
+                                {availableRooms > 0
+                                    ? t(
+                                          translationKey.roomDetails
+                                              .roomsAvailable,
+                                          {
+                                              count: availableRooms,
+                                          }
+                                      )
+                                    : t(
+                                          translationKey.roomDetails
+                                              .noRoomsAvailable
+                                      )}
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                <Button
+                    className="w-full h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-medium rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={
+                        availableRooms <= 0 ||
+                        isLoadingAvailability ||
+                        isCreatingPaymentIntent
+                    }
+                    onClick={handleBooking}
+                >
+                    {isCreatingPaymentIntent ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                        t(translationKey.roomDetails.bookYourStay)
+                    )}
                 </Button>
 
                 <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">

@@ -30,4 +30,6 @@ export enum Messages {
   ROOM_VARIANT_FETCHED = "roomVariantFetchedSuccessfully",
   ROOM_VARIANT_UPDATED = "roomVariantUpdatedSuccessfully",
   ROOM_VARIANT_IMAGE_DELETED_SUCCESSFULLY = "roomVariantImageDeletedSuccessfully",
+  PAYMENT_INTENT_CREATED = "paymentIntentCreated",
+  PAYMENT_VERIFIED_SUCCESSFULLY = "paymentVerifiedSuccessfully",
 }

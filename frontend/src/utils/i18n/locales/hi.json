@@ -103,7 +103,42 @@
         "floorNumberRequired": "मंजिल संख्या आवश्यक है",
         "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
         "otpLength": "OTP {{count}} अक्षरों का होना चाहिए",
-        "otpNumbersOnly": "OTP केवल अंक होना चाहिए"
+        "otpNumbersOnly": "OTP केवल अंक होना चाहिए",
+        "checkinDateMissingOrInvalid": "चेक-इन तिथि गायब है या अमान्य है",
+        "checkoutDateMissingOrInvalid": "चेक-आउट तिथि गायब है या अमान्य है",
+        "roomUnavailable": "चुना गया कमरा अनुरोधित तिथियों के लिए उपलब्ध नहीं है",
+        "invalidRoomVariantId": "अमान्य रूम वैरिएंट",
+        "invalidTraverlerId": "अमान्य यात्री जानकारी",
+        "invalidCheckinDate": "कृपया एक मान्य चेक-इन तिथि चुनें",
+        "invalidCheckoutDate": "कृपया एक मान्य चेक-आउट तिथि चुनें",
+        "invalidGuests": "कृपया मेहमानों की एक मान्य संख्या दर्ज करें",
+        "paymentIntentCreationFailed": "भुगतान शुरू करने में विफल। कृपया बाद में पुनः प्रयास करें।",
+        "paymentFailed": "भुगतान विफल। कृपया पुनः प्रयास करें।",
+        "invalidSignature": "अमान्य वेबहुक हस्ताक्षर",
+        "roomLockNotFound": "रूम लॉक नहीं मिला या समाप्त हो गया"
+    },
+    "bookingConfirmation": {
+        "confirmAndPay": "पुष्टि करें और भुगतान करें",
+        "reviewStayDetails": "अपनी ठहरने की जानकारी देखें और भुगतान पूरा करें।",
+        "paymentSummary": "भुगतान सारांश",
+        "basePrice": "आधार मूल्य",
+        "perNight": "/ रात",
+        "duration": "अवधि",
+        "nights": "रातें",
+        "subtotal": "उप योग",
+        "totalAmount": "कुल राशि",
+        "payNow": "अभी भुगतान करें",
+        "secureTransaction": "सुरक्षित एन्क्रिप्टेड लेनदेन",
+        "instantConfirmation": "तत्काल पुष्टि",
+        "bookingGuaranteed": "आपकी बुकिंग तुरंत गारंटीड है",
+        "hotelDetails": "होटल विवरण",
+        "roomSelection": "कमरा चयन",
+        "stayDetails": "ठहरने का विवरण",
+        "checkIn": "चेक-इन",
+        "checkOut": "चेक-आउट",
+        "from": "{{time}} से",
+        "until": "{{time}} तक",
+        "totalDuration": "कुल अवधि"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -511,6 +546,9 @@
         "POOL_VIEW": "पूल का दृश्य",
         "BLACKOUT_CURTAINS": "ब्लैकआउट पर्दे",
         "SOUNDPROOFING": "साउंडप्रूफिंग"
+    },
+    "messages": {
+        "paymentIntentCreated": "भुगतान आशय सफलतापूर्वक बनाया गया",
+        "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया"
     }
 }
-

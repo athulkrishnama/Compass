@@ -20,4 +20,7 @@ export enum Errors {
   S3_SECRET_ACCESS_KEY_ERROR = "Provide S3 Secret Access Key",
   SIGNED_URL_EXPIRY_ERROR = "Provide signed url expiray time in seconds",
   OTP_EXPIRATION_TIME_ERROR = "Provide otp expiration time in seconds",
+  STRIPE_SECRET_KEY_ERROR = "Provide stripe secret key",
+  STRIPE_WEBHOOK_SECRET_ERROR = "Provide stripe webhook secret",
+  ROOM_LOCK_EXPIRATION_TIME_ERROR = "Provide room lock expiration time in seconds",
 }

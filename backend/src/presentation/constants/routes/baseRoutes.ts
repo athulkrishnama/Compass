@@ -6,4 +6,6 @@ export enum Routes {
   DESTINATION = "/api/v1/destinations",
   ROOM_VARIANT = "/api/v1/room-variants",
   ROOM = "/api/v1/rooms",
+  PAYMENT = "/api/v1/payment",
+  WEBHOOK = "/api/v1/webhooks",
 }

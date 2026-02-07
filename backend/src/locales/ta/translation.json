@@ -141,5 +141,10 @@
   "statusMissingOrInvalid": "நிலை இல்லை அல்லது தவறானது",
   "floorMissingOrInvalid": "தளம் விடுபட்டுள்ளது அல்லது தவறானது",
   "invalidSortBy": "செல்லாத வரிசைப்படுத்தும் புலம்",
-  "invalidSortOrder": "செல்லாத வரிசைப்படுத்தும் முறை"
+  "invalidSortOrder": "செல்லாத வரிசைப்படுத்தும் முறை",
+  "paymentIntentCreated": "கட்டண நோக்கம் வெற்றிகரமாக உருவாக்கப்பட்டது",
+  "checkinDateMissingOrInvalid": "செக்-இன் தேதி இல்லை அல்லது செல்லாது",
+  "checkoutDateMissingOrInvalid": "செக்-அவுட் தேதி இல்லை அல்லது செல்லாது",
+  "roomUnavailable": "தேர்ந்தெடுக்கப்பட்ட அறை கோரப்பட்ட தேதிகளுக்குக் கிடைக்கவில்லை",
+  "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது"
 }

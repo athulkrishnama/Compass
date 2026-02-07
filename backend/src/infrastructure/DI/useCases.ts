@@ -87,6 +87,12 @@ import { IGetDestinationUseCase } from "@application/interfaces/useCase/destinat
 import { GetDestinationUseCase } from "@useCases/destination/getDestinationUseCase";
 import { IHotelSearchUseCase } from "@application/interfaces/useCase/hotel/hotelSearchUseCase.interface";
 import { HotelSearchUseCase } from "@useCases/hotel/hotelSearchUseCase";
+import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
+import { GetRoomAvailabilityUseCase } from "@useCases/roomVariant/getRoomAvailabilityUseCase";
+import { ICreatePaymentIntentUseCase } from "@application/interfaces/useCase/payment/createPaymentIntentUseCase.interface";
+import { CreatePaymentIntentUseCase } from "@useCases/payment/createPaymentIntentUseCase";
+import { IVerifyPaymentUseCase } from "@application/interfaces/useCase/payment/verifyPaymentUseCase.interface";
+import { VerifyPaymentUseCase } from "@useCases/payment/verifyPaymentUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -258,5 +264,17 @@ export function registerUsecases() {
   container.registerSingleton<IHotelSearchUseCase>(
     "IHotelSearchUseCase",
     HotelSearchUseCase,
+  );
+  container.registerSingleton<IGetRoomAvailabilityUseCase>(
+    "IGetRoomAvailabilityUseCase",
+    GetRoomAvailabilityUseCase,
+  );
+  container.registerSingleton<ICreatePaymentIntentUseCase>(
+    "ICreatePaymentIntentUseCase",
+    CreatePaymentIntentUseCase,
+  );
+  container.registerSingleton<IVerifyPaymentUseCase>(
+    "IVerifyPaymentUseCase",
+    VerifyPaymentUseCase,
   );
 }

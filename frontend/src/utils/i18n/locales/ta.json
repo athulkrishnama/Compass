@@ -103,7 +103,42 @@
         "floorNumberRequired": "தள எண் தேவை",
         "somethingWentWrong": "ஏதோ தவறு நடந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.",
         "otpLength": "OTP {{count}} எழுத்துகளாக இருக்க வேண்டும்",
-        "otpNumbersOnly": "OTP எண்கள் மட்டுமே இருக்க வேண்டும்"
+        "otpNumbersOnly": "OTP எண்கள் மட்டுமே இருக்க வேண்டும்",
+        "checkinDateMissingOrInvalid": "செக்-இன் தேதி இல்லை அல்லது செல்லாது",
+        "checkoutDateMissingOrInvalid": "செக்-அவுட் தேதி இல்லை அல்லது செல்லாது",
+        "roomUnavailable": "தேர்ந்தெடுக்கப்பட்ட அறை கோரப்பட்ட தேதிகளுக்குக் கிடைக்கவில்லை",
+        "invalidRoomVariantId": "செல்லாத ரூம் வேரியன்ட்",
+        "invalidTraverlerId": "செல்லாத பயணி தகவல்",
+        "invalidCheckinDate": "செல்லுபடியாகும் செக்-இன் தேதியைத் தேர்ந்தெடுக்கவும்",
+        "invalidCheckoutDate": "செல்லுபடியாகும் செக்-அவுட் தேதியைத் தேர்ந்தெடுக்கவும்",
+        "invalidGuests": "செல்லுபடியாகும் விருந்தினர்களின் எண்ணிக்கையை உள்ளிடவும்",
+        "paymentIntentCreationFailed": "பணம் செலுத்துதலைத் தொடங்கத் தவறிவிட்டது. பிறகு மீண்டும் முயற்சிக்கவும்.",
+        "paymentFailed": "பணம் செலுத்துதல் தோல்வியுற்றது. மீண்டும் முயற்சிக்கவும்.",
+        "invalidSignature": "செல்லாத வெப்ஹூக் கையொப்பம்",
+        "roomLockNotFound": "ரூம் லாக் கண்டறியப்படவில்லை அல்லது காலாவதியாகிவிட்டது"
+    },
+    "bookingConfirmation": {
+        "confirmAndPay": "உறுதிசெய்து பணம் செலுத்துங்கள்",
+        "reviewStayDetails": "உங்கள் தங்குமிட விவரங்களை மதிப்பாய்வு செய்து பணம் செலுத்துங்கள்.",
+        "paymentSummary": "பணம் செலுத்துதல் சுருக்கம்",
+        "basePrice": "அடிப்படை விலை",
+        "perNight": "/ இரவு",
+        "duration": "காலம்",
+        "nights": "இரவுகள்",
+        "subtotal": "துணை மொத்தம்",
+        "totalAmount": "மொத்த தொகை",
+        "payNow": "இப்போது பணம் செலுத்துங்கள்",
+        "secureTransaction": "பாதுகாப்பான மறையாக்கப்பட்ட பரிவர்த்தனை",
+        "instantConfirmation": "உடனடி உறுதிப்படுத்தல்",
+        "bookingGuaranteed": "உங்கள் முன்பதிவு உடனடியாக உத்தரவாதம் செய்யப்படுகிறது",
+        "hotelDetails": "ஹோட்டல் விவரங்கள்",
+        "roomSelection": "அறை தேர்வு",
+        "stayDetails": "தங்குமிட விவரங்கள்",
+        "checkIn": "செக்-இன்",
+        "checkOut": "செக்-அவுட்",
+        "from": "{{time}} இலிருந்து",
+        "until": "{{time}} வரை",
+        "totalDuration": "மொத்த காலம்"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -511,6 +546,9 @@
         "POOL_VIEW": "நீச்சல் குளம் காட்சி",
         "BLACKOUT_CURTAINS": "இருண்ட திரைச்சீலைகள்",
         "SOUNDPROOFING": "ஒலி எதிர்ப்பு"
+    },
+    "messages": {
+        "paymentIntentCreated": "கட்டண நோக்கம் வெற்றிகரமாக உருவாக்கப்பட்டது",
+        "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது"
     }
 }
-

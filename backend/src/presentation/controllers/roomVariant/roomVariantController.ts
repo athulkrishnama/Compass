@@ -8,6 +8,7 @@ import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import {
   createRoomVariantValidation,
   editRoomVariantValidation,
+  getRoomAvailabilityValidation,
 } from "@presentation/validationSchemas/roomVariantValidation";
 import { Request, Response, NextFunction } from "express";
 import { inject, injectable } from "tsyringe";
@@ -16,6 +17,7 @@ import { IListRoomVariantsByHotelIdUseCase } from "@application/interfaces/useCa
 import { IEditRoomVariantUseCase } from "@application/interfaces/useCase/roomVariant/editRoomVariantUseCase.interface";
 import { IGetRoomVariantByIdUseCase } from "@application/interfaces/useCase/roomVariant/getRoomVariantByIdUseCase.interface";
 import { IDeleteRoomVariantImageUseCase } from "@application/interfaces/useCase/roomVariant/deleteRoomVariantImageUseCase.interface";
+import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
 
 @injectable()
 export class RoomVariantController {
@@ -30,6 +32,8 @@ export class RoomVariantController {
     private _getRoomVariantByIdUseCase: IGetRoomVariantByIdUseCase,
     @inject("IDeleteRoomVariantImageUseCase")
     private _deleteRoomVariantImageUseCase: IDeleteRoomVariantImageUseCase,
+    @inject("IGetRoomAvailabilityUseCase")
+    private _getRoomAvailabilityUseCase: IGetRoomAvailabilityUseCase,
   ) {}
 
   async handleCreateRoomVariant(
@@ -192,6 +196,39 @@ export class RoomVariantController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.ROOM_VARIANT_IMAGE_DELETED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetRoomAvailability(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { checkinDate, checkoutDate } = req.query;
+      const { roomVariantId } = req.params;
+
+      const data = getRoomAvailabilityValidation.safeParse({
+        checkinDate,
+        checkoutDate,
+        roomVariantId,
+      });
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      const result = await this._getRoomAvailabilityUseCase.execute(data.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.ROOM_VARIANT_FETCHED,
+        result,
       );
     } catch (error) {
       next(error);
