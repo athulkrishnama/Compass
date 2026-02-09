@@ -7,7 +7,6 @@ import { CabController } from "@presentation/controllers/cab/cabController";
 import { HotelController } from "@presentation/controllers/hotel/hotelController";
 import { RoomVariantController } from "@presentation/controllers/roomVariant/roomVariantController";
 import { DestinationController } from "@presentation/controllers/destination/destinationCotroller";
-import { RoomController } from "@presentation/controllers/room/roomController";
 import { PaymentController } from "@presentation/controllers/payment/paymentController";
 import { WebHookController } from "@presentation/controllers/webhook/webhookController";
 
@@ -19,6 +18,5 @@ export const cabController = container.resolve(CabController);
 export const destinationController = container.resolve(DestinationController);
 export const hotelController = container.resolve(HotelController);
 export const roomVariantController = container.resolve(RoomVariantController);
-export const roomController = container.resolve(RoomController);
 export const paymentController = container.resolve(PaymentController);
 export const webhookController = container.resolve(WebHookController);

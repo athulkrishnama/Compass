@@ -6,7 +6,6 @@ import {
 import { PaymentService } from "@infrastructure/services/paymentService";
 import { inject, injectable } from "tsyringe";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
-import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { ResourceNotFoundException } from "@application/constants/Exceptions";
@@ -19,7 +18,6 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
     @inject("IPaymentService") private _paymentService: PaymentService,
     @inject("IRoomVariantRepo")
     private _roomVariantRepository: IRoomVariantRepo,
-    @inject("IRoomRepo") private _roomRepository: IRoomRepo,
     @inject("IHotelBookingRepo")
     private _hotelBookingRepository: IHotelBookingRepo,
     @inject("IRoomLockRepo") private _roomLockRepository: IRoomLockRepo,
@@ -37,31 +35,7 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
       );
     }
 
-    const totalRoomCountPromise = this._roomRepository.countRoomByVariantId(
-      data.roomVariantId,
-    );
-
-    const totalBookedRoomCountPromise =
-      this._hotelBookingRepository.countBooking({
-        roomVariantId: data.roomVariantId,
-        beforeCheckInDate: data.checkOutDate,
-        afterCheckOutDate: data.checkInDate,
-      });
-    const totalLockedRoomCountPromise = this._roomLockRepository.countRoomLock({
-      roomVariantId: data.roomVariantId,
-      beforeCheckInDate: data.checkOutDate,
-      afterCheckOutDate: data.checkInDate,
-    });
-
-    const [totalRoomCount, totalBookedRoomCount, totalLockedRoomCount] =
-      await Promise.all([
-        totalRoomCountPromise,
-        totalBookedRoomCountPromise,
-        totalLockedRoomCountPromise,
-      ]);
-
-    const availableRoomCount =
-      totalRoomCount - (totalBookedRoomCount + totalLockedRoomCount);
+    const availableRoomCount = 0;
 
     if (availableRoomCount <= 0) {
       throw new ResourceNotFoundException(

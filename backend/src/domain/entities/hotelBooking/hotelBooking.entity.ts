@@ -6,7 +6,6 @@ export interface HotelBookingEntity {
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
-  roomId?: string;
   checkinDate: Date;
   checkoutDate: Date;
   totalAmount: number;

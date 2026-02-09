@@ -9,8 +9,6 @@ import { HotelRepo } from "@infrastructure/repository/hotel/hotel.repo";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { RoomVariantRepo } from "@infrastructure/repository/roomVariant/roomVariant.repo";
-import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
-import { RoomRepo } from "@infrastructure/repository/room/roomRepo";
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { RoomLockRepo } from "@infrastructure/repository/roomLock/roomLock.repo";
 import { HotelBookingRepo } from "@infrastructure/repository/hotelBooking/hotelBooking.repo";
@@ -28,7 +26,6 @@ export function registerRepositories() {
     "IRoomVariantRepo",
     RoomVariantRepo,
   );
-  container.registerSingleton<IRoomRepo>("IRoomRepo", RoomRepo);
   container.registerSingleton<IRoomLockRepo>("IRoomLockRepo", RoomLockRepo);
   container.registerSingleton<IHotelBookingRepo>(
     "IHotelBookingRepo",

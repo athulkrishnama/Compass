@@ -22,7 +22,6 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -42,9 +41,6 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
-    }
-    if (filter.roomId) {
-      filterQuery.roomId = filter.roomId;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -86,7 +82,6 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -106,9 +101,6 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
-    }
-    if (filter.roomId) {
-      filterQuery.roomId = filter.roomId;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -168,7 +160,6 @@ export class HotelBookingRepo
       hotelId: doc.hotelId,
       travelerId: doc.travelerId,
       roomVariantId: doc.roomVariantId,
-      roomId: doc.roomId,
       checkinDate: doc.checkinDate,
       checkoutDate: doc.checkoutDate,
       totalAmount: doc.totalAmount,
