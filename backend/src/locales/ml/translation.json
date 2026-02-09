@@ -146,5 +146,6 @@
   "checkinDateMissingOrInvalid": "ചെക്ക്-ഇൻ തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
   "checkoutDateMissingOrInvalid": "ചെക്ക്-ഔട്ട് തീയതി ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
   "roomUnavailable": "തിരഞ്ഞെടുത്ത മുറി ഈ തീയതികളിൽ ലഭ്യമല്ല",
-  "paymentVerifiedSuccessfully": "പേയ്‌മെന്റ് വിജയകരമായി സ്ഥിരീകരിച്ചു"
+  "paymentVerifiedSuccessfully": "പേയ്‌മെന്റ് വിജയകരമായി സ്ഥിരീകരിച്ചു",
+  "unverified": "ഉപയോക്താവിനെ പരിശോധിച്ചിട്ടില്ല"
 }

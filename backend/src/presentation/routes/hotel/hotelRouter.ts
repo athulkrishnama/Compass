@@ -23,6 +23,7 @@ export class HotelRouter {
       HotelRoutes.INDEX,
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.HOTEL]),
+      authMiddleware.checkVerified,
       uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
       (req: Request, res: Response, next: NextFunction) => {
         hotelController.handleCreateHotel(req, res, next);
@@ -42,6 +43,7 @@ export class HotelRouter {
       `${HotelRoutes.INDEX}:id`,
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.HOTEL]),
+      authMiddleware.checkVerified,
       uploadMiddleware.fields([{ name: "images" }, { name: "coverImage" }]),
       (req: Request, res: Response, next: NextFunction) => {
         hotelController.handleEditHotel(req, res, next);

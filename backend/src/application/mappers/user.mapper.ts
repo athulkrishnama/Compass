@@ -1,4 +1,4 @@
-import { IUserDocument } from "@infrastructure/repository/database configs/schemas/userSchema";
+import { IUserDocument } from "@infrastructure/repository/users/userSchema";
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { ICreateUserRequestDTO } from "@domain/dtos/auth/createUser.dto";
 import { IUserLoginResponseDTO } from "@domain/dtos/auth/userLogin.dto";

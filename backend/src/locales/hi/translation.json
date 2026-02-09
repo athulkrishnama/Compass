@@ -146,5 +146,6 @@
   "checkinDateMissingOrInvalid": "चेक-इन तिथि गायब है या अमान्य है",
   "checkoutDateMissingOrInvalid": "चेक-आउट तिथि गायब है या अमान्य है",
   "roomUnavailable": "चुना गया कमरा अनुरोधित तिथियों के लिए उपलब्ध नहीं है",
-  "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया"
+  "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया",
+  "unverified": "उपयोगकर्ता सत्यापित नहीं है"
 }

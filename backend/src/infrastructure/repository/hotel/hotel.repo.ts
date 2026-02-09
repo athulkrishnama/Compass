@@ -2,11 +2,11 @@ import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.
 import { BaseRepository } from "../base/base.repo";
 import { inject, injectable } from "tsyringe";
 import { Model, PipelineStage, RootFilterQuery } from "mongoose";
-import { IHotelDocument } from "../database configs/schemas/hotelSchema";
+import { IHotelDocument } from "./hotelSchema";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 import { Types } from "mongoose";
 import { IHotelWithAggregatedRoomVariantDTO } from "@domain/dtos/hotel/hotelSearch.dto";
-import { IRoomVariantDocument } from "../database configs/schemas/roomVariantSchema";
+import { IRoomVariantDocument } from "../roomVariant/roomVariantSchema";
 import { VALUES } from "@presentation/constants/values";
 
 @injectable()

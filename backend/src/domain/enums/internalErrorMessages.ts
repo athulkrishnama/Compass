@@ -129,4 +129,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   INVALID_SIGNATURE = "invalidSignature",
   ROOM_LOCK_NOT_FOUND = "roomLockNotFound",
   USER_REACHED_BOOKING_LIMIT = "userHasReachedBookingLimitForMonth",
+  UNVERIFIED = "unverified",
 }

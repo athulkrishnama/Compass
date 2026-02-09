@@ -1,4 +1,4 @@
 import { model } from "mongoose";
-import { destinationSchema } from "../schemas/destinationSchema";
+import { destinationSchema } from "./destinationSchema";
 
 export const destinationModel = model("destinations", destinationSchema);

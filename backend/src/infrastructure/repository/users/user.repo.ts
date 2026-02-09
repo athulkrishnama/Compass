@@ -4,7 +4,7 @@ import { Model, RootFilterQuery } from "mongoose";
 import { UserMapper } from "application/mappers/user.mapper";
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { inject, injectable } from "tsyringe";
-import { IUserDocument } from "../database configs/schemas/userSchema";
+import { IUserDocument } from "./userSchema";
 import { ROLES } from "@domain/types/roles";
 import { VALUES } from "presentation/constants/values";
 import { ROLES as ROLE_VALUES } from "@domain/enums/roles";

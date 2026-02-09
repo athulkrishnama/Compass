@@ -1,6 +1,6 @@
 import { RoomLockEntity } from "@domain/entities/roomLock/roomLock.entity";
 import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IRoomLockDocument } from "@infrastructure/repository/database configs/schemas/roomLockSchema";
+import { IRoomLockDocument } from "@infrastructure/repository/roomLock/roomLockSchema";
 
 export interface IRoomLockRepo
   extends BaseRepository<RoomLockEntity, IRoomLockDocument> {

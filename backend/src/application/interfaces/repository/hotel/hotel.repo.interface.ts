@@ -1,7 +1,7 @@
 import { IHotelWithAggregatedRoomVariantDTO } from "@domain/dtos/hotel/hotelSearch.dto";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IHotelDocument } from "@infrastructure/repository/database configs/schemas/hotelSchema";
+import { IHotelDocument } from "@infrastructure/repository/hotel/hotelSchema";
 
 export interface IHotelRepo
   extends BaseRepository<HotelEntity, IHotelDocument> {

@@ -1,6 +1,6 @@
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { IBaseRepository } from "../base/base.repo.interface";
-import { IUserDocument } from "@infrastructure/repository/database configs/schemas/userSchema";
+import { IUserDocument } from "@infrastructure/repository/users/userSchema";
 import { ROLES } from "@domain/types/roles";
 import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
 

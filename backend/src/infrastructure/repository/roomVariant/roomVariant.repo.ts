@@ -2,7 +2,7 @@ import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant
 import { BaseRepository } from "../base/base.repo";
 import { inject, injectable } from "tsyringe";
 import { Model, Types } from "mongoose";
-import { IRoomVariantDocument } from "../database configs/schemas/roomVariantSchema";
+import { IRoomVariantDocument } from "./roomVariantSchema";
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";

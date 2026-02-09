@@ -2,7 +2,7 @@ import { HotelBookingEntity } from "@domain/entities/hotelBooking/hotelBooking.e
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IHotelBookingDocument } from "@infrastructure/repository/database configs/schemas/hotelBookingSchema";
+import { IHotelBookingDocument } from "@infrastructure/repository/hotelBooking/hotelBookingSchema";
 
 export interface IHotelBookingRepo
   extends BaseRepository<HotelBookingEntity, IHotelBookingDocument> {

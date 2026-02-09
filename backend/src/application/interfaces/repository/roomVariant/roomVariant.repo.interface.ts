@@ -1,6 +1,6 @@
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
 import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IRoomVariantDocument } from "@infrastructure/repository/database configs/schemas/roomVariantSchema";
+import { IRoomVariantDocument } from "@infrastructure/repository/roomVariant/roomVariantSchema";
 
 export interface IRoomVariantRepo
   extends BaseRepository<RoomVariantEntity, IRoomVariantDocument> {
