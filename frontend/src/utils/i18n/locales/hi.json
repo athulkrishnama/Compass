@@ -115,7 +115,12 @@
         "paymentIntentCreationFailed": "भुगतान शुरू करने में विफल। कृपया बाद में पुनः प्रयास करें।",
         "paymentFailed": "भुगतान विफल। कृपया पुनः प्रयास करें।",
         "invalidSignature": "अमान्य वेबहुक हस्ताक्षर",
-        "roomLockNotFound": "रूम लॉक नहीं मिला या समाप्त हो गया"
+        "roomLockNotFound": "रूम लॉक नहीं मिला या समाप्त हो गया",
+        "roomPrefixMissingOrInvalid": "रूम प्रीफिक्स गायब है या अमान्य है",
+        "totalRoomsMissingOrInvalid": "कुल कमरों की संख्या गायब है या अमान्य है",
+        "isActiveMissingOrInvalid": "सक्रिय स्थिति गायब है या अमान्य है",
+        "roomNumberExceedsTotal": "कमरा संख्या कुल कमरों से अधिक नहीं हो सकती ({{total}})",
+        "roomVariantPrefixAlreadyExists": "इस प्रीफ़िक्स वाला रूम वेरिएंट पहले से मौजूद है"
     },
     "bookingConfirmation": {
         "confirmAndPay": "पुष्टि करें और भुगतान करें",
@@ -436,7 +441,20 @@
         "sortOrderAsc": "आरोही",
         "sortOrderDesc": "अवरोही",
         "sortByName": "नाम",
-        "sortByPrice": "कीमत"
+        "sortByPrice": "कीमत",
+        "operationalStatus": "परिचालन स्थिति",
+        "unavailableRooms": "अनुपलब्ध",
+        "markUnavailable": "अनुपलब्ध चिह्नित करें",
+        "maintenanceCleaningEtc": "रखरखाव, सफाई आदि",
+        "restore": "पुनर्स्थापित करें",
+        "markRoomUnavailable": "कमरा अनुपलब्ध चिह्नित करें",
+        "roomNumberLabel": "कमरा संख्या",
+        "reasonLabel": "कारण",
+        "enterReasonPlaceholder": "अनुपलब्धता का कारण दर्ज करें...",
+        "fullRoomCode": "पूर्ण कमरा कोड",
+        "maintenance": "रखरखाव",
+        "cleaning": "सफाई",
+        "blocked": "अवरुद्ध"
     },
     "tableHeaders": {
         "destination": "गंतव्य",

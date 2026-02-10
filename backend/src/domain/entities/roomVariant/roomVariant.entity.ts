@@ -17,6 +17,7 @@ export interface RoomVariantEntity {
   _id?: string;
   hotelId: string;
   name: string;
+  roomPrefix: string;
   description: string;
   maxOccupancy: number;
   bedConfig: BedConfig;
@@ -25,4 +26,8 @@ export interface RoomVariantEntity {
   basePrice: number;
   coverImage: string;
   images: string[];
+  totalRooms: number;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

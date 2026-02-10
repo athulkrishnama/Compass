@@ -10,6 +10,9 @@ export const createRoomVariantValidation = z.object({
   name: z.string({
     error: INTERNAL_ERROR_MESSAGES.ROOM_NAME_MISSING_OR_INVALID,
   }),
+  roomPrefix: z.string({
+    error: INTERNAL_ERROR_MESSAGES.ROOM_PREFIX_MISSING_OR_INVALID,
+  }),
   description: z.string({
     error: INTERNAL_ERROR_MESSAGES.DESCRIPTION_MISSING_OR_INVALID,
   }),
@@ -89,6 +92,16 @@ export const createRoomVariantValidation = z.object({
         error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
       }),
   ),
+  totalRooms: z.preprocess(
+    (value) => (typeof value === "string" ? parseInt(value, 10) : value),
+    z
+      .number({
+        error: INTERNAL_ERROR_MESSAGES.TOTAL_ROOMS_MISSING_OR_INVALID,
+      })
+      .min(1, {
+        error: INTERNAL_ERROR_MESSAGES.TOTAL_ROOMS_MISSING_OR_INVALID,
+      }),
+  ),
 });
 
 export const editRoomVariantValidation = z.object({
@@ -101,6 +114,11 @@ export const editRoomVariantValidation = z.object({
   name: z
     .string({
       error: INTERNAL_ERROR_MESSAGES.ROOM_NAME_MISSING_OR_INVALID,
+    })
+    .optional(),
+  roomPrefix: z
+    .string({
+      error: INTERNAL_ERROR_MESSAGES.ROOM_PREFIX_MISSING_OR_INVALID,
     })
     .optional(),
   description: z
@@ -197,6 +215,22 @@ export const editRoomVariantValidation = z.object({
         .mime(["image/jpeg", "image/png", "image/webp"], {
           error: INTERNAL_ERROR_MESSAGES.IMAGES_MISSING_OR_INVALID,
         }),
+    )
+    .optional(),
+  totalRooms: z.coerce
+    .number({
+      error: INTERNAL_ERROR_MESSAGES.TOTAL_ROOMS_MISSING_OR_INVALID,
+    })
+    .min(1, {
+      error: INTERNAL_ERROR_MESSAGES.TOTAL_ROOMS_MISSING_OR_INVALID,
+    })
+    .optional(),
+  isActive: z
+    .preprocess(
+      (value) => (value === "true" ? true : value === "false" ? false : value),
+      z.boolean({
+        error: INTERNAL_ERROR_MESSAGES.IS_ACTIVE_MISSING_OR_INVALID,
+      }),
     )
     .optional(),
 });

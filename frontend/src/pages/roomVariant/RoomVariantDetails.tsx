@@ -32,7 +32,7 @@ function RoomVariantDetailsContent() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="overflow-y-scroll hide-scroll-bar bg-gray-50">
             <div className="max-w-6xl mx-auto px-6 py-8 space-y-8">
                 <Link
                     to="/hotel/hotels/$hotelId"
@@ -46,9 +46,8 @@ function RoomVariantDetailsContent() {
                 <RoomVariantHeader roomVariant={roomVariantData} />
 
                 <RoomInstancesSection
-                    hotelId={hotelId}
                     roomVariantId={roomVariantId}
-                    rooms={roomVariantData.rooms}
+                    roomVariant={roomVariantData}
                 />
             </div>
         </div>

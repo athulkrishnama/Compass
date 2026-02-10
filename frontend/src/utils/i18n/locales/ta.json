@@ -115,7 +115,12 @@
         "paymentIntentCreationFailed": "பணம் செலுத்துதலைத் தொடங்கத் தவறிவிட்டது. பிறகு மீண்டும் முயற்சிக்கவும்.",
         "paymentFailed": "பணம் செலுத்துதல் தோல்வியுற்றது. மீண்டும் முயற்சிக்கவும்.",
         "invalidSignature": "செல்லாத வெப்ஹூக் கையொப்பம்",
-        "roomLockNotFound": "ரூம் லாக் கண்டறியப்படவில்லை அல்லது காலாவதியாகிவிட்டது"
+        "roomLockNotFound": "ரூம் லாக் கண்டறியப்படவில்லை அல்லது காலாவதியாகிவிட்டது",
+        "roomPrefixMissingOrInvalid": "ரூம் பிரிஃபிக்ஸ் இல்லை அல்லது செல்லாது",
+        "totalRoomsMissingOrInvalid": "மொத்த அறைகளின் எண்ணிக்கை இல்லை அல்லது செல்லாது",
+        "isActiveMissingOrInvalid": "செயலில் உள்ள நிலை இல்லை அல்லது செல்லாது",
+        "roomNumberExceedsTotal": "அறை எண் மொத்த அறைகளை விட அதிகமாக இருக்கக் கூடாது ({{total}})",
+        "roomVariantPrefixAlreadyExists": "இந்த முன்னொட்டுடன் கூடிய அறை வகை ஏற்கனவே உள்ளது"
     },
     "bookingConfirmation": {
         "confirmAndPay": "உறுதிசெய்து பணம் செலுத்துங்கள்",
@@ -436,7 +441,20 @@
         "sortOrderAsc": "மேலேற்றம்",
         "sortOrderDesc": "கீழேற்றம்",
         "sortByName": "பெயர்",
-        "sortByPrice": "விலை"
+        "sortByPrice": "விலை",
+        "operationalStatus": "செயல்பாட்டு நிலை",
+        "unavailableRooms": "கிடைக்கவில்லை",
+        "markUnavailable": "கிடைக்கவில்லை என குறிக்கவும்",
+        "maintenanceCleaningEtc": "பராமரிப்பு, சுத்தம் செய்தல் போன்றவை",
+        "restore": "மீட்டமைக்கவும்",
+        "markRoomUnavailable": "அறை கிடைக்கவில்லை என குறிக்கவும்",
+        "roomNumberLabel": "அறை எண்",
+        "reasonLabel": "காரணம்",
+        "enterReasonPlaceholder": "கிடைக்காததற்கான காரணத்தை உள்ளிடவும்...",
+        "fullRoomCode": "முழு அறை குறியீடு",
+        "maintenance": "பராமரிப்பு",
+        "cleaning": "சுத்தம் செய்தல்",
+        "blocked": "தடைசெய்யப்பட்டது"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",

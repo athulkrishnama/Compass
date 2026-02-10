@@ -56,6 +56,8 @@ function EditRoomVariantForm({
         values: {
             name: roomVariantData.name,
             description: roomVariantData.description,
+            roomPrefix: roomVariantData.roomPrefix,
+            totalRooms: roomVariantData.totalRooms,
             maxOccupancy: roomVariantData.maxOccupancy,
             bedType: roomVariantData.bedConfig
                 .type as (typeof BedTypes)[number],
@@ -77,6 +79,10 @@ function EditRoomVariantForm({
             formData.append("name", data.name);
         if (data.description !== roomVariantData.description)
             formData.append("description", data.description);
+        if (data.roomPrefix !== roomVariantData.roomPrefix)
+            formData.append("roomPrefix", data.roomPrefix);
+        if (data.totalRooms !== roomVariantData.totalRooms)
+            formData.append("totalRooms", data.totalRooms.toString());
         if (data.maxOccupancy !== roomVariantData.maxOccupancy)
             formData.append("maxOccupancy", data.maxOccupancy.toString());
         if (data.basePrice !== roomVariantData.basePrice)

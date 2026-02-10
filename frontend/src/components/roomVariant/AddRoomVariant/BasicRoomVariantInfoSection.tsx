@@ -18,6 +18,7 @@ function BasicRoomVariantInfoSection({
     const {
         register,
         formState: { errors },
+        setValue,
     } = form;
 
     return (
@@ -67,6 +68,55 @@ function BasicRoomVariantInfoSection({
                             {errors.description.message}
                         </p>
                     )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label className="text-xs text-gray-500 uppercase tracking-wider">
+                            {t(translationKey.form.roomPrefix)}
+                        </Label>
+                        <Input
+                            {...register("roomPrefix", {
+                                onChange: (e) => {
+                                    setValue(
+                                        "roomPrefix",
+                                        e.target.value.toUpperCase()
+                                    );
+                                },
+                            })}
+                            placeholder={t(
+                                translationKey.form.roomPrefixPlaceholder
+                            )}
+                            className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors uppercase"
+                        />
+                        {errors.roomPrefix && (
+                            <p className="text-xs text-red-500">
+                                {errors.roomPrefix.message}
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label className="text-xs text-gray-500 uppercase tracking-wider">
+                            {t(translationKey.form.totalRooms)}
+                        </Label>
+                        <Input
+                            {...register("totalRooms", {
+                                valueAsNumber: true,
+                            })}
+                            type="number"
+                            min="1"
+                            placeholder={t(
+                                translationKey.form.totalRoomsPlaceholder
+                            )}
+                            className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:bg-white transition-colors"
+                        />
+                        {errors.totalRooms && (
+                            <p className="text-xs text-red-500">
+                                {errors.totalRooms.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </motion.div>

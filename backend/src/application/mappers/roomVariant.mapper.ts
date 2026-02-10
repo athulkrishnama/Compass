@@ -1,6 +1,7 @@
 import { ICreateRoomVariantRequestDTO } from "@domain/dtos/roomVariant/createRoomVariant.dto";
 import { IRoomVariantDetailResponseDTO } from "@domain/dtos/roomVariant/getRoomVariantDetail.dto";
 import { IRoomVariantListingResponseDTO } from "@domain/dtos/roomVariant/roomVariantListing.dto";
+import { RoomStatusEntity } from "@domain/entities/roomStatus/roomStatus.entity";
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
 
 export class RoomVariantMapper {
@@ -14,6 +15,7 @@ export class RoomVariantMapper {
         coverImage: roomVariant.coverImage,
         basePrice: roomVariant.basePrice,
         maxOccupancy: roomVariant.maxOccupancy,
+        isActive: roomVariant.isActive,
       })),
       count: roomVariants.length,
     };
@@ -28,6 +30,7 @@ export class RoomVariantMapper {
     return {
       hotelId: data.hotelId,
       name: data.name,
+      roomPrefix: data.roomPrefix,
       description: data.description,
       maxOccupancy: data.maxOccupancy,
       bedConfig: {
@@ -44,16 +47,19 @@ export class RoomVariantMapper {
       basePrice: data.basePrice,
       coverImage: data.coverImage,
       images: data.images,
+      totalRooms: data.totalRooms,
+      isActive: true,
     };
   }
 
   static toRoomVariantDetailResponseDTO(
     roomVariant: RoomVariantEntity,
-    rooms: [],
+    unAvailableRooms: RoomStatusEntity[],
   ): IRoomVariantDetailResponseDTO {
     return {
       id: roomVariant._id!,
       hotelId: roomVariant.hotelId,
+      roomPrefix: roomVariant.roomPrefix,
       name: roomVariant.name,
       description: roomVariant.description,
       maxOccupancy: roomVariant.maxOccupancy,
@@ -71,7 +77,15 @@ export class RoomVariantMapper {
       basePrice: roomVariant.basePrice,
       coverImage: roomVariant.coverImage,
       images: roomVariant.images,
-      rooms: rooms,
+      totalRooms: roomVariant.totalRooms,
+      isActive: roomVariant.isActive,
+      unAvailableRooms: unAvailableRooms.map((roomStatus) => {
+        return {
+          roomNumber: roomStatus.roomNumber,
+          status: roomStatus.status,
+          reason: roomStatus.reason,
+        };
+      }),
     };
   }
 }

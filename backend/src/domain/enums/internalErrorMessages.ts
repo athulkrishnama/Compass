@@ -130,4 +130,8 @@ export enum INTERNAL_ERROR_MESSAGES {
   ROOM_LOCK_NOT_FOUND = "roomLockNotFound",
   USER_REACHED_BOOKING_LIMIT = "userHasReachedBookingLimitForMonth",
   UNVERIFIED = "unverified",
+  ROOM_PREFIX_MISSING_OR_INVALID = "roomPrefixMissingOrInvalid",
+  TOTAL_ROOMS_MISSING_OR_INVALID = "totalRoomsMissingOrInvalid",
+  IS_ACTIVE_MISSING_OR_INVALID = "isActiveMissingOrInvalid",
+  ROOM_VARIANT_PREFIX_ALREADY_EXISTS = "roomVariantPrefixAlreadyExists",
 }

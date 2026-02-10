@@ -89,6 +89,9 @@ export class EditRoomVariantUseCase implements IEditRoomVariantUseCase {
       basePrice: data.basePrice ?? roomVariant.basePrice,
       coverImage: coverImageUrl,
       images: galleryImages,
+      roomPrefix: data.roomPrefix ?? roomVariant.roomPrefix,
+      totalRooms: data.totalRooms ?? roomVariant.totalRooms,
+      isActive: data.isActive ?? roomVariant.isActive,
     };
 
     await this._roomVariantRepository.update(

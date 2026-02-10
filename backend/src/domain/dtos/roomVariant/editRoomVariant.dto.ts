@@ -6,6 +6,7 @@ export interface IEditRoomVariantRequestDTO {
   userId: string;
   name?: string;
   description?: string;
+  roomPrefix?: string;
   maxOccupancy?: number;
   bedConfig?: {
     type: BedType;
@@ -21,4 +22,6 @@ export interface IEditRoomVariantRequestDTO {
   basePrice?: number;
   coverImage?: File;
   images?: File[];
+  totalRooms?: number;
+  isActive?: boolean;
 }

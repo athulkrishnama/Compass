@@ -58,6 +58,7 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
 
     await this._roomLockRepository.create({
       roomVariantId: data.roomVariantId,
+      travelerId: data.traverlerId,
       checkinDate: data.checkInDate,
       checkoutDate: data.checkOutDate,
       amount: totalAmount,

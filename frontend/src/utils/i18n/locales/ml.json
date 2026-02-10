@@ -115,7 +115,11 @@
         "paymentIntentCreationFailed": "പേയ്‌മെന്റ് ആരംഭിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.",
         "paymentFailed": "പേയ്‌മെന്റ് പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
         "invalidSignature": "അസാധുവായ വെബ്ഹുക്ക് സിഗ്നേച്ചർ",
-        "roomLockNotFound": "റൂം ലോക്ക് കണ്ടെത്താനായില്ല അല്ലെങ്കിൽ കാലാവധി കഴിഞ്ഞു"
+        "roomLockNotFound": "റൂം ലോക്ക് കണ്ടെത്താനായില്ല അല്ലെങ്കിൽ കാലാവധി കഴിഞ്ഞു",
+        "roomPrefixMissingOrInvalid": "റൂം പ്രിഫിക്‌സ് ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+        "totalRoomsMissingOrInvalid": "ആകെ മുറികളുടെ എണ്ണം ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+        "isActiveMissingOrInvalid": "സജീവ നില ലഭ്യമല്ല അല്ലെങ്കിൽ അസാധുവാണ്",
+        "roomVariantPrefixAlreadyExists": "ഈ പ്രിഫിക്സിലുള്ള റൂം വെരിയന്റ് നിലവിലുണ്ട്"
     },
     "bookingConfirmation": {
         "confirmAndPay": "സ്ഥിരീകരിച്ച് പണം അടയ്ക്കുക",
@@ -138,6 +142,7 @@
         "checkOut": "ചെക്ക്-ഔട്ട്",
         "from": "{{time}} മുതൽ",
         "until": "{{time}} വരെ",
+        "roomNumberExceedsTotal": "റൂം നമ്പർ മൊത്തം മുറികളെക്കാൾ കൂടുതൽ ആകരുത് ({{total}})",
         "totalDuration": "മൊത്തം കാലാവധി"
     },
     "activities": {
@@ -436,7 +441,20 @@
         "sortOrderAsc": "ആരോഹണം",
         "sortOrderDesc": "അവരോഹണം",
         "sortByName": "പേര്",
-        "sortByPrice": "വില"
+        "sortByPrice": "വില",
+        "operationalStatus": "പ്രവർത്തന നില",
+        "unavailableRooms": "ലഭ്യമല്ല",
+        "markUnavailable": "ലഭ്യമല്ലെന്ന് അടയാളപ്പെടുത്തുക",
+        "maintenanceCleaningEtc": "പരിപാലനം, വൃത്തിയാക്കൽ മുതലായവ.",
+        "restore": "പുനഃസ്ഥാപിക്കുക",
+        "markRoomUnavailable": "റൂം ലഭ്യമല്ലെന്ന് അടയാളപ്പെടുത്തുക",
+        "roomNumberLabel": "റൂം നമ്പർ",
+        "reasonLabel": "കാരണം",
+        "enterReasonPlaceholder": "ലഭ്യമല്ലാത്തതിന്റെ കാരണം നൽകുക...",
+        "fullRoomCode": "പൂർണ്ണ റൂം കോഡ്",
+        "maintenance": "പരിപാലനം",
+        "cleaning": "വൃത്തിയാക്കൽ",
+        "blocked": "തടഞ്ഞു"
     },
     "tableHeaders": {
         "destination": "ലക്ഷ്യസ്ഥാനം",

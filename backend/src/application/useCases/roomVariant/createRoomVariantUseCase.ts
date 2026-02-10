@@ -43,6 +43,17 @@ export class CreateRoomVariantUseCase implements ICreateRoomVariantUseCase {
       );
     }
 
+    const existingRoomPrefix = await this._roomVariantRepository.findByPrefix(
+      data.hotelId,
+      data.roomPrefix,
+    );
+
+    if (existingRoomPrefix) {
+      throw new ConflictException(
+        INTERNAL_ERROR_MESSAGES.ROOM_VARIANT_PREFIX_ALREADY_EXISTS,
+      );
+    }
+
     const resizedImage = await fileResizer(
       data.coverImage,
       VALUES.HOTEL_ROOM_COVER_IMAGE_MAX_WIDTH,

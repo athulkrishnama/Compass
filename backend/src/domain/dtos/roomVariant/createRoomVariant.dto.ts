@@ -4,6 +4,7 @@ import { RoomAmenity } from "@domain/enums/roomAmenity";
 export interface ICreateRoomVariantRequestDTO {
   hotelId: string;
   name: string;
+  roomPrefix: string;
   description: string;
   maxOccupancy: number;
   bedConfig: {
@@ -20,4 +21,5 @@ export interface ICreateRoomVariantRequestDTO {
   basePrice: number;
   coverImage: File;
   images: File[];
+  totalRooms: number;
 }

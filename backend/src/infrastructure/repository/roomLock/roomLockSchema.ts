@@ -3,6 +3,7 @@ import { Document, Schema, Types } from "mongoose";
 export interface IRoomLockDocument extends Document {
   _id: Types.ObjectId;
   roomVariantId: string;
+  travelerId: string;
   checkinDate: Date;
   checkoutDate: Date;
   amount: number;
@@ -12,6 +13,7 @@ export interface IRoomLockDocument extends Document {
 
 export const roomLockSchema = new Schema<IRoomLockDocument>({
   roomVariantId: { type: String, required: true },
+  travelerId: { type: String, required: true },
   checkinDate: { type: Date, required: true },
   checkoutDate: { type: Date, required: true },
   amount: { type: Number, required: true },

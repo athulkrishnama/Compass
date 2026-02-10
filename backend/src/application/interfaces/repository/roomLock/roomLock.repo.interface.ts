@@ -6,6 +6,7 @@ export interface IRoomLockRepo
   extends BaseRepository<RoomLockEntity, IRoomLockDocument> {
   filterRoomLock(filter: {
     roomVariantId?: string;
+    travelerId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -17,6 +18,7 @@ export interface IRoomLockRepo
 
   countRoomLock(filter: {
     roomVariantId?: string;
+    travelerId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;

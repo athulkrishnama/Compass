@@ -134,7 +134,15 @@
         "paymentIntentCreationFailed": "Failed to initialize payment. Please try again later.",
         "paymentFailed": "Payment failed. Please try again.",
         "invalidSignature": "Invalid webhook signature",
-        "roomLockNotFound": "Room lock not found or expired"
+        "roomLockNotFound": "Room lock not found or expired",
+        "roomPrefixMissingOrInvalid": "Room prefix is missing or invalid",
+        "totalRoomsMissingOrInvalid": "Total rooms count is missing or invalid",
+        "roomPrefixMinLength": "Room prefix must be at least 3 characters",
+        "roomPrefixMaxLength": "Room prefix must be less than 10 characters",
+        "totalRoomsRequired": "Total rooms is required and must be at least 1",
+        "isActiveMissingOrInvalid": "Active status is missing or invalid",
+        "roomVariantPrefixAlreadyExists": "Room variant with this prefix already exists",
+        "roomNumberExceedsTotal": "Room number cannot exceed total rooms ({{total}})"
     },
     "bookingConfirmation": {
         "confirmAndPay": "Confirm and Pay",
@@ -226,7 +234,11 @@
         "searchLabel": "Search",
         "typeLabel": "Type",
         "priceLabel": "Pricing",
-        "statusLabel": "Status"
+        "statusLabel": "Status",
+        "roomPrefix": "Room Prefix",
+        "roomPrefixPlaceholder": "e.g. DLX, STD, SUT",
+        "totalRooms": "Total Rooms",
+        "totalRoomsPlaceholder": "Enter total number of rooms"
     },
     "button": {
         "submit": "Submit",
@@ -378,6 +390,19 @@
         "SATURDAY": "Saturday"
     },
     "text": {
+        "operationalStatus": "Operational Status",
+        "unavailableRooms": "Unavailable",
+        "markUnavailable": "Mark Unavailable",
+        "maintenanceCleaningEtc": "Maintenance, Cleaning, etc.",
+        "restore": "Restore",
+        "markRoomUnavailable": "Mark Room Unavailable",
+        "roomNumberLabel": "Room Number",
+        "reasonLabel": "Reason",
+        "enterReasonPlaceholder": "Enter reason for unavailability...",
+        "fullRoomCode": "Full room code",
+        "maintenance": "Maintenance",
+        "cleaning": "Cleaning",
+        "blocked": "Blocked",
         "alreadyHaveAccount": "Already have an account?",
         "dontHaveAnAccount": "Don't have an account?",
         "youAreNotA": "You are not a {{role}}",

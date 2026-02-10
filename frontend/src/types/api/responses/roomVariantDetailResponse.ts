@@ -1,16 +1,21 @@
 import type { RoomAmenity } from "@/constants/roomConstants/roomAmenity";
 
-export interface IRoomInstance {
-    id: string;
-    roomCode: string;
-    floor: number;
-    status: string;
+export enum RoomStatus {
+    BLOCKED = "BLOCKED",
+    MAINTENANCE = "MAINTENANCE",
+}
+export interface IUnAvailableRoom {
+    roomNumber: number;
+    status: RoomStatus;
+    reason: string;
 }
 
 export interface IRoomVariantDetailResponse {
     id: string;
     name: string;
     description: string;
+    roomPrefix: string;
+    totalRooms: number;
     baseOccupancy: number;
     maxOccupancy: number;
     bedConfig: {
@@ -28,5 +33,5 @@ export interface IRoomVariantDetailResponse {
     coverImage: string;
     images: string[];
     hotelId: string;
-    rooms: IRoomInstance[];
+    unAvailableRooms: IUnAvailableRoom[];
 }

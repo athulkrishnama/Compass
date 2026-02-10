@@ -14,6 +14,8 @@ import { hotelModel } from "@infrastructure/repository/hotel/hotelModel";
 import { roomVariantModel } from "@infrastructure/repository/roomVariant/roomVariantModel";
 import { hotelBookingModel } from "@infrastructure/repository/hotelBooking/hotelBookingModel";
 import { roomLockModel } from "@infrastructure/repository/roomLock/roomLockModel";
+import { IRoomStatusDocument } from "@infrastructure/repository/roomStatus/roomStatusSchema";
+import { roomStatusModel } from "@infrastructure/repository/roomStatus/roomStatusModel";
 
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
@@ -36,5 +38,8 @@ export function registerModel() {
   });
   container.register<Model<IRoomLockDocument>>("IRoomLockModel", {
     useValue: roomLockModel,
+  });
+  container.register<Model<IRoomStatusDocument>>("IRoomStatusModel", {
+    useValue: roomStatusModel,
   });
 }

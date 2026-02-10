@@ -16,6 +16,7 @@ export class RoomLockRepo
 
   async filterRoomLock(filter: {
     roomVariantId?: string;
+    travelerId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -28,6 +29,9 @@ export class RoomLockRepo
 
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
+    }
+    if (filter.travelerId) {
+      filterQuery.travelerId = filter.travelerId;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -64,6 +68,7 @@ export class RoomLockRepo
 
   async countRoomLock(filter: {
     roomVariantId?: string;
+    travelerId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -76,6 +81,9 @@ export class RoomLockRepo
 
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
+    }
+    if (filter.travelerId) {
+      filterQuery.travelerId = filter.travelerId;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -114,6 +122,7 @@ export class RoomLockRepo
     return {
       _id: doc._id.toString(),
       roomVariantId: doc.roomVariantId,
+      travelerId: doc.travelerId,
       checkinDate: doc.checkinDate,
       checkoutDate: doc.checkoutDate,
       paymentIntentId: doc.paymentIntentId,

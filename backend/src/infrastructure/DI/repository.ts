@@ -13,6 +13,8 @@ import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomL
 import { RoomLockRepo } from "@infrastructure/repository/roomLock/roomLock.repo";
 import { HotelBookingRepo } from "@infrastructure/repository/hotelBooking/hotelBooking.repo";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
+import { IRoomStatusRepo } from "@application/interfaces/repository/roomStatus/roomStatus.repo.interface";
+import { RoomStatusRepo } from "@infrastructure/repository/roomStatus/roomStatus.repo";
 
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
@@ -30,5 +32,9 @@ export function registerRepositories() {
   container.registerSingleton<IHotelBookingRepo>(
     "IHotelBookingRepo",
     HotelBookingRepo,
+  );
+  container.registerSingleton<IRoomStatusRepo>(
+    "IRoomStatusRepo",
+    RoomStatusRepo,
   );
 }
