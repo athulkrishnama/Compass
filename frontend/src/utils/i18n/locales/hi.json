@@ -39,7 +39,8 @@
         "editRoomVariantSubtitle": "इस रूम वैरिएंट सूची के लिए विवरण अपडेट करें",
         "roomVariantDetails": "रूम वैरिएंट विवरण",
         "addRoomInstance": "कमरा इंस्टेंस जोड़ें",
-        "addRoomInstanceSubtitle": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें"
+        "addRoomInstanceSubtitle": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें",
+        "editRoomStatus": "कमरे की स्थिति संपादित करें"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -120,6 +121,8 @@
         "totalRoomsMissingOrInvalid": "कुल कमरों की संख्या गायब है या अमान्य है",
         "isActiveMissingOrInvalid": "सक्रिय स्थिति गायब है या अमान्य है",
         "roomNumberExceedsTotal": "कमरा संख्या कुल कमरों से अधिक नहीं हो सकती ({{total}})",
+        "invalidRoomNumber": "अमान्य कमरा संख्या",
+        "roomNumberAlreadyExists": "कमरा संख्या पहले से ही अनुपलब्ध के रूप में चिह्नित है",
         "roomVariantPrefixAlreadyExists": "इस प्रीफ़िक्स वाला रूम वेरिएंट पहले से मौजूद है"
     },
     "bookingConfirmation": {
@@ -270,7 +273,8 @@
         "searchLabel": "खोज",
         "typeLabel": "प्रकार",
         "priceLabel": "मूल्य निर्धारण",
-        "statusLabel": "स्थिति"
+        "statusLabel": "स्थिति",
+        "selectStatus": "स्थिति चुनें"
     },
     "button": {
         "submit": "सबमिट करें",
@@ -454,7 +458,8 @@
         "fullRoomCode": "पूर्ण कमरा कोड",
         "maintenance": "रखरखाव",
         "cleaning": "सफाई",
-        "blocked": "अवरुद्ध"
+        "blocked": "अवरुद्ध",
+        "roomNumberCannotBeChanged": "कमरा संख्या बदली नहीं जा सकती"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
@@ -567,6 +572,7 @@
     },
     "messages": {
         "paymentIntentCreated": "भुगतान आशय सफलतापूर्वक बनाया गया",
-        "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया"
+        "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया",
+        "roomVariantMarkedAsUnavailable": "रूम वेरिएंट को सफलतापूर्वक अनुपलब्ध के रूप में चिह्नित किया गया"
     }
 }

@@ -42,7 +42,8 @@
         "roomVariantDetails": "Room Variant Details",
         "addRoomInstance": "Add Room Instance",
         "editRoomInstance": "Edit Room Instance",
-        "addRoomInstanceSubtitle": "Configure the details for a new physical room unit to expand your property inventory"
+        "addRoomInstanceSubtitle": "Configure the details for a new physical room unit to expand your property inventory",
+        "editRoomStatus": "Edit Room Status"
     },
     "sections": {
         "basicInformation": "Basic Information",
@@ -142,7 +143,9 @@
         "totalRoomsRequired": "Total rooms is required and must be at least 1",
         "isActiveMissingOrInvalid": "Active status is missing or invalid",
         "roomVariantPrefixAlreadyExists": "Room variant with this prefix already exists",
-        "roomNumberExceedsTotal": "Room number cannot exceed total rooms ({{total}})"
+        "roomNumberExceedsTotal": "Room number cannot exceed total rooms ({{total}})",
+        "invalidRoomNumber": "Invalid room number",
+        "roomNumberAlreadyExists": "Room is already marked as unavailable"
     },
     "bookingConfirmation": {
         "confirmAndPay": "Confirm and Pay",
@@ -238,7 +241,8 @@
         "roomPrefix": "Room Prefix",
         "roomPrefixPlaceholder": "e.g. DLX, STD, SUT",
         "totalRooms": "Total Rooms",
-        "totalRoomsPlaceholder": "Enter total number of rooms"
+        "totalRoomsPlaceholder": "Enter total number of rooms",
+        "selectStatus": "Select status"
     },
     "button": {
         "submit": "Submit",
@@ -506,7 +510,8 @@
         "activeStatus": "Active Status",
         "liveAvailabilityOnly": "Live availability only",
         "freeEntryOnly": "Free Entry Only",
-        "sortConfiguration": "Sort Configuration"
+        "sortConfiguration": "Sort Configuration",
+        "roomNumberCannotBeChanged": "Room number cannot be changed"
     },
     "tableHeaders": {
         "destination": "DESTINATION",
@@ -641,6 +646,7 @@
     },
     "messages": {
         "paymentIntentCreated": "Payment intent created successfully",
-        "paymentVerifiedSuccessfully": "Payment verified successfully"
+        "paymentVerifiedSuccessfully": "Payment verified successfully",
+        "roomVariantMarkedAsUnavailable": "Room variant marked as unavailable successfully"
     }
 }

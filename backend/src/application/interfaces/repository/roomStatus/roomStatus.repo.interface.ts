@@ -5,4 +5,8 @@ import { IRoomStatusDocument } from "@infrastructure/repository/roomStatus/roomS
 export interface IRoomStatusRepo
   extends BaseRepository<RoomStatusEntity, IRoomStatusDocument> {
   findByRoomVariantId(roomVariantId: string): Promise<RoomStatusEntity[]>;
+  findByRoomVariantIdAndRoomNumber(
+    roomVariantId: string,
+    roomNumber: number,
+  ): Promise<RoomStatusEntity | null>;
 }

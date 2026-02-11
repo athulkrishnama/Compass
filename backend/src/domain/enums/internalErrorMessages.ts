@@ -134,4 +134,9 @@ export enum INTERNAL_ERROR_MESSAGES {
   TOTAL_ROOMS_MISSING_OR_INVALID = "totalRoomsMissingOrInvalid",
   IS_ACTIVE_MISSING_OR_INVALID = "isActiveMissingOrInvalid",
   ROOM_VARIANT_PREFIX_ALREADY_EXISTS = "roomVariantPrefixAlreadyExists",
+  ROOM_NUMBER_MISSING_OR_INVALID = "roomNumberMissingOrInvalid",
+  REASON_MISSING_OR_INVALID = "reasonMissingOrInvalid",
+  INVALID_ROOM_NUMBER = "invalidRoomNumber",
+  ROOM_NUMBER_ALREADY_EXISTS = "roomNumberAlreadyExists",
+  ROOM_STATUS_NOT_FOUND = "roomStatusNotFound",
 }

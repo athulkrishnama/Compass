@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Plus, Wrench, Ban } from "lucide-react";
+import { Plus, Wrench, Ban, Pencil } from "lucide-react";
 import translationKey from "@/utils/i18n/translationKey";
 import type {
     IUnAvailableRoom,
@@ -8,6 +8,16 @@ import type {
     RoomStatus,
 } from "@/types/api/responses/roomVariantDetailResponse";
 import MarkUnavailableModal from "./MarkUnavailableModal";
+import EditUnavailableModal from "./EditUnavailableModal";
+import { useMutation } from "@tanstack/react-query";
+import {
+    createGetRoomVariantByIdQueryOptions,
+    createMarkRoomAsUnavailableMutationOptions,
+    createUpdateRoomUnavailabilityMutationOptions,
+} from "@/queryOptions/roomVariantQueryOptions";
+import { toast } from "sonner";
+import { queryClient } from "@/config/tanstackQueryConfig";
+import type { HttpResponse } from "@/types/api/responseType";
 
 interface RoomInstancesSectionProps {
     roomVariantId: string;
@@ -37,18 +47,107 @@ export default function RoomInstancesSection({
 }: RoomInstancesSectionProps) {
     const { t } = useTranslation();
     const [isMarkUnavailableOpen, setIsMarkUnavailableOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedRoom, setSelectedRoom] = useState<IUnAvailableRoom | null>(
+        null
+    );
+
+    const { mutate: markRoomAsUnavailableMutation } = useMutation(
+        createMarkRoomAsUnavailableMutationOptions()
+    );
+
+    const { mutate: updateRoomUnavailabilityMutation } = useMutation(
+        createUpdateRoomUnavailabilityMutationOptions()
+    );
 
     const handleMarkUnavailable = (data: {
         roomNumber: string;
         status: RoomStatus;
         reason: string;
     }) => {
-        console.log(data);
-        setIsMarkUnavailableOpen(false);
+        markRoomAsUnavailableMutation(
+            {
+                roomVariantId: roomVariant.id,
+                roomNumber: Number(data.roomNumber),
+                status: data.status,
+                reason: data.reason,
+            },
+            {
+                onSuccess: (res) => {
+                    queryClient.setQueriesData(
+                        createGetRoomVariantByIdQueryOptions(roomVariant.id),
+                        (oldData: HttpResponse<IRoomVariantDetailResponse>) => {
+                            const duplicate = structuredClone(oldData);
+                            const { id } = res.data!;
+                            duplicate?.data?.unAvailableRooms.push({
+                                id: id!,
+                                roomNumber: Number(data.roomNumber),
+                                status: data.status,
+                                reason: data.reason,
+                            });
+                            return duplicate;
+                        }
+                    );
+                    toast.success(res.message);
+                },
+                onError: (error) => {
+                    toast.error(error.message);
+                },
+                onSettled: () => {
+                    setIsMarkUnavailableOpen(false);
+                },
+            }
+        );
     };
 
     const handleRestore = (room: IUnAvailableRoom) => {
         console.log("Restore room:", room.roomNumber);
+    };
+
+    const handleEdit = (room: IUnAvailableRoom) => {
+        setSelectedRoom(room);
+        setIsEditModalOpen(true);
+    };
+
+    const handleUpdateRoom = (data: {
+        id: string;
+        status: RoomStatus;
+        reason: string;
+    }) => {
+        updateRoomUnavailabilityMutation(data, {
+            onSuccess: (res) => {
+                queryClient.setQueriesData(
+                    createGetRoomVariantByIdQueryOptions(roomVariant.id),
+                    (oldData: HttpResponse<IRoomVariantDetailResponse>) => {
+                        const duplicate = structuredClone(oldData);
+                        const roomIndex =
+                            duplicate?.data?.unAvailableRooms.findIndex(
+                                (r) => r.id === data.id
+                            );
+                        if (
+                            roomIndex !== undefined &&
+                            roomIndex !== -1 &&
+                            duplicate?.data
+                        ) {
+                            duplicate.data.unAvailableRooms[roomIndex] = {
+                                ...duplicate.data.unAvailableRooms[roomIndex],
+                                status: data.status,
+                                reason: data.reason,
+                            };
+                        }
+                        return duplicate;
+                    }
+                );
+                toast.success(res.message);
+            },
+            onError: (error) => {
+                toast.error(error.message);
+            },
+            onSettled: () => {
+                setIsEditModalOpen(false);
+                setSelectedRoom(null);
+            },
+        });
     };
 
     return (
@@ -119,35 +218,44 @@ export default function RoomInstancesSection({
                         const config =
                             STATUS_CONFIGS[room.status] ||
                             STATUS_CONFIGS.MAINTENANCE;
-                        const StatusIcon = config.icon;
                         return (
                             <div
                                 key={room.roomNumber}
-                                className={`border rounded-xl p-4 ${config.bgColor}`}
+                                className="bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-shadow"
                             >
-                                <div className="flex items-start justify-between mb-3">
-                                    <div>
-                                        <span className="text-sm font-bold text-gray-900 block mb-1">
-                                            #{roomVariant.roomPrefix}
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-lg font-bold text-gray-900">
+                                            • #{roomVariant.roomPrefix}
                                             {room.roomNumber}
                                         </span>
-                                        <span
-                                            className={`inline-flex items-center gap-1 text-xs font-medium ${config.color}`}
-                                        >
-                                            <StatusIcon className="w-3 h-3" />
-                                            {config.label}
-                                        </span>
                                     </div>
+                                    <span className="px-3 py-1 rounded-md bg-gray-100 text-xs font-medium text-gray-700 uppercase">
+                                        {config.label}
+                                    </span>
                                 </div>
-                                <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                                    {room.reason}
-                                </p>
-                                <button
-                                    onClick={() => handleRestore(room)}
-                                    className="w-full px-3 py-1.5 bg-black text-white text-xs font-medium rounded-lg hover:bg-gray-800 transition-colors"
-                                >
-                                    {t(translationKey.text.restore)}
-                                </button>
+
+                                <div className="bg-gray-50 rounded-lg p-3 mb-4">
+                                    <p className="text-sm text-gray-600 leading-relaxed">
+                                        {room.reason}
+                                    </p>
+                                </div>
+
+                                <div className="flex items-center justify-end gap-2">
+                                    <button
+                                        onClick={() => handleEdit(room)}
+                                        className="p-2 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
+                                        title="Edit"
+                                    >
+                                        <Pencil className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={() => handleRestore(room)}
+                                        className="px-6 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors"
+                                    >
+                                        {t(translationKey.text.restore)}
+                                    </button>
+                                </div>
                             </div>
                         );
                     })}
@@ -175,6 +283,16 @@ export default function RoomInstancesSection({
                 handleClose={() => setIsMarkUnavailableOpen(false)}
                 roomPrefix={roomVariant.roomPrefix}
                 onSubmit={handleMarkUnavailable}
+            />
+            <EditUnavailableModal
+                isOpen={isEditModalOpen}
+                handleClose={() => {
+                    setIsEditModalOpen(false);
+                    setSelectedRoom(null);
+                }}
+                roomPrefix={roomVariant.roomPrefix}
+                room={selectedRoom}
+                onSubmit={handleUpdateRoom}
             />
         </>
     );

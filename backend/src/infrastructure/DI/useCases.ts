@@ -89,6 +89,10 @@ import { ICreatePaymentIntentUseCase } from "@application/interfaces/useCase/pay
 import { CreatePaymentIntentUseCase } from "@useCases/payment/createPaymentIntentUseCase";
 import { IVerifyPaymentUseCase } from "@application/interfaces/useCase/payment/verifyPaymentUseCase.interface";
 import { VerifyPaymentUseCase } from "@useCases/payment/verifyPaymentUseCase";
+import { IMarkRoomAsUnavailableUseCase } from "@application/interfaces/useCase/roomVariant/markRoomAsUnavailableUseCase.interface";
+import { MarkRoomAsUnavailableUseCase } from "@useCases/roomVariant/markRoomAsUnavailableUseCase";
+import { IUpdateRoomUnavailabilityUseCase } from "@application/interfaces/useCase/roomVariant/updateRoomUnavailabilityUseCase.interface";
+import { UpdateRoomUnavailabilityUseCase } from "@useCases/roomVariant/updateRoomUnavailabilityUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -264,5 +268,13 @@ export function registerUsecases() {
   container.registerSingleton<IVerifyPaymentUseCase>(
     "IVerifyPaymentUseCase",
     VerifyPaymentUseCase,
+  );
+  container.registerSingleton<IMarkRoomAsUnavailableUseCase>(
+    "IMarkRoomAsUnavailableUseCase",
+    MarkRoomAsUnavailableUseCase,
+  );
+  container.registerSingleton<IUpdateRoomUnavailabilityUseCase>(
+    "IUpdateRoomUnavailabilityUseCase",
+    UpdateRoomUnavailabilityUseCase,
   );
 }

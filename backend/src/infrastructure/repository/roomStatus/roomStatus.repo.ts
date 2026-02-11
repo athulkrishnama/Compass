@@ -36,4 +36,15 @@ export class RoomStatusRepo
       this.toEntity(document),
     );
   }
+
+  async findByRoomVariantIdAndRoomNumber(
+    roomVariantId: string,
+    roomNumber: number,
+  ): Promise<RoomStatusEntity | null> {
+    const document = await this.model.findOne({
+      roomVariantId,
+      roomNumber,
+    });
+    return document ? this.toEntity(document) : null;
+  }
 }

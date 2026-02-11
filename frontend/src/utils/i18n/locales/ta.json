@@ -39,7 +39,8 @@
         "editRoomVariantSubtitle": "இந்த ரூம் வேரியன்ட் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
         "roomVariantDetails": "ரூம் வேரியன்ட் விவரங்கள்",
         "addRoomInstance": "அறை இன்ஸ்டன்ஸ் சேர்க்கவும்",
-        "addRoomInstanceSubtitle": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்"
+        "addRoomInstanceSubtitle": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்",
+        "editRoomStatus": "அறை நிலையைத் திருத்து"
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -120,6 +121,8 @@
         "totalRoomsMissingOrInvalid": "மொத்த அறைகளின் எண்ணிக்கை இல்லை அல்லது செல்லாது",
         "isActiveMissingOrInvalid": "செயலில் உள்ள நிலை இல்லை அல்லது செல்லாது",
         "roomNumberExceedsTotal": "அறை எண் மொத்த அறைகளை விட அதிகமாக இருக்கக் கூடாது ({{total}})",
+        "invalidRoomNumber": "தவறான அறை எண்",
+        "roomNumberAlreadyExists": "அறை எண் ஏற்கனவே கிடைக்கவில்லை என குறிக்கப்பட்டுள்ளது",
         "roomVariantPrefixAlreadyExists": "இந்த முன்னொட்டுடன் கூடிய அறை வகை ஏற்கனவே உள்ளது"
     },
     "bookingConfirmation": {
@@ -270,7 +273,8 @@
         "searchLabel": "தேடல்",
         "typeLabel": "வகை",
         "priceLabel": "விலை",
-        "statusLabel": "நிலை"
+        "statusLabel": "நிலை",
+        "selectStatus": "நிலையைத் தேர்ந்தெடுக்கவும்"
     },
     "button": {
         "submit": "சமர்ப்பிக்க",
@@ -454,7 +458,8 @@
         "fullRoomCode": "முழு அறை குறியீடு",
         "maintenance": "பராமரிப்பு",
         "cleaning": "சுத்தம் செய்தல்",
-        "blocked": "தடைசெய்யப்பட்டது"
+        "blocked": "தடைசெய்யப்பட்டது",
+        "roomNumberCannotBeChanged": "அறை எண்ணை மாற்ற முடியாது"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",
@@ -567,6 +572,7 @@
     },
     "messages": {
         "paymentIntentCreated": "கட்டண நோக்கம் வெற்றிகரமாக உருவாக்கப்பட்டது",
-        "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது"
+        "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது",
+        "roomVariantMarkedAsUnavailable": "அறை வகை வெற்றிகரமாக கிடைக்கவில்லை எனக் குறிக்கப்பட்டது"
     }
 }

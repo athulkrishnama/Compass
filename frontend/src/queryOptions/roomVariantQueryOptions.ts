@@ -6,8 +6,14 @@ import {
     getRoomVariantByHotelId,
     updateRoomVariant,
     getRoomVariantAvailability,
+    markRoomAsUnavailable,
+    updateRoomUnavailability,
 } from "@/services/api/roomVariant.ApiService";
-import type { IGetRoomVariantAvailabilityRequestDTO } from "@/types/api/requests/roomVariantRequests";
+import type {
+    IGetRoomVariantAvailabilityRequestDTO,
+    IMarkRoomAsUnavailableRequestDTO,
+    IUpdateRoomUnavailabilityRequestDTO,
+} from "@/types/api/requests/roomVariantRequests";
 import type { IRoomVariantDetailResponse } from "@/types/api/responses/roomVariantDetailResponse";
 import type { IRoomVariantListingResponse } from "@/types/api/responses/roomVariantListingResponse";
 import type { IGetRoomVariantAvailabilityResponseDTO } from "@/types/api/responses/roomVariantResponse";
@@ -81,5 +87,25 @@ export function createGetRoomVariantAvailabilityQueryOptions({
             }),
         refetchOnWindowFocus: true,
         refetchInterval: 1000 * 5,
+    });
+}
+
+export function createMarkRoomAsUnavailableMutationOptions() {
+    return mutationOptions<
+        HttpResponse<{ id: string }>,
+        Error,
+        IMarkRoomAsUnavailableRequestDTO
+    >({
+        mutationFn: markRoomAsUnavailable,
+    });
+}
+
+export function createUpdateRoomUnavailabilityMutationOptions() {
+    return mutationOptions<
+        HttpResponse<{ id: string }>,
+        Error,
+        IUpdateRoomUnavailabilityRequestDTO
+    >({
+        mutationFn: updateRoomUnavailability,
     });
 }

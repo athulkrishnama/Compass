@@ -2,6 +2,7 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
 import z from "zod";
+import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 export const createRoomVariantValidation = z.object({
   hotelId: z.string({
@@ -244,5 +245,35 @@ export const getRoomAvailabilityValidation = z.object({
   }),
   roomVariantId: z.string({
     error: INTERNAL_ERROR_MESSAGES.ROOM_VARIANT_ID_MISSING_OR_INVALID,
+  }),
+});
+
+export const markRoomAsUnavailableValidation = z.object({
+  userId: z.string({
+    error: INTERNAL_ERROR_MESSAGES.USER_ID_MISSING_OR_INVALID,
+  }),
+  roomVariantId: z.string({
+    error: INTERNAL_ERROR_MESSAGES.ROOM_VARIANT_ID_MISSING_OR_INVALID,
+  }),
+  roomNumber: z.number({
+    error: INTERNAL_ERROR_MESSAGES.ROOM_NUMBER_MISSING_OR_INVALID,
+  }),
+  reason: z.string({
+    error: INTERNAL_ERROR_MESSAGES.REASON_MISSING_OR_INVALID,
+  }),
+  status: z.enum(RoomVariantStatus, {
+    error: INTERNAL_ERROR_MESSAGES.STATUS_MISSING_OR_INVALID,
+  }),
+});
+
+export const updateRoomUnavailabilityValidation = z.object({
+  id: z.string({
+    error: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+  }),
+  status: z.enum(RoomVariantStatus, {
+    error: INTERNAL_ERROR_MESSAGES.STATUS_MISSING_OR_INVALID,
+  }),
+  reason: z.string({
+    error: INTERNAL_ERROR_MESSAGES.REASON_MISSING_OR_INVALID,
   }),
 });

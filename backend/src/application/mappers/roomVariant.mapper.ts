@@ -81,6 +81,7 @@ export class RoomVariantMapper {
       isActive: roomVariant.isActive,
       unAvailableRooms: unAvailableRooms.map((roomStatus) => {
         return {
+          id: roomStatus._id!,
           roomNumber: roomStatus.roomNumber,
           status: roomStatus.status,
           reason: roomStatus.reason,

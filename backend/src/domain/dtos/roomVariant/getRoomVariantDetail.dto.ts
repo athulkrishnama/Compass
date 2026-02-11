@@ -3,6 +3,7 @@ import { RoomAmenity } from "@domain/enums/roomAmenity";
 import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
 interface IUnAvailableRoom {
+  id: string;
   roomNumber: number;
   status: RoomVariantStatus;
   reason: string;

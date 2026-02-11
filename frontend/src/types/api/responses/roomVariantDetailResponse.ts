@@ -5,6 +5,7 @@ export enum RoomStatus {
     MAINTENANCE = "MAINTENANCE",
 }
 export interface IUnAvailableRoom {
+    id: string;
     roomNumber: number;
     status: RoomStatus;
     reason: string;

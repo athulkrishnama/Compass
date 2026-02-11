@@ -43,6 +43,7 @@ export default {
         addRoomInstance: "headings.addRoomInstance",
         editRoomInstance: "headings.editRoomInstance",
         addRoomInstanceSubtitle: "headings.addRoomInstanceSubtitle",
+        editRoomStatus: "headings.editRoomStatus",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -145,6 +146,8 @@ export default {
         isActiveMissingOrInvalid: "errors.isActiveMissingOrInvalid",
         roomVariantPrefixAlreadyExists: "errors.roomVariantPrefixAlreadyExists",
         roomNumberExceedsTotal: "errors.roomNumberExceedsTotal",
+        invalidRoomNumber: "errors.invalidRoomNumber",
+        roomNumberAlreadyExists: "errors.roomNumberAlreadyExists",
     },
     bookingConfirmation: {
         confirmAndPay: "bookingConfirmation.confirmAndPay",
@@ -241,6 +244,7 @@ export default {
         roomPrefixPlaceholder: "form.roomPrefixPlaceholder",
         totalRooms: "form.totalRooms",
         totalRoomsPlaceholder: "form.totalRoomsPlaceholder",
+        selectStatus: "form.selectStatus",
     },
     button: {
         submit: "button.submit",
@@ -508,6 +512,7 @@ export default {
         liveAvailabilityOnly: "text.liveAvailabilityOnly",
         freeEntryOnly: "text.freeEntryOnly",
         sortConfiguration: "text.sortConfiguration",
+        roomNumberCannotBeChanged: "text.roomNumberCannotBeChanged",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",
@@ -642,5 +647,7 @@ export default {
     messages: {
         paymentIntentCreated: "messages.paymentIntentCreated",
         paymentVerifiedSuccessfully: "messages.paymentVerifiedSuccessfully",
+        roomVariantMarkedAsUnavailable:
+            "messages.roomVariantMarkedAsUnavailable",
     },
 };
