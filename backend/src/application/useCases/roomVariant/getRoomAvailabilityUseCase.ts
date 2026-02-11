@@ -35,7 +35,25 @@ export class GetRoomAvailabilityUseCase implements IGetRoomAvailabilityUseCase {
       );
     }
 
-    const availableRoomCount = 0;
+    const roomLockPromise = this._roomLockRepository.countRoomLock({
+      roomVariantId: data.roomVariantId,
+      beforeCheckInDate: data.checkoutDate,
+      afterCheckOutDate: data.checkinDate,
+    });
+
+    const hotelBookingPromise = this._hotelBookingRepository.countBooking({
+      roomVariantId: data.roomVariantId,
+      beforeCheckInDate: data.checkoutDate,
+      afterCheckOutDate: data.checkinDate,
+    });
+
+    const [roomLockCount, hotelBookingCount] = await Promise.all([
+      roomLockPromise,
+      hotelBookingPromise,
+    ]);
+
+    const availableRoomCount =
+      roomVariant.totalRooms - roomLockCount - hotelBookingCount;
 
     return {
       available: availableRoomCount,

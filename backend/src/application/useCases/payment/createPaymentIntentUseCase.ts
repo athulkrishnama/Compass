@@ -35,7 +35,25 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
       );
     }
 
-    const availableRoomCount = 0;
+    const roomLockPromise = this._roomLockRepository.countRoomLock({
+      roomVariantId: data.roomVariantId,
+      beforeCheckInDate: data.checkOutDate,
+      afterCheckOutDate: data.checkInDate,
+    });
+
+    const hotelBookingPromise = this._hotelBookingRepository.countBooking({
+      roomVariantId: data.roomVariantId,
+      beforeCheckInDate: data.checkOutDate,
+      afterCheckOutDate: data.checkInDate,
+    });
+
+    const [roomLockCount, hotelBookingCount] = await Promise.all([
+      roomLockPromise,
+      hotelBookingPromise,
+    ]);
+
+    const availableRoomCount =
+      roomVariant.totalRooms - roomLockCount - hotelBookingCount;
 
     if (availableRoomCount <= 0) {
       throw new ResourceNotFoundException(
