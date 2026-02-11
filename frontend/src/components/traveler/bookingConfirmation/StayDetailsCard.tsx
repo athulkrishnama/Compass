@@ -37,52 +37,52 @@ export default function StayDetailsCard({
 
     return (
         <motion.div variants={itemVariants}>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
                 {t(translationKey.bookingConfirmation.stayDetails)}
             </h2>
-            <div className="grid grid-cols-3 gap-4">
-                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500 mb-2">
-                        <CalendarDays className="w-4 h-4" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2 text-gray-500 mb-1.5 sm:mb-2">
+                        <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         <span className="text-xs font-semibold uppercase tracking-wide">
                             {t(translationKey.bookingConfirmation.checkIn)}
                         </span>
                     </div>
-                    <p className="text-base font-bold text-gray-900">
+                    <p className="text-sm sm:text-base font-bold text-gray-900">
                         {formatDate(checkInDate)}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs sm:text-sm text-gray-500">
                         {t(translationKey.bookingConfirmation.from, {
                             time: "2:00 PM",
                         })}
                     </p>
                 </div>
-                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500 mb-2">
-                        <CalendarDays className="w-4 h-4" />
+                <div className="bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2 text-gray-500 mb-1.5 sm:mb-2">
+                        <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         <span className="text-xs font-semibold uppercase tracking-wide">
                             {t(translationKey.bookingConfirmation.checkOut)}
                         </span>
                     </div>
-                    <p className="text-base font-bold text-gray-900">
+                    <p className="text-sm sm:text-base font-bold text-gray-900">
                         {formatDate(checkOutDate)}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs sm:text-sm text-gray-500">
                         {t(translationKey.bookingConfirmation.until, {
                             time: "11:00 AM",
                         })}
                     </p>
                 </div>
-                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500 mb-2">
-                        <Moon className="w-4 h-4" />
+                <div className="bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2 text-gray-500 mb-1.5 sm:mb-2">
+                        <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         <span className="text-xs font-semibold uppercase tracking-wide">
                             {t(
                                 translationKey.bookingConfirmation.totalDuration
                             )}
                         </span>
                     </div>
-                    <p className="text-xl font-bold text-gray-900">
+                    <p className="text-lg sm:text-xl font-bold text-gray-900">
                         {nights} {t(translationKey.bookingConfirmation.nights)}
                     </p>
                 </div>

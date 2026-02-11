@@ -31,26 +31,28 @@ export default function HotelDetailsCard({
     const { t } = useTranslation();
     return (
         <motion.div variants={itemVariants}>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
                 {t(translationKey.bookingConfirmation.hotelDetails)}
             </h2>
             <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                <div className="aspect-[16/10] overflow-hidden">
+                <div className="aspect-[16/9] sm:aspect-[16/8] overflow-hidden">
                     <img
                         src={image}
                         alt={name}
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="p-5">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <div className="p-4 sm:p-5">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
                         {name}
                     </h3>
-                    <div className="flex items-start gap-2 text-gray-500 mb-3">
+                    <div className="flex items-start gap-2 text-gray-500 mb-2 sm:mb-3">
                         <MapPin className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
-                        <p className="text-sm">{address}</p>
+                        <p className="text-xs sm:text-sm">{address}</p>
                     </div>
-                    <p className="text-sm text-gray-400">{description}</p>
+                    <p className="text-xs sm:text-sm text-gray-400 line-clamp-2">
+                        {description}
+                    </p>
                 </div>
             </div>
         </motion.div>

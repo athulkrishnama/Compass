@@ -35,23 +35,23 @@ export default function RoomSelectionCard({
     const { t } = useTranslation();
     return (
         <motion.div variants={itemVariants}>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
                 {t(translationKey.bookingConfirmation.roomSelection)}
             </h2>
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                <div className="flex gap-4">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-gray-100">
+                <div className="flex gap-3 sm:gap-4">
                     <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1">
                             {name}
                         </h3>
-                        <p className="text-sm text-gray-500 mb-4">
-                            {type} • {bedConfig} • {view}
+                        <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
+                            {type} • {bedConfig} {view && `• ${view}`}
                         </p>
-                        <div className="flex gap-2">
-                            {amenities.map((amenity, index) => (
+                        <div className="flex flex-wrap gap-2">
+                            {amenities.slice(0, 4).map((amenity, index) => (
                                 <span
                                     key={index}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600 border border-gray-100"
+                                    className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600 border border-gray-100"
                                 >
                                     {amenity === "FREE WIFI" && (
                                         <Wifi className="w-3 h-3" />
@@ -64,7 +64,7 @@ export default function RoomSelectionCard({
                             ))}
                         </div>
                     </div>
-                    <div className="w-28 h-24 rounded-xl overflow-hidden flex-shrink-0">
+                    <div className="w-24 h-20 sm:w-28 sm:h-24 rounded-xl overflow-hidden flex-shrink-0">
                         <img
                             src={image}
                             alt={name}
