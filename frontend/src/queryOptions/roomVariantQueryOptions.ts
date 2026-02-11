@@ -8,6 +8,7 @@ import {
     getRoomVariantAvailability,
     markRoomAsUnavailable,
     updateRoomUnavailability,
+    restoreRoom,
 } from "@/services/api/roomVariant.ApiService";
 import type {
     IGetRoomVariantAvailabilityRequestDTO,
@@ -107,5 +108,11 @@ export function createUpdateRoomUnavailabilityMutationOptions() {
         IUpdateRoomUnavailabilityRequestDTO
     >({
         mutationFn: updateRoomUnavailability,
+    });
+}
+
+export function createRestoreRoomMutationOptions() {
+    return mutationOptions<HttpResponse<object>, Error, string>({
+        mutationFn: restoreRoom,
     });
 }

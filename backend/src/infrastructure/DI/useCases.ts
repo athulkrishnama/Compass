@@ -93,6 +93,8 @@ import { IMarkRoomAsUnavailableUseCase } from "@application/interfaces/useCase/r
 import { MarkRoomAsUnavailableUseCase } from "@useCases/roomVariant/markRoomAsUnavailableUseCase";
 import { IUpdateRoomUnavailabilityUseCase } from "@application/interfaces/useCase/roomVariant/updateRoomUnavailabilityUseCase.interface";
 import { UpdateRoomUnavailabilityUseCase } from "@useCases/roomVariant/updateRoomUnavailabilityUseCase";
+import { IRestoreRoomUseCase } from "@application/interfaces/useCase/roomVariant/restoreRoomUseCase.interface";
+import { RestoreRoomUseCase } from "@useCases/roomVariant/restoreRoomUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -276,5 +278,9 @@ export function registerUsecases() {
   container.registerSingleton<IUpdateRoomUnavailabilityUseCase>(
     "IUpdateRoomUnavailabilityUseCase",
     UpdateRoomUnavailabilityUseCase,
+  );
+  container.registerSingleton<IRestoreRoomUseCase>(
+    "IRestoreRoomUseCase",
+    RestoreRoomUseCase,
   );
 }

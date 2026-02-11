@@ -88,6 +88,15 @@ export class RoomVariantRouter {
         roomVariantController.handleUpdateRoomUnavailability(req, res, next);
       },
     );
+
+    this._router.delete(
+      RoomVariantRoutes.RESTORE_ROOM,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        roomVariantController.handleRestoreRoom(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

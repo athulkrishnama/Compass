@@ -14,6 +14,7 @@ import {
     createGetRoomVariantByIdQueryOptions,
     createMarkRoomAsUnavailableMutationOptions,
     createUpdateRoomUnavailabilityMutationOptions,
+    createRestoreRoomMutationOptions,
 } from "@/queryOptions/roomVariantQueryOptions";
 import { toast } from "sonner";
 import { queryClient } from "@/config/tanstackQueryConfig";
@@ -60,6 +61,10 @@ export default function RoomInstancesSection({
         createUpdateRoomUnavailabilityMutationOptions()
     );
 
+    const { mutate: restoreRoomMutation } = useMutation(
+        createRestoreRoomMutationOptions()
+    );
+
     const handleMarkUnavailable = (data: {
         roomNumber: string;
         status: RoomStatus;
@@ -101,7 +106,27 @@ export default function RoomInstancesSection({
     };
 
     const handleRestore = (room: IUnAvailableRoom) => {
-        console.log("Restore room:", room.roomNumber);
+        restoreRoomMutation(room.id, {
+            onSuccess: (res) => {
+                queryClient.setQueriesData(
+                    createGetRoomVariantByIdQueryOptions(roomVariant.id),
+                    (oldData: HttpResponse<IRoomVariantDetailResponse>) => {
+                        const duplicate = structuredClone(oldData);
+                        if (duplicate?.data) {
+                            duplicate.data.unAvailableRooms =
+                                duplicate.data.unAvailableRooms.filter(
+                                    (r) => r.id !== room.id
+                                );
+                        }
+                        return duplicate;
+                    }
+                );
+                toast.success(res.message);
+            },
+            onError: (error) => {
+                toast.error(error.message);
+            },
+        });
     };
 
     const handleEdit = (room: IUnAvailableRoom) => {

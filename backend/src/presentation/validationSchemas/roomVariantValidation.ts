@@ -277,3 +277,9 @@ export const updateRoomUnavailabilityValidation = z.object({
     error: INTERNAL_ERROR_MESSAGES.REASON_MISSING_OR_INVALID,
   }),
 });
+
+export const restoreRoomValidation = z.object({
+  id: z.string({
+    error: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+  }),
+});

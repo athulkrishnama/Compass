@@ -163,3 +163,17 @@ export async function updateRoomUnavailability(
         throw new Error("something went wrong");
     }
 }
+
+export async function restoreRoom(id: string) {
+    try {
+        const response = await axiosInstance.delete(
+            ROOM_VARIANT_ROUTES.RESTORE_ROOM.replace(":id", id)
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
