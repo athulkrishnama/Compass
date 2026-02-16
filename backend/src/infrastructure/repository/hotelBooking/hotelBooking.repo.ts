@@ -30,6 +30,8 @@ export class HotelBookingRepo
     beforeCheckInDate?: Date;
     paymentStatus?: PAYMENT_STATUS;
     bookingStatus?: BOOKING_STATUS;
+    isWalkIn?: boolean;
+    paymentIntendId?: string;
   }): Promise<HotelBookingEntity[]> {
     const filterQuery: RootFilterQuery<IHotelBookingDocument> = {};
 
@@ -74,6 +76,12 @@ export class HotelBookingRepo
     if (filter.bookingStatus) {
       filterQuery.bookingStatus = filter.bookingStatus;
     }
+    if (filter.isWalkIn !== undefined) {
+      filterQuery.isWalkIn = filter.isWalkIn;
+    }
+    if (filter.paymentIntendId) {
+      filterQuery.paymentIntendId = filter.paymentIntendId;
+    }
     const result = await this._model.find(filterQuery).exec();
     return result.map((doc) => this.toEntity(doc));
   }
@@ -90,6 +98,8 @@ export class HotelBookingRepo
     beforeCheckInDate?: Date;
     paymentStatus?: PAYMENT_STATUS;
     bookingStatus?: BOOKING_STATUS;
+    isWalkIn?: boolean;
+    paymentIntendId?: string;
   }): Promise<number> {
     const filterQuery: RootFilterQuery<IHotelBookingDocument> = {};
 
@@ -133,6 +143,12 @@ export class HotelBookingRepo
     }
     if (filter.bookingStatus) {
       filterQuery.bookingStatus = filter.bookingStatus;
+    }
+    if (filter.isWalkIn !== undefined) {
+      filterQuery.isWalkIn = filter.isWalkIn;
+    }
+    if (filter.paymentIntendId) {
+      filterQuery.paymentIntendId = filter.paymentIntendId;
     }
     const result = await this._model.countDocuments(filterQuery).exec();
     return result;

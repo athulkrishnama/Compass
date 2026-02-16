@@ -62,7 +62,6 @@ export default function BookingConfirmation() {
         name: roomVariant?.name ?? "",
         type: roomVariant?.name ?? "",
         bedConfig: `${roomVariant?.bedConfig.count} ${roomVariant?.bedConfig.type}`,
-        view: "",
         amenities: roomVariant?.amenities ?? [],
         image: roomVariant?.coverImage ?? "",
     };
@@ -71,13 +70,13 @@ export default function BookingConfirmation() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 sm:mb-8 lg:mb-10"
+                    className="mb-4 sm:mb-6 lg:mb-8"
                 >
-                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1.5 sm:mb-2">
                         {t(translationKey.bookingConfirmation.confirmAndPay)}
                     </h1>
                     <p className="text-sm sm:text-base text-gray-500">
@@ -91,9 +90,9 @@ export default function BookingConfirmation() {
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
+                    className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6"
                 >
-                    <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+                    <div className="lg:col-span-2 space-y-3 sm:space-y-4">
                         <HotelDetailsCard
                             name={hotelData.name}
                             address={hotelData.address}
@@ -104,7 +103,6 @@ export default function BookingConfirmation() {
                             name={roomData.name}
                             type={roomData.type}
                             bedConfig={roomData.bedConfig}
-                            view={roomData.view}
                             amenities={roomData.amenities}
                             image={roomData.image}
                         />
@@ -115,7 +113,7 @@ export default function BookingConfirmation() {
                         />
                     </div>
 
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-2">
                         <PaymentSummaryCard
                             amount={amount}
                             nights={nights}
@@ -125,13 +123,6 @@ export default function BookingConfirmation() {
                     </div>
                 </motion.div>
             </div>
-
-            <footer className="border-t border-gray-200 mt-8 sm:mt-12 py-6 sm:py-8">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs sm:text-sm text-gray-400">
-                    © {new Date().getFullYear()} {hotelData.name} •{" "}
-                    {hotel?.city}, {hotel?.country}
-                </div>
-            </footer>
         </div>
     );
 }

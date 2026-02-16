@@ -19,6 +19,8 @@ export interface IHotelBookingRepo
     beforeCheckInDate?: Date;
     paymentStatus?: PAYMENT_STATUS;
     bookingStatus?: BOOKING_STATUS;
+    isWalkIn?: boolean;
+    paymentIntendId?: string;
   }): Promise<HotelBookingEntity[]>;
 
   countBooking(filter: {
@@ -34,5 +36,7 @@ export interface IHotelBookingRepo
     beforeCheckInDate?: Date;
     paymentStatus?: PAYMENT_STATUS;
     bookingStatus?: BOOKING_STATUS;
+    isWalkIn?: boolean;
+    paymentIntendId?: string;
   }): Promise<number>;
 }

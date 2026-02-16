@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import translationKey from "@/utils/i18n/translationKey";
 
 interface HotelDetailsCardProps {
     name: string;
@@ -28,31 +26,31 @@ export default function HotelDetailsCard({
     description,
     image,
 }: HotelDetailsCardProps) {
-    const { t } = useTranslation();
     return (
         <motion.div variants={itemVariants}>
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
-                {t(translationKey.bookingConfirmation.hotelDetails)}
-            </h2>
-            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                <div className="aspect-[16/9] sm:aspect-[16/8] overflow-hidden">
-                    <img
-                        src={image}
-                        alt={name}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-                <div className="p-4 sm:p-5">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-                        {name}
-                    </h3>
-                    <div className="flex items-start gap-2 text-gray-500 mb-2 sm:mb-3">
-                        <MapPin className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
-                        <p className="text-xs sm:text-sm">{address}</p>
+            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                <div className="flex gap-3 sm:gap-4">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                            src={image}
+                            alt={name}
+                            className="w-full h-full object-cover"
+                        />
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-400 line-clamp-2">
-                        {description}
-                    </p>
+                    <div className="flex-1 min-w-0">
+                        <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1">
+                            {name}
+                        </h3>
+                        <div className="flex items-start gap-1.5 text-gray-500 mb-1">
+                            <MapPin className="w-3.5 h-3.5 mt-0.5 text-green-600 flex-shrink-0" />
+                            <p className="text-xs sm:text-sm line-clamp-1">
+                                {address}
+                            </p>
+                        </div>
+                        <p className="text-xs text-gray-400 line-clamp-2">
+                            {description}
+                        </p>
+                    </div>
                 </div>
             </div>
         </motion.div>

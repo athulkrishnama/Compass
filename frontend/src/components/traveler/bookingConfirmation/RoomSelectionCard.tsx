@@ -1,13 +1,9 @@
 import { motion } from "framer-motion";
-import { Wifi, AirVent } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import translationKey from "@/utils/i18n/translationKey";
 
 interface RoomSelectionCardProps {
     name: string;
     type: string;
     bedConfig: string;
-    view: string;
     amenities: string[];
     image: string;
 }
@@ -28,43 +24,32 @@ export default function RoomSelectionCard({
     name,
     type,
     bedConfig,
-    view,
     amenities,
     image,
 }: RoomSelectionCardProps) {
-    const { t } = useTranslation();
     return (
         <motion.div variants={itemVariants}>
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
-                {t(translationKey.bookingConfirmation.roomSelection)}
-            </h2>
-            <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                 <div className="flex gap-3 sm:gap-4">
                     <div className="flex-1">
                         <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1">
                             {name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
-                            {type} • {bedConfig} {view && `• ${view}`}
+                        <p className="text-xs sm:text-sm text-gray-500 mb-2">
+                            {type} • {bedConfig}
                         </p>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5">
                             {amenities.slice(0, 4).map((amenity, index) => (
                                 <span
                                     key={index}
-                                    className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600 border border-gray-100"
+                                    className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-50 rounded text-xs font-medium text-gray-700 border border-gray-200"
                                 >
-                                    {amenity === "FREE WIFI" && (
-                                        <Wifi className="w-3 h-3" />
-                                    )}
-                                    {amenity === "AC" && (
-                                        <AirVent className="w-3 h-3" />
-                                    )}
-                                    {amenity}
+                                    {amenity.toUpperCase().replace("FREE ", "")}
                                 </span>
                             ))}
                         </div>
                     </div>
-                    <div className="w-24 h-20 sm:w-28 sm:h-24 rounded-xl overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden flex-shrink-0">
                         <img
                             src={image}
                             alt={name}
