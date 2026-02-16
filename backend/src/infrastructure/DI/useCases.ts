@@ -95,6 +95,8 @@ import { IUpdateRoomUnavailabilityUseCase } from "@application/interfaces/useCas
 import { UpdateRoomUnavailabilityUseCase } from "@useCases/roomVariant/updateRoomUnavailabilityUseCase";
 import { IRestoreRoomUseCase } from "@application/interfaces/useCase/roomVariant/restoreRoomUseCase.interface";
 import { RestoreRoomUseCase } from "@useCases/roomVariant/restoreRoomUseCase";
+import { IGetBookingByPaymentIdUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingByPaymentIdUseCase";
+import { GetBookingByPaymentIdUseCase } from "@useCases/hotelBooking/GetBookingByPaymentIdUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -282,5 +284,9 @@ export function registerUsecases() {
   container.registerSingleton<IRestoreRoomUseCase>(
     "IRestoreRoomUseCase",
     RestoreRoomUseCase,
+  );
+  container.registerSingleton<IGetBookingByPaymentIdUseCase>(
+    "IGetBookingByPaymentIdUseCase",
+    GetBookingByPaymentIdUseCase,
   );
 }

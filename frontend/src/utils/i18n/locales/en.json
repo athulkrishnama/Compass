@@ -168,7 +168,16 @@
         "checkOut": "Check-out",
         "from": "From {{time}}",
         "until": "Until {{time}}",
-        "totalDuration": "Total Duration"
+        "totalDuration": "Total Duration",
+        "verifyingPayment": "Verifying Payment...",
+        "bookingConfirmed": "Booking Confirmed!",
+        "redirectingToHistory": "Redirecting to your booking history...",
+        "paymentFailedTitle": "Payment Verification Failed",
+        "paymentFailedMessage": "We couldn't verify your payment. If you have been charged, please contact support or try again.",
+        "paymentTimeoutMessage": "Payment status confirmation timed out. Please check your booking history or contact support.",
+        "tryAgain": "Try Again",
+        "goToHome": "Go to Home",
+        "bookingNotFound": "Booking not found or payment not verified yet"
     },
     "form": {
         "fullname": "Full Name",

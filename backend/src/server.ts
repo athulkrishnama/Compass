@@ -20,6 +20,7 @@ import { RoomVariantRouter } from "@presentation/routes/roomVariant/roomVariantR
 import { DestinationRouter } from "@presentation/routes/destination/destinationRouter";
 import { PaymentRouter } from "@presentation/routes/payment/paymentRouter";
 import { WebHookRouter } from "@presentation/routes/webHook/webHookRouter";
+import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
 
 export class Server {
   private _app: Express;
@@ -36,6 +37,7 @@ export class Server {
     this._setRoomVariantRouter();
     this._setPaymentRouter();
     this._setDestinationRouter();
+    this._setBookingRouter();
     this._setErrorHandlingMiddleware();
   }
 
@@ -78,6 +80,11 @@ export class Server {
     const webHookRouter = new WebHookRouter();
     this._app.use(middleware.handle(i18next));
     this._app.use(Routes.WEBHOOK, webHookRouter.getRouter());
+  }
+
+  private _setBookingRouter() {
+    const bookingRouter = new BookingRouter();
+    this._app.use(Routes.BOOKING, bookingRouter.getRouter());
   }
 
   private _setMiddlewares() {

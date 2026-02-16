@@ -9,6 +9,7 @@ import { RoomVariantController } from "@presentation/controllers/roomVariant/roo
 import { DestinationController } from "@presentation/controllers/destination/destinationCotroller";
 import { PaymentController } from "@presentation/controllers/payment/paymentController";
 import { WebHookController } from "@presentation/controllers/webhook/webhookController";
+import { BookingController } from "@presentation/controllers/hotelBooking/BookingController";
 
 registerDI();
 export const authController = container.resolve(AuthController);
@@ -20,3 +21,4 @@ export const hotelController = container.resolve(HotelController);
 export const roomVariantController = container.resolve(RoomVariantController);
 export const paymentController = container.resolve(PaymentController);
 export const webhookController = container.resolve(WebHookController);
+export const bookingController = container.resolve(BookingController);

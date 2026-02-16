@@ -13,6 +13,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import translationKey from "@/utils/i18n/translationKey";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "@tanstack/react-router";
 
 interface PaymentSummaryCardProps {
     amount: number;
@@ -36,8 +37,10 @@ const itemVariants = {
 export function PaymentSummaryCard({
     amount,
     nights,
+    paymentIntentId,
 }: PaymentSummaryCardProps) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const basePrice = nights > 0 ? Math.round(amount / nights) : 0;
 
     const strip = useStripe();
@@ -53,15 +56,22 @@ export function PaymentSummaryCard({
 
         setLoading(true);
 
-        const { error } = await strip.confirmPayment({
+        const { error, paymentIntent } = await strip.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/traveler/booking-success`,
+                return_url: `${window.location.origin}/traveler/booking-status?payment_intent=${paymentIntentId}`,
             },
+            redirect: "if_required",
         });
 
         if (error) {
             toast.error(t(translationKey.errors.paymentFailed));
+        } else if (paymentIntent && paymentIntent.status === "succeeded") {
+            navigate({
+                to: "/traveler/booking-status",
+                search: { payment_intent: paymentIntentId },
+                replace: true,
+            });
         }
 
         setLoading(false);

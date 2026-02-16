@@ -34,4 +34,5 @@ export enum Messages {
   PAYMENT_VERIFIED_SUCCESSFULLY = "paymentVerifiedSuccessfully",
   ROOM_VARIANT_MARKED_AS_UNAVAILABLE = "roomVariantMarkedAsUnavailable",
   ROOM_RESTORED_SUCCESSFULLY = "roomRestoredSuccessfully",
+  BOOKING_RETRIEVED_SUCCESSFULLY = "bookingRetrievedSuccessfully",
 }

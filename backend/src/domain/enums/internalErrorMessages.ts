@@ -139,4 +139,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   INVALID_ROOM_NUMBER = "invalidRoomNumber",
   ROOM_NUMBER_ALREADY_EXISTS = "roomNumberAlreadyExists",
   ROOM_STATUS_NOT_FOUND = "roomStatusNotFound",
+  BOOKING_NOT_FOUND = "bookingNotFound",
 }

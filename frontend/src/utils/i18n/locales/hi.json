@@ -146,7 +146,15 @@
         "checkOut": "चेक-आउट",
         "from": "{{time}} से",
         "until": "{{time}} तक",
-        "totalDuration": "कुल अवधि"
+        "totalDuration": "कुल अवधि",
+        "verifyingPayment": "भुगतान सत्यापित कर रहा है...",
+        "bookingConfirmed": "बुकिंग की पुष्टि हो गई!",
+        "redirectingToHistory": "आपके बुकिंग इतिहास पर पुनर्निर्देशित किया जा रहा है...",
+        "paymentFailedTitle": "भुगतान सत्यापन विफल",
+        "paymentFailedMessage": "हम आपके भुगतान को सत्यापित नहीं कर सके। यदि आपने भुगतान किया है, तो कृपया सहायता से संपर्क करें या पुन: प्रयास करें।",
+        "tryAgain": "पुनः प्रयास करें",
+        "goToHome": "होम पर जाएं",
+        "bookingNotFound": "बुकिंग नहीं मिली या भुगतान अभी तक सत्यापित नहीं हुआ"
     },
     "activities": {
         "HIKING": "Hiking",
