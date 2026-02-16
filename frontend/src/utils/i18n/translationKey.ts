@@ -2,6 +2,10 @@ export default {
     brand: {
         name: "brand.name",
     },
+    common: {
+        language: "common.language",
+        openMainMenu: "common.openMainMenu",
+    },
     headings: {
         signup: "headings.signup",
         enterOtp: "headings.enterOtp",

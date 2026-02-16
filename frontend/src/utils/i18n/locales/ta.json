@@ -2,6 +2,10 @@
     "brand": {
         "name": "காம்பஸ்"
     },
+    "common": {
+        "language": "மொழி",
+        "openMainMenu": "முக்கிய மெனுவை திறக்கவும்"
+    },
     "headings": {
         "signup": "சைன் அப்",
         "enterOtp": "OTP ஐ உள்ளிடவும்",

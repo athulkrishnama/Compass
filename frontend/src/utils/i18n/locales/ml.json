@@ -2,6 +2,10 @@
     "brand": {
         "name": "കാമ്പസ്"
     },
+    "common": {
+        "language": "ഭാഷ",
+        "openMainMenu": "പ്രധാന മെനു തുറക്കുക"
+    },
     "headings": {
         "signup": "സൈൻ അപ്",
         "enterOtp": "OTP നൽകുക",

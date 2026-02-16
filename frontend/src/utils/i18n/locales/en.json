@@ -2,6 +2,10 @@
     "brand": {
         "name": "Compass"
     },
+    "common": {
+        "language": "Language",
+        "openMainMenu": "Open main menu"
+    },
     "headings": {
         "signup": "Sign Up",
         "enterOtp": "Enter OTP",

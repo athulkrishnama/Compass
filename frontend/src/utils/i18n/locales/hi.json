@@ -2,6 +2,10 @@
     "brand": {
         "name": "कम्पास"
     },
+    "common": {
+        "language": "भाषा",
+        "openMainMenu": "मुख्य मेनू खोलें"
+    },
     "headings": {
         "signup": "साइन अप",
         "enterOtp": "OTP दर्ज करें",
