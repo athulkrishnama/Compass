@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { Hotel } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
@@ -25,21 +24,19 @@ export function EmptyBookingsState({ type }: EmptyBookingsStateProps) {
         },
     };
 
+    const currentConfig = config[type];
+
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center justify-center py-16 px-4 text-center"
-        >
-            <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-6">
-                <Calendar className="w-10 h-10 text-muted-foreground" />
+        <div className="flex flex-col items-center justify-center py-16 px-4">
+            <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mb-8">
+                <Hotel className="w-8 h-8 text-muted-foreground/40" />
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-                {config[type].title}
+            <h3 className="text-3xl font-serif text-foreground mb-4 text-center tracking-tight">
+                {currentConfig.title}
             </h3>
-            <p className="text-muted-foreground max-w-md">
-                {config[type].description}
+            <p className="text-muted-foreground text-center max-w-sm leading-relaxed font-medium">
+                {currentConfig.description}
             </p>
-        </motion.div>
+        </div>
     );
 }

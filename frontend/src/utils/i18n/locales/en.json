@@ -199,7 +199,9 @@
         "viewDetails": "View Details",
         "viewReceipt": "View Receipt",
         "loadMoreHistory": "Load More History",
-        "showingBookingsOfTotal": "Showing {{count}} of {{total}} bookings"
+        "showingBookingsOfTotal": "Showing {{count}} of {{total}} bookings",
+        "details": "Details",
+        "total": "Total"
     },
     "bookingStatus": {
         "CONFIRMED": "Confirmed",

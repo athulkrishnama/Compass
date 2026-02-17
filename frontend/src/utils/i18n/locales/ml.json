@@ -176,8 +176,10 @@
         "noPastDescription": "നിങ്ങൾ ഇതുവരെ ബുക്കിംഗുകളൊന്നും പൂർത്തിയാക്കിയിട്ടില്ല. നിങ്ങൾ താമസിച്ചുകഴിഞ്ഞാൽ നിങ്ങളുടെ വിവരങ്ങൾ ഇവിടെ കാണാം.",
         "viewDetails": "വിശദാംശങ്ങൾ കാണുക",
         "viewReceipt": "രസീത് കാണുക",
-        "loadMoreHistory": "കൂടുതൽ ചരിത്രം ലോഡ് ചെയ്യുക",
-        "showingBookingsOfTotal": "{{total}} ബുക്കിംഗുകളിൽ {{count}} എണ്ണം കാണിക്കുന്നു"
+        "loadMoreHistory": "കൂടുതൽ ചരിത്രം കാണുക",
+        "showingBookingsOfTotal": "{{total}}-ൽ {{count}} ബുക്കിംഗുകൾ കാണിക്കുന്നു",
+        "details": "വിശദാംശങ്ങൾ",
+        "total": "ആകെ"
     },
     "bookingStatus": {
         "CONFIRMED": "സ്ഥിരീകരിച്ചു",

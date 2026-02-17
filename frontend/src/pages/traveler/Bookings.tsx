@@ -74,38 +74,38 @@ function Bookings() {
     const isEmpty = !isLoading && bookings.length === 0;
 
     return (
-        <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
-            <div className="mb-8">
-                <p className="text-[11px] font-semibold text-muted-foreground tracking-[0.2em] uppercase mb-2">
-                    {t(translationKey.bookingHistory.yourProfile)}
+        <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
+            <div className="mb-12">
+                <p className="text-[10px] font-bold text-muted-foreground/60 tracking-[0.3em] uppercase mb-3">
+                    {activeTab === "upcoming"
+                        ? "Your Stays"
+                        : activeTab === "ongoing"
+                          ? "Current Stay"
+                          : "Travel History"}
                 </p>
-                <h1 className="text-3xl font-bold text-foreground">
+                <h1 className="text-5xl font-serif text-foreground tracking-tight">
                     {t(translationKey.bookingHistory.title)}
                 </h1>
             </div>
 
-            <BookingTabs activeTab={activeTab} onTabChange={setActiveTab} />
+            <div className="mb-12 overflow-x-auto hide-scroll-bar">
+                <BookingTabs activeTab={activeTab} onTabChange={setActiveTab} />
+            </div>
 
-            <div className="mt-8">
+            <div className="">
                 {isLoading ? (
-                    <div className="space-y-5">
-                        {[...Array(3)].map((_, i) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[...Array(6)].map((_, i) => (
                             <BookingCardSkeleton key={i} />
                         ))}
                     </div>
                 ) : isEmpty ? (
-                    <EmptyBookingsState
-                        type={
-                            activeTab === "upcoming"
-                                ? "upcoming"
-                                : activeTab === "ongoing"
-                                  ? "ongoing"
-                                  : "past"
-                        }
-                    />
+                    <div className="py-20 text-center">
+                        <EmptyBookingsState type={activeTab} />
+                    </div>
                 ) : (
                     <>
-                        <div className="space-y-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-10 md:gap-y-12">
                             {bookings.map((booking) => (
                                 <BookingCard
                                     key={booking.id}
@@ -124,7 +124,7 @@ function Bookings() {
                         <div ref={observerTarget} className="h-20" />
 
                         {activeQuery.isFetchingNextPage && (
-                            <div className="mt-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                                 <BookingCardSkeleton />
                             </div>
                         )}
@@ -134,32 +134,22 @@ function Bookings() {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="flex justify-center py-6"
+                                    className="flex justify-center py-12"
                                 >
                                     <button
                                         onClick={() =>
                                             activeQuery.fetchNextPage()
                                         }
-                                        className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium border border-border rounded-full hover:bg-muted transition-colors"
+                                        className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-bold border border-border rounded-full hover:bg-foreground hover:text-background transition-all duration-300"
                                     >
                                         {t(
                                             translationKey.bookingHistory
                                                 .loadMoreHistory
                                         )}
-                                        <ChevronDown className="w-4 h-4" />
+                                        <ChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-1" />
                                     </button>
                                 </motion.div>
                             )}
-
-                        {!activeQuery.hasNextPage && bookings.length > 0 && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="text-center py-8 text-sm text-muted-foreground"
-                            >
-                                {t(translationKey.hotelSearch.noMoreHotels)}
-                            </motion.div>
-                        )}
                     </>
                 )}
             </div>

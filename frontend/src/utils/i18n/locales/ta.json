@@ -176,7 +176,9 @@
         "viewDetails": "விவரங்களைப் பார்க்கவும்",
         "viewReceipt": "ரசீதைப் பார்க்கவும்",
         "loadMoreHistory": "மேலும் வரலாற்றை ஏற்றவும்",
-        "showingBookingsOfTotal": "{{total}} முன்பதிவுகளில் {{count}} காட்டப்படுகிறது"
+        "showingBookingsOfTotal": "{{total}} இல் {{count}} முன்பதிவுகளைக் காட்டுகிறது",
+        "details": "விவரங்கள்",
+        "total": "மொத்தம்"
     },
     "bookingStatus": {
         "CONFIRMED": "உறுதிப்படுத்தப்பட்டது",

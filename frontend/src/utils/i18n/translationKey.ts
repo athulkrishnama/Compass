@@ -202,6 +202,8 @@ export default {
         viewReceipt: "bookingHistory.viewReceipt",
         loadMoreHistory: "bookingHistory.loadMoreHistory",
         showingBookingsOfTotal: "bookingHistory.showingBookingsOfTotal",
+        details: "bookingHistory.details",
+        total: "bookingHistory.total",
     },
     bookingStatus: {
         CONFIRMED: "bookingStatus.CONFIRMED",
