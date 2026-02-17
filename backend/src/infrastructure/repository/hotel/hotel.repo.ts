@@ -122,6 +122,7 @@ export class HotelRepo
         doc.roomVariant?.map((roomVariant: IRoomVariantDocument) => ({
           _id: roomVariant._id.toString(),
           hotelId: roomVariant.hotelId.toString(),
+          roomPrefix: roomVariant.roomPrefix,
           description: roomVariant.description,
           bedConfig: roomVariant.bedConfig,
           amenities: roomVariant.amenities,
@@ -132,6 +133,8 @@ export class HotelRepo
           price: roomVariant.basePrice,
           maxOccupancy: roomVariant.maxOccupancy,
           coverImage: roomVariant.coverImage,
+          totalRooms: roomVariant.totalRooms,
+          isActive: roomVariant.isActive,
         })) || [],
     };
   }

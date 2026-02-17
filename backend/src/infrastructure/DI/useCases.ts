@@ -79,10 +79,6 @@ import { IGetRoomVariantByIdUseCase } from "@application/interfaces/useCase/room
 import { GetRoomVariantByIdUseCase } from "@useCases/roomVariant/getRoomVariantByIdUseCase";
 import { IDeleteRoomVariantImageUseCase } from "@application/interfaces/useCase/roomVariant/deleteRoomVariantImageUseCase.interface";
 import { DeleteRoomVariantImageUseCase } from "@useCases/roomVariant/deleteRoomVariantImageUseCase";
-import { ICreateRoomUseCase } from "@application/interfaces/useCase/room/createRoomUseCase.interface";
-import { CreateRoomUseCase } from "@useCases/room/createRoomUseCase";
-import { IEditRoomUseCase } from "@application/interfaces/useCase/room/editRoomUseCase.interface";
-import { EditRoomUseCase } from "@useCases/room/editRoomUseCase";
 import { IGetDestinationUseCase } from "@application/interfaces/useCase/destination/getDestinationUseCase.interface";
 import { GetDestinationUseCase } from "@useCases/destination/getDestinationUseCase";
 import { IHotelSearchUseCase } from "@application/interfaces/useCase/hotel/hotelSearchUseCase.interface";
@@ -93,6 +89,14 @@ import { ICreatePaymentIntentUseCase } from "@application/interfaces/useCase/pay
 import { CreatePaymentIntentUseCase } from "@useCases/payment/createPaymentIntentUseCase";
 import { IVerifyPaymentUseCase } from "@application/interfaces/useCase/payment/verifyPaymentUseCase.interface";
 import { VerifyPaymentUseCase } from "@useCases/payment/verifyPaymentUseCase";
+import { IMarkRoomAsUnavailableUseCase } from "@application/interfaces/useCase/roomVariant/markRoomAsUnavailableUseCase.interface";
+import { MarkRoomAsUnavailableUseCase } from "@useCases/roomVariant/markRoomAsUnavailableUseCase";
+import { IUpdateRoomUnavailabilityUseCase } from "@application/interfaces/useCase/roomVariant/updateRoomUnavailabilityUseCase.interface";
+import { UpdateRoomUnavailabilityUseCase } from "@useCases/roomVariant/updateRoomUnavailabilityUseCase";
+import { IRestoreRoomUseCase } from "@application/interfaces/useCase/roomVariant/restoreRoomUseCase.interface";
+import { RestoreRoomUseCase } from "@useCases/roomVariant/restoreRoomUseCase";
+import { IGetBookingByPaymentIdUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingByPaymentIdUseCase";
+import { GetBookingByPaymentIdUseCase } from "@useCases/hotelBooking/GetBookingByPaymentIdUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -249,14 +253,6 @@ export function registerUsecases() {
     "IDeleteRoomVariantImageUseCase",
     DeleteRoomVariantImageUseCase,
   );
-  container.registerSingleton<ICreateRoomUseCase>(
-    "ICreateRoomUseCase",
-    CreateRoomUseCase,
-  );
-  container.registerSingleton<IEditRoomUseCase>(
-    "IEditRoomUseCase",
-    EditRoomUseCase,
-  );
   container.registerSingleton<IGetDestinationUseCase>(
     "IGetDestinationUseCase",
     GetDestinationUseCase,
@@ -276,5 +272,21 @@ export function registerUsecases() {
   container.registerSingleton<IVerifyPaymentUseCase>(
     "IVerifyPaymentUseCase",
     VerifyPaymentUseCase,
+  );
+  container.registerSingleton<IMarkRoomAsUnavailableUseCase>(
+    "IMarkRoomAsUnavailableUseCase",
+    MarkRoomAsUnavailableUseCase,
+  );
+  container.registerSingleton<IUpdateRoomUnavailabilityUseCase>(
+    "IUpdateRoomUnavailabilityUseCase",
+    UpdateRoomUnavailabilityUseCase,
+  );
+  container.registerSingleton<IRestoreRoomUseCase>(
+    "IRestoreRoomUseCase",
+    RestoreRoomUseCase,
+  );
+  container.registerSingleton<IGetBookingByPaymentIdUseCase>(
+    "IGetBookingByPaymentIdUseCase",
+    GetBookingByPaymentIdUseCase,
   );
 }

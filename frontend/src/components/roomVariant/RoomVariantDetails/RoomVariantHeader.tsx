@@ -48,8 +48,8 @@ export default function RoomVariantHeader({
                             </div>
                         </div>
                         {allImages.length > 1 && (
-                            <div className="p-3 bg-gray-50 border-t border-gray-100">
-                                <div className="flex gap-2 overflow-x-auto">
+                            <div className="p-3 bg-gray-50 border-t border-gray-100 ">
+                                <div className="flex gap-2 overflow-x-auto hide-scroll-bar">
                                     {allImages.map((img, index) => (
                                         <button
                                             key={index}
@@ -155,7 +155,6 @@ export default function RoomVariantHeader({
                             </div>
                         </div>
 
-                        {/* Policies */}
                         <div className="flex flex-wrap gap-3 mb-6">
                             <div
                                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${

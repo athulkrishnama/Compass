@@ -67,6 +67,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       roomVariantId: lock.roomVariantId,
       totalAmount: lock.amount,
       paymentStatus: PAYMENT_STATUS.SUCCESS,
+      isWalkIn: false,
     };
 
     await this._hotelBookingRepo.create(booking);

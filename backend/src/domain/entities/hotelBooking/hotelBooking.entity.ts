@@ -6,13 +6,14 @@ export interface HotelBookingEntity {
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
-  roomId?: string;
+  roomNumber?: string;
   checkinDate: Date;
   checkoutDate: Date;
   totalAmount: number;
   paymentIntendId: string;
   paymentStatus: PAYMENT_STATUS;
   bookingStatus: BOOKING_STATUS;
+  isWalkIn: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

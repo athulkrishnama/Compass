@@ -6,6 +6,7 @@ export interface IRoomVariantDocument extends Document {
   _id: Types.ObjectId;
   hotelId: Types.ObjectId;
   name: string;
+  roomPrefix: string;
   description: string;
   maxOccupancy: number;
   bedConfig: {
@@ -22,6 +23,10 @@ export interface IRoomVariantDocument extends Document {
   basePrice: number;
   coverImage: string;
   images: string[];
+  totalRooms: number;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const roomVariantSchema = new Schema<IRoomVariantDocument>(
@@ -32,6 +37,10 @@ export const roomVariantSchema = new Schema<IRoomVariantDocument>(
       required: true,
     },
     name: {
+      type: String,
+      required: true,
+    },
+    roomPrefix: {
       type: String,
       required: true,
     },
@@ -91,6 +100,15 @@ export const roomVariantSchema = new Schema<IRoomVariantDocument>(
     images: {
       type: [String],
       default: [],
+    },
+    totalRooms: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {

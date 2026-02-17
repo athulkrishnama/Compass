@@ -2,6 +2,10 @@ export default {
     brand: {
         name: "brand.name",
     },
+    common: {
+        language: "common.language",
+        openMainMenu: "common.openMainMenu",
+    },
     headings: {
         signup: "headings.signup",
         enterOtp: "headings.enterOtp",
@@ -43,6 +47,7 @@ export default {
         addRoomInstance: "headings.addRoomInstance",
         editRoomInstance: "headings.editRoomInstance",
         addRoomInstanceSubtitle: "headings.addRoomInstanceSubtitle",
+        editRoomStatus: "headings.editRoomStatus",
     },
     sections: {
         basicInformation: "sections.basicInformation",
@@ -137,6 +142,16 @@ export default {
         paymentFailed: "errors.paymentFailed",
         invalidSignature: "errors.invalidSignature",
         roomLockNotFound: "errors.roomLockNotFound",
+        roomPrefixMissingOrInvalid: "errors.roomPrefixMissingOrInvalid",
+        totalRoomsMissingOrInvalid: "errors.totalRoomsMissingOrInvalid",
+        roomPrefixMinLength: "errors.roomPrefixMinLength",
+        roomPrefixMaxLength: "errors.roomPrefixMaxLength",
+        totalRoomsRequired: "errors.totalRoomsRequired",
+        isActiveMissingOrInvalid: "errors.isActiveMissingOrInvalid",
+        roomVariantPrefixAlreadyExists: "errors.roomVariantPrefixAlreadyExists",
+        roomNumberExceedsTotal: "errors.roomNumberExceedsTotal",
+        invalidRoomNumber: "errors.invalidRoomNumber",
+        roomNumberAlreadyExists: "errors.roomNumberAlreadyExists",
     },
     bookingConfirmation: {
         confirmAndPay: "bookingConfirmation.confirmAndPay",
@@ -160,6 +175,15 @@ export default {
         from: "bookingConfirmation.from",
         until: "bookingConfirmation.until",
         totalDuration: "bookingConfirmation.totalDuration",
+        verifyingPayment: "bookingConfirmation.verifyingPayment",
+        bookingConfirmed: "bookingConfirmation.bookingConfirmed",
+        redirectingToHistory: "bookingConfirmation.redirectingToHistory",
+        paymentFailedTitle: "bookingConfirmation.paymentFailedTitle",
+        paymentFailedMessage: "bookingConfirmation.paymentFailedMessage",
+        paymentTimeoutMessage: "bookingConfirmation.paymentTimeoutMessage",
+        tryAgain: "bookingConfirmation.tryAgain",
+        goToHome: "bookingConfirmation.goToHome",
+        bookingNotFound: "bookingConfirmation.bookingNotFound",
     },
     form: {
         fullname: "form.fullname",
@@ -229,6 +253,11 @@ export default {
         typeLabel: "form.typeLabel",
         priceLabel: "form.priceLabel",
         statusLabel: "form.statusLabel",
+        roomPrefix: "form.roomPrefix",
+        roomPrefixPlaceholder: "form.roomPrefixPlaceholder",
+        totalRooms: "form.totalRooms",
+        totalRoomsPlaceholder: "form.totalRoomsPlaceholder",
+        selectStatus: "form.selectStatus",
     },
     button: {
         submit: "button.submit",
@@ -380,6 +409,19 @@ export default {
         SATURDAY: "weekdays.SATURDAY",
     },
     text: {
+        operationalStatus: "text.operationalStatus",
+        unavailableRooms: "text.unavailableRooms",
+        markUnavailable: "text.markUnavailable",
+        maintenanceCleaningEtc: "text.maintenanceCleaningEtc",
+        restore: "text.restore",
+        markRoomUnavailable: "text.markRoomUnavailable",
+        roomNumberLabel: "text.roomNumberLabel",
+        reasonLabel: "text.reasonLabel",
+        enterReasonPlaceholder: "text.enterReasonPlaceholder",
+        fullRoomCode: "text.fullRoomCode",
+        maintenance: "text.maintenance",
+        cleaning: "text.cleaning",
+        blocked: "text.blocked",
         alreadyHaveAccount: "text.alreadyHaveAccount",
         dontHaveAnAccount: "text.dontHaveAnAccount",
         youAreNotA: "text.youAreNotA",
@@ -483,6 +525,7 @@ export default {
         liveAvailabilityOnly: "text.liveAvailabilityOnly",
         freeEntryOnly: "text.freeEntryOnly",
         sortConfiguration: "text.sortConfiguration",
+        roomNumberCannotBeChanged: "text.roomNumberCannotBeChanged",
     },
     tableHeaders: {
         destination: "tableHeaders.destination",
@@ -617,5 +660,7 @@ export default {
     messages: {
         paymentIntentCreated: "messages.paymentIntentCreated",
         paymentVerifiedSuccessfully: "messages.paymentVerifiedSuccessfully",
+        roomVariantMarkedAsUnavailable:
+            "messages.roomVariantMarkedAsUnavailable",
     },
 };

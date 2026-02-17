@@ -1,6 +1,10 @@
 import { axiosInstance } from "@/axios/instance";
 import { ROOM_VARIANT_ROUTES } from "@/constants/routes/roomVariantRoutes";
-import type { IGetRoomVariantAvailabilityRequestDTO } from "@/types/api/requests/roomVariantRequests";
+import type {
+    IGetRoomVariantAvailabilityRequestDTO,
+    IMarkRoomAsUnavailableRequestDTO,
+    IUpdateRoomUnavailabilityRequestDTO,
+} from "@/types/api/requests/roomVariantRequests";
 import { AxiosError } from "axios";
 
 export async function createRoomVariant({
@@ -113,6 +117,57 @@ export async function getRoomVariantAvailability({
                     checkoutDate: checkoutDate.toDateString(),
                 },
             }
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function markRoomAsUnavailable(
+    data: IMarkRoomAsUnavailableRequestDTO
+) {
+    try {
+        const response = await axiosInstance.post(
+            ROOM_VARIANT_ROUTES.MARK_AS_UNAVAILABLE.replace(
+                ":roomVariantId",
+                data.roomVariantId
+            ),
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function updateRoomUnavailability(
+    data: IUpdateRoomUnavailabilityRequestDTO
+) {
+    try {
+        const response = await axiosInstance.patch(
+            ROOM_VARIANT_ROUTES.UPDATE_UNAVAILABLE.replace(":id", data.id),
+            data
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function restoreRoom(id: string) {
+    try {
+        const response = await axiosInstance.delete(
+            ROOM_VARIANT_ROUTES.RESTORE_ROOM.replace(":id", id)
         );
         return response.data;
     } catch (error) {

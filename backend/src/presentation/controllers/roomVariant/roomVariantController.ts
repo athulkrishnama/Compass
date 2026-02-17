@@ -9,6 +9,9 @@ import {
   createRoomVariantValidation,
   editRoomVariantValidation,
   getRoomAvailabilityValidation,
+  markRoomAsUnavailableValidation,
+  updateRoomUnavailabilityValidation,
+  restoreRoomValidation,
 } from "@presentation/validationSchemas/roomVariantValidation";
 import { Request, Response, NextFunction } from "express";
 import { inject, injectable } from "tsyringe";
@@ -18,6 +21,9 @@ import { IEditRoomVariantUseCase } from "@application/interfaces/useCase/roomVar
 import { IGetRoomVariantByIdUseCase } from "@application/interfaces/useCase/roomVariant/getRoomVariantByIdUseCase.interface";
 import { IDeleteRoomVariantImageUseCase } from "@application/interfaces/useCase/roomVariant/deleteRoomVariantImageUseCase.interface";
 import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
+import { IMarkRoomAsUnavailableUseCase } from "@application/interfaces/useCase/roomVariant/markRoomAsUnavailableUseCase.interface";
+import { IUpdateRoomUnavailabilityUseCase } from "@application/interfaces/useCase/roomVariant/updateRoomUnavailabilityUseCase.interface";
+import { IRestoreRoomUseCase } from "@application/interfaces/useCase/roomVariant/restoreRoomUseCase.interface";
 
 @injectable()
 export class RoomVariantController {
@@ -34,6 +40,12 @@ export class RoomVariantController {
     private _deleteRoomVariantImageUseCase: IDeleteRoomVariantImageUseCase,
     @inject("IGetRoomAvailabilityUseCase")
     private _getRoomAvailabilityUseCase: IGetRoomAvailabilityUseCase,
+    @inject("IMarkRoomAsUnavailableUseCase")
+    private _markRoomAsUnavailableUseCase: IMarkRoomAsUnavailableUseCase,
+    @inject("IUpdateRoomUnavailabilityUseCase")
+    private _updateRoomUnavailabilityUseCase: IUpdateRoomUnavailabilityUseCase,
+    @inject("IRestoreRoomUseCase")
+    private _restoreRoomUseCase: IRestoreRoomUseCase,
   ) {}
 
   async handleCreateRoomVariant(
@@ -229,6 +241,95 @@ export class RoomVariantController {
         HTTP_STATUS_CODE.OK,
         Messages.ROOM_VARIANT_FETCHED,
         result,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleMarkRoomAsUnavailable(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const userId = req.user!.id;
+      const { roomVariantId } = req.params;
+
+      const data = markRoomAsUnavailableValidation.safeParse({
+        userId,
+        roomVariantId,
+        ...req.body,
+      });
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      const id = await this._markRoomAsUnavailableUseCase.execute(data.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.ROOM_VARIANT_MARKED_AS_UNAVAILABLE,
+        { id },
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleUpdateRoomUnavailability(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+
+      const data = updateRoomUnavailabilityValidation.safeParse({
+        id,
+        ...req.body,
+      });
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      const updatedId = await this._updateRoomUnavailabilityUseCase.execute(
+        data.data,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.ROOM_VARIANT_UPDATED,
+        { id: updatedId },
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleRestoreRoom(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      const data = restoreRoomValidation.safeParse({ id });
+
+      if (data.error) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      await this._restoreRoomUseCase.execute(data.data);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.ROOM_RESTORED_SUCCESSFULLY,
       );
     } catch (error) {
       next(error);

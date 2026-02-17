@@ -1,8 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { BedDouble, Eye, Pencil, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import translationKey from "@/utils/i18n/translationKey";
 import type { RoomVariantListingItem } from "@/types/api/responses/roomVariantListingResponse";
+import { createUpdateRoomVariantMutationOptions } from "@/queryOptions/roomVariantQueryOptions";
+import { queryClient } from "@/config/tanstackQueryConfig";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface RoomVariantsSectionProps {
     hotelId: string;
@@ -14,6 +21,33 @@ export default function RoomVariantsSection({
     roomVariants,
 }: RoomVariantsSectionProps) {
     const { t } = useTranslation();
+
+    const { mutate: updateRoomVariant, isPending } = useMutation(
+        createUpdateRoomVariantMutationOptions()
+    );
+
+    const handleToggleActive = (
+        roomVariantId: string,
+        currentStatus: boolean
+    ) => {
+        const formData = new FormData();
+        formData.append("isActive", (!currentStatus).toString());
+
+        updateRoomVariant(
+            { roomVariantId, data: formData },
+            {
+                onSuccess: (result) => {
+                    toast.success(result.message);
+                    queryClient.invalidateQueries({
+                        queryKey: [QUERY_KEYS.ROOM_VARIANT, hotelId],
+                    });
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                },
+            }
+        );
+    };
 
     return (
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -48,7 +82,7 @@ export default function RoomVariantsSection({
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 flex-1 items-center">
                             <div>
                                 <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">
                                     {t(translationKey.form.roomName)}
@@ -67,6 +101,27 @@ export default function RoomVariantsSection({
                                         {t(translationKey.text.perNight)}
                                     </span>
                                 </p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Switch
+                                    id={`active-${roomVariant.id}`}
+                                    checked={roomVariant.isActive}
+                                    onCheckedChange={() =>
+                                        handleToggleActive(
+                                            roomVariant.id,
+                                            roomVariant.isActive
+                                        )
+                                    }
+                                    disabled={isPending}
+                                />
+                                <Label
+                                    htmlFor={`active-${roomVariant.id}`}
+                                    className="text-[10px] text-gray-500 uppercase tracking-wider cursor-pointer"
+                                >
+                                    {roomVariant.isActive
+                                        ? t(translationKey.text.isActive)
+                                        : t(translationKey.text.inactive)}
+                                </Label>
                             </div>
                             <div className="flex justify-end gap-4">
                                 <Link

@@ -3,7 +3,6 @@ import { ICabDocument } from "@infrastructure/repository/cab/cabSchema";
 import { IDestinationDocument } from "@infrastructure/repository/destination/destinationSchema";
 import { IHotelBookingDocument } from "@infrastructure/repository/hotelBooking/hotelBookingSchema";
 import { IHotelDocument } from "@infrastructure/repository/hotel/hotelSchema";
-import { IRoomDocument } from "@infrastructure/repository/room/roomSchema";
 import { IRoomLockDocument } from "@infrastructure/repository/roomLock/roomLockSchema";
 import { IRoomVariantDocument } from "@infrastructure/repository/roomVariant/roomVariantSchema";
 import { IUserDocument } from "@infrastructure/repository/users/userSchema";
@@ -13,9 +12,10 @@ import { userModel } from "@infrastructure/repository/users/userModel";
 import { cabModel } from "@infrastructure/repository/cab/cabModel";
 import { hotelModel } from "@infrastructure/repository/hotel/hotelModel";
 import { roomVariantModel } from "@infrastructure/repository/roomVariant/roomVariantModel";
-import { roomModel } from "@infrastructure/repository/room/roomModel";
 import { hotelBookingModel } from "@infrastructure/repository/hotelBooking/hotelBookingModel";
 import { roomLockModel } from "@infrastructure/repository/roomLock/roomLockModel";
+import { IRoomStatusDocument } from "@infrastructure/repository/roomStatus/roomStatusSchema";
+import { roomStatusModel } from "@infrastructure/repository/roomStatus/roomStatusModel";
 
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
@@ -33,13 +33,13 @@ export function registerModel() {
   container.register<Model<IRoomVariantDocument>>("IRoomVariantModel", {
     useValue: roomVariantModel,
   });
-  container.register<Model<IRoomDocument>>("IRoomModel", {
-    useValue: roomModel,
-  });
   container.register<Model<IHotelBookingDocument>>("IHotelBookingModel", {
     useValue: hotelBookingModel,
   });
   container.register<Model<IRoomLockDocument>>("IRoomLockModel", {
     useValue: roomLockModel,
+  });
+  container.register<Model<IRoomStatusDocument>>("IRoomStatusModel", {
+    useValue: roomStatusModel,
   });
 }

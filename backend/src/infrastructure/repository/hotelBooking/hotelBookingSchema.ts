@@ -7,13 +7,14 @@ export interface IHotelBookingDocument extends Document {
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
-  roomId?: string;
+  roomNumber?: string;
   checkinDate: Date;
   checkoutDate: Date;
   totalAmount: number;
   paymentIntendId: string;
   paymentStatus: PAYMENT_STATUS;
   bookingStatus: BOOKING_STATUS;
+  isWalkIn: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -22,7 +23,7 @@ export const hotelBookingSchema = new Schema<IHotelBookingDocument>({
   hotelId: { type: String, required: true },
   travelerId: { type: String, required: true },
   roomVariantId: { type: String, required: true },
-  roomId: { type: String },
+  roomNumber: { type: String },
   checkinDate: { type: Date, required: true },
   checkoutDate: { type: Date, required: true },
   totalAmount: { type: Number, required: true },
@@ -36,6 +37,10 @@ export const hotelBookingSchema = new Schema<IHotelBookingDocument>({
     type: String,
     enum: Object.values(BOOKING_STATUS),
     default: BOOKING_STATUS.CONFIRMED,
+  },
+  isWalkIn: {
+    type: Boolean,
+    default: false,
   },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

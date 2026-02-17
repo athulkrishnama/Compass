@@ -147,5 +147,10 @@
   "checkoutDateMissingOrInvalid": "செக்-அவுட் தேதி இல்லை அல்லது செல்லாது",
   "roomUnavailable": "தேர்ந்தெடுக்கப்பட்ட அறை கோரப்பட்ட தேதிகளுக்குக் கிடைக்கவில்லை",
   "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது",
-  "unverified": "பயனர் சரிபார்க்கப்படவில்லை"
+  "unverified": "பயனர் சரிபார்க்கப்படவில்லை",
+  "roomNumberMissingOrInvalid": "அறை எண் இல்லை அல்லது தவறானது",
+  "reasonMissingOrInvalid": "காரணம் இல்லை அல்லது தவறானது",
+  "invalidRoomNumber": "தவறான அறை எண்",
+  "roomNumberAlreadyExists": "அறை எண் ஏற்கனவே கிடைக்கவில்லை என குறிக்கப்பட்டுள்ளது",
+  "roomVariantMarkedAsUnavailable": "அறை வகை வெற்றிகரமாக கிடைக்கவில்லை எனக் குறிக்கப்பட்டது"
 }

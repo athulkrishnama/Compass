@@ -70,6 +70,33 @@ export class RoomVariantRouter {
         roomVariantController.handleGetRoomAvailability(req, res, next);
       },
     );
+
+    this._router.post(
+      RoomVariantRoutes.MARK_AS_UNAVAILABLE,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        roomVariantController.handleMarkRoomAsUnavailable(req, res, next);
+      },
+    );
+
+    this._router.patch(
+      RoomVariantRoutes.UPDATE_UNAVAILABLE,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        roomVariantController.handleUpdateRoomUnavailability(req, res, next);
+      },
+    );
+
+    this._router.delete(
+      RoomVariantRoutes.RESTORE_ROOM,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req: Request, res: Response, next: NextFunction) => {
+        roomVariantController.handleRestoreRoom(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

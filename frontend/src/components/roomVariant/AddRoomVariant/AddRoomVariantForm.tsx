@@ -41,6 +41,8 @@ function AddRoomVariantForm() {
         values: {
             name: "",
             description: "",
+            roomPrefix: "",
+            totalRooms: 1,
             maxOccupancy: 2,
             bedType: "KING",
             bedCount: 1,
@@ -67,6 +69,8 @@ function AddRoomVariantForm() {
 
         formData.append("name", data.name);
         formData.append("description", data.description);
+        formData.append("roomPrefix", data.roomPrefix);
+        formData.append("totalRooms", data.totalRooms.toString());
         formData.append("maxOccupancy", data.maxOccupancy.toString());
         formData.append(
             "bedConfig",

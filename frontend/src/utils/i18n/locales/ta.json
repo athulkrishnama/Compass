@@ -2,6 +2,10 @@
     "brand": {
         "name": "காம்பஸ்"
     },
+    "common": {
+        "language": "மொழி",
+        "openMainMenu": "முக்கிய மெனுவை திறக்கவும்"
+    },
     "headings": {
         "signup": "சைன் அப்",
         "enterOtp": "OTP ஐ உள்ளிடவும்",
@@ -39,7 +43,8 @@
         "editRoomVariantSubtitle": "இந்த ரூம் வேரியன்ட் பட்டியலுக்கான விவரங்களை புதுப்பிக்கவும்",
         "roomVariantDetails": "ரூம் வேரியன்ட் விவரங்கள்",
         "addRoomInstance": "அறை இன்ஸ்டன்ஸ் சேர்க்கவும்",
-        "addRoomInstanceSubtitle": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்"
+        "addRoomInstanceSubtitle": "உங்கள் சொத்து பட்டியலை விரிவுபடுத்த புதிய உடல் அறை அலகின் விவரங்களை கான்பிகர் செய்யவும்",
+        "editRoomStatus": "அறை நிலையைத் திருத்து"
     },
     "sections": {
         "basicInformation": "அடிப்படை தகவல்",
@@ -115,7 +120,14 @@
         "paymentIntentCreationFailed": "பணம் செலுத்துதலைத் தொடங்கத் தவறிவிட்டது. பிறகு மீண்டும் முயற்சிக்கவும்.",
         "paymentFailed": "பணம் செலுத்துதல் தோல்வியுற்றது. மீண்டும் முயற்சிக்கவும்.",
         "invalidSignature": "செல்லாத வெப்ஹூக் கையொப்பம்",
-        "roomLockNotFound": "ரூம் லாக் கண்டறியப்படவில்லை அல்லது காலாவதியாகிவிட்டது"
+        "roomLockNotFound": "ரூம் லாக் கண்டறியப்படவில்லை அல்லது காலாவதியாகிவிட்டது",
+        "roomPrefixMissingOrInvalid": "ரூம் பிரிஃபிக்ஸ் இல்லை அல்லது செல்லாது",
+        "totalRoomsMissingOrInvalid": "மொத்த அறைகளின் எண்ணிக்கை இல்லை அல்லது செல்லாது",
+        "isActiveMissingOrInvalid": "செயலில் உள்ள நிலை இல்லை அல்லது செல்லாது",
+        "roomNumberExceedsTotal": "அறை எண் மொத்த அறைகளை விட அதிகமாக இருக்கக் கூடாது ({{total}})",
+        "invalidRoomNumber": "தவறான அறை எண்",
+        "roomNumberAlreadyExists": "அறை எண் ஏற்கனவே கிடைக்கவில்லை என குறிக்கப்பட்டுள்ளது",
+        "roomVariantPrefixAlreadyExists": "இந்த முன்னொட்டுடன் கூடிய அறை வகை ஏற்கனவே உள்ளது"
     },
     "bookingConfirmation": {
         "confirmAndPay": "உறுதிசெய்து பணம் செலுத்துங்கள்",
@@ -138,7 +150,15 @@
         "checkOut": "செக்-அவுட்",
         "from": "{{time}} இலிருந்து",
         "until": "{{time}} வரை",
-        "totalDuration": "மொத்த காலம்"
+        "totalDuration": "மொத்த காலம்",
+        "verifyingPayment": "கட்டணத்தைச் சரிபார்க்கிறது...",
+        "bookingConfirmed": "முன்பதிவு உறுதிசெய்யப்பட்டது!",
+        "redirectingToHistory": "உங்கள் முன்பதிவு வரலாற்றிற்கு மாற்றப்படுகிறது...",
+        "paymentFailedTitle": "கட்டணச் சரிபார்ப்பு தோல்வியடைந்தது",
+        "paymentFailedMessage": "உங்கள் கட்டணத்தைச் சரிபார்க்க முடியவில்லை. பணம் பிடித்தம் செய்யப்பட்டிருந்தால், வாடிக்கையாளர் சேவையைத் தொடர்பு கொள்ளவும்.",
+        "tryAgain": "மீண்டும் முயற்சிக்கவும்",
+        "goToHome": "முகப்புக்குச் செல்",
+        "bookingNotFound": "முன்பதிவு கண்டுபிடிக்கப்படவில்லை அல்லது கட்டணம் இன்னும் சரிபார்க்கப்படவில்லை"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -265,7 +285,8 @@
         "searchLabel": "தேடல்",
         "typeLabel": "வகை",
         "priceLabel": "விலை",
-        "statusLabel": "நிலை"
+        "statusLabel": "நிலை",
+        "selectStatus": "நிலையைத் தேர்ந்தெடுக்கவும்"
     },
     "button": {
         "submit": "சமர்ப்பிக்க",
@@ -436,7 +457,21 @@
         "sortOrderAsc": "மேலேற்றம்",
         "sortOrderDesc": "கீழேற்றம்",
         "sortByName": "பெயர்",
-        "sortByPrice": "விலை"
+        "sortByPrice": "விலை",
+        "operationalStatus": "செயல்பாட்டு நிலை",
+        "unavailableRooms": "கிடைக்கவில்லை",
+        "markUnavailable": "கிடைக்கவில்லை என குறிக்கவும்",
+        "maintenanceCleaningEtc": "பராமரிப்பு, சுத்தம் செய்தல் போன்றவை",
+        "restore": "மீட்டமைக்கவும்",
+        "markRoomUnavailable": "அறை கிடைக்கவில்லை என குறிக்கவும்",
+        "roomNumberLabel": "அறை எண்",
+        "reasonLabel": "காரணம்",
+        "enterReasonPlaceholder": "கிடைக்காததற்கான காரணத்தை உள்ளிடவும்...",
+        "fullRoomCode": "முழு அறை குறியீடு",
+        "maintenance": "பராமரிப்பு",
+        "cleaning": "சுத்தம் செய்தல்",
+        "blocked": "தடைசெய்யப்பட்டது",
+        "roomNumberCannotBeChanged": "அறை எண்ணை மாற்ற முடியாது"
     },
     "tableHeaders": {
         "destination": "சேருமிடம்",
@@ -549,6 +584,7 @@
     },
     "messages": {
         "paymentIntentCreated": "கட்டண நோக்கம் வெற்றிகரமாக உருவாக்கப்பட்டது",
-        "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது"
+        "paymentVerifiedSuccessfully": "கட்டணம் வெற்றிகரமாக சரிபார்க்கப்பட்டது",
+        "roomVariantMarkedAsUnavailable": "அறை வகை வெற்றிகரமாக கிடைக்கவில்லை எனக் குறிக்கப்பட்டது"
     }
 }

@@ -41,6 +41,13 @@ export const createRoomVariantValidationSchema = () => {
             .string()
             .min(3, t(translationKey.errors.roomNameMinLength))
             .max(100, t(translationKey.errors.roomNameMaxLength)),
+        roomPrefix: z
+            .string()
+            .min(3, t(translationKey.errors.roomPrefixMinLength))
+            .max(10, t(translationKey.errors.roomPrefixMaxLength)),
+        totalRooms: z
+            .number()
+            .min(1, t(translationKey.errors.totalRoomsRequired)),
         description: z
             .string()
             .min(10, t(translationKey.errors.descriptionMinLength))

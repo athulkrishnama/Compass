@@ -4,6 +4,7 @@ interface RoomVariantListingItem {
   coverImage: string;
   basePrice: number;
   maxOccupancy: number;
+  isActive: boolean;
 }
 
 export interface IRoomVariantListingResponseDTO {

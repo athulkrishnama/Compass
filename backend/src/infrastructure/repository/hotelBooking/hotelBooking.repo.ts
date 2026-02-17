@@ -22,7 +22,6 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -31,6 +30,8 @@ export class HotelBookingRepo
     beforeCheckInDate?: Date;
     paymentStatus?: PAYMENT_STATUS;
     bookingStatus?: BOOKING_STATUS;
+    isWalkIn?: boolean;
+    paymentIntendId?: string;
   }): Promise<HotelBookingEntity[]> {
     const filterQuery: RootFilterQuery<IHotelBookingDocument> = {};
 
@@ -43,9 +44,6 @@ export class HotelBookingRepo
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
     }
-    if (filter.roomId) {
-      filterQuery.roomId = filter.roomId;
-    }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
     }
@@ -78,6 +76,12 @@ export class HotelBookingRepo
     if (filter.bookingStatus) {
       filterQuery.bookingStatus = filter.bookingStatus;
     }
+    if (filter.isWalkIn !== undefined) {
+      filterQuery.isWalkIn = filter.isWalkIn;
+    }
+    if (filter.paymentIntendId) {
+      filterQuery.paymentIntendId = filter.paymentIntendId;
+    }
     const result = await this._model.find(filterQuery).exec();
     return result.map((doc) => this.toEntity(doc));
   }
@@ -86,7 +90,6 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -95,6 +98,8 @@ export class HotelBookingRepo
     beforeCheckInDate?: Date;
     paymentStatus?: PAYMENT_STATUS;
     bookingStatus?: BOOKING_STATUS;
+    isWalkIn?: boolean;
+    paymentIntendId?: string;
   }): Promise<number> {
     const filterQuery: RootFilterQuery<IHotelBookingDocument> = {};
 
@@ -107,9 +112,6 @@ export class HotelBookingRepo
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
     }
-    if (filter.roomId) {
-      filterQuery.roomId = filter.roomId;
-    }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
     }
@@ -141,6 +143,12 @@ export class HotelBookingRepo
     }
     if (filter.bookingStatus) {
       filterQuery.bookingStatus = filter.bookingStatus;
+    }
+    if (filter.isWalkIn !== undefined) {
+      filterQuery.isWalkIn = filter.isWalkIn;
+    }
+    if (filter.paymentIntendId) {
+      filterQuery.paymentIntendId = filter.paymentIntendId;
     }
     const result = await this._model.countDocuments(filterQuery).exec();
     return result;
@@ -168,13 +176,14 @@ export class HotelBookingRepo
       hotelId: doc.hotelId,
       travelerId: doc.travelerId,
       roomVariantId: doc.roomVariantId,
-      roomId: doc.roomId,
+      roomNumber: doc.roomNumber,
       checkinDate: doc.checkinDate,
       checkoutDate: doc.checkoutDate,
       totalAmount: doc.totalAmount,
       paymentIntendId: doc.paymentIntendId,
       paymentStatus: doc.paymentStatus,
       bookingStatus: doc.bookingStatus,
+      isWalkIn: doc.isWalkIn,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };

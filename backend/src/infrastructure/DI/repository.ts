@@ -9,12 +9,12 @@ import { HotelRepo } from "@infrastructure/repository/hotel/hotel.repo";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { RoomVariantRepo } from "@infrastructure/repository/roomVariant/roomVariant.repo";
-import { IRoomRepo } from "@application/interfaces/repository/room/room.repo.interface";
-import { RoomRepo } from "@infrastructure/repository/room/roomRepo";
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { RoomLockRepo } from "@infrastructure/repository/roomLock/roomLock.repo";
 import { HotelBookingRepo } from "@infrastructure/repository/hotelBooking/hotelBooking.repo";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
+import { IRoomStatusRepo } from "@application/interfaces/repository/roomStatus/roomStatus.repo.interface";
+import { RoomStatusRepo } from "@infrastructure/repository/roomStatus/roomStatus.repo";
 
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
@@ -28,10 +28,13 @@ export function registerRepositories() {
     "IRoomVariantRepo",
     RoomVariantRepo,
   );
-  container.registerSingleton<IRoomRepo>("IRoomRepo", RoomRepo);
   container.registerSingleton<IRoomLockRepo>("IRoomLockRepo", RoomLockRepo);
   container.registerSingleton<IHotelBookingRepo>(
     "IHotelBookingRepo",
     HotelBookingRepo,
+  );
+  container.registerSingleton<IRoomStatusRepo>(
+    "IRoomStatusRepo",
+    RoomStatusRepo,
   );
 }

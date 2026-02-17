@@ -1,12 +1,11 @@
 import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
-export interface RoomEntity {
+export interface RoomStatusEntity {
   _id?: string;
-  hotelId: string;
-  variantId: string;
-  roomCode: string;
-  floor: number;
+  roomVariantId: string;
+  roomNumber: number;
   status: RoomVariantStatus;
+  reason: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

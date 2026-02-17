@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { CalendarDays, Moon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
@@ -37,54 +36,36 @@ export default function StayDetailsCard({
 
     return (
         <motion.div variants={itemVariants}>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
-                {t(translationKey.bookingConfirmation.stayDetails)}
-            </h2>
-            <div className="grid grid-cols-3 gap-4">
-                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500 mb-2">
-                        <CalendarDays className="w-4 h-4" />
-                        <span className="text-xs font-semibold uppercase tracking-wide">
-                            {t(translationKey.bookingConfirmation.checkIn)}
+            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                        <span className="text-gray-500">
+                            {t(translationKey.bookingConfirmation.checkIn)}:
+                        </span>
+                        <span className="font-semibold text-gray-900">
+                            {formatDate(checkInDate)}
                         </span>
                     </div>
-                    <p className="text-base font-bold text-gray-900">
-                        {formatDate(checkInDate)}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                        {t(translationKey.bookingConfirmation.from, {
-                            time: "2:00 PM",
-                        })}
-                    </p>
-                </div>
-                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500 mb-2">
-                        <CalendarDays className="w-4 h-4" />
-                        <span className="text-xs font-semibold uppercase tracking-wide">
-                            {t(translationKey.bookingConfirmation.checkOut)}
+                    <div className="flex items-center gap-2">
+                        <span className="text-gray-500">
+                            {t(translationKey.bookingConfirmation.checkOut)}:
+                        </span>
+                        <span className="font-semibold text-gray-900">
+                            {formatDate(checkOutDate)}
                         </span>
                     </div>
-                    <p className="text-base font-bold text-gray-900">
-                        {formatDate(checkOutDate)}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                        {t(translationKey.bookingConfirmation.until, {
-                            time: "11:00 AM",
-                        })}
-                    </p>
-                </div>
-                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500 mb-2">
-                        <Moon className="w-4 h-4" />
-                        <span className="text-xs font-semibold uppercase tracking-wide">
+                    <div className="flex items-center gap-2">
+                        <span className="text-gray-500">
                             {t(
                                 translationKey.bookingConfirmation.totalDuration
                             )}
+                            :
+                        </span>
+                        <span className="font-semibold text-gray-900">
+                            {nights}{" "}
+                            {t(translationKey.bookingConfirmation.nights)}
                         </span>
                     </div>
-                    <p className="text-xl font-bold text-gray-900">
-                        {nights} {t(translationKey.bookingConfirmation.nights)}
-                    </p>
                 </div>
             </div>
         </motion.div>

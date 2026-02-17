@@ -2,6 +2,10 @@
     "brand": {
         "name": "कम्पास"
     },
+    "common": {
+        "language": "भाषा",
+        "openMainMenu": "मुख्य मेनू खोलें"
+    },
     "headings": {
         "signup": "साइन अप",
         "enterOtp": "OTP दर्ज करें",
@@ -39,7 +43,8 @@
         "editRoomVariantSubtitle": "इस रूम वैरिएंट सूची के लिए विवरण अपडेट करें",
         "roomVariantDetails": "रूम वैरिएंट विवरण",
         "addRoomInstance": "कमरा इंस्टेंस जोड़ें",
-        "addRoomInstanceSubtitle": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें"
+        "addRoomInstanceSubtitle": "अपनी संपत्ति सूची का विस्तार करने के लिए एक नई भौतिक कमरा इकाई के विवरण को कॉन्फ़िगर करें",
+        "editRoomStatus": "कमरे की स्थिति संपादित करें"
     },
     "sections": {
         "basicInformation": "मूल जानकारी",
@@ -115,7 +120,14 @@
         "paymentIntentCreationFailed": "भुगतान शुरू करने में विफल। कृपया बाद में पुनः प्रयास करें।",
         "paymentFailed": "भुगतान विफल। कृपया पुनः प्रयास करें।",
         "invalidSignature": "अमान्य वेबहुक हस्ताक्षर",
-        "roomLockNotFound": "रूम लॉक नहीं मिला या समाप्त हो गया"
+        "roomLockNotFound": "रूम लॉक नहीं मिला या समाप्त हो गया",
+        "roomPrefixMissingOrInvalid": "रूम प्रीफिक्स गायब है या अमान्य है",
+        "totalRoomsMissingOrInvalid": "कुल कमरों की संख्या गायब है या अमान्य है",
+        "isActiveMissingOrInvalid": "सक्रिय स्थिति गायब है या अमान्य है",
+        "roomNumberExceedsTotal": "कमरा संख्या कुल कमरों से अधिक नहीं हो सकती ({{total}})",
+        "invalidRoomNumber": "अमान्य कमरा संख्या",
+        "roomNumberAlreadyExists": "कमरा संख्या पहले से ही अनुपलब्ध के रूप में चिह्नित है",
+        "roomVariantPrefixAlreadyExists": "इस प्रीफ़िक्स वाला रूम वेरिएंट पहले से मौजूद है"
     },
     "bookingConfirmation": {
         "confirmAndPay": "पुष्टि करें और भुगतान करें",
@@ -138,7 +150,15 @@
         "checkOut": "चेक-आउट",
         "from": "{{time}} से",
         "until": "{{time}} तक",
-        "totalDuration": "कुल अवधि"
+        "totalDuration": "कुल अवधि",
+        "verifyingPayment": "भुगतान सत्यापित कर रहा है...",
+        "bookingConfirmed": "बुकिंग की पुष्टि हो गई!",
+        "redirectingToHistory": "आपके बुकिंग इतिहास पर पुनर्निर्देशित किया जा रहा है...",
+        "paymentFailedTitle": "भुगतान सत्यापन विफल",
+        "paymentFailedMessage": "हम आपके भुगतान को सत्यापित नहीं कर सके। यदि आपने भुगतान किया है, तो कृपया सहायता से संपर्क करें या पुन: प्रयास करें।",
+        "tryAgain": "पुनः प्रयास करें",
+        "goToHome": "होम पर जाएं",
+        "bookingNotFound": "बुकिंग नहीं मिली या भुगतान अभी तक सत्यापित नहीं हुआ"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -265,7 +285,8 @@
         "searchLabel": "खोज",
         "typeLabel": "प्रकार",
         "priceLabel": "मूल्य निर्धारण",
-        "statusLabel": "स्थिति"
+        "statusLabel": "स्थिति",
+        "selectStatus": "स्थिति चुनें"
     },
     "button": {
         "submit": "सबमिट करें",
@@ -436,7 +457,21 @@
         "sortOrderAsc": "आरोही",
         "sortOrderDesc": "अवरोही",
         "sortByName": "नाम",
-        "sortByPrice": "कीमत"
+        "sortByPrice": "कीमत",
+        "operationalStatus": "परिचालन स्थिति",
+        "unavailableRooms": "अनुपलब्ध",
+        "markUnavailable": "अनुपलब्ध चिह्नित करें",
+        "maintenanceCleaningEtc": "रखरखाव, सफाई आदि",
+        "restore": "पुनर्स्थापित करें",
+        "markRoomUnavailable": "कमरा अनुपलब्ध चिह्नित करें",
+        "roomNumberLabel": "कमरा संख्या",
+        "reasonLabel": "कारण",
+        "enterReasonPlaceholder": "अनुपलब्धता का कारण दर्ज करें...",
+        "fullRoomCode": "पूर्ण कमरा कोड",
+        "maintenance": "रखरखाव",
+        "cleaning": "सफाई",
+        "blocked": "अवरुद्ध",
+        "roomNumberCannotBeChanged": "कमरा संख्या बदली नहीं जा सकती"
     },
     "tableHeaders": {
         "destination": "गंतव्य",
@@ -549,6 +584,7 @@
     },
     "messages": {
         "paymentIntentCreated": "भुगतान आशय सफलतापूर्वक बनाया गया",
-        "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया"
+        "paymentVerifiedSuccessfully": "भुगतान सफलतापूर्वक सत्यापित किया गया",
+        "roomVariantMarkedAsUnavailable": "रूम वेरिएंट को सफलतापूर्वक अनुपलब्ध के रूप में चिह्नित किया गया"
     }
 }

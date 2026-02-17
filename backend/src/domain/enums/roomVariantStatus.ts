@@ -1,5 +1,4 @@
 export enum RoomVariantStatus {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
+  BLOCKED = "BLOCKED",
   MAINTENANCE = "MAINTENANCE",
 }

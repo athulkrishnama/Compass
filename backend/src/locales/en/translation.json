@@ -148,5 +148,11 @@
   "checkoutDateMissingOrInvalid": "Check-out date is missing or invalid",
   "roomUnavailable": "Selected room is not available for requested dates",
   "paymentVerifiedSuccessfully": "Payment verified successfully",
-  "unverified": "User is not verified"
+  "unverified": "User is not verified",
+  "roomNumberMissingOrInvalid": "Room number is missing or invalid",
+  "reasonMissingOrInvalid": "Reason is missing or invalid",
+  "invalidRoomNumber": "Invalid room number",
+  "roomNumberAlreadyExists": "Room is already marked as unavailable",
+  "roomVariantMarkedAsUnavailable": "Room variant marked as unavailable successfully",
+  "roomStatusNotFound": "Room status not found"
 }

@@ -1,15 +1,18 @@
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
+import { RoomVariantStatus } from "@domain/enums/roomVariantStatus";
 
-export interface IRoomInstance {
+interface IUnAvailableRoom {
   id: string;
-  roomCode: string;
-  floor: number;
-  status: string;
+  roomNumber: number;
+  status: RoomVariantStatus;
+  reason: string;
 }
+
 export interface IRoomVariantDetailResponseDTO {
   id: string;
   hotelId: string;
+  roomPrefix: string;
   name: string;
   description: string;
   maxOccupancy: number;
@@ -27,5 +30,7 @@ export interface IRoomVariantDetailResponseDTO {
   basePrice: number;
   coverImage: string;
   images: string[];
-  rooms: IRoomInstance[];
+  totalRooms: number;
+  isActive: boolean;
+  unAvailableRooms: IUnAvailableRoom[];
 }
