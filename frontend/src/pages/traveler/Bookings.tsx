@@ -11,6 +11,7 @@ import {
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 function Bookings() {
     const { t } = useTranslation();
@@ -64,10 +65,10 @@ function Bookings() {
     return (
         <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
             <div className="mb-8">
-                <p className="text-xs font-medium text-muted-foreground tracking-wider mb-2">
+                <p className="text-[11px] font-semibold text-muted-foreground tracking-[0.2em] uppercase mb-2">
                     {t(translationKey.bookingHistory.yourProfile)}
                 </p>
-                <h1 className="text-4xl font-bold text-foreground">
+                <h1 className="text-3xl font-bold text-foreground">
                     {t(translationKey.bookingHistory.title)}
                 </h1>
             </div>
@@ -76,7 +77,7 @@ function Bookings() {
 
             <div className="mt-8">
                 {isLoading ? (
-                    <div className="space-y-6">
+                    <div className="space-y-5">
                         {[...Array(3)].map((_, i) => (
                             <BookingCardSkeleton key={i} />
                         ))}
@@ -85,7 +86,7 @@ function Bookings() {
                     <EmptyBookingsState type={activeTab} />
                 ) : (
                     <>
-                        <div className="space-y-6">
+                        <div className="space-y-5">
                             {bookings.map((booking) => (
                                 <BookingCard
                                     key={booking.id}
@@ -104,10 +105,32 @@ function Bookings() {
                         <div ref={observerTarget} className="h-20" />
 
                         {activeQuery.isFetchingNextPage && (
-                            <div className="mt-6">
+                            <div className="mt-5">
                                 <BookingCardSkeleton />
                             </div>
                         )}
+
+                        {activeQuery.hasNextPage &&
+                            !activeQuery.isFetchingNextPage && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="flex justify-center py-6"
+                                >
+                                    <button
+                                        onClick={() =>
+                                            activeQuery.fetchNextPage()
+                                        }
+                                        className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium border border-border rounded-full hover:bg-muted transition-colors"
+                                    >
+                                        {t(
+                                            translationKey.bookingHistory
+                                                .loadMoreHistory
+                                        )}
+                                        <ChevronDown className="w-4 h-4" />
+                                    </button>
+                                </motion.div>
+                            )}
 
                         {!activeQuery.hasNextPage && bookings.length > 0 && (
                             <motion.div

@@ -22,25 +22,25 @@ export function BookingTabs({ activeTab, onTabChange }: BookingTabsProps) {
     ];
 
     return (
-        <div className="flex gap-2 border-b border-border">
+        <div className="flex gap-3">
             {tabs.map((tab) => (
                 <button
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
-                    className={`relative px-6 py-3 text-sm font-medium transition-colors ${
+                    className={`relative px-5 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
                         activeTab === tab.id
-                            ? "text-foreground"
-                            : "text-muted-foreground hover:text-foreground"
+                            ? "bg-foreground text-background shadow-sm"
+                            : "bg-background text-foreground border border-border hover:bg-muted"
                     }`}
                 >
                     {tab.label}
                     {activeTab === tab.id && (
                         <motion.div
-                            layoutId="activeTab"
-                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground"
+                            layoutId="activeTabPill"
+                            className="absolute inset-0 bg-foreground rounded-full -z-10"
                             transition={{
                                 type: "spring",
-                                stiffness: 500,
+                                stiffness: 400,
                                 damping: 30,
                             }}
                         />
