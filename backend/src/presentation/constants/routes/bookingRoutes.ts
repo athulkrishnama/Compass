@@ -1,3 +1,5 @@
 export enum BookingRoutes {
   GET_BOOKING_BY_PAYMENT_ID = "/:paymentId",
+  GET_UPCOMING_BOOKINGS = "/upcoming",
+  GET_COMPLETED_BOOKINGS = "/completed",
 }

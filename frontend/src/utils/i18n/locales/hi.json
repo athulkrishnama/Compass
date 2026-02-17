@@ -160,6 +160,26 @@
         "goToHome": "होम पर जाएं",
         "bookingNotFound": "बुकिंग नहीं मिली या भुगतान अभी तक सत्यापित नहीं हुआ"
     },
+    "bookingHistory": {
+        "title": "बुकिंग इतिहास",
+        "yourProfile": "आपकी प्रोफ़ाइल",
+        "upcomingTab": "आगामी",
+        "pastBookingsTab": "पिछली बुकिंग",
+        "noUpcomingBookings": "कोई आगामी बुकिंग नहीं",
+        "noPastBookings": "कोई पिछली बुकिंग नहीं",
+        "noUpcomingDescription": "आपके पास कोई आगामी प्रवास नहीं है। गंतव्यों की खोज शुरू करें और अपना अगला रोमांच बुक करें!",
+        "noPastDescription": "आपने अभी तक कोई बुकिंग पूरी नहीं की है। एक बार जब आप किसी संपत्ति में रुक जाएंगे तो आपका यात्रा इतिहास यहां दिखाई देगा।",
+        "viewDetails": "विवरण देखें",
+        "viewReceipt": "रसीद देखें",
+        "loadMoreHistory": "अधिक इतिहास लोड करें",
+        "showingBookingsOfTotal": "{{total}} बुकिंग में से {{count}} दिखाया जा रहा है"
+    },
+    "bookingStatus": {
+        "CONFIRMED": "पुष्टि की गई",
+        "CHECKED_IN": "चेक-इन किया गया",
+        "CANCELLED": "रद्द किया गया",
+        "COMPLETED": "पूर्ण"
+    },
     "activities": {
         "HIKING": "Hiking",
         "PARAGLIDING": "Paragliding",

@@ -5,7 +5,10 @@ import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooki
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { inject, injectable } from "tsyringe";
-import { Model, RootFilterQuery } from "mongoose";
+import { Model, PipelineStage, RootFilterQuery } from "mongoose";
+import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
+import { VALUES } from "@presentation/constants/values";
+import { IHotelDocument } from "../hotel/hotelSchema";
 
 @injectable()
 export class HotelBookingRepo
@@ -186,6 +189,122 @@ export class HotelBookingRepo
       isWalkIn: doc.isWalkIn,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
+    };
+  }
+
+  async getTravelerUpcomingBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          travelerId,
+          checkoutDate: { $gt: today },
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $sort: { checkinDate: 1 },
+      },
+      {
+        $skip: (pageNo - 1) * VALUES.BOOKINGS_LIMIT,
+      },
+      {
+        $limit: VALUES.BOOKINGS_LIMIT,
+      },
+    ];
+
+    const bookings = await this._model.aggregate<
+      IHotelBookingDocument & { hotel: IHotelDocument }
+    >(aggregationPipeline);
+
+    return {
+      bookings: bookings.map((booking) => ({
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: {
+          name: booking.hotel.name,
+          coverImage: booking.hotel.coverImage,
+          address: { city: booking.hotel.address.city },
+        },
+      })),
+      pageNo,
+    };
+  }
+
+  async getTravelerCompletedBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          travelerId,
+          checkoutDate: { $lt: today },
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $sort: { checkinDate: -1 },
+      },
+      {
+        $skip: (pageNo - 1) * VALUES.BOOKINGS_LIMIT,
+      },
+      {
+        $limit: VALUES.BOOKINGS_LIMIT,
+      },
+    ];
+
+    const bookings = await this._model.aggregate<
+      IHotelBookingDocument & { hotel: IHotelDocument }
+    >(aggregationPipeline);
+
+    return {
+      bookings: bookings.map((booking) => ({
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: {
+          name: booking.hotel.name,
+          coverImage: booking.hotel.coverImage,
+          address: { city: booking.hotel.address.city },
+        },
+      })),
+      pageNo,
     };
   }
 }

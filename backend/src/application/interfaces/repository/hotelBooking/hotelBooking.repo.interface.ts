@@ -3,6 +3,7 @@ import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BaseRepository } from "@infrastructure/repository/base/base.repo";
 import { IHotelBookingDocument } from "@infrastructure/repository/hotelBooking/hotelBookingSchema";
+import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
 
 export interface IHotelBookingRepo
   extends BaseRepository<HotelBookingEntity, IHotelBookingDocument> {
@@ -39,4 +40,14 @@ export interface IHotelBookingRepo
     isWalkIn?: boolean;
     paymentIntendId?: string;
   }): Promise<number>;
+
+  getTravelerUpcomingBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation>;
+
+  getTravelerCompletedBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation>;
 }

@@ -183,6 +183,26 @@
         "goToHome": "Go to Home",
         "bookingNotFound": "Booking not found or payment not verified yet"
     },
+    "bookingHistory": {
+        "title": "Booking History",
+        "yourProfile": "YOUR PROFILE",
+        "upcomingTab": "Upcoming",
+        "pastBookingsTab": "Past Bookings",
+        "noUpcomingBookings": "No Upcoming Bookings",
+        "noPastBookings": "No Past Bookings",
+        "noUpcomingDescription": "You don't have any upcoming stays. Start exploring destinations and book your next adventure!",
+        "noPastDescription": "You haven't completed any bookings yet. Your travel history will appear here once you've stayed at a property.",
+        "viewDetails": "View Details",
+        "viewReceipt": "View Receipt",
+        "loadMoreHistory": "Load More History",
+        "showingBookingsOfTotal": "Showing {{count}} of {{total}} bookings"
+    },
+    "bookingStatus": {
+        "CONFIRMED": "Confirmed",
+        "CHECKED_IN": "Checked In",
+        "CANCELLED": "Cancelled",
+        "COMPLETED": "Completed"
+    },
     "form": {
         "fullname": "Full Name",
         "email": "Email Address",
