@@ -21,17 +21,20 @@ function Bookings() {
     );
     const observerTarget = useRef<HTMLDivElement>(null);
 
-    const upcomingQuery = useInfiniteQuery(
-        createGetUpcomingBookingsInfiniteQueryOptions()
-    );
+    const upcomingQuery = useInfiniteQuery({
+        ...createGetUpcomingBookingsInfiniteQueryOptions(),
+        enabled: activeTab === "upcoming",
+    });
 
-    const ongoingQuery = useInfiniteQuery(
-        createGetOngoingBookingsInfiniteQueryOptions()
-    );
+    const ongoingQuery = useInfiniteQuery({
+        ...createGetOngoingBookingsInfiniteQueryOptions(),
+        enabled: activeTab === "ongoing",
+    });
 
-    const pastQuery = useInfiniteQuery(
-        createGetCompletedBookingsInfiniteQueryOptions()
-    );
+    const pastQuery = useInfiniteQuery({
+        ...createGetCompletedBookingsInfiniteQueryOptions(),
+        enabled: activeTab === "past",
+    });
 
     const activeQuery =
         activeTab === "upcoming"
