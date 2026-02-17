@@ -21,12 +21,28 @@ export class BookingRouter {
     );
 
     this._router.get(
+      BookingRoutes.GET_ONGOING_BOOKINGS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) =>
+        bookingController.getTravelerOngoingBookings(req, res, next),
+    );
+
+    this._router.get(
       BookingRoutes.GET_COMPLETED_BOOKINGS,
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.TRAVELER]),
       (req, res, next) =>
         bookingController.getTravelerCompletedBookings(req, res, next),
     );
+
+    this._router.get(
+      BookingRoutes.GET_BOOKING_DETAILS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => bookingController.getBookingDetails(req, res, next),
+    );
+
     this._router.get(
       BookingRoutes.GET_BOOKING_BY_PAYMENT_ID,
       (req, res, next) =>

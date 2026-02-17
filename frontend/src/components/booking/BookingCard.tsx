@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { BOOKING_STATUS } from "@/types/api/responses/bookingResponse";
 import { format } from "date-fns";
+import { Link } from "@tanstack/react-router";
 
 interface BookingCardProps {
     id: string;
@@ -32,6 +33,7 @@ const statusConfig = {
 };
 
 export function BookingCard({
+    id,
     hotelName,
     coverImage,
     city,
@@ -117,7 +119,11 @@ export function BookingCard({
                                 </span>
                             </div>
 
-                            <button className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium border border-border rounded-full hover:bg-muted transition-colors">
+                            <Link
+                                to="/traveler/booking/$bookingId"
+                                params={{ bookingId: id }}
+                                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium border border-border rounded-full hover:bg-muted transition-colors"
+                            >
                                 {status === BOOKING_STATUS.COMPLETED ? (
                                     <>
                                         {t(
@@ -129,7 +135,7 @@ export function BookingCard({
                                 ) : (
                                     t(translationKey.bookingHistory.viewDetails)
                                 )}
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

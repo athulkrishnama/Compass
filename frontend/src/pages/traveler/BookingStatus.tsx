@@ -33,7 +33,7 @@ export default function BookingStatus() {
     useEffect(() => {
         if (isSuccess) {
             const timer = setTimeout(() => {
-                navigate({ to: "/traveler/history" });
+                navigate({ to: "/traveler/bookings" });
             }, 3000);
             return () => clearTimeout(timer);
         }

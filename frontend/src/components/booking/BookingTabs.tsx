@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
 interface BookingTabsProps {
-    activeTab: "upcoming" | "past";
-    onTabChange: (tab: "upcoming" | "past") => void;
+    activeTab: "upcoming" | "ongoing" | "past";
+    onTabChange: (tab: "upcoming" | "ongoing" | "past") => void;
 }
 
 export function BookingTabs({ activeTab, onTabChange }: BookingTabsProps) {
@@ -14,6 +14,10 @@ export function BookingTabs({ activeTab, onTabChange }: BookingTabsProps) {
         {
             id: "upcoming" as const,
             label: t(translationKey.bookingHistory.upcomingTab),
+        },
+        {
+            id: "ongoing" as const,
+            label: t(translationKey.bookingHistory.ongoingTab),
         },
         {
             id: "past" as const,

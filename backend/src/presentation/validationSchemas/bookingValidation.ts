@@ -7,3 +7,11 @@ export const bookingListingQueryValidationSchema = z.object({
     .int({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO })
     .positive({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO }),
 });
+
+export const bookingDetailsParamsValidationSchema = z.object({
+  bookingId: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.INVALID_ID })
+    .regex(/^[0-9a-fA-F]{24}$/, {
+      message: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+    }),
+});

@@ -4,6 +4,7 @@ import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BaseRepository } from "@infrastructure/repository/base/base.repo";
 import { IHotelBookingDocument } from "@infrastructure/repository/hotelBooking/hotelBookingSchema";
 import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
+import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 
 export interface IHotelBookingRepo
   extends BaseRepository<HotelBookingEntity, IHotelBookingDocument> {
@@ -46,8 +47,18 @@ export interface IHotelBookingRepo
     pageNo: number,
   ): Promise<IBookingWithHotelAggregation>;
 
+  getTravelerOngoingBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation>;
+
   getTravelerCompletedBookings(
     travelerId: string,
     pageNo: number,
   ): Promise<IBookingWithHotelAggregation>;
+
+  getBookingDetailsById(
+    bookingId: string,
+    travelerId: string,
+  ): Promise<IBookingDetailsAggregation | null>;
 }

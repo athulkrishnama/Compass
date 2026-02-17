@@ -6,6 +6,7 @@ import { BookingCardSkeleton } from "@/components/booking/BookingCardSkeleton";
 import { EmptyBookingsState } from "@/components/booking/EmptyBookingsState";
 import {
     createGetUpcomingBookingsInfiniteQueryOptions,
+    createGetOngoingBookingsInfiniteQueryOptions,
     createGetCompletedBookingsInfiniteQueryOptions,
 } from "@/queryOptions/bookingQueryOptions";
 import { useTranslation } from "react-i18next";
@@ -15,19 +16,29 @@ import { ChevronDown } from "lucide-react";
 
 function Bookings() {
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
+    const [activeTab, setActiveTab] = useState<"upcoming" | "ongoing" | "past">(
+        "upcoming"
+    );
     const observerTarget = useRef<HTMLDivElement>(null);
 
     const upcomingQuery = useInfiniteQuery(
         createGetUpcomingBookingsInfiniteQueryOptions()
     );
 
-    const completedQuery = useInfiniteQuery(
+    const ongoingQuery = useInfiniteQuery(
+        createGetOngoingBookingsInfiniteQueryOptions()
+    );
+
+    const pastQuery = useInfiniteQuery(
         createGetCompletedBookingsInfiniteQueryOptions()
     );
 
     const activeQuery =
-        activeTab === "upcoming" ? upcomingQuery : completedQuery;
+        activeTab === "upcoming"
+            ? upcomingQuery
+            : activeTab === "ongoing"
+              ? ongoingQuery
+              : pastQuery;
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -83,7 +94,15 @@ function Bookings() {
                         ))}
                     </div>
                 ) : isEmpty ? (
-                    <EmptyBookingsState type={activeTab} />
+                    <EmptyBookingsState
+                        type={
+                            activeTab === "upcoming"
+                                ? "upcoming"
+                                : activeTab === "ongoing"
+                                  ? "ongoing"
+                                  : "past"
+                        }
+                    />
                 ) : (
                     <>
                         <div className="space-y-5">

@@ -35,4 +35,5 @@ export enum Messages {
   ROOM_VARIANT_MARKED_AS_UNAVAILABLE = "roomVariantMarkedAsUnavailable",
   ROOM_RESTORED_SUCCESSFULLY = "roomRestoredSuccessfully",
   BOOKING_RETRIEVED_SUCCESSFULLY = "bookingRetrievedSuccessfully",
+  BOOKING_DETAILS_FETCHED = "bookingDetailsFetched",
 }

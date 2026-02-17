@@ -5,10 +5,12 @@ import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooki
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { inject, injectable } from "tsyringe";
-import { Model, PipelineStage, RootFilterQuery } from "mongoose";
+import { Model, PipelineStage, RootFilterQuery, Types } from "mongoose";
 import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
 import { VALUES } from "@presentation/constants/values";
 import { IHotelDocument } from "../hotel/hotelSchema";
+import { IRoomVariantDocument } from "../roomVariant/roomVariantSchema";
+import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 
 @injectable()
 export class HotelBookingRepo
@@ -192,6 +194,65 @@ export class HotelBookingRepo
     };
   }
 
+  async getTravelerOngoingBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          travelerId,
+          checkinDate: { $lte: today },
+          checkoutDate: { $gte: today },
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $sort: { checkinDate: 1 },
+      },
+      {
+        $skip: (pageNo - 1) * VALUES.BOOKINGS_LIMIT,
+      },
+      {
+        $limit: VALUES.BOOKINGS_LIMIT,
+      },
+    ];
+
+    const bookings = await this._model.aggregate<
+      IHotelBookingDocument & { hotel: IHotelDocument }
+    >(aggregationPipeline);
+
+    return {
+      bookings: bookings.map((booking) => ({
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: {
+          name: booking.hotel.name,
+          coverImage: booking.hotel.coverImage,
+          address: { city: booking.hotel.address.city },
+        },
+      })),
+      pageNo,
+    };
+  }
+
   async getTravelerUpcomingBookings(
     travelerId: string,
     pageNo: number,
@@ -203,7 +264,7 @@ export class HotelBookingRepo
       {
         $match: {
           travelerId,
-          checkoutDate: { $gt: today },
+          checkinDate: { $gt: today },
         },
       },
       {
@@ -305,6 +366,70 @@ export class HotelBookingRepo
         },
       })),
       pageNo,
+    };
+  }
+
+  async getBookingDetailsById(
+    bookingId: string,
+    travelerId: string,
+  ): Promise<IBookingDetailsAggregation | null> {
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          _id: new Types.ObjectId(bookingId),
+          travelerId,
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $addFields: {
+          roomVariantObjectId: { $toObjectId: "$roomVariantId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      {
+        $unwind: "$roomVariant",
+      },
+    ];
+
+    const result = await this._model.aggregate<
+      IHotelBookingDocument & {
+        hotel: IHotelDocument;
+        roomVariant: IRoomVariantDocument;
+      }
+    >(aggregationPipeline);
+
+    if (result.length === 0) return null;
+
+    const booking = result[0];
+    return {
+      booking: {
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: booking.hotel,
+        roomVariant: booking.roomVariant,
+      },
     };
   }
 }

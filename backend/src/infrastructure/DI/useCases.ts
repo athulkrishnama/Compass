@@ -100,7 +100,11 @@ import { GetBookingByPaymentIdUseCase } from "@useCases/hotelBooking/GetBookingB
 import { IGetTravelerUpcomingBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerUpcomingBookingsUseCase";
 import { GetTravelerUpcomingBookingsUseCase } from "@useCases/hotelBooking/GetTravelerUpcomingBookingsUseCase";
 import { IGetTravelerCompletedBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerCompletedBookingsUseCase";
+import { IGetTravelerOngoingBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerOngoingBookingsUseCase";
 import { GetTravelerCompletedBookingsUseCase } from "@useCases/hotelBooking/GetTravelerCompletedBookingsUseCase";
+import { GetTravelerOngoingBookingsUseCase } from "@useCases/hotelBooking/GetTravelerOngoingBookingsUseCase";
+import { IGetBookingDetailsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingDetailsUseCase";
+import { GetBookingDetailsUseCase } from "@useCases/hotelBooking/GetBookingDetailsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -297,8 +301,18 @@ export function registerUsecases() {
     "IGetTravelerUpcomingBookingsUseCase",
     GetTravelerUpcomingBookingsUseCase,
   );
+
+  container.registerSingleton<IGetTravelerOngoingBookingsUseCase>(
+    "IGetTravelerOngoingBookingsUseCase",
+    GetTravelerOngoingBookingsUseCase,
+  );
+
   container.registerSingleton<IGetTravelerCompletedBookingsUseCase>(
     "IGetTravelerCompletedBookingsUseCase",
     GetTravelerCompletedBookingsUseCase,
+  );
+  container.registerSingleton<IGetBookingDetailsUseCase>(
+    "IGetBookingDetailsUseCase",
+    GetBookingDetailsUseCase,
   );
 }

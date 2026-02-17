@@ -1,10 +1,13 @@
 import {
     getTravelerUpcomingBookings,
+    getTravelerOngoingBookings,
     getTravelerCompletedBookings,
+    getBookingDetails,
 } from "@/services/api/booking.ApiService";
 import type { ITravelerBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
+import type { IBookingDetailsResponseDTO } from "@/types/api/responses/bookingResponse";
 import type { HttpResponse } from "@/types/api/responseType";
-import { infiniteQueryOptions } from "@tanstack/react-query";
+import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 
 export function createGetUpcomingBookingsInfiniteQueryOptions() {
@@ -15,6 +18,24 @@ export function createGetUpcomingBookingsInfiniteQueryOptions() {
         queryKey: [QUERY_KEYS.BOOKING, "upcoming"],
         queryFn: ({ pageParam = 1 }) =>
             getTravelerUpcomingBookings(pageParam as number),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage?.data?.bookings?.length === 0) {
+                return undefined;
+            }
+            return allPages.length + 1;
+        },
+        initialPageParam: 1,
+    });
+}
+
+export function createGetOngoingBookingsInfiniteQueryOptions() {
+    return infiniteQueryOptions<
+        HttpResponse<ITravelerBookingListingResponseDTO>,
+        Error
+    >({
+        queryKey: [QUERY_KEYS.BOOKING, "ongoing"],
+        queryFn: ({ pageParam = 1 }) =>
+            getTravelerOngoingBookings(pageParam as number),
         getNextPageParam: (lastPage, allPages) => {
             if (lastPage?.data?.bookings?.length === 0) {
                 return undefined;
@@ -40,5 +61,12 @@ export function createGetCompletedBookingsInfiniteQueryOptions() {
             return allPages.length + 1;
         },
         initialPageParam: 1,
+    });
+}
+
+export function createGetBookingDetailsQueryOptions(bookingId: string) {
+    return queryOptions<HttpResponse<IBookingDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.BOOKING_DETAILS, bookingId],
+        queryFn: () => getBookingDetails(bookingId),
     });
 }

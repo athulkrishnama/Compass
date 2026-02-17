@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
 interface EmptyBookingsStateProps {
-    type: "upcoming" | "past";
+    type: "upcoming" | "ongoing" | "past";
 }
 
 export function EmptyBookingsState({ type }: EmptyBookingsStateProps) {
@@ -14,6 +14,10 @@ export function EmptyBookingsState({ type }: EmptyBookingsStateProps) {
         upcoming: {
             title: t(translationKey.bookingHistory.noUpcomingBookings),
             description: t(translationKey.bookingHistory.noUpcomingDescription),
+        },
+        ongoing: {
+            title: t(translationKey.bookingHistory.noOngoingBookings),
+            description: t(translationKey.bookingHistory.noOngoingDescription),
         },
         past: {
             title: t(translationKey.bookingHistory.noPastBookings),
