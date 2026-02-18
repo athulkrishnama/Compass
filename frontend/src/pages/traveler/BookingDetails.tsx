@@ -70,6 +70,9 @@ export default function BookingDetails() {
                     paymentIntendId={booking.paymentIntendId}
                     bookingStatus={booking.bookingStatus}
                     checkInDate={booking.checkInDate}
+                    bookingId={bookingId}
+                    refundAmount={booking.refundAmount}
+                    refundStatus={booking.refundStatus}
                 />
             </div>
         </div>

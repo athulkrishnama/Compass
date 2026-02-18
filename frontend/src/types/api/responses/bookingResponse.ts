@@ -54,4 +54,7 @@ export interface IBookingDetailsResponseDTO {
             checkOutTime: string;
         };
     };
+    refundAmount?: number;
+    refundStatus?: string;
+    cancelledAt?: string;
 }

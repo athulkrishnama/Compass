@@ -48,6 +48,13 @@ export class BookingRouter {
       (req, res, next) =>
         bookingController.getBookingByPaymentId(req, res, next),
     );
+
+    this._router.patch(
+      BookingRoutes.CANCEL_BOOKING,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => bookingController.cancelBooking(req, res, next),
+    );
   }
 
   getRouter(): Router {

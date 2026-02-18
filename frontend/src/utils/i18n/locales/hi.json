@@ -661,6 +661,24 @@
         "no": "नहीं",
         "backToListings": "लिस्टिंग पर वापस जाएं",
         "adults": "{{count}} वयस्क",
-        "bedType": "बिस्तर का प्रकार"
+        "bedType": "बिस्तर का प्रकार",
+        "cancellationPolicy": "रद्दीकरण नीति",
+        "cancellationPolicyTitle": "बुकिंग रद्द करें",
+        "refundAmount": "वापसी राशि",
+        "noRefund": "कोई वापसी नहीं",
+        "fullRefund": "पूर्ण वापसी",
+        "halfRefund": "50% वापसी",
+        "hoursBeforeCheckIn": "चेक-इन से पहले घंटे",
+        "confirmCancellation": "रद्दीकरण की पुष्टि करें",
+        "cancelling": "रद्द किया जा रहा है...",
+        "cancelSuccess": "बुकिंग सफलतापूर्वक रद्द कर दी गई!",
+        "policyTierFull": "चेक-इन से 48+ घंटे पहले: 100% वापसी",
+        "policyTierHalf": "चेक-इन से 24-48 घंटे पहले: 50% वापसी",
+        "policyTierNone": "चेक-इन से 24 घंटे से कम: कोई वापसी नहीं",
+        "refundStatusLabel": "रिफंड स्थिति",
+        "refundedAmount": "वापस की गई राशि",
+        "cancelledOn": "रद्द करने की तिथि",
+        "yourRefund": "आपकी वापसी",
+        "cancelConfirmMessage": "क्या आप वाकई इस बुकिंग को रद्द करना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।"
     }
 }

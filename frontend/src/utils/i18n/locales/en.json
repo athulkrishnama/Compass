@@ -736,6 +736,24 @@
         "no": "NO",
         "backToListings": "Back to Listings",
         "adults": "{{count}} Adults",
-        "bedType": "Bed Type"
+        "bedType": "Bed Type",
+        "cancellationPolicy": "Cancellation Policy",
+        "cancellationPolicyTitle": "Cancel Booking",
+        "refundAmount": "Refund Amount",
+        "noRefund": "No Refund",
+        "fullRefund": "Full Refund",
+        "halfRefund": "50% Refund",
+        "hoursBeforeCheckIn": "hours before check-in",
+        "confirmCancellation": "Confirm Cancellation",
+        "cancelling": "Cancelling...",
+        "cancelSuccess": "Booking cancelled successfully!",
+        "policyTierFull": "48+ hours before check-in: 100% refund",
+        "policyTierHalf": "24-48 hours before check-in: 50% refund",
+        "policyTierNone": "Less than 24 hours before check-in: No refund",
+        "refundStatusLabel": "Refund Status",
+        "refundedAmount": "Refunded Amount",
+        "cancelledOn": "Cancelled On",
+        "yourRefund": "Your Refund",
+        "cancelConfirmMessage": "Are you sure you want to cancel this booking? This action cannot be undone."
     }
 }

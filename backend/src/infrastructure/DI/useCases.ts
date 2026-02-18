@@ -105,6 +105,8 @@ import { GetTravelerCompletedBookingsUseCase } from "@useCases/hotelBooking/GetT
 import { GetTravelerOngoingBookingsUseCase } from "@useCases/hotelBooking/GetTravelerOngoingBookingsUseCase";
 import { IGetBookingDetailsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingDetailsUseCase";
 import { GetBookingDetailsUseCase } from "@useCases/hotelBooking/GetBookingDetailsUseCase";
+import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICancelBookingUseCase";
+import { CancelBookingUseCase } from "@useCases/hotelBooking/CancelBookingUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -314,5 +316,9 @@ export function registerUsecases() {
   container.registerSingleton<IGetBookingDetailsUseCase>(
     "IGetBookingDetailsUseCase",
     GetBookingDetailsUseCase,
+  );
+  container.registerSingleton<ICancelBookingUseCase>(
+    "ICancelBookingUseCase",
+    CancelBookingUseCase,
   );
 }

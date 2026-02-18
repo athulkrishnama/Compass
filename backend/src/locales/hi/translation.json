@@ -152,5 +152,9 @@
   "reasonMissingOrInvalid": "कारण गायब है या अमान्य है",
   "invalidRoomNumber": "अमान्य कमरा संख्या",
   "roomNumberAlreadyExists": "कमरा संख्या पहले से ही अनुपलब्ध के रूप में चिह्नित है",
-  "roomVariantMarkedAsUnavailable": "रूम वेरिएंट को सफलतापूर्वक अनुपलब्ध के रूप में चिह्नित किया गया"
+  "roomVariantMarkedAsUnavailable": "रूम वेरिएंट को सफलतापूर्वक अनुपलब्ध के रूप में चिह्नित किया गया",
+  "bookingCancelledSuccessfully": "बुकिंग सफलतापूर्वक रद्द कर दी गई",
+  "bookingAlreadyCancelled": "बुकिंग पहले ही रद्द हो चुकी है",
+  "bookingCannotBeCancelled": "बुकिंग वर्तमान स्थिति में रद्द नहीं की जा सकती",
+  "refundFailed": "रिफंड प्रक्रिया विफल रही। कृपया बाद में पुनः प्रयास करें"
 }

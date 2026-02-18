@@ -57,3 +57,17 @@ export async function getBookingDetails(bookingId: string) {
         throw new Error("something went wrong");
     }
 }
+
+export async function cancelBooking(bookingId: string) {
+    try {
+        const response = await axiosInstance.patch(
+            `${BookingRoutes.CANCEL}/${bookingId}`
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

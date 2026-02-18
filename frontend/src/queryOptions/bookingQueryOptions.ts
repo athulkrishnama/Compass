@@ -3,6 +3,7 @@ import {
     getTravelerOngoingBookings,
     getTravelerCompletedBookings,
     getBookingDetails,
+    cancelBooking,
 } from "@/services/api/booking.ApiService";
 import type { ITravelerBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
 import type { IBookingDetailsResponseDTO } from "@/types/api/responses/bookingResponse";
@@ -69,4 +70,10 @@ export function createGetBookingDetailsQueryOptions(bookingId: string) {
         queryKey: [QUERY_KEYS.BOOKING_DETAILS, bookingId],
         queryFn: () => getBookingDetails(bookingId),
     });
+}
+
+export function createCancelBookingMutationOptions(bookingId: string) {
+    return {
+        mutationFn: () => cancelBooking(bookingId),
+    };
 }

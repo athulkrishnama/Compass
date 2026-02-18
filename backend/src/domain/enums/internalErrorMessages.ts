@@ -141,4 +141,7 @@ export enum INTERNAL_ERROR_MESSAGES {
   ROOM_STATUS_NOT_FOUND = "roomStatusNotFound",
   BOOKING_NOT_FOUND = "bookingNotFound",
   BOOKING_ID_REQUIRED = "bookingIdRequired",
+  BOOKING_ALREADY_CANCELLED = "bookingAlreadyCancelled",
+  BOOKING_CANNOT_BE_CANCELLED = "bookingCannotBeCancelled",
+  REFUND_FAILED = "refundFailed",
 }

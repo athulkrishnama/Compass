@@ -63,6 +63,9 @@ export class HotelBookingMapper {
           checkOutTime: b.roomVariant.policies.checkOutTime,
         },
       },
+      refundAmount: b.refundAmount,
+      refundStatus: b.refundStatus,
+      cancelledAt: b.cancelledAt?.toISOString(),
     };
   }
 }

@@ -1,0 +1,6 @@
+export enum REFUND_STATUS {
+  NONE = "NONE",
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+}

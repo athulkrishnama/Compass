@@ -666,6 +666,24 @@
         "no": "ഇല്ല",
         "backToListings": "ലിസ്റ്റിംഗുകളിലേക്ക് മടങ്ങുക",
         "adults": "{{count}} മുതിർന്നവർ",
-        "bedType": "കിടക്ക തരം"
+        "bedType": "കിടക്ക തരം",
+        "cancellationPolicy": "റദ്ദാക്കൽ നയം",
+        "cancellationPolicyTitle": "ബുക്കിംഗ് റദ്ദാക്കുക",
+        "refundAmount": "തിരികെ നൽകേണ്ട തുക",
+        "noRefund": "തിരികെ നൽകില്ല",
+        "fullRefund": "പൂർണ്ണ തിരിച്ചടവ്",
+        "halfRefund": "50% തിരിച്ചടവ്",
+        "hoursBeforeCheckIn": "ചെക്ക്-ഇൻ ന് മുമ്പ് മണിക്കൂറുകൾ",
+        "confirmCancellation": "റദ്ദാക്കൽ സ്ഥിരീകരിക്കുക",
+        "cancelling": "റദ്ദാക്കുന്നു...",
+        "cancelSuccess": "ബുക്കിംഗ് വിജയകരമായി റദ്ദാക്കി!",
+        "policyTierFull": "ചെക്ക്-ഇന് 48+ മണിക്കൂർ മുമ്പ്: 100% തിരിച്ചടവ്",
+        "policyTierHalf": "ചെക്ക്-ഇന് 24-48 മണിക്കൂർ മുമ്പ്: 50% തിരിച്ചടവ്",
+        "policyTierNone": "ചെക്ക്-ഇന് 24 മണിക്കൂറിൽ കുറവ്: തിരിച്ചടവ് ഇല്ല",
+        "refundStatusLabel": "റീഫണ്ട് നില",
+        "refundedAmount": "തിരികെ നൽകിയ തുക",
+        "cancelledOn": "റദ്ദാക്കിയ തീയതി",
+        "yourRefund": "നിങ്ങളുടെ റീഫണ്ട്",
+        "cancelConfirmMessage": "ഈ ബുക്കിംഗ് റദ്ദാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ? ഈ പ്രവർത്തനം പഴയപടിയാക്കാൻ കഴിയില്ല."
     }
 }

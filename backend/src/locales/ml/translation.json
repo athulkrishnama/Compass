@@ -153,5 +153,9 @@
   "invalidRoomNumber": "അസാധുവായ റൂം നമ്പർ",
   "roomNumberAlreadyExists": "റൂം നമ്പർ ഇതിനകം ലഭ്യമല്ലെന്ന് അടയാളപ്പെടുത്തിയിട്ടുണ്ട്",
   "roomVariantMarkedAsUnavailable": "റൂം വേരിയന്റ് ലഭ്യമല്ലെന്ന് വിജയകരമായി അടയാളപ്പെടുത്തി",
-  "roomStatusNotFound": "റൂം സ്റ്റാറ്റസ് കണ്ടെത്തിയില്ല"
+  "roomStatusNotFound": "റൂം സ്റ്റാറ്റസ് കണ്ടെത്തിയില്ല",
+  "bookingCancelledSuccessfully": "ബുക്കിംഗ് വിജയകരമായി റദ്ദാക്കി",
+  "bookingAlreadyCancelled": "ബുക്കിംഗ് ഇതിനകം റദ്ദാക്കിയിട്ടുണ്ട്",
+  "bookingCannotBeCancelled": "ബുക്കിംഗ് നിലവിലെ അവസ്ഥയിൽ റദ്ദാക്കാൻ കഴിയില്ല",
+  "refundFailed": "റീഫണ്ട് പ്രോസസ്സ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക"
 }

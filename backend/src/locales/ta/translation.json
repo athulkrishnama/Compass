@@ -152,5 +152,9 @@
   "reasonMissingOrInvalid": "காரணம் இல்லை அல்லது தவறானது",
   "invalidRoomNumber": "தவறான அறை எண்",
   "roomNumberAlreadyExists": "அறை எண் ஏற்கனவே கிடைக்கவில்லை என குறிக்கப்பட்டுள்ளது",
-  "roomVariantMarkedAsUnavailable": "அறை வகை வெற்றிகரமாக கிடைக்கவில்லை எனக் குறிக்கப்பட்டது"
+  "roomVariantMarkedAsUnavailable": "அறை வகை வெற்றிகரமாக கிடைக்கவில்லை எனக் குறிக்கப்பட்டது",
+  "bookingCancelledSuccessfully": "முன்பதிவு வெற்றிகரமாக ரத்து செய்யப்பட்டது",
+  "bookingAlreadyCancelled": "முன்பதிவு ஏற்கனவே ரத்து செய்யப்பட்டுள்ளது",
+  "bookingCannotBeCancelled": "முன்பதிவை தற்போதைய நிலையில் ரத்து செய்ய முடியாது",
+  "refundFailed": "பணத்தைத் திரும்பப் பெறுவதில் தோல்வி. பின்னர் மீண்டும் முயற்சிக்கவும்"
 }

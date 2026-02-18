@@ -4,4 +4,5 @@ export enum BookingRoutes {
   GET_ONGOING_BOOKINGS = "/ongoing",
   GET_COMPLETED_BOOKINGS = "/completed",
   GET_BOOKING_DETAILS = "/details/:bookingId",
+  CANCEL_BOOKING = "/cancel/:bookingId",
 }

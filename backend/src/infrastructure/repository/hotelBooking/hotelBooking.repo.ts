@@ -189,6 +189,9 @@ export class HotelBookingRepo
       paymentStatus: doc.paymentStatus,
       bookingStatus: doc.bookingStatus,
       isWalkIn: doc.isWalkIn,
+      refundAmount: doc.refundAmount,
+      refundStatus: doc.refundStatus,
+      cancelledAt: doc.cancelledAt,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };

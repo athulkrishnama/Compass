@@ -8,6 +8,7 @@ import { IGetTravelerUpcomingBookingsUseCase } from "@application/interfaces/use
 import { IGetTravelerCompletedBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerCompletedBookingsUseCase";
 import { IGetTravelerOngoingBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerOngoingBookingsUseCase";
 import { IGetBookingDetailsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingDetailsUseCase";
+import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICancelBookingUseCase";
 import { bookingListingQueryValidationSchema } from "@presentation/validationSchemas/bookingValidation";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
@@ -25,6 +26,8 @@ export class BookingController {
     private _getTravelerCompletedBookingsUseCase: IGetTravelerCompletedBookingsUseCase,
     @inject("IGetBookingDetailsUseCase")
     private _getBookingDetailsUseCase: IGetBookingDetailsUseCase,
+    @inject("ICancelBookingUseCase")
+    private _cancelBookingUseCase: ICancelBookingUseCase,
   ) {}
 
   async getBookingByPaymentId(req: Request, res: Response, next: NextFunction) {
@@ -153,6 +156,33 @@ export class BookingController {
         HTTP_STATUS_CODE.OK,
         Messages.BOOKING_DETAILS_FETCHED,
         bookingDetails,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async cancelBooking(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { bookingId } = req.params;
+      const travelerId = req.user?.id;
+      if (!bookingId || !travelerId) {
+        throw new InvalideDataException(
+          INTERNAL_ERROR_MESSAGES.BOOKING_ID_REQUIRED,
+        );
+      }
+
+      const result = await this._cancelBookingUseCase.execute(
+        bookingId,
+        travelerId,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.BOOKING_CANCELLED_SUCCESSFULLY,
+        result,
       );
     } catch (error) {
       next(error);
