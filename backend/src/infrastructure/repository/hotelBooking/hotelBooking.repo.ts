@@ -435,4 +435,184 @@ export class HotelBookingRepo
       },
     };
   }
+
+  async getDashboardStats(hotelIds: string[]): Promise<
+    {
+      hotelId: string;
+      todayCheckIns: number;
+      todayCheckOuts: number;
+      activeGuests: number;
+      occupiedRooms: number;
+      totalRevenue: number;
+      totalBookings: number;
+    }[]
+  > {
+    const today = new Date();
+    const startOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+    );
+    const endOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+    );
+
+    const result = await this._model.aggregate([
+      { $match: { hotelId: { $in: hotelIds } } },
+      {
+        $group: {
+          _id: "$hotelId",
+          todayCheckIns: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$checkinDate", startOfDay] },
+                    { $lt: ["$checkinDate", endOfDay] },
+                    { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          todayCheckOuts: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$checkoutDate", startOfDay] },
+                    { $lt: ["$checkoutDate", endOfDay] },
+                    { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          activeGuests: {
+            $sum: {
+              $cond: [
+                { $eq: ["$bookingStatus", BOOKING_STATUS.CHECKED_IN] },
+                1,
+                0,
+              ],
+            },
+          },
+          occupiedRooms: {
+            $sum: {
+              $cond: [
+                { $eq: ["$bookingStatus", BOOKING_STATUS.CHECKED_IN] },
+                1,
+                0,
+              ],
+            },
+          },
+          totalRevenue: {
+            $sum: {
+              $cond: [
+                { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                "$totalAmount",
+                0,
+              ],
+            },
+          },
+          totalBookings: {
+            $sum: {
+              $cond: [
+                { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                1,
+                0,
+              ],
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          hotelId: "$_id",
+          todayCheckIns: 1,
+          todayCheckOuts: 1,
+          activeGuests: 1,
+          occupiedRooms: 1,
+          totalRevenue: 1,
+          totalBookings: 1,
+        },
+      },
+    ]);
+
+    return result;
+  }
+
+  async getRecentBookingsByHotelId(
+    hotelId: string,
+    limit: number,
+  ): Promise<
+    {
+      _id: string;
+      guestName: string;
+      roomVariantName: string;
+      checkinDate: Date;
+      checkoutDate: Date;
+      bookingStatus: BOOKING_STATUS;
+      totalAmount: number;
+    }[]
+  > {
+    const result = await this._model.aggregate([
+      {
+        $match: {
+          hotelId,
+          bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      { $limit: limit },
+      {
+        $addFields: {
+          travelerObjectId: { $toObjectId: "$travelerId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "travelerObjectId",
+          foreignField: "_id",
+          as: "traveler",
+        },
+      },
+      { $unwind: { path: "$traveler", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          roomVariantObjectId: { $toObjectId: "$roomVariantId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      { $unwind: { path: "$roomVariant", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: { $toString: "$_id" },
+          guestName: { $ifNull: ["$traveler.full_name", "Guest"] },
+          roomVariantName: { $ifNull: ["$roomVariant.name", "Unknown"] },
+          checkinDate: 1,
+          checkoutDate: 1,
+          bookingStatus: 1,
+          totalAmount: 1,
+        },
+      },
+    ]);
+
+    return result;
+  }
 }

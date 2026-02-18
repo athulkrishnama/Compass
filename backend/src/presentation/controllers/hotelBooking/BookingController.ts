@@ -9,6 +9,8 @@ import { IGetTravelerCompletedBookingsUseCase } from "@application/interfaces/us
 import { IGetTravelerOngoingBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerOngoingBookingsUseCase";
 import { IGetBookingDetailsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingDetailsUseCase";
 import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICancelBookingUseCase";
+import { IGetOverallDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetOverallDashboardUseCase";
+import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelDashboardUseCase";
 import { bookingListingQueryValidationSchema } from "@presentation/validationSchemas/bookingValidation";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
@@ -28,6 +30,10 @@ export class BookingController {
     private _getBookingDetailsUseCase: IGetBookingDetailsUseCase,
     @inject("ICancelBookingUseCase")
     private _cancelBookingUseCase: ICancelBookingUseCase,
+    @inject("IGetOverallDashboardUseCase")
+    private _getOverallDashboardUseCase: IGetOverallDashboardUseCase,
+    @inject("IGetHotelDashboardUseCase")
+    private _getHotelDashboardUseCase: IGetHotelDashboardUseCase,
   ) {}
 
   async getBookingByPaymentId(req: Request, res: Response, next: NextFunction) {
@@ -183,6 +189,48 @@ export class BookingController {
         HTTP_STATUS_CODE.OK,
         Messages.BOOKING_CANCELLED_SUCCESSFULLY,
         result,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getOverallDashboard(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user.id;
+      const data = await this._getOverallDashboardUseCase.execute(userId);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DASHBOARD_FETCHED_SUCCESSFULLY,
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getHotelDashboard(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user.id;
+      const { hotelId } = req.params;
+      if (!hotelId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+      }
+
+      const data = await this._getHotelDashboardUseCase.execute(
+        userId,
+        hotelId,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DASHBOARD_FETCHED_SUCCESSFULLY,
+        data,
       );
     } catch (error) {
       next(error);

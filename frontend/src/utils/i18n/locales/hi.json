@@ -680,5 +680,33 @@
         "cancelledOn": "रद्द करने की तिथि",
         "yourRefund": "आपकी वापसी",
         "cancelConfirmMessage": "क्या आप वाकई इस बुकिंग को रद्द करना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।"
+    },
+    "dashboard": {
+        "overallTitle": "डैशबोर्ड अवलोकन",
+        "todayCheckIns": "आज की चेक-इन",
+        "todayCheckOuts": "आज की चेक-आउट",
+        "activeGuests": "सक्रिय मेहमान",
+        "occupancyRate": "ऑक्यूपेंसी दर",
+        "totalRooms": "कुल कमरे",
+        "occupiedRooms": "भरे हुए कमरे",
+        "totalRevenue": "कुल राजस्व",
+        "totalBookings": "कुल बुकिंग",
+        "yourProperties": "आपकी संपत्तियाँ",
+        "hotelName": "होटल का नाम",
+        "city": "शहर",
+        "rooms": "कमरे",
+        "occupancy": "ऑक्यूपेंसी",
+        "actions": "कार्रवाइयाँ",
+        "viewDashboard": "डैशबोर्ड देखें",
+        "noHotels": "कोई होटल नहीं",
+        "noHotelsDescription": "आपने अभी तक कोई होटल नहीं जोड़ा है। अपना पहला प्रॉपर्टी जोड़कर शुरू करें।",
+        "recentBookings": "हाल की बुकिंग",
+        "guestName": "मेहमान का नाम",
+        "roomType": "कमरे का प्रकार",
+        "checkIn": "चेक-इन",
+        "checkOut": "चेक-आउट",
+        "status": "स्थिति",
+        "amount": "राशि",
+        "noRecentBookings": "कोई हाल की बुकिंग नहीं मिली।"
     }
 }

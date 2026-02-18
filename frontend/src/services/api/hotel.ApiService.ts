@@ -102,3 +102,31 @@ export async function searchHotels<T extends object>(data: T) {
         throw new Error("something went wrong");
     }
 }
+
+export async function getOverallDashboard() {
+    try {
+        const response = await axiosInstance.get(
+            HOTEL_ROUTES.OVERALL_DASHBOARD
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function getHotelDashboard(hotelId: string) {
+    try {
+        const response = await axiosInstance.get(
+            `${HOTEL_ROUTES.HOTEL_DASHBOARD}/${hotelId}`
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

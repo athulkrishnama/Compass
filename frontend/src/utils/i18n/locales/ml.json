@@ -685,5 +685,33 @@
         "cancelledOn": "റദ്ദാക്കിയ തീയതി",
         "yourRefund": "നിങ്ങളുടെ റീഫണ്ട്",
         "cancelConfirmMessage": "ഈ ബുക്കിംഗ് റദ്ദാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ? ഈ പ്രവർത്തനം പഴയപടിയാക്കാൻ കഴിയില്ല."
+    },
+    "dashboard": {
+        "overallTitle": "ഡാഷ്ബോർഡ് അവലോകനം",
+        "todayCheckIns": "ഇന്നത്തെ ചെക്ക്-ഇൻസ്",
+        "todayCheckOuts": "ഇന്നത്തെ ചെക്ക്-ഔട്ടുകൾ",
+        "activeGuests": "സജീവ അതിഥികൾ",
+        "occupancyRate": "ഒക്യുപൻസി നിരക്ക്",
+        "totalRooms": "ആകെ മുറികൾ",
+        "occupiedRooms": "ഉപയോഗിക്കുന്ന മുറികൾ",
+        "totalRevenue": "ആകെ വരുമാനം",
+        "totalBookings": "ആകെ ബുക്കിങ്ങുകൾ",
+        "yourProperties": "നിങ്ങളുടെ പ്രോപ്പർട്ടികൾ",
+        "hotelName": "ഹോട്ടൽ പേര്",
+        "city": "നഗരം",
+        "rooms": "മുറികൾ",
+        "occupancy": "ഒക്യുപൻസി",
+        "actions": "പ്രവർത്തനങ്ങൾ",
+        "viewDashboard": "ഡാഷ്ബോർഡ് കാണുക",
+        "noHotels": "ഹോട്ടലുകൾ ഇല്ല",
+        "noHotelsDescription": "നിങ്ങൾ ഇതുവരെ ഹോട്ടലുകൾ ചേർത്തിട്ടില്ല. ആദ്യ പ്രോപ്പർട്ടി ചേർത്ത് ആരംഭിക്കുക.",
+        "recentBookings": "സമീപകാല ബുക്കിങ്ങുകൾ",
+        "guestName": "അതിഥിയുടെ പേര്",
+        "roomType": "മുറി തരം",
+        "checkIn": "ചെക്ക്-ഇൻ",
+        "checkOut": "ചെക്ക്-ഔട്ട്",
+        "status": "നില",
+        "amount": "തുക",
+        "noRecentBookings": "സമീപകാല ബുക്കിങ്ങുകൾ ഇല്ല."
     }
 }

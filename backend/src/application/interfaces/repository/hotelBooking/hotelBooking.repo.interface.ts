@@ -61,4 +61,31 @@ export interface IHotelBookingRepo
     bookingId: string,
     travelerId: string,
   ): Promise<IBookingDetailsAggregation | null>;
+
+  getDashboardStats(hotelIds: string[]): Promise<
+    {
+      hotelId: string;
+      todayCheckIns: number;
+      todayCheckOuts: number;
+      activeGuests: number;
+      occupiedRooms: number;
+      totalRevenue: number;
+      totalBookings: number;
+    }[]
+  >;
+
+  getRecentBookingsByHotelId(
+    hotelId: string,
+    limit: number,
+  ): Promise<
+    {
+      _id: string;
+      guestName: string;
+      roomVariantName: string;
+      checkinDate: Date;
+      checkoutDate: Date;
+      bookingStatus: BOOKING_STATUS;
+      totalAmount: number;
+    }[]
+  >;
 }

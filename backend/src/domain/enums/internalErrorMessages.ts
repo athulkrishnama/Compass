@@ -144,4 +144,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   BOOKING_ALREADY_CANCELLED = "bookingAlreadyCancelled",
   BOOKING_CANNOT_BE_CANCELLED = "bookingCannotBeCancelled",
   REFUND_FAILED = "refundFailed",
+  NOT_ALLOWED = "notAllowed",
 }

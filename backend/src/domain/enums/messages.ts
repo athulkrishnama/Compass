@@ -37,4 +37,5 @@ export enum Messages {
   BOOKING_RETRIEVED_SUCCESSFULLY = "bookingRetrievedSuccessfully",
   BOOKING_DETAILS_FETCHED = "bookingDetailsFetched",
   BOOKING_CANCELLED_SUCCESSFULLY = "bookingCancelledSuccessfully",
+  DASHBOARD_FETCHED_SUCCESSFULLY = "dashboardFetchedSuccessfully",
 }

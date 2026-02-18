@@ -55,6 +55,20 @@ export class BookingRouter {
       authMiddleware.authorizeRole([ROLES.TRAVELER]),
       (req, res, next) => bookingController.cancelBooking(req, res, next),
     );
+
+    this._router.get(
+      BookingRoutes.OVERALL_DASHBOARD,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.getOverallDashboard(req, res, next),
+    );
+
+    this._router.get(
+      BookingRoutes.HOTEL_DASHBOARD,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.getHotelDashboard(req, res, next),
+    );
   }
 
   getRouter(): Router {

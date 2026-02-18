@@ -5,4 +5,6 @@ export enum BookingRoutes {
   GET_COMPLETED_BOOKINGS = "/completed",
   GET_BOOKING_DETAILS = "/details/:bookingId",
   CANCEL_BOOKING = "/cancel/:bookingId",
+  OVERALL_DASHBOARD = "/dashboard/overall",
+  HOTEL_DASHBOARD = "/dashboard/:hotelId",
 }
