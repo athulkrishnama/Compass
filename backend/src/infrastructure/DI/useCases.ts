@@ -111,6 +111,8 @@ import { IGetOverallDashboardUseCase } from "@application/interfaces/useCase/hot
 import { GetOverallDashboardUseCase } from "@useCases/hotelBooking/GetOverallDashboardUseCase";
 import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelDashboardUseCase";
 import { GetHotelDashboardUseCase } from "@useCases/hotelBooking/GetHotelDashboardUseCase";
+import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
+import { GetHotelBookingsUseCase } from "@useCases/hotelBooking/GetHotelBookingsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -332,5 +334,9 @@ export function registerUsecases() {
   container.registerSingleton<IGetHotelDashboardUseCase>(
     "IGetHotelDashboardUseCase",
     GetHotelDashboardUseCase,
+  );
+  container.registerSingleton<IGetHotelBookingsUseCase>(
+    "IGetHotelBookingsUseCase",
+    GetHotelBookingsUseCase,
   );
 }

@@ -58,3 +58,22 @@ export interface IBookingDetailsResponseDTO {
     refundStatus?: string;
     cancelledAt?: string;
 }
+
+export interface IHotelBookingListingItem {
+    id: string;
+    guestName: string;
+    roomVariantName: string;
+    roomNumber: string;
+    checkInDate: string;
+    checkOutDate: string;
+    totalAmount: number;
+    paymentStatus: string;
+    bookingStatus: string;
+}
+
+export interface IHotelBookingListingResponseDTO {
+    bookings: IHotelBookingListingItem[];
+    totalPages: number;
+    currentPage: number;
+    totalCount: number;
+}

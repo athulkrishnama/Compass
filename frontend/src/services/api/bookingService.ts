@@ -18,3 +18,26 @@ export async function getBookingByPaymentId(
         throw new Error("Something went wrong");
     }
 }
+
+export async function getHotelBookings(
+    hotelId: string,
+    params: {
+        pageNo: number;
+        roomVariantId?: string;
+        status?: string;
+        search?: string;
+    }
+) {
+    try {
+        const response = await axiosInstance.get(
+            `${BookingRoutes.HOTEL_BOOKINGS}/${hotelId}/bookings`,
+            { params }
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}

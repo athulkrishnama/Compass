@@ -5,9 +5,18 @@ import { BaseRepository } from "@infrastructure/repository/base/base.repo";
 import { IHotelBookingDocument } from "@infrastructure/repository/hotelBooking/hotelBookingSchema";
 import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
 import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
+import { IHotelBookingListingAggregation } from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
 
 export interface IHotelBookingRepo
   extends BaseRepository<HotelBookingEntity, IHotelBookingDocument> {
+  getHotelBookings(params: {
+    hotelId: string;
+    roomVariantId?: string;
+    bookingStatus?: BOOKING_STATUS;
+    search?: string;
+    pageNo: number;
+  }): Promise<IHotelBookingListingAggregation>;
+
   filterBooking(filter: {
     travelerId?: string;
     hotelId?: string;

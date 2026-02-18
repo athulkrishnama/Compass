@@ -5,8 +5,10 @@ import {
     getBookingDetails,
     cancelBooking,
 } from "@/services/api/booking.ApiService";
+import { getHotelBookings } from "@/services/api/bookingService";
 import type { ITravelerBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
 import type { IBookingDetailsResponseDTO } from "@/types/api/responses/bookingResponse";
+import type { IHotelBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
 import type { HttpResponse } from "@/types/api/responseType";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
@@ -76,4 +78,19 @@ export function createCancelBookingMutationOptions(bookingId: string) {
     return {
         mutationFn: () => cancelBooking(bookingId),
     };
+}
+
+export function createGetHotelBookingsQueryOptions(
+    hotelId: string,
+    params: {
+        pageNo: number;
+        roomVariantId?: string;
+        status?: string;
+        search?: string;
+    }
+) {
+    return queryOptions<HttpResponse<IHotelBookingListingResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.HOTEL_BOOKINGS, hotelId, params],
+        queryFn: () => getHotelBookings(hotelId, params),
+    });
 }

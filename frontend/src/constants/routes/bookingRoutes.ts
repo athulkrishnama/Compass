@@ -5,4 +5,5 @@ export enum BookingRoutes {
     COMPLETED = "/bookings/completed",
     DETAILS = "/bookings/details",
     CANCEL = "/bookings/cancel",
+    HOTEL_BOOKINGS = "/bookings/hotel",
 }

@@ -69,6 +69,13 @@ export class BookingRouter {
       authMiddleware.authorizeRole([ROLES.HOTEL]),
       (req, res, next) => bookingController.getHotelDashboard(req, res, next),
     );
+
+    this._router.get(
+      BookingRoutes.GET_HOTEL_BOOKINGS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.getHotelBookings(req, res, next),
+    );
   }
 
   getRouter(): Router {

@@ -7,7 +7,6 @@ import {
     LogOut,
     Users,
     Percent,
-    DollarSign,
     Building2,
     CalendarCheck,
     ArrowLeft,

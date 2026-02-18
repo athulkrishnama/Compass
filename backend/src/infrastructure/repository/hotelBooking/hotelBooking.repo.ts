@@ -7,9 +7,11 @@ import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { inject, injectable } from "tsyringe";
 import { Model, PipelineStage, RootFilterQuery, Types } from "mongoose";
 import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
+import { IHotelBookingListingAggregation } from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
 import { VALUES } from "@presentation/constants/values";
 import { IHotelDocument } from "../hotel/hotelSchema";
 import { IRoomVariantDocument } from "../roomVariant/roomVariantSchema";
+import { IUserDocument } from "../users/userSchema";
 import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 
 @injectable()
@@ -614,5 +616,96 @@ export class HotelBookingRepo
     ]);
 
     return result;
+  }
+
+  async getHotelBookings(params: {
+    hotelId: string;
+    roomVariantId?: string;
+    bookingStatus?: BOOKING_STATUS;
+    search?: string;
+    pageNo: number;
+  }): Promise<IHotelBookingListingAggregation> {
+    const matchStage: Record<string, unknown> = {
+      hotelId: params.hotelId,
+    };
+
+    if (params.roomVariantId) {
+      matchStage.roomVariantId = params.roomVariantId;
+    }
+
+    if (params.bookingStatus) {
+      matchStage.bookingStatus = params.bookingStatus;
+    }
+
+    const pipeline: PipelineStage[] = [
+      { $match: matchStage },
+      {
+        $addFields: {
+          travelerObjectId: { $toObjectId: "$travelerId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "travelerObjectId",
+          foreignField: "_id",
+          as: "traveler",
+        },
+      },
+      { $unwind: { path: "$traveler", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          roomVariantObjectId: { $toObjectId: "$roomVariantId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      { $unwind: { path: "$roomVariant", preserveNullAndEmptyArrays: true } },
+    ];
+
+    if (params.search) {
+      pipeline.push({
+        $match: {
+          "traveler.full_name": {
+            $regex: params.search,
+            $options: "i",
+          },
+        },
+      });
+    }
+
+    pipeline.push({ $sort: { createdAt: -1 } });
+
+    const result = await this._model.aggregate<{
+      bookings: (IHotelBookingDocument & {
+        traveler: IUserDocument;
+        roomVariant: IRoomVariantDocument;
+      })[];
+      total: { count: number }[];
+    }>([
+      ...pipeline,
+      {
+        $facet: {
+          bookings: [
+            { $skip: (params.pageNo - 1) * VALUES.BOOKINGS_LIMIT },
+            { $limit: VALUES.BOOKINGS_LIMIT },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ]);
+
+    const facetResult = result[0];
+
+    return {
+      bookings: facetResult?.bookings || [],
+      total: facetResult?.total?.[0]?.count || 0,
+    } as unknown as IHotelBookingListingAggregation;
   }
 }

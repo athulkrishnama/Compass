@@ -11,7 +11,11 @@ import { IGetBookingDetailsUseCase } from "@application/interfaces/useCase/hotel
 import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICancelBookingUseCase";
 import { IGetOverallDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetOverallDashboardUseCase";
 import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelDashboardUseCase";
-import { bookingListingQueryValidationSchema } from "@presentation/validationSchemas/bookingValidation";
+import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
+import {
+  bookingListingQueryValidationSchema,
+  hotelBookingQueryValidationSchema,
+} from "@presentation/validationSchemas/bookingValidation";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
@@ -34,6 +38,8 @@ export class BookingController {
     private _getOverallDashboardUseCase: IGetOverallDashboardUseCase,
     @inject("IGetHotelDashboardUseCase")
     private _getHotelDashboardUseCase: IGetHotelDashboardUseCase,
+    @inject("IGetHotelBookingsUseCase")
+    private _getHotelBookingsUseCase: IGetHotelBookingsUseCase,
   ) {}
 
   async getBookingByPaymentId(req: Request, res: Response, next: NextFunction) {
@@ -230,6 +236,40 @@ export class BookingController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.DASHBOARD_FETCHED_SUCCESSFULLY,
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getHotelBookings(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { hotelId } = req.params;
+      if (!hotelId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+      }
+
+      const query = hotelBookingQueryValidationSchema.safeParse(req.query);
+      if (query.error) {
+        throw new InvalideDataException(query.error.issues[0].message);
+      }
+
+      const userId = req.user.id;
+      const data = await this._getHotelBookingsUseCase.execute(
+        userId,
+        hotelId,
+        query.data.roomVariantId,
+        query.data.status,
+        query.data.search,
+        query.data.pageNo,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         data,
       );
     } catch (error) {

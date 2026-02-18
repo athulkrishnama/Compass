@@ -6,6 +6,10 @@ import {
   IBookingDetailsAggregation,
   IBookingDetailsResponseDTO,
 } from "@domain/dtos/hotelBooking/bookingDetails.dto";
+import {
+  IHotelBookingListingAggregation,
+  IHotelBookingListingResponseDTO,
+} from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
 
 export class HotelBookingMapper {
   static toTravelerBookingListingResponseDTO(
@@ -66,6 +70,30 @@ export class HotelBookingMapper {
       refundAmount: b.refundAmount,
       refundStatus: b.refundStatus,
       cancelledAt: b.cancelledAt?.toISOString(),
+    };
+  }
+
+  static toHotelBookingListingResponseDTO(
+    data: IHotelBookingListingAggregation,
+    totalPages: number,
+    currentPage: number,
+    totalCount: number,
+  ): IHotelBookingListingResponseDTO {
+    return {
+      bookings: data.bookings.map((b) => ({
+        id: b._id.toString(),
+        guestName: b.traveler?.full_name || "Guest",
+        roomVariantName: b.roomVariant?.name || "Unknown",
+        roomNumber: b.roomNumber || "-",
+        checkInDate: b.checkinDate.toISOString(),
+        checkOutDate: b.checkoutDate.toISOString(),
+        totalAmount: b.totalAmount,
+        paymentStatus: b.paymentStatus,
+        bookingStatus: b.bookingStatus,
+      })),
+      totalPages,
+      currentPage,
+      totalCount,
     };
   }
 }

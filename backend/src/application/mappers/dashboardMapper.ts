@@ -1,7 +1,4 @@
-import {
-  IHotelDashboardResponseDTO,
-  IRecentBooking,
-} from "@domain/dtos/hotelBooking/hotelDashboard.dto";
+import { IHotelDashboardResponseDTO } from "@domain/dtos/hotelBooking/hotelDashboard.dto";
 import {
   IHotelDashboardSummary,
   IOverallDashboardResponseDTO,
