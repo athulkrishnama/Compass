@@ -16,6 +16,7 @@ export class PaymentService implements IPaymentService {
     metadata: Record<string, string>,
   ): Promise<{ paymentIntentId: string; clientSecret: string }> {
     try {
+      console.log(amount);
       const session = await this._stripe.paymentIntents.create({
         amount: Math.ceil(amount) * 100,
         currency: "inr",

@@ -22,6 +22,8 @@ import { StorageService } from "@infrastructure/services/storageService";
 import { ChangeEmailTemplateGenerator } from "@infrastructure/services/emailTemplateGenerators/changeEmailTemplateGenerator";
 import { IPaymentService } from "@application/interfaces/service/paymentService.interface";
 import { PaymentService } from "@infrastructure/services/paymentService";
+import { IPricingService } from "@application/interfaces/services/IPricingService";
+import { PricingService } from "@infrastructure/services/pricingService";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -57,5 +59,9 @@ export function registerServices() {
   container.registerSingleton<IPaymentService>(
     "IPaymentService",
     PaymentService,
+  );
+  container.registerSingleton<IPricingService>(
+    "IPricingService",
+    PricingService,
   );
 }

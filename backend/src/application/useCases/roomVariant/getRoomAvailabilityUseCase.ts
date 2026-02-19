@@ -3,6 +3,7 @@ import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooki
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
+import { IPricingService } from "@application/interfaces/services/IPricingService";
 import {
   IGetRoomAvailabilityRequestDTO,
   IGetRoomAvailabilityResponseDTO,
@@ -19,6 +20,8 @@ export class GetRoomAvailabilityUseCase implements IGetRoomAvailabilityUseCase {
     private readonly _roomLockRepository: IRoomLockRepo,
     @inject("IHotelBookingRepo")
     private readonly _hotelBookingRepository: IHotelBookingRepo,
+    @inject("IPricingService")
+    private readonly _pricingService: IPricingService,
   ) {}
 
   async execute(
@@ -47,16 +50,21 @@ export class GetRoomAvailabilityUseCase implements IGetRoomAvailabilityUseCase {
       afterCheckOutDate: data.checkinDate,
     });
 
-    const [roomLockCount, hotelBookingCount] = await Promise.all([
-      roomLockPromise,
-      hotelBookingPromise,
-    ]);
+    const pricingPromise = this._pricingService.calculateDynamicPrice({
+      roomVariantId: data.roomVariantId,
+      checkInDate: data.checkinDate,
+      checkOutDate: data.checkoutDate,
+    });
+
+    const [roomLockCount, hotelBookingCount, pricingDetails] =
+      await Promise.all([roomLockPromise, hotelBookingPromise, pricingPromise]);
 
     const availableRoomCount =
       roomVariant.totalRooms - roomLockCount - hotelBookingCount;
 
     return {
       available: availableRoomCount,
+      dynamicPrice: pricingDetails.totalPrice,
     };
   }
 }

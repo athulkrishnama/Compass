@@ -48,7 +48,6 @@ export default function BookingWidget({
 
     const nights =
         date?.from && date?.to ? differenceInDays(date.to, date.from) : 0;
-    const total = basePrice * Math.max(nights, 1);
 
     const { data: availabilityData, isLoading: isLoadingAvailability } =
         useQuery({
@@ -63,6 +62,9 @@ export default function BookingWidget({
         });
 
     const availableRooms = availabilityData?.data?.available ?? 0;
+    const dynamicPrice = availabilityData?.data?.dynamicPrice || 0;
+    const total =
+        dynamicPrice > 0 ? dynamicPrice : basePrice * Math.max(nights, 1);
 
     const { mutate: createPaymentIntent, isPending: isCreatingPaymentIntent } =
         useMutation({
@@ -116,18 +118,6 @@ export default function BookingWidget({
             className="sticky top-6"
         >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                <div className="flex items-baseline gap-2 mb-6">
-                    <div className="flex items-center">
-                        <IndianRupee className="w-6 h-6 text-gray-900" />
-                        <span className="text-3xl font-bold text-gray-900">
-                            {basePrice.toLocaleString("en-IN")}
-                        </span>
-                    </div>
-                    <span className="text-gray-500">
-                        / {t(translationKey.roomDetails.night)}
-                    </span>
-                </div>
-
                 <div className="mb-4">
                     <Popover>
                         <PopoverTrigger asChild>
@@ -295,21 +285,17 @@ export default function BookingWidget({
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-600">
                             {t(translationKey.roomDetails.baseNights, {
-                                price: `₹${basePrice.toLocaleString("en-IN")}`,
+                                price:
+                                    dynamicPrice > 0 &&
+                                    dynamicPrice !==
+                                        basePrice * Math.max(nights, 1)
+                                        ? "Dynamic"
+                                        : `₹${basePrice.toLocaleString("en-IN")}`,
                                 nights: Math.max(nights, 1),
                             })}
                         </span>
                         <span className="flex items-center text-gray-900">
                             <IndianRupee className="w-3 h-3" />
-                            {total.toLocaleString("en-IN")}
-                        </span>
-                    </div>
-                    <div className="flex justify-between font-semibold pt-3 border-t border-gray-100">
-                        <span className="text-gray-900">
-                            {t(translationKey.roomDetails.total)}
-                        </span>
-                        <span className="flex items-center text-gray-900">
-                            <IndianRupee className="w-4 h-4" />
                             {total.toLocaleString("en-IN")}
                         </span>
                     </div>

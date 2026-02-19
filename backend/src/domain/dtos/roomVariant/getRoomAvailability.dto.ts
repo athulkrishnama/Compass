@@ -6,4 +6,5 @@ export interface IGetRoomAvailabilityRequestDTO {
 
 export interface IGetRoomAvailabilityResponseDTO {
   available: number;
+  dynamicPrice: number;
 }
