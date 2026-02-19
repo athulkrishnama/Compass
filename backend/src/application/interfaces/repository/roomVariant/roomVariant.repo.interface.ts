@@ -10,4 +10,8 @@ export interface IRoomVariantRepo
     hotelId: string,
     prefix: string,
   ): Promise<RoomVariantEntity | null>;
+
+  getTotalRoomsByHotelIds(
+    hotelIds: string[],
+  ): Promise<{ hotelId: string; totalRooms: number }[]>;
 }

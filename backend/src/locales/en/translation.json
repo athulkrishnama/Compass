@@ -154,5 +154,10 @@
   "invalidRoomNumber": "Invalid room number",
   "roomNumberAlreadyExists": "Room is already marked as unavailable",
   "roomVariantMarkedAsUnavailable": "Room variant marked as unavailable successfully",
-  "roomStatusNotFound": "Room status not found"
+  "roomStatusNotFound": "Room status not found",
+  "bookingCancelledSuccessfully": "Booking cancelled successfully",
+  "bookingAlreadyCancelled": "Booking has already been cancelled",
+  "bookingCannotBeCancelled": "Booking cannot be cancelled in its current state",
+  "refundFailed": "Failed to process refund. Please try again later",
+  "roomHasActiveBooking": "This room has an active checked-in booking"
 }

@@ -26,3 +26,7 @@ export enum BookingStatusResponseStatus {
 export interface BookingStatusResponse {
     status: BookingStatusResponseStatus;
 }
+export interface IAvailableRoomsResponseDTO {
+    availableRooms: number[];
+    unavailableRooms: { roomNumber: number; reason: string }[];
+}

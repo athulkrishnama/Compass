@@ -1,3 +1,9 @@
+import { IGetAvailableRoomsForCheckInUseCase } from "@application/interfaces/useCase/hotelBooking/IGetAvailableRoomsForCheckInUseCase";
+import { GetAvailableRoomsForCheckInUseCase } from "@useCases/hotelBooking/GetAvailableRoomsForCheckInUseCase";
+import { ICheckInBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckInBookingUseCase";
+import { CheckInBookingUseCase } from "@useCases/hotelBooking/CheckInBookingUseCase";
+import { ICheckOutBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckOutBookingUseCase";
+import { CheckOutBookingUseCase } from "@useCases/hotelBooking/CheckOutBookingUseCase";
 import { IGetUsersUseCase } from "application/interfaces/useCase/admin/getUsersUseCase.interface";
 import { IUserStatusChangeUseCase } from "application/interfaces/useCase/admin/userStatusChangeUseCase.interface";
 import { IForgetPasswordResetPasswordUseCase } from "application/interfaces/useCase/auth/forgetPasswordResetPassword.interface";
@@ -97,6 +103,22 @@ import { IRestoreRoomUseCase } from "@application/interfaces/useCase/roomVariant
 import { RestoreRoomUseCase } from "@useCases/roomVariant/restoreRoomUseCase";
 import { IGetBookingByPaymentIdUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingByPaymentIdUseCase";
 import { GetBookingByPaymentIdUseCase } from "@useCases/hotelBooking/GetBookingByPaymentIdUseCase";
+import { IGetTravelerUpcomingBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerUpcomingBookingsUseCase";
+import { GetTravelerUpcomingBookingsUseCase } from "@useCases/hotelBooking/GetTravelerUpcomingBookingsUseCase";
+import { IGetTravelerCompletedBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerCompletedBookingsUseCase";
+import { IGetTravelerOngoingBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetTravelerOngoingBookingsUseCase";
+import { GetTravelerCompletedBookingsUseCase } from "@useCases/hotelBooking/GetTravelerCompletedBookingsUseCase";
+import { GetTravelerOngoingBookingsUseCase } from "@useCases/hotelBooking/GetTravelerOngoingBookingsUseCase";
+import { IGetBookingDetailsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetBookingDetailsUseCase";
+import { GetBookingDetailsUseCase } from "@useCases/hotelBooking/GetBookingDetailsUseCase";
+import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICancelBookingUseCase";
+import { CancelBookingUseCase } from "@useCases/hotelBooking/CancelBookingUseCase";
+import { IGetOverallDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetOverallDashboardUseCase";
+import { GetOverallDashboardUseCase } from "@useCases/hotelBooking/GetOverallDashboardUseCase";
+import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelDashboardUseCase";
+import { GetHotelDashboardUseCase } from "@useCases/hotelBooking/GetHotelDashboardUseCase";
+import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
+import { GetHotelBookingsUseCase } from "@useCases/hotelBooking/GetHotelBookingsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -288,5 +310,51 @@ export function registerUsecases() {
   container.registerSingleton<IGetBookingByPaymentIdUseCase>(
     "IGetBookingByPaymentIdUseCase",
     GetBookingByPaymentIdUseCase,
+  );
+  container.registerSingleton<IGetTravelerUpcomingBookingsUseCase>(
+    "IGetTravelerUpcomingBookingsUseCase",
+    GetTravelerUpcomingBookingsUseCase,
+  );
+
+  container.registerSingleton<IGetTravelerOngoingBookingsUseCase>(
+    "IGetTravelerOngoingBookingsUseCase",
+    GetTravelerOngoingBookingsUseCase,
+  );
+
+  container.registerSingleton<IGetTravelerCompletedBookingsUseCase>(
+    "IGetTravelerCompletedBookingsUseCase",
+    GetTravelerCompletedBookingsUseCase,
+  );
+  container.registerSingleton<IGetBookingDetailsUseCase>(
+    "IGetBookingDetailsUseCase",
+    GetBookingDetailsUseCase,
+  );
+  container.registerSingleton<ICancelBookingUseCase>(
+    "ICancelBookingUseCase",
+    CancelBookingUseCase,
+  );
+  container.registerSingleton<IGetOverallDashboardUseCase>(
+    "IGetOverallDashboardUseCase",
+    GetOverallDashboardUseCase,
+  );
+  container.registerSingleton<IGetHotelDashboardUseCase>(
+    "IGetHotelDashboardUseCase",
+    GetHotelDashboardUseCase,
+  );
+  container.registerSingleton<IGetHotelBookingsUseCase>(
+    "IGetHotelBookingsUseCase",
+    GetHotelBookingsUseCase,
+  );
+  container.registerSingleton<IGetAvailableRoomsForCheckInUseCase>(
+    "IGetAvailableRoomsForCheckInUseCase",
+    GetAvailableRoomsForCheckInUseCase,
+  );
+  container.registerSingleton<ICheckInBookingUseCase>(
+    "ICheckInBookingUseCase",
+    CheckInBookingUseCase,
+  );
+  container.registerSingleton<ICheckOutBookingUseCase>(
+    "ICheckOutBookingUseCase",
+    CheckOutBookingUseCase,
   );
 }

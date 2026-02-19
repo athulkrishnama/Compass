@@ -1,5 +1,6 @@
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
+import { REFUND_STATUS } from "@domain/enums/refundStatus";
 import { Schema, Types } from "mongoose";
 
 export interface IHotelBookingDocument extends Document {
@@ -15,6 +16,9 @@ export interface IHotelBookingDocument extends Document {
   paymentStatus: PAYMENT_STATUS;
   bookingStatus: BOOKING_STATUS;
   isWalkIn: boolean;
+  refundAmount?: number;
+  refundStatus?: REFUND_STATUS;
+  cancelledAt?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -42,6 +46,13 @@ export const hotelBookingSchema = new Schema<IHotelBookingDocument>({
     type: Boolean,
     default: false,
   },
+  refundAmount: { type: Number, default: 0 },
+  refundStatus: {
+    type: String,
+    enum: Object.values(REFUND_STATUS),
+    default: REFUND_STATUS.NONE,
+  },
+  cancelledAt: { type: Date },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

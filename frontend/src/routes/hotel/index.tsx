@@ -1,9 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import OverallDashboard from "@/pages/hotel/OverallDashboard";
 
 export const Route = createFileRoute("/hotel/")({
-    component: RouteComponent,
+    component: OverallDashboard,
 });
-
-function RouteComponent() {
-    return <div>Hello "/hotel/"!</div>;
-}

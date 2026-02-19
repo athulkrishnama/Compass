@@ -80,4 +80,25 @@ export class PaymentService implements IPaymentService {
       );
     }
   }
+
+  async refundPayment(
+    paymentIntentId: string,
+    amount: number,
+  ): Promise<{ refundId: string; status: string }> {
+    try {
+      const refund = await this._stripe.refunds.create({
+        payment_intent: paymentIntentId,
+        amount: amount * 100,
+      });
+      return {
+        refundId: refund.id,
+        status: refund.status || "unknown",
+      };
+    } catch (error) {
+      console.log(error);
+      throw new InvalidOperationException(
+        INTERNAL_ERROR_MESSAGES.REFUND_FAILED,
+      );
+    }
+  }
 }

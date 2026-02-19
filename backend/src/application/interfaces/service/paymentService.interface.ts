@@ -12,4 +12,9 @@ export interface IPaymentService {
     metadata?: Record<string, string>;
     paymentIntentId?: string;
   }>;
+
+  refundPayment(
+    paymentIntentId: string,
+    amount: number,
+  ): Promise<{ refundId: string; status: string }>;
 }

@@ -105,4 +105,27 @@ export class RoomVariantRepo
       updatedAt: doc.updatedAt,
     };
   }
+
+  async getTotalRoomsByHotelIds(
+    hotelIds: string[],
+  ): Promise<{ hotelId: string; totalRooms: number }[]> {
+    const objectIds = hotelIds.map((id) => new Types.ObjectId(id));
+    const result = await this._model.aggregate([
+      { $match: { hotelId: { $in: objectIds }, isActive: true } },
+      {
+        $group: {
+          _id: "$hotelId",
+          totalRooms: { $sum: "$totalRooms" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          hotelId: { $toString: "$_id" },
+          totalRooms: 1,
+        },
+      },
+    ]);
+    return result;
+  }
 }

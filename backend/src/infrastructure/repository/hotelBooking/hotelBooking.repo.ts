@@ -5,7 +5,14 @@ import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooki
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { inject, injectable } from "tsyringe";
-import { Model, RootFilterQuery } from "mongoose";
+import { Model, PipelineStage, RootFilterQuery, Types } from "mongoose";
+import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
+import { IHotelBookingListingAggregation } from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
+import { VALUES } from "@presentation/constants/values";
+import { IHotelDocument } from "../hotel/hotelSchema";
+import { IRoomVariantDocument } from "../roomVariant/roomVariantSchema";
+import { IUserDocument } from "../users/userSchema";
+import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 
 @injectable()
 export class HotelBookingRepo
@@ -22,6 +29,7 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
+    roomNumber?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -43,6 +51,9 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
+    }
+    if (filter.roomNumber) {
+      filterQuery.roomNumber = filter.roomNumber;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -90,6 +101,7 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
+    roomNumber?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -111,6 +123,9 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
+    }
+    if (filter.roomNumber) {
+      filterQuery.roomNumber = filter.roomNumber;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -184,8 +199,531 @@ export class HotelBookingRepo
       paymentStatus: doc.paymentStatus,
       bookingStatus: doc.bookingStatus,
       isWalkIn: doc.isWalkIn,
+      refundAmount: doc.refundAmount,
+      refundStatus: doc.refundStatus,
+      cancelledAt: doc.cancelledAt,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };
+  }
+
+  async getTravelerOngoingBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          travelerId,
+          checkinDate: { $lt: tomorrow },
+          checkoutDate: { $gte: today },
+          bookingStatus: {
+            $in: [BOOKING_STATUS.CONFIRMED, BOOKING_STATUS.CHECKED_IN],
+          },
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $sort: { checkinDate: 1 },
+      },
+      {
+        $skip: (pageNo - 1) * VALUES.BOOKINGS_LIMIT,
+      },
+      {
+        $limit: VALUES.BOOKINGS_LIMIT,
+      },
+    ];
+
+    const bookings = await this._model.aggregate<
+      IHotelBookingDocument & { hotel: IHotelDocument }
+    >(aggregationPipeline);
+
+    return {
+      bookings: bookings.map((booking) => ({
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: {
+          name: booking.hotel.name,
+          coverImage: booking.hotel.coverImage,
+          address: { city: booking.hotel.address.city },
+        },
+      })),
+      pageNo,
+    };
+  }
+
+  async getTravelerUpcomingBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          travelerId,
+          checkinDate: { $gte: tomorrow },
+          bookingStatus: BOOKING_STATUS.CONFIRMED,
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $sort: { checkinDate: 1 },
+      },
+      {
+        $skip: (pageNo - 1) * VALUES.BOOKINGS_LIMIT,
+      },
+      {
+        $limit: VALUES.BOOKINGS_LIMIT,
+      },
+    ];
+
+    const bookings = await this._model.aggregate<
+      IHotelBookingDocument & { hotel: IHotelDocument }
+    >(aggregationPipeline);
+
+    return {
+      bookings: bookings.map((booking) => ({
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: {
+          name: booking.hotel.name,
+          coverImage: booking.hotel.coverImage,
+          address: { city: booking.hotel.address.city },
+        },
+      })),
+      pageNo,
+    };
+  }
+
+  async getTravelerCompletedBookings(
+    travelerId: string,
+    pageNo: number,
+  ): Promise<IBookingWithHotelAggregation> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          travelerId,
+          bookingStatus: {
+            $in: [BOOKING_STATUS.COMPLETED, BOOKING_STATUS.CANCELLED],
+          },
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $sort: { checkinDate: -1 },
+      },
+      {
+        $skip: (pageNo - 1) * VALUES.BOOKINGS_LIMIT,
+      },
+      {
+        $limit: VALUES.BOOKINGS_LIMIT,
+      },
+    ];
+
+    const bookings = await this._model.aggregate<
+      IHotelBookingDocument & { hotel: IHotelDocument }
+    >(aggregationPipeline);
+
+    return {
+      bookings: bookings.map((booking) => ({
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: {
+          name: booking.hotel.name,
+          coverImage: booking.hotel.coverImage,
+          address: { city: booking.hotel.address.city },
+        },
+      })),
+      pageNo,
+    };
+  }
+
+  async getBookingDetailsById(
+    bookingId: string,
+    travelerId: string,
+  ): Promise<IBookingDetailsAggregation | null> {
+    const aggregationPipeline: PipelineStage[] = [
+      {
+        $match: {
+          _id: new Types.ObjectId(bookingId),
+          travelerId,
+        },
+      },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $addFields: {
+          roomVariantObjectId: { $toObjectId: "$roomVariantId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      {
+        $unwind: "$roomVariant",
+      },
+    ];
+
+    const result = await this._model.aggregate<
+      IHotelBookingDocument & {
+        hotel: IHotelDocument;
+        roomVariant: IRoomVariantDocument;
+      }
+    >(aggregationPipeline);
+
+    if (result.length === 0) return null;
+
+    const booking = result[0];
+    return {
+      booking: {
+        ...this.toEntity(booking as IHotelBookingDocument),
+        hotel: booking.hotel,
+        roomVariant: booking.roomVariant,
+      },
+    };
+  }
+
+  async getDashboardStats(hotelIds: string[]): Promise<
+    {
+      hotelId: string;
+      todayCheckIns: number;
+      todayCheckOuts: number;
+      activeGuests: number;
+      occupiedRooms: number;
+      totalRevenue: number;
+      totalBookings: number;
+    }[]
+  > {
+    const today = new Date();
+    const startOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+    );
+    const endOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+    );
+
+    const result = await this._model.aggregate([
+      { $match: { hotelId: { $in: hotelIds } } },
+      {
+        $group: {
+          _id: "$hotelId",
+          todayCheckIns: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$checkinDate", startOfDay] },
+                    { $lt: ["$checkinDate", endOfDay] },
+                    { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          todayCheckOuts: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$checkoutDate", startOfDay] },
+                    { $lt: ["$checkoutDate", endOfDay] },
+                    { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          activeGuests: {
+            $sum: {
+              $cond: [
+                { $eq: ["$bookingStatus", BOOKING_STATUS.CHECKED_IN] },
+                1,
+                0,
+              ],
+            },
+          },
+          occupiedRooms: {
+            $sum: {
+              $cond: [
+                { $eq: ["$bookingStatus", BOOKING_STATUS.CHECKED_IN] },
+                1,
+                0,
+              ],
+            },
+          },
+          totalRevenue: {
+            $sum: {
+              $cond: [
+                { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                "$totalAmount",
+                0,
+              ],
+            },
+          },
+          totalBookings: {
+            $sum: {
+              $cond: [
+                { $ne: ["$bookingStatus", BOOKING_STATUS.CANCELLED] },
+                1,
+                0,
+              ],
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          hotelId: "$_id",
+          todayCheckIns: 1,
+          todayCheckOuts: 1,
+          activeGuests: 1,
+          occupiedRooms: 1,
+          totalRevenue: 1,
+          totalBookings: 1,
+        },
+      },
+    ]);
+
+    return result;
+  }
+
+  async getRecentBookingsByHotelId(
+    hotelId: string,
+    limit: number,
+  ): Promise<
+    {
+      _id: string;
+      guestName: string;
+      roomVariantName: string;
+      checkinDate: Date;
+      checkoutDate: Date;
+      bookingStatus: BOOKING_STATUS;
+      totalAmount: number;
+    }[]
+  > {
+    const result = await this._model.aggregate([
+      {
+        $match: {
+          hotelId,
+          bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      { $limit: limit },
+      {
+        $addFields: {
+          travelerObjectId: { $toObjectId: "$travelerId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "travelerObjectId",
+          foreignField: "_id",
+          as: "traveler",
+        },
+      },
+      { $unwind: { path: "$traveler", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          roomVariantObjectId: { $toObjectId: "$roomVariantId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      { $unwind: { path: "$roomVariant", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: { $toString: "$_id" },
+          guestName: { $ifNull: ["$traveler.full_name", "Guest"] },
+          roomVariantName: { $ifNull: ["$roomVariant.name", "Unknown"] },
+          checkinDate: 1,
+          checkoutDate: 1,
+          bookingStatus: 1,
+          totalAmount: 1,
+        },
+      },
+    ]);
+
+    return result;
+  }
+
+  async getHotelBookings(params: {
+    hotelId: string;
+    roomVariantId?: string;
+    bookingStatus?: BOOKING_STATUS;
+    search?: string;
+    pageNo: number;
+  }): Promise<IHotelBookingListingAggregation> {
+    const matchStage: Record<string, unknown> = {
+      hotelId: params.hotelId,
+    };
+
+    if (params.roomVariantId) {
+      matchStage.roomVariantId = params.roomVariantId;
+    }
+
+    if (params.bookingStatus) {
+      matchStage.bookingStatus = params.bookingStatus;
+    }
+
+    const pipeline: PipelineStage[] = [
+      { $match: matchStage },
+      {
+        $addFields: {
+          travelerObjectId: { $toObjectId: "$travelerId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "travelerObjectId",
+          foreignField: "_id",
+          as: "traveler",
+        },
+      },
+      { $unwind: { path: "$traveler", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          roomVariantObjectId: { $toObjectId: "$roomVariantId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      { $unwind: { path: "$roomVariant", preserveNullAndEmptyArrays: true } },
+    ];
+
+    if (params.search) {
+      pipeline.push({
+        $match: {
+          "traveler.full_name": {
+            $regex: params.search,
+            $options: "i",
+          },
+        },
+      });
+    }
+
+    pipeline.push({ $sort: { createdAt: -1 } });
+
+    const result = await this._model.aggregate<{
+      bookings: (IHotelBookingDocument & {
+        traveler: IUserDocument;
+        roomVariant: IRoomVariantDocument;
+      })[];
+      total: { count: number }[];
+    }>([
+      ...pipeline,
+      {
+        $facet: {
+          bookings: [
+            { $skip: (params.pageNo - 1) * VALUES.BOOKINGS_LIMIT },
+            { $limit: VALUES.BOOKINGS_LIMIT },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ]);
+
+    const facetResult = result[0];
+
+    return {
+      bookings: facetResult?.bookings || [],
+      total: facetResult?.total?.[0]?.count || 0,
+    } as unknown as IHotelBookingListingAggregation;
   }
 }
