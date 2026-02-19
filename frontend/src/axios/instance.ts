@@ -1,4 +1,5 @@
 import { env } from "@/config/env";
+import { HTTP_STATUS_CODES } from "@/constants/HTTPStatusCodes";
 import { ROLES } from "@/constants/roles";
 import { AUTH_ROUTES } from "@/constants/routes/authRoutes";
 import { router } from "@/main";
@@ -30,7 +31,7 @@ axiosInstance.interceptors.response.use(
         const originalRequest = err.config;
 
         if (
-            err.response.status === 403 &&
+            err.response.status === HTTP_STATUS_CODES.FORBIDDEN &&
             err.response.data.error === "blocked"
         ) {
             const role = store.getState().user.role;
@@ -47,7 +48,7 @@ axiosInstance.interceptors.response.use(
         }
 
         if (
-            err.response.status === 401 &&
+            err.response.status === HTTP_STATUS_CODES.UNAUTHORIZED &&
             err.response.data.error === "invalidToken" &&
             !originalRequest.retry
         ) {
@@ -65,9 +66,9 @@ axiosInstance.interceptors.response.use(
                 store.dispatch(removeUser());
 
                 let url = "";
-                if (role === "ADMIN") url = "/admin/login";
-                else if (role === "CAB") url = "/cab/login";
-                else if (role === "HOTEL") url = "/hotel/login";
+                if (role === ROLES.ADMIN) url = "/admin/login";
+                else if (role === ROLES.CAB) url = "/cab/login";
+                else if (role === ROLES.HOTEL) url = "/hotel/login";
                 else url = "/traveler/login";
 
                 window.location.href = url;

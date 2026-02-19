@@ -87,7 +87,9 @@ export class HotelRepo
       aggregationPipeline.push({ $match: query });
     }
 
-    const roomVariantMatch: any = {};
+    const roomVariantMatch: RootFilterQuery<IRoomVariantDocument> = {
+      maxOccupancy: null,
+    };
     if (filter.guests) {
       roomVariantMatch.maxOccupancy = { $gte: filter.guests };
     }
