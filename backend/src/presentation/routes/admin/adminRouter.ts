@@ -65,6 +65,15 @@ export class AdminRouter {
         adminController.handleRejectUser(req, res, next);
       },
     );
+
+    this._router.get(
+      AdminRoutes.TRANSACTIONS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.getTransactions(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

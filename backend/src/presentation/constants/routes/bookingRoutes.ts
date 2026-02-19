@@ -11,4 +11,6 @@ export enum BookingRoutes {
   GET_AVAILABLE_ROOMS = "/hotel/:hotelId/bookings/:bookingId/available-rooms",
   CHECK_IN = "/hotel/:hotelId/bookings/:bookingId/check-in",
   CHECK_OUT = "/hotel/:hotelId/bookings/:bookingId/check-out",
+  HOTEL_WALLET = "/wallet",
+  HOTEL_TRANSACTIONS = "/transactions",
 }

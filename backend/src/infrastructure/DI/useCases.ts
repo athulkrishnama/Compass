@@ -119,6 +119,12 @@ import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotel
 import { GetHotelDashboardUseCase } from "@useCases/hotelBooking/GetHotelDashboardUseCase";
 import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
 import { GetHotelBookingsUseCase } from "@useCases/hotelBooking/GetHotelBookingsUseCase";
+import { IGetWalletUseCase } from "@application/interfaces/useCase/wallet/IGetWalletUseCase";
+import { GetWalletUseCase } from "@useCases/wallet/GetWalletUseCase";
+import { IGetProviderTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetProviderTransactionsUseCase";
+import { GetProviderTransactionsUseCase } from "@useCases/transaction/GetProviderTransactionsUseCase";
+import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAdminTransactionsUseCase";
+import { GetAdminTransactionsUseCase } from "@useCases/transaction/GetAdminTransactionsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -356,5 +362,17 @@ export function registerUsecases() {
   container.registerSingleton<ICheckOutBookingUseCase>(
     "ICheckOutBookingUseCase",
     CheckOutBookingUseCase,
+  );
+  container.registerSingleton<IGetWalletUseCase>(
+    "IGetWalletUseCase",
+    GetWalletUseCase,
+  );
+  container.registerSingleton<IGetProviderTransactionsUseCase>(
+    "IGetProviderTransactionsUseCase",
+    GetProviderTransactionsUseCase,
+  );
+  container.registerSingleton<IGetAdminTransactionsUseCase>(
+    "IGetAdminTransactionsUseCase",
+    GetAdminTransactionsUseCase,
   );
 }

@@ -17,6 +17,11 @@ import { roomLockModel } from "@infrastructure/repository/roomLock/roomLockModel
 import { IRoomStatusDocument } from "@infrastructure/repository/roomStatus/roomStatusSchema";
 import { roomStatusModel } from "@infrastructure/repository/roomStatus/roomStatusModel";
 
+import { IWalletDocument } from "@infrastructure/repository/wallet/walletSchema";
+import { walletModel } from "@infrastructure/repository/wallet/walletModel";
+import { ITransactionDocument } from "@infrastructure/repository/transaction/transactionSchema";
+import { transactionModel } from "@infrastructure/repository/transaction/transactionModel";
+
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
     useValue: userModel,
@@ -41,5 +46,11 @@ export function registerModel() {
   });
   container.register<Model<IRoomStatusDocument>>("IRoomStatusModel", {
     useValue: roomStatusModel,
+  });
+  container.register<Model<IWalletDocument>>("IWalletModel", {
+    useValue: walletModel,
+  });
+  container.register<Model<ITransactionDocument>>("ITransactionModel", {
+    useValue: transactionModel,
   });
 }

@@ -39,6 +39,10 @@ function RouteComponent() {
             name: t(translationKey.button.bookings),
             route: "/hotel/bookings",
         },
+        {
+            name: t(translationKey.transactions.title),
+            route: "/hotel/transactions",
+        },
 
         { name: t(translationKey.button.profile), route: "/hotel/profile" },
     ];

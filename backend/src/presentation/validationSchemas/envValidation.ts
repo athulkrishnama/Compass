@@ -41,4 +41,8 @@ export const envSchema = z.object({
   ROOM_LOCK_TIME: z.coerce.number({
     error: Errors.ROOM_LOCK_EXPIRATION_TIME_ERROR,
   }),
+  COMMISSION_PERCENTAGE: z.coerce
+    .number({ error: Errors.COMMISSION_PERCENTAGE_ERROR })
+    .min(0)
+    .max(100),
 });

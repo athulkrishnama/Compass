@@ -41,4 +41,6 @@ export enum Messages {
   CHECKED_IN_SUCCESSFULLY = "checkedInSuccessfully",
   CHECKED_OUT_SUCCESSFULLY = "checkedOutSuccessfully",
   AVAILABLE_ROOMS_FETCHED = "availableRoomsFetched",
+  WALLET_FETCHED_SUCCESSFULLY = "walletFetchedSuccessfully",
+  TRANSACTIONS_FETCHED_SUCCESSFULLY = "transactionsFetchedSuccessfully",
 }

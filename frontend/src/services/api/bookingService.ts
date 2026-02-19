@@ -99,3 +99,29 @@ export async function checkOutBooking(bookingId: string, hotelId: string) {
         throw new Error("Something went wrong");
     }
 }
+
+export async function getWallet() {
+    try {
+        const url = BookingRoutes.HOTEL_WALLET;
+        const response = await axiosInstance.get(url);
+        return response.data.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
+export async function getTransactions(page: number) {
+    try {
+        const url = BookingRoutes.HOTEL_TRANSACTIONS;
+        const response = await axiosInstance.get(url, { params: { page } });
+        return response.data.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}

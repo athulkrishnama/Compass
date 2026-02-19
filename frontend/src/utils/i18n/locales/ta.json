@@ -772,5 +772,28 @@
         "error": "பிழை",
         "roomLabel": "அறை {{room}}",
         "checkInFailed": "செக்-இன் தோல்வியடைந்தது"
+    },
+    "transactions": {
+        "title": "பரிவர்த்தனைகள்",
+        "walletBalance": "வாலட் இருப்பு",
+        "transactionHistory": "பரிவர்த்தனை வரலாறு",
+        "noTransactions": "இதுவரை பரிவர்த்தனைகள் இல்லை",
+        "bookingId": "முன்பதிவு",
+        "amount": "தொகை",
+        "commission": "கமிஷன்",
+        "providerAmount": "வரவு வைக்கப்பட்டது",
+        "commissionRate": "கமிஷன் விகிதம்",
+        "date": "தேதி",
+        "selectHotel": "பரிவர்த்தனைகளைப் பார்க்க ஒரு ஹோட்டலைத் தேர்ந்தெடுக்கவும்",
+        "totalCommission": "ஈட்டிய மொத்த கமிஷன்",
+        "adminTitle": "பரிவர்த்தனைகள்",
+        "hotelName": "ஹோட்டல்",
+        "service": "சேவை",
+        "previous": "முந்தைய",
+        "next": "அடுத்தது",
+        "page": "பக்கம்",
+        "creditedToAdmin": "நிர்வாகிக்கு வரவு வைக்கப்பட்டது",
+        "paymentReceived": "கட்டணம் பெறப்பட்டது",
+        "hotelCredit": "ஹோட்டல் வாலட் வரவு"
     }
 }
