@@ -193,6 +193,7 @@ export class HotelController {
 
   async handleHotelSearch(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log(req.query);
       const data = hotelSearchValidationSchema.safeParse(req.query);
 
       if (data.error) {

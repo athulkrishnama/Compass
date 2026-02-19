@@ -29,15 +29,14 @@ const HotelSearch = () => {
     > => {
         return {
             queryString: searchParams.q || undefined,
-            checkInDate: searchParams.checkIn
-                ? new Date(searchParams.checkIn).toLocaleDateString("en-GB")
-                : undefined,
-            checkOutDate: searchParams.checkOut
-                ? new Date(searchParams.checkOut).toLocaleDateString("en-GB")
-                : undefined,
             guests: searchParams.guests,
             minPrice: searchParams.minPrice,
             maxPrice: searchParams.maxPrice,
+            city:
+                searchParams.city && searchParams.city.length === 2
+                    ? [searchParams.city[0], searchParams.city[1]]
+                    : undefined,
+            proximityRadius: searchParams.proximityRadius,
         };
     }, [searchParams]);
 
@@ -81,27 +80,50 @@ const HotelSearch = () => {
 
     const filters = {
         searchQuery: searchParams.q || "",
-        checkIn: searchParams.checkIn || "",
-        checkOut: searchParams.checkOut || "",
         guests: searchParams.guests,
         minPrice: searchParams.minPrice,
         maxPrice: searchParams.maxPrice,
+        city:
+            searchParams.city && searchParams.city.length === 2
+                ? (searchParams.city as [number, number])
+                : undefined,
+        cityName: searchParams.cityName,
+        proximityRadius: searchParams.proximityRadius,
     };
 
     const handleFiltersChange = (newFilters: Partial<typeof filters>) => {
         const mappedFilters: Partial<HotelSearchParams> = {};
         if ("searchQuery" in newFilters)
             mappedFilters.q = newFilters.searchQuery;
-        if ("checkIn" in newFilters) mappedFilters.checkIn = newFilters.checkIn;
-        if ("checkOut" in newFilters)
-            mappedFilters.checkOut = newFilters.checkOut;
         if ("guests" in newFilters) mappedFilters.guests = newFilters.guests;
         if ("minPrice" in newFilters)
             mappedFilters.minPrice = newFilters.minPrice;
         if ("maxPrice" in newFilters)
             mappedFilters.maxPrice = newFilters.maxPrice;
+
+        if ("city" in newFilters) {
+            mappedFilters.city = newFilters.city;
+            // Default to 10km if city is selected but no radius is set
+            if (newFilters.city && !filters.proximityRadius) {
+                mappedFilters.proximityRadius = 10;
+            }
+        }
+
+        if ("cityName" in newFilters)
+            mappedFilters.cityName = newFilters.cityName;
+        if ("proximityRadius" in newFilters)
+            mappedFilters.proximityRadius = newFilters.proximityRadius;
+
         handleFilterChange(mappedFilters);
     };
+
+    const handleResetFilters = useCallback(() => {
+        navigate({
+            to: "/traveler/hotels",
+            search: { guests: 1 },
+            replace: true,
+        });
+    }, [navigate]);
 
     return (
         <div className="min-h-screen bg-gray-50/50">
@@ -125,6 +147,7 @@ const HotelSearch = () => {
                     <HotelSearchFilters
                         filters={filters}
                         onFilterChange={handleFiltersChange}
+                        onReset={handleResetFilters}
                     />
                 </motion.div>
 

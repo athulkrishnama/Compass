@@ -72,3 +72,5 @@ export const hotelSchema = new Schema<IHotelDocument>({
     },
   },
 });
+
+hotelSchema.index({ "address.coordinates": "2dsphere" });

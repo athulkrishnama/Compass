@@ -29,7 +29,10 @@ export const errorHandlingMiddleware = (
     let statusCode = HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR;
 
     if (err instanceof ApplicationException) {
-      if (err instanceof UserNotFoundException || err instanceof ResourceNotFoundException) {
+      if (
+        err instanceof UserNotFoundException ||
+        err instanceof ResourceNotFoundException
+      ) {
         statusCode = HTTP_STATUS_CODE.NOT_FOUND;
       } else if (
         err instanceof UserAlreadyExistingException ||

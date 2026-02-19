@@ -67,29 +67,55 @@ export class HotelRepo
       ];
     }
 
-    if (filter.city && filter.proximityRadius) {
-      query.address = {
-        coordinates: {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: filter.city,
-            },
-            $maxDistance: filter.proximityRadius * 1000,
-          },
-        },
-      };
-    }
-
     const aggregationPipeline: PipelineStage[] = [];
 
-    aggregationPipeline.push({ $match: query });
+    if (filter.city && filter.proximityRadius) {
+      aggregationPipeline.push({
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [filter.city[1], filter.city[0]],
+          },
+          distanceField: "distance",
+          maxDistance: filter.proximityRadius * 1000,
+          query: query,
+          spherical: true,
+          key: "address.coordinates",
+        },
+      });
+    } else {
+      aggregationPipeline.push({ $match: query });
+    }
+
+    const roomVariantMatch: RootFilterQuery<IRoomVariantDocument> = {
+      maxOccupancy: null,
+    };
+    if (filter.guests) {
+      roomVariantMatch.maxOccupancy = { $gte: filter.guests };
+    }
+
+    if (filter.minPrice !== undefined || filter.maxPrice !== undefined) {
+      roomVariantMatch.basePrice = {};
+      if (filter.minPrice !== undefined) {
+        roomVariantMatch.basePrice.$gte = filter.minPrice;
+      }
+      if (filter.maxPrice !== undefined) {
+        roomVariantMatch.basePrice.$lte = filter.maxPrice;
+      }
+    }
 
     aggregationPipeline.push({
       $lookup: {
         from: "roomvariants",
-        localField: "_id",
-        foreignField: "hotelId",
+        let: { hotelId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ["$hotelId", "$$hotelId"] },
+              ...roomVariantMatch,
+            },
+          },
+        ],
         as: "roomVariant",
       },
     });
@@ -97,6 +123,7 @@ export class HotelRepo
     aggregationPipeline.push({
       $match: { "roomVariant.0": { $exists: true } },
     });
+
     aggregationPipeline.push({
       $skip: (filter.pageNo - 1) * VALUES.HOTELS_LIMIT,
     });
