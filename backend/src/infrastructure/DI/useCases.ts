@@ -1,3 +1,9 @@
+import { IGetAvailableRoomsForCheckInUseCase } from "@application/interfaces/useCase/hotelBooking/IGetAvailableRoomsForCheckInUseCase";
+import { GetAvailableRoomsForCheckInUseCase } from "@useCases/hotelBooking/GetAvailableRoomsForCheckInUseCase";
+import { ICheckInBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckInBookingUseCase";
+import { CheckInBookingUseCase } from "@useCases/hotelBooking/CheckInBookingUseCase";
+import { ICheckOutBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckOutBookingUseCase";
+import { CheckOutBookingUseCase } from "@useCases/hotelBooking/CheckOutBookingUseCase";
 import { IGetUsersUseCase } from "application/interfaces/useCase/admin/getUsersUseCase.interface";
 import { IUserStatusChangeUseCase } from "application/interfaces/useCase/admin/userStatusChangeUseCase.interface";
 import { IForgetPasswordResetPasswordUseCase } from "application/interfaces/useCase/auth/forgetPasswordResetPassword.interface";
@@ -338,5 +344,17 @@ export function registerUsecases() {
   container.registerSingleton<IGetHotelBookingsUseCase>(
     "IGetHotelBookingsUseCase",
     GetHotelBookingsUseCase,
+  );
+  container.registerSingleton<IGetAvailableRoomsForCheckInUseCase>(
+    "IGetAvailableRoomsForCheckInUseCase",
+    GetAvailableRoomsForCheckInUseCase,
+  );
+  container.registerSingleton<ICheckInBookingUseCase>(
+    "ICheckInBookingUseCase",
+    CheckInBookingUseCase,
+  );
+  container.registerSingleton<ICheckOutBookingUseCase>(
+    "ICheckOutBookingUseCase",
+    CheckOutBookingUseCase,
   );
 }

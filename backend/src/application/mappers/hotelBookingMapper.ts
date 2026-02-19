@@ -82,6 +82,9 @@ export class HotelBookingMapper {
     return {
       bookings: data.bookings.map((b) => ({
         id: b._id.toString(),
+        travelerId: b.travelerId,
+        travelerEmail: b.traveler?.email || "",
+        travelerProfileImage: b.traveler?.profile_image || "",
         guestName: b.traveler?.full_name || "Guest",
         roomVariantName: b.roomVariant?.name || "Unknown",
         roomNumber: b.roomNumber || "-",

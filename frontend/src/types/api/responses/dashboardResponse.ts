@@ -1,4 +1,4 @@
-import { BOOKING_STATUS } from "@/types/api/responses/bookingResponse";
+import { BookingStatus } from "@/enums/bookingStatus";
 
 export interface IHotelDashboardSummary {
     id: string;
@@ -31,7 +31,7 @@ export interface IRecentBooking {
     roomVariantName: string;
     checkInDate: string;
     checkOutDate: string;
-    status: BOOKING_STATUS;
+    status: BookingStatus;
     totalAmount: number;
 }
 

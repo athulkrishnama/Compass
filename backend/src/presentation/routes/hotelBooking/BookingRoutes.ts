@@ -76,6 +76,27 @@ export class BookingRouter {
       authMiddleware.authorizeRole([ROLES.HOTEL]),
       (req, res, next) => bookingController.getHotelBookings(req, res, next),
     );
+
+    this._router.get(
+      BookingRoutes.GET_AVAILABLE_ROOMS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.getAvailableRooms(req, res, next),
+    );
+
+    this._router.patch(
+      BookingRoutes.CHECK_IN,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.checkIn(req, res, next),
+    );
+
+    this._router.patch(
+      BookingRoutes.CHECK_OUT,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.checkOut(req, res, next),
+    );
   }
 
   getRouter(): Router {

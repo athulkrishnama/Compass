@@ -1,19 +1,20 @@
 import { motion } from "framer-motion";
+import { BookingStatus } from "@/enums/bookingStatus";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
 interface BookingHeaderProps {
-    bookingStatus: string;
+    bookingStatus: BookingStatus;
     createdAt: string;
     id: string;
 }
 
-const statusStyles: Record<string, string> = {
-    CONFIRMED: "bg-black text-white",
-    CHECKED_IN: "bg-blue-600 text-white",
-    CANCELLED: "bg-red-600 text-white",
-    COMPLETED: "bg-gray-600 text-white",
+const statusStyles: Record<BookingStatus, string> = {
+    [BookingStatus.CONFIRMED]: "bg-black text-white",
+    [BookingStatus.CHECKED_IN]: "bg-blue-600 text-white",
+    [BookingStatus.CANCELLED]: "bg-red-600 text-white",
+    [BookingStatus.COMPLETED]: "bg-gray-600 text-white",
 };
 
 export function BookingHeader({
@@ -34,11 +35,7 @@ export function BookingHeader({
                         <span
                             className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${statusStyles[bookingStatus] || statusStyles.CONFIRMED}`}
                         >
-                            {t(
-                                translationKey.bookingStatus[
-                                    bookingStatus as keyof typeof translationKey.bookingStatus
-                                ]
-                            )}
+                            {t(translationKey.bookingStatus[bookingStatus])}
                         </span>
                         <span className="text-sm text-muted-foreground">
                             {format(new Date(createdAt), "MMMM dd, yyyy")}

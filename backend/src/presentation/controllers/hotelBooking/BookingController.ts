@@ -12,9 +12,15 @@ import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBook
 import { IGetOverallDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetOverallDashboardUseCase";
 import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelDashboardUseCase";
 import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
+import { IGetAvailableRoomsForCheckInUseCase } from "@application/interfaces/useCase/hotelBooking/IGetAvailableRoomsForCheckInUseCase";
+import { ICheckInBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckInBookingUseCase";
+import { ICheckOutBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckOutBookingUseCase";
 import {
   bookingListingQueryValidationSchema,
   hotelBookingQueryValidationSchema,
+  checkInParamsValidationSchema,
+  checkInBodyValidationSchema,
+  checkOutParamsValidationSchema,
 } from "@presentation/validationSchemas/bookingValidation";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
@@ -40,6 +46,12 @@ export class BookingController {
     private _getHotelDashboardUseCase: IGetHotelDashboardUseCase,
     @inject("IGetHotelBookingsUseCase")
     private _getHotelBookingsUseCase: IGetHotelBookingsUseCase,
+    @inject("IGetAvailableRoomsForCheckInUseCase")
+    private _getAvailableRoomsForCheckInUseCase: IGetAvailableRoomsForCheckInUseCase,
+    @inject("ICheckInBookingUseCase")
+    private _checkInBookingUseCase: ICheckInBookingUseCase,
+    @inject("ICheckOutBookingUseCase")
+    private _checkOutBookingUseCase: ICheckOutBookingUseCase,
   ) {}
 
   async getBookingByPaymentId(req: Request, res: Response, next: NextFunction) {
@@ -271,6 +283,89 @@ export class BookingController {
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getAvailableRooms(req: Request, res: Response, next: NextFunction) {
+    try {
+      const validation = checkInParamsValidationSchema.safeParse(req.params);
+
+      if (!validation.success) {
+        throw new InvalideDataException(validation.error.issues[0].message);
+      }
+
+      const { bookingId, hotelId } = validation.data;
+
+      const result = await this._getAvailableRoomsForCheckInUseCase.execute(
+        bookingId,
+        hotelId,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.AVAILABLE_ROOMS_FETCHED,
+        result,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async checkIn(req: Request, res: Response, next: NextFunction) {
+    try {
+      const paramsValidation = checkInParamsValidationSchema.safeParse(
+        req.params,
+      );
+      const bodyValidation = checkInBodyValidationSchema.safeParse(req.body);
+
+      if (!paramsValidation.success) {
+        throw new InvalideDataException(
+          paramsValidation.error.issues[0].message,
+        );
+      }
+
+      if (!bodyValidation.success) {
+        throw new InvalideDataException(bodyValidation.error.issues[0].message);
+      }
+
+      const { bookingId, hotelId } = paramsValidation.data;
+      const { roomNumber } = bodyValidation.data;
+
+      await this._checkInBookingUseCase.execute(bookingId, hotelId, roomNumber);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.CHECKED_IN_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async checkOut(req: Request, res: Response, next: NextFunction) {
+    try {
+      const validation = checkOutParamsValidationSchema.safeParse(req.params);
+
+      if (!validation.success) {
+        throw new InvalideDataException(validation.error.issues[0].message);
+      }
+
+      const { bookingId, hotelId } = validation.data;
+
+      await this._checkOutBookingUseCase.execute(bookingId, hotelId);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.CHECKED_OUT_SUCCESSFULLY,
       );
     } catch (error) {
       next(error);

@@ -2,7 +2,7 @@ import { MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
-import { BOOKING_STATUS } from "@/types/api/responses/bookingResponse";
+import { BookingStatus } from "@/enums/bookingStatus";
 import { format } from "date-fns";
 import { Link } from "@tanstack/react-router";
 
@@ -14,24 +14,24 @@ interface BookingCardProps {
     checkInDate: string;
     checkOutDate: string;
     totalAmount: number;
-    status: BOOKING_STATUS;
+    status: BookingStatus;
 }
 
 const statusConfig = {
-    [BOOKING_STATUS.CONFIRMED]: {
-        label: "CONFIRMED",
+    [BookingStatus.CONFIRMED]: {
+        translationKey: translationKey.bookingStatus.CONFIRMED,
         className: "bg-black text-white",
     },
-    [BOOKING_STATUS.CHECKED_IN]: {
-        label: "CHECKED IN",
+    [BookingStatus.CHECKED_IN]: {
+        translationKey: translationKey.bookingStatus.CHECKED_IN,
         className: "bg-blue-600 text-white",
     },
-    [BOOKING_STATUS.CANCELLED]: {
-        label: "CANCELLED",
+    [BookingStatus.CANCELLED]: {
+        translationKey: translationKey.bookingStatus.CANCELLED,
         className: "bg-red-600 text-white",
     },
-    [BOOKING_STATUS.COMPLETED]: {
-        label: "COMPLETED",
+    [BookingStatus.COMPLETED]: {
+        translationKey: translationKey.bookingStatus.COMPLETED,
         className: "bg-gray-200 text-gray-600",
     },
 };
@@ -70,7 +70,7 @@ export function BookingCard({
                         <span
                             className={`px-2.5 py-1 rounded-full text-[9px] font-bold tracking-tighter uppercase ${statusConfig[status].className}`}
                         >
-                            {statusConfig[status].label}
+                            {t(statusConfig[status].translationKey)}
                         </span>
                     </div>
                 </div>
@@ -122,7 +122,7 @@ export function BookingCard({
                             params={{ bookingId: id }}
                             className="px-5 py-2 border border-border hover:bg-muted text-xs font-bold rounded-full transition-all active:scale-95"
                         >
-                            {status === BOOKING_STATUS.COMPLETED
+                            {status === BookingStatus.COMPLETED
                                 ? t(translationKey.bookingHistory.viewReceipt)
                                 : t(translationKey.bookingHistory.viewDetails)}
                         </Link>

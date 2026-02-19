@@ -1,9 +1,5 @@
-export enum BOOKING_STATUS {
-    CONFIRMED = "CONFIRMED",
-    CHECKED_IN = "CHECKED_IN",
-    CANCELLED = "CANCELLED",
-    COMPLETED = "COMPLETED",
-}
+import { BookingStatus } from "@/enums/bookingStatus";
+import { PaymentStatus } from "@/enums/paymentStatus";
 
 interface IBooking {
     id: string;
@@ -13,7 +9,7 @@ interface IBooking {
     checkInDate: string;
     checkOutDate: string;
     totalAmount: number;
-    status: BOOKING_STATUS;
+    status: BookingStatus;
 }
 
 export interface ITravelerBookingListingResponseDTO {
@@ -23,8 +19,8 @@ export interface ITravelerBookingListingResponseDTO {
 
 export interface IBookingDetailsResponseDTO {
     id: string;
-    bookingStatus: string;
-    paymentStatus: string;
+    bookingStatus: BookingStatus;
+    paymentStatus: PaymentStatus;
     createdAt: string;
     checkInDate: string;
     checkOutDate: string;
@@ -67,8 +63,11 @@ export interface IHotelBookingListingItem {
     checkInDate: string;
     checkOutDate: string;
     totalAmount: number;
-    paymentStatus: string;
-    bookingStatus: string;
+    paymentStatus: PaymentStatus;
+    bookingStatus: BookingStatus;
+    travelerId?: string;
+    travelerEmail?: string;
+    travelerProfileImage?: string;
 }
 
 export interface IHotelBookingListingResponseDTO {

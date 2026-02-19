@@ -8,7 +8,8 @@ import RoomVariantSelector from "@/components/hotel/bookings/RoomVariantSelector
 import Pagination from "@/components/shared/Pagination/Pagination";
 import Loading from "@/components/shared/loading/Loading";
 import type { IHotelBookingListingItem } from "@/types/api/responses/bookingResponse";
-import { BOOKING_STATUS } from "@/types/api/responses/bookingResponse";
+import { BookingStatus } from "@/enums/bookingStatus";
+import { PaymentStatus } from "@/enums/paymentStatus";
 import { useTranslation } from "react-i18next";
 import translationKeys from "@/utils/i18n/translationKey";
 import { useDebouncedValue } from "@tanstack/react-pacer";
@@ -16,25 +17,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-    Calendar,
-    Search,
-    SlidersHorizontal,
-    MoreVertical,
-} from "lucide-react";
+import { Calendar, Search, SlidersHorizontal } from "lucide-react";
+import CheckInModal from "@/components/hotel/bookings/CheckInModal";
+import CheckOutModal from "@/components/hotel/bookings/CheckOutModal";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const statusStyles: Record<string, string> = {
-    CONFIRMED: "bg-blue-50 text-blue-700 border-blue-200",
-    CHECKED_IN: "bg-green-50 text-green-700 border-green-200",
-    COMPLETED: "bg-gray-100 text-gray-700 border-gray-200",
-    CANCELLED: "bg-red-50 text-red-700 border-red-200",
+const statusStyles: Record<BookingStatus, string> = {
+    [BookingStatus.CONFIRMED]: "bg-blue-50 text-blue-700 border-blue-200",
+    [BookingStatus.CHECKED_IN]: "bg-green-50 text-green-700 border-green-200",
+    [BookingStatus.COMPLETED]: "bg-gray-100 text-gray-700 border-gray-200",
+    [BookingStatus.CANCELLED]: "bg-red-50 text-red-700 border-red-200",
 };
 
-const paymentColors: Record<string, string> = {
-    PAID: "text-green-600",
-    PENDING: "text-amber-600",
-    REFUNDED: "text-purple-600",
-    FAILED: "text-red-600",
+const paymentColors: Record<PaymentStatus, string> = {
+    [PaymentStatus.PAID]: "text-green-600",
+    [PaymentStatus.SUCCESS]: "text-green-600",
+    [PaymentStatus.PENDING]: "text-amber-600",
+    [PaymentStatus.REFUNDED]: "text-purple-600",
+    [PaymentStatus.FAILED]: "text-red-600",
 };
 
 const rowVariants = {
@@ -79,23 +79,37 @@ export default function HotelBookingDetails() {
     const [search, setSearch] = useState("");
     const [debouncedSearch] = useDebouncedValue(search, { wait: 500 });
     const [pageNo, setPageNo] = useState(1);
+    const [selectedBooking, setSelectedBooking] =
+        useState<IHotelBookingListingItem | null>(null);
+    const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
+    const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
+
+    const handleCheckInClick = (booking: IHotelBookingListingItem) => {
+        setSelectedBooking(booking);
+        setIsCheckInModalOpen(true);
+    };
+
+    const handleCheckOutClick = (booking: IHotelBookingListingItem) => {
+        setSelectedBooking(booking);
+        setIsCheckOutModalOpen(true);
+    };
 
     const STATUS_TABS = [
         {
             label: t(translationKeys.hotelBookingListing.current),
-            value: BOOKING_STATUS.CHECKED_IN,
+            value: BookingStatus.CHECKED_IN,
         },
         {
             label: t(translationKeys.hotelBookingListing.upcoming),
-            value: BOOKING_STATUS.CONFIRMED,
+            value: BookingStatus.CONFIRMED,
         },
         {
             label: t(translationKeys.hotelBookingListing.past),
-            value: BOOKING_STATUS.COMPLETED,
+            value: BookingStatus.COMPLETED,
         },
         {
             label: t(translationKeys.hotelBookingListing.cancelled),
-            value: BOOKING_STATUS.CANCELLED,
+            value: BookingStatus.CANCELLED,
         },
         {
             label: t(translationKeys.hotelBookingListing.all),
@@ -226,63 +240,63 @@ export default function HotelBookingDetails() {
                             <table className="w-full text-sm table-fixed min-w-[900px]">
                                 <thead>
                                     <tr className="border-b">
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[8%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[7%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.id
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[15%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[14%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing
                                                     .guestName
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[12%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[11%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.variant
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[7%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[6%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.room
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[12%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[10%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.checkIn
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[12%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[10%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing
                                                     .checkOut
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[10%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[9%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.amount
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[10%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[9%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.payment
                                             )}
                                         </th>
-                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[10%]">
+                                        <th className="text-left px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground w-[9%]">
                                             {t(
                                                 translationKeys
                                                     .hotelBookingListing.status
                                             )}
                                         </th>
-                                        <th className="px-3 py-3.5 w-[4%]"></th>
+                                        <th className="px-3 py-3.5 w-[15%]"></th>
                                     </tr>
                                 </thead>
                                 <tbody className="min-h-[320px]">
@@ -309,15 +323,24 @@ export default function HotelBookingDetails() {
                                                         </td>
                                                         <td className="px-5 py-4 overflow-hidden">
                                                             <div className="flex items-center gap-3 min-w-0">
-                                                                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                                                                    <span className="text-xs font-semibold text-muted-foreground">
+                                                                <Avatar className="w-8 h-8 flex-shrink-0">
+                                                                    <AvatarImage
+                                                                        src={
+                                                                            booking.travelerProfileImage
+                                                                        }
+                                                                        alt={
+                                                                            booking.guestName
+                                                                        }
+                                                                        className="object-cover"
+                                                                    />
+                                                                    <AvatarFallback className="bg-muted text-xs font-semibold text-muted-foreground">
                                                                         {booking.guestName
                                                                             .charAt(
                                                                                 0
                                                                             )
                                                                             .toUpperCase()}
-                                                                    </span>
-                                                                </div>
+                                                                    </AvatarFallback>
+                                                                </Avatar>
                                                                 <span className="font-medium text-foreground truncate">
                                                                     {
                                                                         booking.guestName
@@ -374,14 +397,55 @@ export default function HotelBookingDetails() {
                                                                 )}
                                                             </Badge>
                                                         </td>
-                                                        <td className="px-3 py-4">
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                className="h-8 w-8 p-0"
-                                                            >
-                                                                <MoreVertical className="w-4 h-4 text-muted-foreground" />
-                                                            </Button>
+                                                        <td className="px-5 py-4">
+                                                            {booking.bookingStatus ===
+                                                                BookingStatus.CONFIRMED && (
+                                                                <Button
+                                                                    variant="default"
+                                                                    size="sm"
+                                                                    className="h-8 text-xs bg-black hover:bg-black/90 text-white"
+                                                                    onClick={() =>
+                                                                        handleCheckInClick(
+                                                                            booking
+                                                                        )
+                                                                    }
+                                                                    disabled={
+                                                                        new Date() <
+                                                                            new Date(
+                                                                                booking.checkInDate
+                                                                            ) ||
+                                                                        new Date() >
+                                                                            new Date(
+                                                                                booking.checkOutDate
+                                                                            )
+                                                                    }
+                                                                >
+                                                                    {t(
+                                                                        translationKeys
+                                                                            .hotelBookingListing
+                                                                            .checkIn
+                                                                    )}
+                                                                </Button>
+                                                            )}
+                                                            {booking.bookingStatus ===
+                                                                BookingStatus.CHECKED_IN && (
+                                                                <Button
+                                                                    variant="outline"
+                                                                    size="sm"
+                                                                    className="h-8 text-xs border-black text-black hover:bg-gray-100"
+                                                                    onClick={() =>
+                                                                        handleCheckOutClick(
+                                                                            booking
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    {t(
+                                                                        translationKeys
+                                                                            .hotelBookingListing
+                                                                            .checkOut
+                                                                    )}
+                                                                </Button>
+                                                            )}
                                                         </td>
                                                     </motion.tr>
                                                 )
@@ -413,6 +477,22 @@ export default function HotelBookingDetails() {
                             setPage={setPageNo}
                         />
                     )}
+                </>
+            )}
+            {selectedBooking && hotelId && (
+                <>
+                    <CheckInModal
+                        isOpen={isCheckInModalOpen}
+                        onClose={() => setIsCheckInModalOpen(false)}
+                        booking={selectedBooking}
+                        hotelId={hotelId}
+                    />
+                    <CheckOutModal
+                        isOpen={isCheckOutModalOpen}
+                        onClose={() => setIsCheckOutModalOpen(false)}
+                        booking={selectedBooking}
+                        hotelId={hotelId}
+                    />
                 </>
             )}
         </div>

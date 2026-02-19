@@ -145,4 +145,8 @@ export enum INTERNAL_ERROR_MESSAGES {
   BOOKING_CANNOT_BE_CANCELLED = "bookingCannotBeCancelled",
   REFUND_FAILED = "refundFailed",
   NOT_ALLOWED = "notAllowed",
+  CHECKIN_NOT_ALLOWED = "checkinNotAllowed",
+  CHECKIN_DATE_NOT_REACHED = "checkinDateNotReached",
+  CHECKOUT_NOT_ALLOWED = "checkoutNotAllowed",
+  ROOM_NOT_AVAILABLE_FOR_CHECKIN = "roomNotAvailableForCheckin",
 }

@@ -5,7 +5,13 @@ import {
     getBookingDetails,
     cancelBooking,
 } from "@/services/api/booking.ApiService";
-import { getHotelBookings } from "@/services/api/bookingService";
+import {
+    getHotelBookings,
+    getAvailableRooms,
+    checkInBooking,
+    checkOutBooking,
+} from "@/services/api/bookingService";
+import type { IAvailableRoomsResponseDTO } from "@/types/booking";
 import type { ITravelerBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
 import type { IBookingDetailsResponseDTO } from "@/types/api/responses/bookingResponse";
 import type { IHotelBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
@@ -93,4 +99,31 @@ export function createGetHotelBookingsQueryOptions(
         queryKey: [QUERY_KEYS.HOTEL_BOOKINGS, hotelId, params],
         queryFn: () => getHotelBookings(hotelId, params),
     });
+}
+
+export function createGetAvailableRoomsQueryOptions(
+    hotelId: string,
+    bookingId: string
+) {
+    return queryOptions<IAvailableRoomsResponseDTO, Error>({
+        queryKey: [QUERY_KEYS.AVAILABLE_ROOMS, hotelId, bookingId],
+        queryFn: () => getAvailableRooms(hotelId, bookingId),
+    });
+}
+
+export function createCheckInMutationOptions() {
+    return {
+        mutationFn: (data: {
+            bookingId: string;
+            hotelId: string;
+            roomNumber?: number;
+        }) => checkInBooking(data.bookingId, data.hotelId, data.roomNumber),
+    };
+}
+
+export function createCheckOutMutationOptions() {
+    return {
+        mutationFn: (data: { bookingId: string; hotelId: string }) =>
+            checkOutBooking(data.bookingId, data.hotelId),
+    };
 }

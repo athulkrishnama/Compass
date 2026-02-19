@@ -26,3 +26,33 @@ export const hotelBookingQueryValidationSchema = z.object({
   status: z.enum(Object.values(BOOKING_STATUS)).optional(),
   search: z.string().optional(),
 });
+
+export const checkInParamsValidationSchema = z.object({
+  bookingId: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.INVALID_ID })
+    .regex(/^[0-9a-fA-F]{24}$/, {
+      message: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+    }),
+  hotelId: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.INVALID_ID })
+    .regex(/^[0-9a-fA-F]{24}$/, {
+      message: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+    }),
+});
+
+export const checkInBodyValidationSchema = z.object({
+  roomNumber: z.coerce.number().int().positive().optional(),
+});
+
+export const checkOutParamsValidationSchema = z.object({
+  bookingId: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.INVALID_ID })
+    .regex(/^[0-9a-fA-F]{24}$/, {
+      message: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+    }),
+  hotelId: z
+    .string({ error: INTERNAL_ERROR_MESSAGES.INVALID_ID })
+    .regex(/^[0-9a-fA-F]{24}$/, {
+      message: INTERNAL_ERROR_MESSAGES.INVALID_ID,
+    }),
+});

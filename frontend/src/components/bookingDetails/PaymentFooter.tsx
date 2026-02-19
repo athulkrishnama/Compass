@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { BookingStatus } from "@/enums/bookingStatus";
 import { isPast, parseISO } from "date-fns";
 import { Trash2, Copy, IndianRupee } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -15,7 +16,7 @@ import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 interface PaymentFooterProps {
     totalAmount: number;
     paymentIntendId: string;
-    bookingStatus: string;
+    bookingStatus: BookingStatus;
     checkInDate: string;
     bookingId: string;
     refundAmount?: number;
@@ -36,9 +37,11 @@ export function PaymentFooter({
     const [showCancelModal, setShowCancelModal] = useState(false);
 
     const isCheckInPast = isPast(parseISO(checkInDate));
-    const isCancelled = bookingStatus === "CANCELLED";
+    const isCancelled = bookingStatus === BookingStatus.CANCELLED;
     const canCancel =
-        bookingStatus !== "COMPLETED" && !isCancelled && !isCheckInPast;
+        bookingStatus !== BookingStatus.COMPLETED &&
+        !isCancelled &&
+        !isCheckInPast;
 
     const cancelMutation = useMutation({
         ...createCancelBookingMutationOptions(bookingId),
@@ -53,7 +56,7 @@ export function PaymentFooter({
                         ...old,
                         data: {
                             ...old.data,
-                            bookingStatus: "CANCELLED",
+                            bookingStatus: BookingStatus.CANCELLED,
                             refundAmount: response.data?.refundAmount ?? 0,
                             refundStatus:
                                 response.data?.refundPercentage === 100

@@ -3,6 +3,8 @@ import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 
 export interface HotelBookingListingItem {
   id: string;
+  travelerId: string;
+  travelerEmail: string;
   guestName: string;
   roomVariantName: string;
   roomNumber: string;
@@ -34,6 +36,8 @@ export interface IHotelBookingListingAggregationBooking {
   createdAt?: Date;
   traveler: {
     full_name: string;
+    email: string;
+    profile_image?: string;
   };
   roomVariant: {
     name: string;

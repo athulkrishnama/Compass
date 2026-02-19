@@ -8,6 +8,8 @@ import { ResourceNotFoundException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { VALUES } from "@presentation/constants/values";
+import { IStorageService } from "@application/interfaces/service/storageService.interface";
+import { env } from "@config/envConfig";
 
 @injectable()
 export class GetHotelBookingsUseCase implements IGetHotelBookingsUseCase {
@@ -16,6 +18,8 @@ export class GetHotelBookingsUseCase implements IGetHotelBookingsUseCase {
     private _hotelBookingRepo: IHotelBookingRepo,
     @inject("IHotelRepo")
     private _hotelRepo: IHotelRepo,
+    @inject("IStorageService")
+    private _storageService: IStorageService,
   ) {}
 
   async execute(
@@ -40,6 +44,16 @@ export class GetHotelBookingsUseCase implements IGetHotelBookingsUseCase {
       search,
       pageNo,
     });
+
+    const promises = data.bookings.map(async (b) => {
+      if (b.traveler.profile_image)
+        b.traveler.profile_image = await this._storageService.createSignedUrl(
+          b.traveler.profile_image,
+          env.SIGNED_URL_EXPIRY,
+        );
+    });
+
+    await Promise.all(promises);
 
     const totalPages = Math.ceil(data.total / VALUES.BOOKINGS_LIMIT);
 
