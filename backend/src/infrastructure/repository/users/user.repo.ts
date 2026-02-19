@@ -124,4 +124,12 @@ export class UserRepository
   toEntity(doc: IUserDocument): UserEntity {
     return UserMapper.toEntityfromMongooseDocument(doc);
   }
+
+  async countUsers(role?: ROLES): Promise<number> {
+    const filter: RootFilterQuery<IUserDocument> = {};
+    if (role) {
+      filter.role = role;
+    }
+    return await this._model.countDocuments(filter);
+  }
 }

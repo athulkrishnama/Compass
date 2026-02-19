@@ -125,6 +125,8 @@ import { IGetProviderTransactionsUseCase } from "@application/interfaces/useCase
 import { GetProviderTransactionsUseCase } from "@useCases/transaction/GetProviderTransactionsUseCase";
 import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAdminTransactionsUseCase";
 import { GetAdminTransactionsUseCase } from "@useCases/transaction/GetAdminTransactionsUseCase";
+import { IGetAdminDashboardStatsUseCase } from "@application/interfaces/useCase/admin/getAdminDashboardStatsUseCase.interface";
+import { GetAdminDashboardStatsUseCase } from "../../application/useCases/admin/GetAdminDashboardStatsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -374,5 +376,9 @@ export function registerUsecases() {
   container.registerSingleton<IGetAdminTransactionsUseCase>(
     "IGetAdminTransactionsUseCase",
     GetAdminTransactionsUseCase,
+  );
+  container.registerSingleton<IGetAdminDashboardStatsUseCase>(
+    "IGetAdminDashboardStatsUseCase",
+    GetAdminDashboardStatsUseCase,
   );
 }

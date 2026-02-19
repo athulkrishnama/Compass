@@ -181,4 +181,8 @@ export class HotelRepo
       },
     };
   }
+
+  async countHotels(): Promise<number> {
+    return await this._model.countDocuments();
+  }
 }

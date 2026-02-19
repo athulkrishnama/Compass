@@ -72,4 +72,8 @@ export class CabRepo
     }
     return entity;
   }
+
+  async countCabs(): Promise<number> {
+    return await this._model.countDocuments();
+  }
 }

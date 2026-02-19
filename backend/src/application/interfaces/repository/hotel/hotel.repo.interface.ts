@@ -21,4 +21,5 @@ export interface IHotelRepo
     minPrice?: number;
     pageNo: number;
   }): Promise<IHotelWithAggregatedRoomVariantDTO>;
+  countHotels(): Promise<number>;
 }

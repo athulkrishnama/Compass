@@ -20,6 +20,7 @@ import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/u
 import { IRejectUserVerificationRequestRequestDTO } from "@domain/dtos/admin/rejectUserVerificationRequest.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAdminTransactionsUseCase";
+import { IGetAdminDashboardStatsUseCase } from "@application/interfaces/useCase/admin/getAdminDashboardStatsUseCase.interface";
 
 @injectable()
 export class AdminController {
@@ -37,6 +38,8 @@ export class AdminController {
     private _rejectUserVerificationRequestUseCase: IRejectUserVerificationRequestUseCase,
     @inject("IGetAdminTransactionsUseCase")
     private _getAdminTransactionsUseCase: IGetAdminTransactionsUseCase,
+    @inject("IGetAdminDashboardStatsUseCase")
+    private _getAdminDashboardStatsUseCase: IGetAdminDashboardStatsUseCase,
   ) {}
 
   async handleGetUsers(req: Request, res: Response, next: NextFunction) {
@@ -206,6 +209,35 @@ export class AdminController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.TRANSACTIONS_FETCHED_SUCCESSFULLY,
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetDashboardStats(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const type =
+        (req.query.type as "weekly" | "monthly" | "yearly") || "weekly";
+      const year = req.query.year
+        ? parseInt(req.query.year as string)
+        : undefined;
+
+      const data = await this._getAdminDashboardStatsUseCase.execute({
+        type,
+        year,
+      });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
         data,
       );
     } catch (error) {
