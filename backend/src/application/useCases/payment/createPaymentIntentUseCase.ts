@@ -10,7 +10,8 @@ import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooki
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { ResourceNotFoundException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
-import { getNumberOfDays } from "@presentation/utils/date";
+
+import { IPricingService } from "@application/interfaces/services/IPricingService";
 
 @injectable()
 export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
@@ -21,6 +22,7 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
     @inject("IHotelBookingRepo")
     private _hotelBookingRepository: IHotelBookingRepo,
     @inject("IRoomLockRepo") private _roomLockRepository: IRoomLockRepo,
+    @inject("IPricingService") private _pricingService: IPricingService,
   ) {}
   async execute(
     data: ICreateIndentRequestDTO,
@@ -61,9 +63,13 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
       );
     }
 
-    const totalAmount =
-      getNumberOfDays(data.checkInDate, data.checkOutDate) *
-      roomVariant.basePrice;
+    const pricingDetails = await this._pricingService.calculateDynamicPrice({
+      roomVariantId: data.roomVariantId,
+      checkInDate: data.checkInDate,
+      checkOutDate: data.checkOutDate,
+    });
+
+    const totalAmount = pricingDetails.totalPrice;
 
     const { paymentIntentId, clientSecret } =
       await this._paymentService.createPaymentIntent(totalAmount, {
