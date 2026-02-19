@@ -97,6 +97,25 @@ export async function getAdminTransactions(page: number) {
         if (error instanceof AxiosError) {
             throw new Error(error.response?.data.message);
         }
+    }
+}
+
+export async function getDashboardStats(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+}) {
+    try {
+        const response = await axiosInstance.get(
+            `${AdminRoutes.DASHBOARD_STATS}`,
+            {
+                params: filter,
+            }
+        );
+        return response.data.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
         throw new Error("something went wrong");
     }
 }

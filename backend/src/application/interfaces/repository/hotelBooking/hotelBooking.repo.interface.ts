@@ -99,4 +99,15 @@ export interface IHotelBookingRepo
       totalAmount: number;
     }[]
   >;
+
+  countTotalBookings(): Promise<number>;
+  calculateTotalRevenue(): Promise<number>;
+  getBookingTrends(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+  }): Promise<{ name: string; bookings: number; revenue: number }[]>;
+  getTopBookedHotels(
+    limit: number,
+  ): Promise<{ name: string; bookings: number }[]>;
+  getBookingStatusDistribution(): Promise<{ name: string; value: number }[]>;
 }

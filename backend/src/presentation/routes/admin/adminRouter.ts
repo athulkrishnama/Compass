@@ -74,6 +74,15 @@ export class AdminRouter {
         adminController.getTransactions(req, res, next);
       },
     );
+
+    this._router.get(
+      "/dashboard-stats",
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.handleGetDashboardStats(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

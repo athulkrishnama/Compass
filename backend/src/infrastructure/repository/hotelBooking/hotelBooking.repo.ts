@@ -726,4 +726,168 @@ export class HotelBookingRepo
       total: facetResult?.total?.[0]?.count || 0,
     } as unknown as IHotelBookingListingAggregation;
   }
+
+  async countTotalBookings(): Promise<number> {
+    return await this._model.countDocuments({
+      bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
+    });
+  }
+
+  async calculateTotalRevenue(): Promise<number> {
+    const result = await this._model.aggregate([
+      {
+        $match: {
+          bookingStatus: {
+            $in: [BOOKING_STATUS.COMPLETED, BOOKING_STATUS.CHECKED_IN],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: "$totalAmount" },
+        },
+      },
+    ]);
+    return result[0]?.totalRevenue || 0;
+  }
+
+  async getBookingTrends(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+  }): Promise<{ name: string; bookings: number; revenue: number }[]> {
+    const now = new Date();
+    const year = filter.year || now.getFullYear();
+    let groupBy: Record<string, unknown>;
+    const match: RootFilterQuery<IHotelBookingDocument> = {
+      bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
+    };
+
+    if (filter.type === "weekly") {
+      const startOfWeek = new Date();
+      startOfWeek.setDate(now.getDate() - 6);
+      startOfWeek.setHours(0, 0, 0, 0);
+      match.createdAt = { $gte: startOfWeek };
+      groupBy = { $dayOfWeek: "$createdAt" };
+    } else if (filter.type === "monthly") {
+      const startOfYear = new Date(year, 0, 1);
+      const endOfYear = new Date(year, 11, 31);
+      match.createdAt = { $gte: startOfYear, $lte: endOfYear };
+      groupBy = { $month: "$createdAt" };
+    } else {
+      const startYear = year - 4;
+      const startDate = new Date(startYear, 0, 1);
+      match.createdAt = { $gte: startDate };
+      groupBy = { $year: "$createdAt" };
+    }
+
+    const result = await this._model.aggregate<{
+      _id: number;
+      bookings: number;
+      revenue: number;
+    }>([
+      { $match: match },
+      {
+        $group: {
+          _id: groupBy,
+          bookings: { $sum: 1 },
+          revenue: { $sum: "$totalAmount" },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    return result.map((item) => {
+      let name = "";
+      if (filter.type === "weekly") {
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        name = days[item._id - 1];
+      } else if (filter.type === "monthly") {
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        name = months[item._id - 1];
+      } else {
+        name = item._id.toString();
+      }
+
+      return {
+        name,
+        bookings: item.bookings,
+        revenue: item.revenue,
+      };
+    });
+  }
+
+  async getTopBookedHotels(
+    limit: number,
+  ): Promise<{ name: string; bookings: number }[]> {
+    const result = await this._model.aggregate([
+      {
+        $match: { bookingStatus: { $ne: BOOKING_STATUS.CANCELLED } },
+      },
+      {
+        $group: {
+          _id: "$hotelId",
+          bookings: { $sum: 1 },
+        },
+      },
+      { $sort: { bookings: -1 } },
+      { $limit: limit },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$_id" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      { $unwind: "$hotel" },
+      {
+        $project: {
+          name: "$hotel.name",
+          bookings: 1,
+          _id: 0,
+        },
+      },
+    ]);
+    return result;
+  }
+
+  async getBookingStatusDistribution(): Promise<
+    { name: string; value: number }[]
+  > {
+    const result = await this._model.aggregate([
+      {
+        $group: {
+          _id: "$bookingStatus",
+          value: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          name: "$_id",
+          value: 1,
+          _id: 0,
+        },
+      },
+    ]);
+    return result;
+  }
 }

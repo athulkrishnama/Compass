@@ -5,4 +5,5 @@ export enum AdminRoutes {
     REJECT_USER = "/admin/users/verification/##id##/reject",
     APPROVE_USER = "/admin/users/verification/##id##/approve",
     TRANSACTIONS = "/admin/transactions",
+    DASHBOARD_STATS = "/admin/dashboard-stats",
 }

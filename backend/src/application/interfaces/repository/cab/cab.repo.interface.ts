@@ -4,4 +4,5 @@ import { ICabDocument } from "@infrastructure/repository/cab/cabSchema";
 
 export interface ICabRepo extends IBaseRepository<CabEntity, ICabDocument> {
   findByUserId(userId: string): Promise<CabEntity | null>;
+  countCabs(): Promise<number>;
 }
