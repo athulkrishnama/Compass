@@ -23,4 +23,5 @@ export enum Errors {
   STRIPE_SECRET_KEY_ERROR = "Provide stripe secret key",
   STRIPE_WEBHOOK_SECRET_ERROR = "Provide stripe webhook secret",
   ROOM_LOCK_EXPIRATION_TIME_ERROR = "Provide room lock expiration time in seconds",
+  COMMISSION_PERCENTAGE_ERROR = "Provide commission percentage (0-100)",
 }

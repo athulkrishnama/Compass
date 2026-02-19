@@ -777,5 +777,28 @@
         "error": "പിശക്",
         "roomLabel": "മുറി {{room}}",
         "checkInFailed": "ചെക്ക്-ഇൻ പരാജയപ്പെട്ടു"
+    },
+    "transactions": {
+        "title": "ഇടപാടുകൾ",
+        "walletBalance": "വാലറ്റ് ബാലൻസ്",
+        "transactionHistory": "ഇടപാട് ചരിത്രം",
+        "noTransactions": "ഇടപാടുകളൊന്നുമില്ല",
+        "bookingId": "ബുക്കിംഗ്",
+        "amount": "തുക",
+        "commission": "കമ്മീഷൻ",
+        "providerAmount": "ക്രെഡിറ്റ് ചെയ്തു",
+        "commissionRate": "കമ്മീഷൻ നിരക്ക്",
+        "date": "തീയതി",
+        "selectHotel": "ഇടപാടുകൾ കാണാൻ ഒരു ഹോട്ടൽ തിരഞ്ഞെടുക്കുക",
+        "totalCommission": "നേടിയ ആകെ കമ്മീഷൻ",
+        "adminTitle": "ഇടപാടുകൾ",
+        "hotelName": "ഹോട്ടൽ",
+        "service": "സേവനം",
+        "previous": "മുമ്പത്തെ",
+        "next": "അടുത്തത്",
+        "page": "പേജ്",
+        "creditedToAdmin": "അഡ്മിനിലേക്ക് ക്രെഡിറ്റ് ചെയ്തു",
+        "paymentReceived": "പേയ്മെന്റ് ലഭിച്ചു",
+        "hotelCredit": "ഹോട്ടൽ വാലറ്റ് ക്രെഡിറ്റ്"
     }
 }

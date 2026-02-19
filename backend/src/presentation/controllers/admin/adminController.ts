@@ -19,6 +19,7 @@ import { IApproveUserVerificationRequestUseCase } from "@application/interfaces/
 import { IRejectUserVerificationRequestUseCase } from "@application/interfaces/useCase/admin/rejectUserVerificationRequestUseCase.interface";
 import { IRejectUserVerificationRequestRequestDTO } from "@domain/dtos/admin/rejectUserVerificationRequest.dto";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAdminTransactionsUseCase";
 
 @injectable()
 export class AdminController {
@@ -34,6 +35,8 @@ export class AdminController {
     private _approveUserVerificationRequestUseCase: IApproveUserVerificationRequestUseCase,
     @inject("IRejectUserVerificationRequestUseCase")
     private _rejectUserVerificationRequestUseCase: IRejectUserVerificationRequestUseCase,
+    @inject("IGetAdminTransactionsUseCase")
+    private _getAdminTransactionsUseCase: IGetAdminTransactionsUseCase,
   ) {}
 
   async handleGetUsers(req: Request, res: Response, next: NextFunction) {
@@ -186,6 +189,24 @@ export class AdminController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.VERIFICATION_REJECTED,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getTransactions(req: Request, res: Response, next: NextFunction) {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+
+      const data = await this._getAdminTransactionsUseCase.execute(page);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.TRANSACTIONS_FETCHED_SUCCESSFULLY,
+        data,
       );
     } catch (error) {
       next(error);

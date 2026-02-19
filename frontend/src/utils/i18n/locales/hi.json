@@ -772,5 +772,28 @@
         "error": "त्रुटि",
         "roomLabel": "कमरा {{room}}",
         "checkInFailed": "चेक-इन विफल"
+    },
+    "transactions": {
+        "title": "लेन-देन",
+        "walletBalance": "वॉलेट बैलेंस",
+        "transactionHistory": "लेन-देन का इतिहास",
+        "noTransactions": "अभी तक कोई लेन-देन नहीं",
+        "bookingId": "बुकिंग",
+        "amount": "राशि",
+        "commission": "कमीशन",
+        "providerAmount": "क्रेडिट किया गया",
+        "commissionRate": "कमीशन दर",
+        "date": "तारीख",
+        "selectHotel": "लेन-देन देखने के लिए एक होटल चुनें",
+        "totalCommission": "कुल अर्जित कमीशन",
+        "adminTitle": "लेन-देन",
+        "hotelName": "होटल",
+        "service": "सेवा",
+        "previous": "पिछला",
+        "next": "अगला",
+        "page": "पृष्ठ",
+        "creditedToAdmin": "एडमिन को क्रेडिट किया गया",
+        "paymentReceived": "भुगतान प्राप्त हुआ",
+        "hotelCredit": "होटल वॉलेट क्रेडिट"
     }
 }

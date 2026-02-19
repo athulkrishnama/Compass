@@ -11,6 +11,11 @@ import { Messages } from "@domain/enums/messages";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { inject, injectable } from "tsyringe";
 
+import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
+import { TRANSACTION_TYPE } from "@domain/enums/transactionType";
+import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
+import { SERVICE_TYPE } from "@domain/enums/serviceType";
+
 @injectable()
 export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
   constructor(
@@ -22,6 +27,10 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     private _hotelBookingRepo: IHotelBookingRepo,
     @inject("IRoomVariantRepo")
     private _roomVariantRepository: IRoomVariantRepo,
+    @inject("ITransactionRepo")
+    private _transactionRepo: ITransactionRepo,
+    @inject("IHotelRepo")
+    private _hotelRepo: IHotelRepo,
   ) {}
 
   async execute(data: {
@@ -57,6 +66,13 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       );
     }
 
+    const hotel = await this._hotelRepo.findById(roomVaraint.hotelId);
+    if (!hotel) {
+      throw new InvalidOperationException(
+        INTERNAL_ERROR_MESSAGES.HOTEL_NOT_FOUND,
+      );
+    }
+
     const booking: HotelBookingEntity = {
       hotelId: roomVaraint.hotelId,
       bookingStatus: BOOKING_STATUS.CONFIRMED,
@@ -70,7 +86,16 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       isWalkIn: false,
     };
 
-    await this._hotelBookingRepo.create(booking);
+    const newBookingId = await this._hotelBookingRepo.create(booking);
+
+    await this._transactionRepo.create({
+      bookingId: newBookingId,
+      userId: hotel.userId.toString(),
+      serviceType: SERVICE_TYPE.HOTEL,
+      providerId: hotel.userId.toString(),
+      amount: lock.amount,
+      type: TRANSACTION_TYPE.PAYMENT,
+    });
 
     await this._roomLockRepo.deleteById(lock._id!);
 

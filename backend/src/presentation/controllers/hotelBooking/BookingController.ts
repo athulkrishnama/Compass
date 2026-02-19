@@ -12,6 +12,8 @@ import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBook
 import { IGetOverallDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetOverallDashboardUseCase";
 import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelDashboardUseCase";
 import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
+import { IGetWalletUseCase } from "@application/interfaces/useCase/wallet/IGetWalletUseCase";
+import { IGetProviderTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetProviderTransactionsUseCase";
 import { IGetAvailableRoomsForCheckInUseCase } from "@application/interfaces/useCase/hotelBooking/IGetAvailableRoomsForCheckInUseCase";
 import { ICheckInBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckInBookingUseCase";
 import { ICheckOutBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckOutBookingUseCase";
@@ -52,6 +54,10 @@ export class BookingController {
     private _checkInBookingUseCase: ICheckInBookingUseCase,
     @inject("ICheckOutBookingUseCase")
     private _checkOutBookingUseCase: ICheckOutBookingUseCase,
+    @inject("IGetWalletUseCase")
+    private _getWalletUseCase: IGetWalletUseCase,
+    @inject("IGetProviderTransactionsUseCase")
+    private _getProviderTransactionsUseCase: IGetProviderTransactionsUseCase,
   ) {}
 
   async getBookingByPaymentId(req: Request, res: Response, next: NextFunction) {
@@ -366,6 +372,58 @@ export class BookingController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.CHECKED_OUT_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getWallet(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
+      }
+
+      const data = await this._getWalletUseCase.execute(userId);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.WALLET_FETCHED_SUCCESSFULLY,
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getProviderTransactions(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const userId = req.user?.id;
+      const page = parseInt(req.query.page as string) || 1;
+
+      if (!userId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
+      }
+
+      const data = await this._getProviderTransactionsUseCase.execute(
+        userId,
+        page,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.TRANSACTIONS_FETCHED_SUCCESSFULLY,
+        data,
       );
     } catch (error) {
       next(error);

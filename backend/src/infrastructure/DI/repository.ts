@@ -15,6 +15,10 @@ import { HotelBookingRepo } from "@infrastructure/repository/hotelBooking/hotelB
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { IRoomStatusRepo } from "@application/interfaces/repository/roomStatus/roomStatus.repo.interface";
 import { RoomStatusRepo } from "@infrastructure/repository/roomStatus/roomStatus.repo";
+import { IWalletRepo } from "@application/interfaces/repository/wallet/wallet.repo.interface";
+import { WalletRepo } from "@infrastructure/repository/wallet/wallet.repo";
+import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
+import { TransactionRepo } from "@infrastructure/repository/transaction/transaction.repo";
 
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
@@ -36,5 +40,10 @@ export function registerRepositories() {
   container.registerSingleton<IRoomStatusRepo>(
     "IRoomStatusRepo",
     RoomStatusRepo,
+  );
+  container.registerSingleton<IWalletRepo>("IWalletRepo", WalletRepo);
+  container.registerSingleton<ITransactionRepo>(
+    "ITransactionRepo",
+    TransactionRepo,
   );
 }

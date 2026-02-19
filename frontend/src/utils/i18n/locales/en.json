@@ -848,5 +848,28 @@
         "error": "Error",
         "roomLabel": "Room {{room}}",
         "checkInFailed": "Check-in Failed"
+    },
+    "transactions": {
+        "title": "Transactions",
+        "walletBalance": "Wallet Balance",
+        "transactionHistory": "Transaction History",
+        "noTransactions": "No transactions yet",
+        "bookingId": "Booking",
+        "amount": "Amount",
+        "commission": "Commission",
+        "providerAmount": "Credited",
+        "commissionRate": "Commission Rate",
+        "date": "Date",
+        "selectHotel": "Select a hotel to view transactions",
+        "totalCommission": "Total Commission Earned",
+        "adminTitle": "Transactions",
+        "hotelName": "Hotel",
+        "service": "Service",
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page",
+        "creditedToAdmin": "Credited to Admin",
+        "paymentReceived": "Payment Received",
+        "hotelCredit": "Hotel Wallet Credit"
     }
 }
