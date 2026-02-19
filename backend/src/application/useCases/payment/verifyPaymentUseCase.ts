@@ -86,10 +86,10 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       isWalkIn: false,
     };
 
-    const newBooking = await this._hotelBookingRepo.create(booking);
+    const newBookingId = await this._hotelBookingRepo.create(booking);
 
     await this._transactionRepo.create({
-      bookingId: newBooking._id!.toString(),
+      bookingId: newBookingId,
       userId: hotel.userId.toString(),
       serviceType: SERVICE_TYPE.HOTEL,
       providerId: hotel.userId.toString(),
