@@ -127,12 +127,18 @@ export const hotelSearchValidationSchema = z.object({
     .number({ error: INTERNAL_ERROR_MESSAGES.PROXIMITY_RADIUS_INVALID })
     .positive({ error: INTERNAL_ERROR_MESSAGES.PROXIMITY_RADIUS_INVALID })
     .optional(),
-  checkInDate: z.coerce
-    .date({ error: INTERNAL_ERROR_MESSAGES.CHECK_IN_DATE_INVALID })
-    .optional(),
-  checkOutDate: z.coerce
-    .date({ error: INTERNAL_ERROR_MESSAGES.CHECK_OUT_DATE_INVALID })
-    .optional(),
+  checkInDate: z.preprocess(
+    (v) => (typeof v === "string" ? v.split("/").reverse().join("-") : v),
+    z.coerce
+      .date({ error: INTERNAL_ERROR_MESSAGES.CHECK_IN_DATE_INVALID })
+      .optional(),
+  ),
+  checkOutDate: z.preprocess(
+    (v) => (typeof v === "string" ? v.split("/").reverse().join("-") : v),
+    z.coerce
+      .date({ error: INTERNAL_ERROR_MESSAGES.CHECK_OUT_DATE_INVALID })
+      .optional(),
+  ),
   pageNo: z.coerce
     .number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO })
     .int({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO })

@@ -85,10 +85,13 @@ export async function searchHotels<T extends object>(data: T) {
     try {
         const paramsData: Record<string, string | number> = {};
         for (const key in data) {
-            if (typeof data[key] === "object") {
-                paramsData[key] = JSON.stringify(data[key]);
+            const value = data[key];
+            if (value === undefined || value === null) continue;
+
+            if (typeof value === "object") {
+                paramsData[key] = JSON.stringify(value);
             } else {
-                paramsData[key] = data[key] as string | number;
+                paramsData[key] = value as string | number;
             }
         }
         const response = await axiosInstance.get(HOTEL_ROUTES.SEARCH, {
