@@ -21,6 +21,7 @@ export interface IHotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
+    roomNumber?: string;
     roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
@@ -38,6 +39,7 @@ export interface IHotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
+    roomNumber?: string;
     roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;

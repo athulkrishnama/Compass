@@ -757,6 +757,8 @@ export default {
         cancelledOn: "bookingDetails.cancelledOn",
         yourRefund: "bookingDetails.yourRefund",
         cancelConfirmMessage: "bookingDetails.cancelConfirmMessage",
+        roomNumber: "bookingDetails.roomNumber",
+        walkIn: "bookingDetails.walkIn",
     },
     dashboard: {
         overallTitle: "dashboard.overallTitle",

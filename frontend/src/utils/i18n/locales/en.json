@@ -755,7 +755,9 @@
         "refundedAmount": "Refunded Amount",
         "cancelledOn": "Cancelled On",
         "yourRefund": "Your Refund",
-        "cancelConfirmMessage": "Are you sure you want to cancel this booking? This action cannot be undone."
+        "cancelConfirmMessage": "Are you sure you want to cancel this booking? This action cannot be undone.",
+        "roomNumber": "Room Number",
+        "walkIn": "Walk-in Booking"
     },
     "dashboard": {
         "overallTitle": "Dashboard Overview",

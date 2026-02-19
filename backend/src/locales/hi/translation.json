@@ -156,5 +156,6 @@
   "bookingCancelledSuccessfully": "बुकिंग सफलतापूर्वक रद्द कर दी गई",
   "bookingAlreadyCancelled": "बुकिंग पहले ही रद्द हो चुकी है",
   "bookingCannotBeCancelled": "बुकिंग वर्तमान स्थिति में रद्द नहीं की जा सकती",
-  "refundFailed": "रिफंड प्रक्रिया विफल रही। कृपया बाद में पुनः प्रयास करें"
+  "refundFailed": "रिफंड प्रक्रिया विफल रही। कृपया बाद में पुनः प्रयास करें",
+  "roomHasActiveBooking": "इस कमरे में सक्रिय चेक-इन बुकिंग है"
 }

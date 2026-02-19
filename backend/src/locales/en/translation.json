@@ -158,5 +158,6 @@
   "bookingCancelledSuccessfully": "Booking cancelled successfully",
   "bookingAlreadyCancelled": "Booking has already been cancelled",
   "bookingCannotBeCancelled": "Booking cannot be cancelled in its current state",
-  "refundFailed": "Failed to process refund. Please try again later"
+  "refundFailed": "Failed to process refund. Please try again later",
+  "roomHasActiveBooking": "This room has an active checked-in booking"
 }

@@ -4,24 +4,52 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
+import { Badge } from "@/components/ui/badge";
+
 interface BookingHeaderProps {
     bookingStatus: BookingStatus;
     createdAt: string;
     id: string;
+    roomNumber?: string;
+    isWalkIn?: boolean;
 }
-
-const statusStyles: Record<BookingStatus, string> = {
-    [BookingStatus.CONFIRMED]: "bg-black text-white",
-    [BookingStatus.CHECKED_IN]: "bg-blue-600 text-white",
-    [BookingStatus.CANCELLED]: "bg-red-600 text-white",
-    [BookingStatus.COMPLETED]: "bg-gray-600 text-white",
-};
 
 export function BookingHeader({
     bookingStatus,
     createdAt,
+    roomNumber,
+    isWalkIn,
 }: BookingHeaderProps) {
     const { t } = useTranslation();
+
+    const getStatusBadge = () => {
+        switch (bookingStatus) {
+            case BookingStatus.CANCELLED:
+                return (
+                    <Badge
+                        variant="destructive"
+                        className="text-[10px] font-bold tracking-widest uppercase px-3 py-1"
+                    >
+                        {t(translationKey.bookingStatus[bookingStatus])}
+                    </Badge>
+                );
+            case BookingStatus.COMPLETED:
+                return (
+                    <Badge
+                        variant="secondary"
+                        className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 bg-zinc-200 text-zinc-900 hover:bg-zinc-200"
+                    >
+                        {t(translationKey.bookingStatus[bookingStatus])}
+                    </Badge>
+                );
+            default:
+                return (
+                    <Badge className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 bg-black text-white hover:bg-black">
+                        {t(translationKey.bookingStatus[bookingStatus])}
+                    </Badge>
+                );
+        }
+    };
 
     return (
         <motion.div
@@ -31,13 +59,29 @@ export function BookingHeader({
         >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <div className="flex items-center gap-3 mb-2">
-                        <span
-                            className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${statusStyles[bookingStatus] || statusStyles.CONFIRMED}`}
-                        >
-                            {t(translationKey.bookingStatus[bookingStatus])}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                        {getStatusBadge()}
+
+                        {bookingStatus === BookingStatus.CHECKED_IN &&
+                            roomNumber && (
+                                <Badge
+                                    variant="outline"
+                                    className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 border-zinc-200 text-zinc-600 font-mono"
+                                >
+                                    {t(
+                                        translationKey.bookingDetails.roomNumber
+                                    )}
+                                    : {roomNumber}
+                                </Badge>
+                            )}
+
+                        {isWalkIn && (
+                            <Badge className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-900">
+                                {t(translationKey.bookingDetails.walkIn)}
+                            </Badge>
+                        )}
+
+                        <span className="text-sm text-muted-foreground font-medium">
                             {format(new Date(createdAt), "MMMM dd, yyyy")}
                         </span>
                     </div>

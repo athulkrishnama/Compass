@@ -29,6 +29,7 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
+    roomNumber?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -50,6 +51,9 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
+    }
+    if (filter.roomNumber) {
+      filterQuery.roomNumber = filter.roomNumber;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -97,6 +101,7 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
+    roomNumber?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -118,6 +123,9 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
+    }
+    if (filter.roomNumber) {
+      filterQuery.roomNumber = filter.roomNumber;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -205,13 +213,18 @@ export class HotelBookingRepo
   ): Promise<IBookingWithHotelAggregation> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     const aggregationPipeline: PipelineStage[] = [
       {
         $match: {
           travelerId,
-          checkinDate: { $lte: today },
+          checkinDate: { $lt: tomorrow },
           checkoutDate: { $gte: today },
+          bookingStatus: {
+            $in: [BOOKING_STATUS.CONFIRMED, BOOKING_STATUS.CHECKED_IN],
+          },
         },
       },
       {
@@ -264,12 +277,15 @@ export class HotelBookingRepo
   ): Promise<IBookingWithHotelAggregation> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     const aggregationPipeline: PipelineStage[] = [
       {
         $match: {
           travelerId,
-          checkinDate: { $gt: today },
+          checkinDate: { $gte: tomorrow },
+          bookingStatus: BOOKING_STATUS.CONFIRMED,
         },
       },
       {
@@ -327,7 +343,9 @@ export class HotelBookingRepo
       {
         $match: {
           travelerId,
-          checkoutDate: { $lt: today },
+          bookingStatus: {
+            $in: [BOOKING_STATUS.COMPLETED, BOOKING_STATUS.CANCELLED],
+          },
         },
       },
       {

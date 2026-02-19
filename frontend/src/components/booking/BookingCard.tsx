@@ -5,6 +5,8 @@ import translationKey from "@/utils/i18n/translationKey";
 import { BookingStatus } from "@/enums/bookingStatus";
 import { format } from "date-fns";
 import { Link } from "@tanstack/react-router";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface BookingCardProps {
     id: string;
@@ -24,7 +26,7 @@ const statusConfig = {
     },
     [BookingStatus.CHECKED_IN]: {
         translationKey: translationKey.bookingStatus.CHECKED_IN,
-        className: "bg-blue-600 text-white",
+        className: "bg-foreground text-background",
     },
     [BookingStatus.CANCELLED]: {
         translationKey: translationKey.bookingStatus.CANCELLED,
@@ -59,7 +61,7 @@ export function BookingCard({
             transition={{ duration: 0.3 }}
             className="group"
         >
-            <div className="flex flex-col h-full border border-border/40 rounded-[1.5rem] overflow-hidden bg-background shadow-[0_10px_100px_-20px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_100px_-25px_rgba(0,0,0,0.4)] hover:-translate-y-2 transition-all duration-500">
+            <Card className="flex flex-col h-full border-border/40 rounded-[1.5rem] overflow-hidden bg-background py-0 shadow-[0_10px_100px_-20px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_100px_-25px_rgba(0,0,0,0.4)] hover:-translate-y-2 transition-all duration-500">
                 <div className="relative aspect-video overflow-hidden">
                     <img
                         src={coverImage}
@@ -67,15 +69,16 @@ export function BookingCard({
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute top-3 right-3">
-                        <span
-                            className={`px-2.5 py-1 rounded-full text-[9px] font-bold tracking-tighter uppercase ${statusConfig[status].className}`}
+                        <Badge
+                            variant="outline"
+                            className={`text-[9px] font-bold tracking-tighter uppercase border-none ${statusConfig[status].className}`}
                         >
                             {t(statusConfig[status].translationKey)}
-                        </span>
+                        </Badge>
                     </div>
                 </div>
 
-                <div className="flex-1 p-5 flex flex-col">
+                <CardContent className="flex-1 p-5 flex flex-col">
                     <div className="mb-4">
                         <h3 className="font-serif text-xl text-foreground mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
                             {hotelName}
@@ -127,8 +130,8 @@ export function BookingCard({
                                 : t(translationKey.bookingHistory.viewDetails)}
                         </Link>
                     </div>
-                </div>
-            </div>
+                </CardContent>
+            </Card>
         </motion.div>
     );
 }

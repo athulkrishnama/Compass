@@ -70,6 +70,8 @@ export class HotelBookingMapper {
       refundAmount: b.refundAmount,
       refundStatus: b.refundStatus,
       cancelledAt: b.cancelledAt?.toISOString(),
+      roomNumber: b.roomNumber,
+      isWalkIn: b.isWalkIn,
     };
   }
 

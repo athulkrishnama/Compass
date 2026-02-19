@@ -149,4 +149,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   CHECKIN_DATE_NOT_REACHED = "checkinDateNotReached",
   CHECKOUT_NOT_ALLOWED = "checkoutNotAllowed",
   ROOM_NOT_AVAILABLE_FOR_CHECKIN = "roomNotAvailableForCheckin",
+  ROOM_HAS_ACTIVE_BOOKING = "roomHasActiveBooking",
 }

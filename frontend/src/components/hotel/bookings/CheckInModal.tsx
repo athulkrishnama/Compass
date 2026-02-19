@@ -112,13 +112,13 @@ export default function CheckInModal({
                     </h2>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
-                    <div className="space-y-4">
+                <div className="grid gap-6">
+                    <div className="space-y-4 min-w-0">
                         <h3 className="font-semibold flex items-center gap-2 text-primary">
                             <User className="w-4 h-4" />
                             {t(translationKeys.checkIn.guestDetails)}
                         </h3>
-                        <div className="p-4 rounded-xl bg-card border shadow-sm">
+                        <div className="p-4 rounded-xl bg-card border shadow-sm overflow-hidden">
                             <div className="flex items-start gap-3">
                                 <Avatar className="w-10 h-10 border shadow-sm">
                                     <AvatarImage
@@ -132,13 +132,13 @@ export default function CheckInModal({
                                             .toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
-                                <div>
-                                    <p className="font-medium">
+                                <div className="min-w-0 flex-1">
+                                    <p className="font-medium truncate">
                                         {booking.guestName}
                                     </p>
-                                    <div className="flex items-center gap-1.5 mt-1 text-sm text-muted-foreground">
-                                        <Mail className="w-3.5 h-3.5" />
-                                        <span>
+                                    <div className="flex items-center gap-1.5 mt-1 text-sm text-muted-foreground min-w-0">
+                                        <Mail className="w-3.5 h-3.5 shrink-0" />
+                                        <span className="truncate">
                                             {booking.travelerEmail ||
                                                 "No email provided"}
                                         </span>

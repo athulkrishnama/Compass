@@ -43,6 +43,8 @@ export default function BookingDetails() {
                     bookingStatus={booking.bookingStatus}
                     createdAt={booking.createdAt}
                     id={booking.id}
+                    roomNumber={booking.roomNumber}
+                    isWalkIn={booking.isWalkIn}
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-6">
