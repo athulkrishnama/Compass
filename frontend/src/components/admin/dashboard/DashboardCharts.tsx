@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import translationKeys from "@/utils/i18n/translationKey";
 import {
     AreaChart,
     Area,
@@ -33,6 +35,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({
     chartsData,
     onFilterChange,
 }) => {
+    const { t } = useTranslation();
     const [filterType, setFilterType] = useState<
         "weekly" | "monthly" | "yearly"
     >("weekly");
@@ -215,7 +218,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({
 
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 className="text-lg font-bold text-gray-800 mb-6">
-                    Booking Status Overview
+                    {t(translationKeys.dashboard.bookingStatusOverview)}
                 </h3>
                 <div className="h-[300px] flex justify-center">
                     <ResponsiveContainer width="100%" height="100%">

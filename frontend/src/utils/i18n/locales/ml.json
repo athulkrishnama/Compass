@@ -714,7 +714,12 @@
         "checkOut": "ചെക്ക്-ഔട്ട്",
         "status": "നില",
         "amount": "തുക",
-        "noRecentBookings": "സമീപകാല ബുക്കിങ്ങുകൾ ഇല്ല."
+        "noRecentBookings": "സമീപകാല ബുക്കിങ്ങുകൾ ഇല്ല.",
+        "bookingStatusOverview": "ബുക്കിംഗ് സ്റ്റാറ്റസ് അവലോകനം",
+        "totalUsers": "ആകെ ഉപയോക്താക്കൾ",
+        "totalHotels": "ആകെ ഹോട്ടലുകൾ",
+        "totalCabs": "ആകെ ക്യാബുകൾ",
+        "overAll": "മൊത്തത്തിൽ"
     },
     "hotelBookingListing": {
         "selectHotel": "ഒരു ഹോട്ടൽ തിരഞ്ഞെടുക്കുക",
@@ -776,7 +781,11 @@
         "fetchRoomsError": "ലഭ്യമായ മുറികൾ ലഭ്യമാക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
         "error": "പിശക്",
         "roomLabel": "മുറി {{room}}",
-        "checkInFailed": "ചെക്ക്-ഇൻ പരാജയപ്പെട്ടു"
+        "checkInFailed": "ചെക്ക്-ഇൻ പരാജയപ്പെട്ടു",
+        "checkedInStatus": "ചെക്ക് ഇൻ ചെയ്തു",
+        "roomWithNumber": "റൂം {{roomNumber}}",
+        "readyToCheckOut": "ചെക്ക് ഔട്ട് ചെയ്യാൻ തയ്യാറാണോ?",
+        "checkOutConfirmationMessage": "ഇത് ബുക്കിംഗ് പൂർത്തിയായതായി അടയാളപ്പെടുത്തുകയും ഭാവിയിലെ ബുക്കിംഗുകൾക്കായി റൂം {{roomNumber}} ഒഴിവാക്കുകയും ചെയ്യും."
     },
     "transactions": {
         "title": "ഇടപാടുകൾ",
