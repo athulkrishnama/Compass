@@ -762,6 +762,11 @@ export default {
     },
     dashboard: {
         overallTitle: "dashboard.overallTitle",
+        bookingStatusOverview: "dashboard.bookingStatusOverview",
+        totalUsers: "dashboard.totalUsers",
+        totalHotels: "dashboard.totalHotels",
+        totalCabs: "dashboard.totalCabs",
+        overAll: "dashboard.overAll",
         todayCheckIns: "dashboard.todayCheckIns",
         todayCheckOuts: "dashboard.todayCheckOuts",
         activeGuests: "dashboard.activeGuests",
@@ -848,6 +853,10 @@ export default {
         error: "checkIn.error",
         roomLabel: "checkIn.roomLabel",
         checkInFailed: "checkIn.checkInFailed",
+        checkedInStatus: "checkIn.checkedInStatus",
+        roomWithNumber: "checkIn.roomWithNumber",
+        readyToCheckOut: "checkIn.readyToCheckOut",
+        checkOutConfirmationMessage: "checkIn.checkOutConfirmationMessage",
     },
     transactions: {
         title: "transactions.title",

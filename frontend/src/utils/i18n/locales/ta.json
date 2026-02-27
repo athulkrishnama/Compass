@@ -709,7 +709,12 @@
         "checkOut": "செக்-அவுட்",
         "status": "நிலை",
         "amount": "தொகை",
-        "noRecentBookings": "சமீபத்திய முன்பதிவுகள் இல்லை."
+        "noRecentBookings": "சமீபத்திய முன்பதிவுகள் இல்லை.",
+        "bookingStatusOverview": "முன்பதிவு நிலை மேலோட்டம்",
+        "totalUsers": "மொத்த பயனர்கள்",
+        "totalHotels": "மொத்த ஹோட்டல்கள்",
+        "totalCabs": "மொத்த வண்டிகள்",
+        "overAll": "ஒட்டுமொத்தம்"
     },
     "hotelBookingListing": {
         "selectHotel": "ஒரு ஹோட்டலைத் தேர்வு செய்யவும்",
@@ -771,7 +776,11 @@
         "fetchRoomsError": "கிடைக்கக்கூடிய அறைகளைப் பெறுவதில் தோல்வி. மீண்டும் முயற்சிக்கவும்.",
         "error": "பிழை",
         "roomLabel": "அறை {{room}}",
-        "checkInFailed": "செக்-இன் தோல்வியடைந்தது"
+        "checkInFailed": "செக்-இன் தோல்வியடைந்தது",
+        "checkedInStatus": "செக்-இன் செய்யப்பட்டது",
+        "roomWithNumber": "அறை {{roomNumber}}",
+        "readyToCheckOut": "செக்-அவுட் செய்ய தயாரா?",
+        "checkOutConfirmationMessage": "இது முன்பதிவை நிறைவுற்றதாக குறிக்கும் மற்றும் எதிர்கால முன்பதிவுகளுக்கு அறை {{roomNumber}} ஐ விடுவிக்கும்."
     },
     "transactions": {
         "title": "பரிவர்த்தனைகள்",

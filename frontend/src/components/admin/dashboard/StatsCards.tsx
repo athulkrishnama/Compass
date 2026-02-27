@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import translationKeys from "@/utils/i18n/translationKey";
 import { Users, Building2, Car, CalendarCheck, TrendingUp } from "lucide-react";
 
 interface StatsCardsProps {
@@ -12,9 +14,11 @@ interface StatsCardsProps {
 }
 
 const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
+    const { t } = useTranslation();
+
     const cards = [
         {
-            title: "Total Users",
+            title: t(translationKeys.dashboard.totalUsers),
             value: stats.totalUsers,
             icon: Users,
             color: "bg-blue-500",
@@ -22,7 +26,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
             bgColor: "bg-blue-50",
         },
         {
-            title: "Total Hotels",
+            title: t(translationKeys.dashboard.totalHotels),
             value: stats.totalHotels,
             icon: Building2,
             color: "bg-indigo-500",
@@ -30,7 +34,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
             bgColor: "bg-indigo-50",
         },
         {
-            title: "Total Cabs",
+            title: t(translationKeys.dashboard.totalCabs),
             value: stats.totalCabs,
             icon: Car,
             color: "bg-yellow-500",
@@ -38,7 +42,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
             bgColor: "bg-yellow-50",
         },
         {
-            title: "Total Bookings",
+            title: t(translationKeys.dashboard.totalBookings),
             value: stats.totalBookings,
             icon: CalendarCheck,
             color: "bg-green-500",
@@ -46,7 +50,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
             bgColor: "bg-green-50",
         },
         {
-            title: "Total Revenue",
+            title: t(translationKeys.dashboard.totalRevenue),
             value: `₹${stats.totalRevenue.toLocaleString()}`,
             icon: TrendingUp,
             color: "bg-purple-500",
@@ -69,7 +73,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
                             />
                         </div>
                         <span className="text-gray-400 text-sm font-medium">
-                            Over all
+                            {t(translationKeys.dashboard.overAll)}
                         </span>
                     </div>
                     <h3 className="text-3xl font-bold text-gray-800 mb-1">

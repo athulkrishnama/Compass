@@ -761,6 +761,11 @@
     },
     "dashboard": {
         "overallTitle": "Dashboard Overview",
+        "bookingStatusOverview": "Booking Status Overview",
+        "totalUsers": "Total Users",
+        "totalHotels": "Total Hotels",
+        "totalCabs": "Total Cabs",
+        "overAll": "Over all",
         "todayCheckIns": "Today's Check-ins",
         "todayCheckOuts": "Today's Check-outs",
         "activeGuests": "Active Guests",
@@ -847,7 +852,11 @@
         "fetchRoomsError": "Failed to fetch available rooms. Please try again.",
         "error": "Error",
         "roomLabel": "Room {{room}}",
-        "checkInFailed": "Check-in Failed"
+        "checkInFailed": "Check-in Failed",
+        "checkedInStatus": "Checked In",
+        "roomWithNumber": "Room {{roomNumber}}",
+        "readyToCheckOut": "Ready to check out?",
+        "checkOutConfirmationMessage": "This will mark the booking as completed and free up Room {{roomNumber}} for future bookings."
     },
     "transactions": {
         "title": "Transactions",

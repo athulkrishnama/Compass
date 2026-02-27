@@ -116,7 +116,10 @@ export default function CheckOutModal({
                                             className="bg-green-100/50 text-green-700 hover:bg-green-100 border-green-200"
                                         >
                                             <CheckCircle2 className="w-3 h-3 mr-1" />
-                                            Checked In
+                                            {t(
+                                                translationKeys.checkIn
+                                                    .checkedInStatus
+                                            )}
                                         </Badge>
                                     </div>
                                 </div>
@@ -137,7 +140,11 @@ export default function CheckOutModal({
                                         {booking.roomVariantName}
                                     </p>
                                     <p className="text-xs text-muted-foreground mt-0.5">
-                                        Room {booking.roomNumber}
+                                        {t(
+                                            translationKeys.checkIn
+                                                .roomWithNumber,
+                                            { roomNumber: booking.roomNumber }
+                                        )}
                                     </p>
                                 </div>
                                 <BedDouble className="w-5 h-5 text-muted-foreground" />
@@ -179,11 +186,14 @@ export default function CheckOutModal({
                     <LogOut className="w-5 h-5 text-blue-600 mt-0.5" />
                     <div>
                         <h4 className="text-sm font-medium text-blue-900">
-                            Ready to check out?
+                            {t(translationKeys.checkIn.readyToCheckOut)}
                         </h4>
                         <p className="text-sm text-blue-700 mt-1">
-                            This will mark the booking as completed and free up
-                            Room {booking.roomNumber} for future bookings.
+                            {t(
+                                translationKeys.checkIn
+                                    .checkOutConfirmationMessage,
+                                { roomNumber: booking.roomNumber }
+                            )}
                         </p>
                     </div>
                 </div>
@@ -191,7 +201,9 @@ export default function CheckOutModal({
                 {checkOutError && (
                     <Alert variant="destructive">
                         <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>Check-in Failed</AlertTitle>
+                        <AlertTitle>
+                            {t(translationKeys.checkIn.checkInFailed)}
+                        </AlertTitle>
                         <AlertDescription>
                             {checkOutError.message}
                         </AlertDescription>

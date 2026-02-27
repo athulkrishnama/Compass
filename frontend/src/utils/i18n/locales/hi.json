@@ -709,7 +709,12 @@
         "checkOut": "चेक-आउट",
         "status": "स्थिति",
         "amount": "राशि",
-        "noRecentBookings": "कोई हाल की बुकिंग नहीं मिली।"
+        "noRecentBookings": "कोई हाल की बुकिंग नहीं मिली।",
+        "bookingStatusOverview": "बुकिंग स्थिति अवलोकन",
+        "totalUsers": "कुल उपयोगकर्ता",
+        "totalHotels": "कुल होटल",
+        "totalCabs": "कुल कैब",
+        "overAll": "कुल मिलाकर"
     },
     "hotelBookingListing": {
         "selectHotel": "एक होटल चुनें",
@@ -771,7 +776,11 @@
         "fetchRoomsError": "उपलब्ध कमरे प्राप्त करने में विफल। कृपया पुन: प्रयास करें।",
         "error": "त्रुटि",
         "roomLabel": "कमरा {{room}}",
-        "checkInFailed": "चेक-इन विफल"
+        "checkInFailed": "चेक-इन विफल",
+        "checkedInStatus": "चेक इन किया गया",
+        "roomWithNumber": "कमरा {{roomNumber}}",
+        "readyToCheckOut": "चेक आउट करने के लिए तैयार हैं?",
+        "checkOutConfirmationMessage": "यह बुकिंग को पूरा मान लेगा और भविष्य की बुकिंग के लिए कमरा {{roomNumber}} खाली कर देगा।"
     },
     "transactions": {
         "title": "लेन-देन",
