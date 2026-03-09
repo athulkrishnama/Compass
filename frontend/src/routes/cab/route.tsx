@@ -1,3 +1,5 @@
+import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
+import NotFoundComponent from "@/components/notFound";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
@@ -26,6 +28,11 @@ export const Route = createFileRoute("/cab")({
             throw redirect({ to: "/cab/login", replace: true });
         }
     },
+    errorComponent: (error) => {
+        console.log(error);
+        return <CommonErrorComponent />;
+    },
+    notFoundComponent: NotFoundComponent,
 });
 
 function RouteComponent() {

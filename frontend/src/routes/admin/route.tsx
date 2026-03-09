@@ -1,3 +1,4 @@
+import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
 import SideBar from "@/components/admin/SideBar";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
@@ -7,6 +8,7 @@ import {
     redirect,
     useLocation,
 } from "@tanstack/react-router";
+import NotFoundComponent from "@/components/notFound";
 
 export const Route = createFileRoute("/admin")({
     component: RouteComponent,
@@ -19,6 +21,11 @@ export const Route = createFileRoute("/admin")({
             throw redirect({ to: "/admin/login", replace: true });
         }
     },
+    errorComponent: (error) => {
+        console.log(error);
+        return <CommonErrorComponent />;
+    },
+    notFoundComponent: NotFoundComponent,
 });
 
 function RouteComponent() {

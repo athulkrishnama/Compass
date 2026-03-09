@@ -40,13 +40,12 @@ function DestinationCard({
     const TypeIcon = destinationTypeIcons[type];
 
     return (
-        <Link to="/traveler/destination/$id" params={{ id }}>
+        <Link to="/traveler/destinations/$id" params={{ id }}>
             <motion.div
                 whileHover={{ y: -4, scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 h-full flex flex-col"
             >
-                {/* Cover Image - Fixed height */}
                 <div className="relative h-48 overflow-hidden flex-shrink-0">
                     {coverImage ? (
                         <img
@@ -90,9 +89,7 @@ function DestinationCard({
                     )}
                 </div>
 
-                {/* Content - Flex grow */}
                 <div className="p-4 flex flex-col flex-grow">
-                    {/* Name and City */}
                     <div className="flex items-start justify-between gap-2 mb-2">
                         <h3 className="font-semibold text-lg text-gray-900 truncate group-hover:text-gray-700 transition-colors flex-1">
                             {name}
@@ -105,12 +102,10 @@ function DestinationCard({
                         </div>
                     </div>
 
-                    {/* Tagline - Fixed 2 lines with ellipsis */}
                     <p className="text-sm text-gray-600 leading-relaxed flex-grow mb-3 overflow-hidden line-clamp-2">
                         {tagline}
                     </p>
 
-                    {/* Activities and Price - Always at bottom */}
                     <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-auto">
                         <div className="flex items-center gap-2 overflow-hidden">
                             {activities.slice(0, 2).map((activity) => {

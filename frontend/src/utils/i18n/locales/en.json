@@ -880,5 +880,43 @@
         "creditedToAdmin": "Credited to Admin",
         "paymentReceived": "Payment Received",
         "hotelCredit": "Hotel Wallet Credit"
+    },
+    "errorBoundary": {
+        "room404": "Room 404: The Void",
+        "taxi": "TAXI",
+        "errorSequence": "Error Sequence 404",
+        "youAreNotDreaming": "You’re Not Dreaming,",
+        "thisPageIs": "This Page Is.",
+        "dreamDescription": "We seem to have entered a layer of the internet where this page doesn't exist. Let's try to wake up and get you to a real destination.",
+        "wakeUp": "Wake Up (Go Home)",
+        "nextLayer": "Next Layer (Search)",
+        "nonExistentSuite": "Non-Existent Suite",
+        "ghostCab": "Ghost Cab",
+        "unchartedTerritory": "Uncharted Territory",
+        "reached": "You've reached...",
+        "nowhere": "nowhere.",
+        "nowhereDescription": "This destination doesn't exist on this timeline. Looks like a reality glitch in our booking system.",
+        "backToSafety": "Back to Safety",
+        "reportGlitch": "Report Glitch"
+    },
+    "notFound": {
+        "title": "Whoops!",
+        "subtitle": "Looks like your trip took a wrong turn.",
+        "description": "We can't find the page you're looking for, but we can help you find your next destination.",
+        "bookRealTrip": "Book a Real Trip",
+        "contactSupport": "Contact Support",
+        "checkedOutEarly": {
+            "title1": "This page",
+            "title2": "checked out early.",
+            "description": "We searched every room and every cab — this page is missing. It might have wandered off into the desert.",
+            "bookRealTrip": "Book a Real Trip",
+            "goHome": "Go Home",
+            "orTry": "Or try one of these:",
+            "helpCenter": "Help Center",
+            "searchFlights": "Explore Destinations",
+            "findHotels": "Find Hotels",
+            "hotel": "Hotel?",
+            "taxi": "TAXI"
+        }
     }
 }
