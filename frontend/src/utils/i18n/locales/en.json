@@ -898,5 +898,25 @@
         "nowhereDescription": "This destination doesn't exist on this timeline. Looks like a reality glitch in our booking system.",
         "backToSafety": "Back to Safety",
         "reportGlitch": "Report Glitch"
+    },
+    "notFound": {
+        "title": "Whoops!",
+        "subtitle": "Looks like your trip took a wrong turn.",
+        "description": "We can't find the page you're looking for, but we can help you find your next destination.",
+        "bookRealTrip": "Book a Real Trip",
+        "contactSupport": "Contact Support",
+        "checkedOutEarly": {
+            "title1": "This page",
+            "title2": "checked out early.",
+            "description": "We searched every room and every cab — this page is missing. It might have wandered off into the desert.",
+            "bookRealTrip": "Book a Real Trip",
+            "goHome": "Go Home",
+            "orTry": "Or try one of these:",
+            "helpCenter": "Help Center",
+            "searchFlights": "Explore Destinations",
+            "findHotels": "Find Hotels",
+            "hotel": "Hotel?",
+            "taxi": "TAXI"
+        }
     }
 }

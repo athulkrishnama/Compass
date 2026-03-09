@@ -8,6 +8,7 @@ import {
     redirect,
     useLocation,
 } from "@tanstack/react-router";
+import NotFoundComponent from "@/components/notFound";
 
 export const Route = createFileRoute("/admin")({
     component: RouteComponent,
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/admin")({
         console.log(error);
         return <CommonErrorComponent />;
     },
+    notFoundComponent: NotFoundComponent,
 });
 
 function RouteComponent() {

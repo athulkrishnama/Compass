@@ -7,6 +7,7 @@ import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import i18next from "i18next";
 import { useEffect } from "react";
+import NotFoundComponent from "@/components/notFound";
 
 interface RouterContext {
     queryClient: QueryClient;
@@ -36,4 +37,5 @@ const RootLayout = () => {
 };
 export const Route = createRootRouteWithContext<RouterContext>()({
     component: RootLayout,
+    notFoundComponent: NotFoundComponent,
 });
