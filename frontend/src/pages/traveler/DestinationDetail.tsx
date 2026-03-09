@@ -17,7 +17,7 @@ import translationKey from "@/utils/i18n/translationKey";
 function DestinationDetail() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { id } = useParams({ from: "/traveler/destination/$id" });
+    const { id } = useParams({ from: "/traveler/destinations/$id" });
 
     const { data } = useSuspenseQuery(createFindDestinationByIdQueryOption(id));
     const destination = data?.data;
@@ -34,7 +34,6 @@ function DestinationDetail() {
 
     return (
         <div className="min-h-screen bg-gray-50 relative">
-            {/* Sticky Back Button */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -50,9 +49,7 @@ function DestinationDetail() {
                 </Button>
             </motion.div>
 
-            {/* Main Content */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Hero Section */}
                 <DestinationHero
                     coverImage={destination.coverImage}
                     name={destination.name}
@@ -61,9 +58,7 @@ function DestinationDetail() {
                     activities={destination.activities}
                 />
 
-                {/* Content Grid */}
                 <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Left Content */}
                     <div className="lg:col-span-2 space-y-10">
                         <DestinationDescription
                             description={destination.description}
@@ -76,7 +71,6 @@ function DestinationDetail() {
                         />
                     </div>
 
-                    {/* Right Sidebar */}
                     <div className="lg:col-span-1">
                         <DestinationInfo
                             entryFee={destination.entryFee}
@@ -94,13 +88,10 @@ function DestinationDetail() {
                     </div>
                 </div>
 
-                {/* Gallery Section */}
                 <DestinationGallery
                     images={destination.images}
                     name={destination.name}
                 />
-
-                {/* Map Section */}
                 <DestinationMapSection coordinates={destination.coordinates} />
             </main>
         </div>

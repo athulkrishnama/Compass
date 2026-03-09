@@ -21,6 +21,8 @@ import { DestinationRouter } from "@presentation/routes/destination/destinationR
 import { PaymentRouter } from "@presentation/routes/payment/paymentRouter";
 import { WebHookRouter } from "@presentation/routes/webHook/webHookRouter";
 import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
+import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
 export class Server {
   private _app: Express;
@@ -38,6 +40,7 @@ export class Server {
     this._setPaymentRouter();
     this._setDestinationRouter();
     this._setBookingRouter();
+    this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
 
@@ -93,6 +96,17 @@ export class Server {
     this._app.use(cors(corsOptions));
     this._app.use(cookieParser());
     this._app.use(middleware.handle(i18next));
+  }
+
+  private _setNotFoundRouter() {
+    this._app.use((req: Request, res: Response) => {
+      HTTPResponseBuilder.buildErrorResponse(
+        req,
+        res,
+        404,
+        INTERNAL_ERROR_MESSAGES.NOT_FOUND,
+      );
+    });
   }
 
   private _setErrorHandlingMiddleware() {

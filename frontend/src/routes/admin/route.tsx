@@ -1,3 +1,4 @@
+import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
 import SideBar from "@/components/admin/SideBar";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
@@ -18,6 +19,10 @@ export const Route = createFileRoute("/admin")({
         ) {
             throw redirect({ to: "/admin/login", replace: true });
         }
+    },
+    errorComponent: (error) => {
+        console.log(error);
+        return <CommonErrorComponent />;
     },
 });
 

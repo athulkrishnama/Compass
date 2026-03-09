@@ -1,3 +1,4 @@
+import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
@@ -24,6 +25,10 @@ export const Route = createFileRoute("/hotel")({
         ) {
             throw redirect({ to: "/hotel/login", replace: true });
         }
+    },
+    errorComponent: (error) => {
+        console.log(error);
+        return <CommonErrorComponent />;
     },
 });
 

@@ -880,5 +880,23 @@
         "creditedToAdmin": "Credited to Admin",
         "paymentReceived": "Payment Received",
         "hotelCredit": "Hotel Wallet Credit"
+    },
+    "errorBoundary": {
+        "room404": "Room 404: The Void",
+        "taxi": "TAXI",
+        "errorSequence": "Error Sequence 404",
+        "youAreNotDreaming": "You’re Not Dreaming,",
+        "thisPageIs": "This Page Is.",
+        "dreamDescription": "We seem to have entered a layer of the internet where this page doesn't exist. Let's try to wake up and get you to a real destination.",
+        "wakeUp": "Wake Up (Go Home)",
+        "nextLayer": "Next Layer (Search)",
+        "nonExistentSuite": "Non-Existent Suite",
+        "ghostCab": "Ghost Cab",
+        "unchartedTerritory": "Uncharted Territory",
+        "reached": "You've reached...",
+        "nowhere": "nowhere.",
+        "nowhereDescription": "This destination doesn't exist on this timeline. Looks like a reality glitch in our booking system.",
+        "backToSafety": "Back to Safety",
+        "reportGlitch": "Report Glitch"
     }
 }
