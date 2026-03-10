@@ -47,7 +47,7 @@ function LandingPage() {
     return (
         <div
             ref={containerRef}
-            className="w-full h-screen overflow-y-auto bg-black hide-scroll-bar"
+            className="w-full h-screen overflow-y-auto overflow-x-hidden bg-black hide-scroll-bar"
         >
             <HeroSection />
             <div className="landing-section">
