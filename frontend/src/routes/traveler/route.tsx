@@ -66,6 +66,8 @@ function RouteComponent() {
         "/traveler/login",
         "/traveler/signup",
         "/traveler/forgetPassword",
+        "/traveler",
+        "/traveler/",
     ];
     const hideNavbar = noNavbarRoutes.includes(pathname);
 

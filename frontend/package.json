@@ -13,6 +13,7 @@
     "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.png"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
     "@mapbox/search-js-react": "^1.5.1",
     "@radix-ui/react-avatar": "^1.1.10",
