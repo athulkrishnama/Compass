@@ -175,7 +175,7 @@ function HeroSection() {
 
                     <TextGenerateEffect
                         words={t(k.heroHeadline)}
-                        className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight"
+                        className="text-3xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight"
                     />
 
                     <motion.p
@@ -219,40 +219,40 @@ function HeroSection() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.8, duration: 0.7 }}
-                    className="mt-16 flex items-center gap-12 border-t border-white/10 pt-8"
+                    className="mt-12 sm:mt-16 flex flex-wrap items-center gap-x-8 gap-y-6 sm:gap-12 border-t border-white/10 pt-8"
                 >
-                    <div>
+                    <div className="min-w-[100px]">
                         <div
-                            className="stat-number text-3xl font-bold text-white tabular-nums"
-                            data-target="2"
+                            className="stat-number text-2xl sm:text-3xl font-bold text-white tabular-nums"
+                            data-target="10"
                         >
                             0+
                         </div>
-                        <p className="text-xs text-white/40 mt-1 uppercase tracking-wider">
+                        <p className="text-[10px] sm:text-xs text-white/40 mt-1 uppercase tracking-wider">
                             {t(k.yearsExperience)}
                         </p>
                     </div>
-                    <div className="w-px h-10 bg-white/10" />
-                    <div>
+                    <div className="hidden sm:block w-px h-10 bg-white/10" />
+                    <div className="min-w-[100px]">
                         <div
-                            className="stat-number text-3xl font-bold text-white tabular-nums"
-                            data-target="500"
+                            className="stat-number text-2xl sm:text-3xl font-bold text-white tabular-nums"
+                            data-target="5000"
                         >
                             0+
                         </div>
-                        <p className="text-xs text-white/40 mt-1 uppercase tracking-wider">
+                        <p className="text-[10px] sm:text-xs text-white/40 mt-1 uppercase tracking-wider">
                             {t(k.satisfiedClients)}
                         </p>
                     </div>
-                    <div className="w-px h-10 bg-white/10" />
-                    <div>
+                    <div className="hidden sm:block w-px h-10 bg-white/10" />
+                    <div className="min-w-[100px]">
                         <div
-                            className="stat-number text-3xl font-bold text-white tabular-nums"
+                            className="stat-number text-2xl sm:text-3xl font-bold text-white tabular-nums"
                             data-target="100"
                         >
                             0+
                         </div>
-                        <p className="text-xs text-white/40 mt-1 uppercase tracking-wider">
+                        <p className="text-[10px] sm:text-xs text-white/40 mt-1 uppercase tracking-wider">
                             {t(k.destinations)}
                         </p>
                     </div>

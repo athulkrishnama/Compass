@@ -53,7 +53,7 @@ function DestinationsSection() {
     const { t } = useTranslation();
 
     return (
-        <section className="py-24 bg-[#111111]">
+        <section className="py-24 bg-[#111111] overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

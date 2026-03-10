@@ -51,7 +51,7 @@ function FeatureCards() {
     ];
 
     return (
-        <section className="py-24 bg-[#0a0a0a]">
+        <section className="py-24 bg-[#0a0a0a] overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

@@ -91,16 +91,16 @@ function OtpModal({
 
     return (
         <Modal isOpen={isOpen} handleClose={handleClose}>
-            <div className="flex flex-col items-center justify-center text-center space-y-6 p-6">
-                <h4 className="text-2xl font-semibold text-gray-800">
+            <div className="flex flex-col items-center justify-center text-center space-y-4 sm:space-y-6 p-4 sm:p-6 w-full max-w-[95vw] sm:max-w-md mx-auto">
+                <h4 className="text-xl sm:text-2xl font-semibold text-gray-800 shrink-0">
                     {t(translationKey.headings.enterOtp)}
                 </h4>
 
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-xs sm:text-sm px-2">
                     {t(translationKey.headings.otpHasSentToYourEmail)}
                 </p>
 
-                <div className="my-4">
+                <div className="my-4 w-full overflow-x-auto no-scrollbar flex justify-center items-center pb-2 px-1">
                     <OTP
                         count={6}
                         handleComplete={handleSubmit}
