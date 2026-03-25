@@ -22,6 +22,9 @@ import { walletModel } from "@infrastructure/repository/wallet/walletModel";
 import { ITransactionDocument } from "@infrastructure/repository/transaction/transactionSchema";
 import { transactionModel } from "@infrastructure/repository/transaction/transactionModel";
 
+import { IFareDocument } from "@infrastructure/repository/fare/fareSchema";
+import { fareModel } from "@infrastructure/repository/fare/fareModel";
+
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
     useValue: userModel,
@@ -52,5 +55,8 @@ export function registerModel() {
   });
   container.register<Model<ITransactionDocument>>("ITransactionModel", {
     useValue: transactionModel,
+  });
+  container.register<Model<IFareDocument>>("IFareModel", {
+    useValue: fareModel,
   });
 }
