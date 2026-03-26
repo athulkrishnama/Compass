@@ -45,4 +45,5 @@ export const envSchema = z.object({
     .number({ error: Errors.COMMISSION_PERCENTAGE_ERROR })
     .min(0)
     .max(100),
+  MAPBOX_ACCESS_TOKEN: z.string({ error: Errors.MAPBOX_ACCESS_TOKEN_ERROR }),
 });

@@ -387,7 +387,8 @@
         "updateRoomVariant": "റൂം വെരിയന്റ് അപ്ഡേറ്റ് ചെയ്യുക",
         "createInstance": "ഇൻസ്റൻസ് സൃഷ്ടിക്കുക",
         "viewRoomVariant": "റൂം വെരിയന്റ് കാണുക",
-        "destinations": "ലക്ഷ്യസ്ഥാനങ്ങൾ"
+        "destinations": "ലക്ഷ്യസ്ഥാനങ്ങൾ",
+        "cabs": "ക്യാബുകൾ"
     },
     "text": {
         "alreadyHaveAccount": "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?",

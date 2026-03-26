@@ -24,4 +24,5 @@ export enum Errors {
   STRIPE_WEBHOOK_SECRET_ERROR = "Provide stripe webhook secret",
   ROOM_LOCK_EXPIRATION_TIME_ERROR = "Provide room lock expiration time in seconds",
   COMMISSION_PERCENTAGE_ERROR = "Provide commission percentage (0-100)",
+  MAPBOX_ACCESS_TOKEN_ERROR = "Provide mapbox access token in environment variables",
 }

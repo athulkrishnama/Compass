@@ -359,6 +359,7 @@ export default {
         createInstance: "button.createInstance",
         destinations: "button.destinations",
         viewRoomVariant: "button.viewRoomVariant",
+        cabs: "button.cabs",
     },
     activities: {
         HIKING: "activities.HIKING",
@@ -998,5 +999,20 @@ export default {
             hotel: "notFound.checkedOutEarly.hotel",
             taxi: "notFound.checkedOutEarly.taxi",
         },
+    },
+    cabHome: {
+        bookRide: "cabHome.bookRide",
+        whereAreYouGoing: "cabHome.whereAreYouGoing",
+        pickup: "cabHome.pickup",
+        dropoff: "cabHome.dropoff",
+        selectPickup: "cabHome.selectPickup",
+        selectDropoff: "cabHome.selectDropoff",
+        useCurrentLocation: "cabHome.useCurrentLocation",
+        currentLocation: "cabHome.currentLocation",
+        swapPoints: "cabHome.swapPoints",
+        searchRides: "cabHome.searchRides",
+        gettingLocation: "cabHome.gettingLocation",
+        selectFromPastTrips: "cabHome.selectFromPastTrips",
+        searchResults: "cabHome.searchResults",
     },
 };

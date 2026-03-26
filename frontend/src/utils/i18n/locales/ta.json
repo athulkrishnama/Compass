@@ -386,7 +386,8 @@
         "updateRoomVariant": "ரூம் வேரியன்ட் புதுப்பிக்கவும்",
         "createInstance": "இன்ஸ்டன்ஸ் உருவாக்கவும்",
         "viewRoomVariant": "ரூம் வேரியன்ட் பார்க்கவும்",
-        "destinations": "சேருமிடங்கள்"
+        "destinations": "சேருமிடங்கள்",
+        "cabs": "கேப்ஸ்"
     },
     "text": {
         "alreadyHaveAccount": "உங்களிடம் ஏற்கனவே கணக்கு உள்ளதா?",

@@ -356,7 +356,8 @@
         "updateRoomVariant": "Update Room Variant",
         "createInstance": "Create Instance",
         "viewRoomVariant": "View Room Variant",
-        "destinations": "Destinations"
+        "destinations": "Destinations",
+        "cabs": "Cabs"
     },
     "activities": {
         "HIKING": "Hiking",
@@ -998,5 +999,20 @@
             "hotel": "Hotel?",
             "taxi": "TAXI"
         }
+    },
+    "cabHome": {
+        "bookRide": "Book a Ride",
+        "whereAreYouGoing": "Where are you going?",
+        "pickup": "Pickup",
+        "dropoff": "Drop-off",
+        "selectPickup": "Select pickup point...",
+        "selectDropoff": "Select destination...",
+        "useCurrentLocation": "Use current location",
+        "currentLocation": "Current Location",
+        "swapPoints": "Swap pickup & drop-off",
+        "searchRides": "Search Rides",
+        "gettingLocation": "Getting your location...",
+        "selectFromPastTrips": "Select from past trips",
+        "searchResults": "Search Results"
     }
 }

@@ -137,7 +137,7 @@ function HeroSection() {
                             {t(k.destinations)}
                         </Link>
                         <Link
-                            to="/traveler/hotels"
+                            to="/traveler/cab"
                             className="hover:text-white transition-colors duration-200 flex items-center gap-1.5"
                         >
                             {t(k.cabs)}
