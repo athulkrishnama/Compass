@@ -24,6 +24,8 @@ import { IPaymentService } from "@application/interfaces/service/paymentService.
 import { PaymentService } from "@infrastructure/services/paymentService";
 import { IPricingService } from "@application/interfaces/services/IPricingService";
 import { PricingService } from "@infrastructure/services/pricingService";
+import { IQueueService } from "application/interfaces/service/queueService.interface";
+import { QueueService } from "@infrastructure/services/queueService";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -64,4 +66,5 @@ export function registerServices() {
     "IPricingService",
     PricingService,
   );
+  container.registerSingleton<IQueueService>("IQueueService", QueueService);
 }
