@@ -26,6 +26,8 @@ import { IPricingService } from "@application/interfaces/services/IPricingServic
 import { PricingService } from "@infrastructure/services/pricingService";
 import { IQueueService } from "application/interfaces/service/queueService.interface";
 import { QueueService } from "@infrastructure/services/queueService";
+import { ISocketRegistry } from "application/interfaces/service/socketRegistry.interface";
+import { SocketRegistry } from "@infrastructure/services/socketRegistry";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -67,4 +69,8 @@ export function registerServices() {
     PricingService,
   );
   container.registerSingleton<IQueueService>("IQueueService", QueueService);
+  container.registerSingleton<ISocketRegistry>(
+    "ISocketRegistry",
+    SocketRegistry,
+  );
 }
