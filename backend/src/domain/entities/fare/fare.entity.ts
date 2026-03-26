@@ -3,7 +3,7 @@ import { FareStatus } from "@domain/types/fareStatus";
 import { VehicleType } from "@domain/types/vehicleType";
 
 export interface FareEntity {
-  _id: string;
+  _id?: string;
   rider_id: string;
   pickup_coordinates: Coordinate;
   drop_coordinates: Coordinate;
