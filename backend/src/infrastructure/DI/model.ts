@@ -25,6 +25,9 @@ import { transactionModel } from "@infrastructure/repository/transaction/transac
 import { IFareDocument } from "@infrastructure/repository/fare/fareSchema";
 import { fareModel } from "@infrastructure/repository/fare/fareModel";
 
+import { IRideDocument } from "@infrastructure/repository/ride/rideSchema";
+import { rideModel } from "@infrastructure/repository/ride/rideModel";
+
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
     useValue: userModel,
@@ -58,5 +61,8 @@ export function registerModel() {
   });
   container.register<Model<IFareDocument>>("IFareModel", {
     useValue: fareModel,
+  });
+  container.register<Model<IRideDocument>>("IRideModel", {
+    useValue: rideModel,
   });
 }
