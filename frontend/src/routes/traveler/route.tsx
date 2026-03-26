@@ -61,7 +61,7 @@ function RouteComponent() {
         },
         { name: t(translationKey.button.history), route: "/traveler/history" },
         { name: t(translationKey.button.profile), route: "/traveler/profile" },
-        { name: t(translationKey.button.cabs), route: "/traveler/cabs" },
+        { name: t(translationKey.button.cabs), route: "/traveler/cab" },
     ];
 
     const noNavbarRoutes = [

@@ -17,14 +17,16 @@ interface MapboxMapProps {
     initialZoom?: number;
     className?: string;
     onMarkerClick?: (marker: MapboxMarker) => void;
+    routeCoordinates?: [number, number][];
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({
     markers = [],
-    initialCenter = [76.2711, 10.8505],
+    initialCenter = [77.5946, 12.9716],
     initialZoom = 11,
     className = "",
     onMarkerClick,
+    routeCoordinates,
 }) => {
     const mapContainer = useRef<HTMLDivElement>(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -120,14 +122,65 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                         [markers[0].lng, markers[0].lat]
                     )
                 );
+
+                // If routeCoordinates is provided, pad the bounds more to account for the drawn line
+                const padding =
+                    routeCoordinates && routeCoordinates.length > 0
+                        ? { top: 80, bottom: 80, left: 80, right: 80 }
+                        : 60;
                 map.fitBounds(bounds, {
-                    padding: 60,
+                    padding,
                     maxZoom: 14,
                     duration: 800,
                 });
+
+                if (routeCoordinates && routeCoordinates.length > 0) {
+                    if (map.getSource("route")) {
+                        (
+                            map.getSource("route") as mapboxgl.GeoJSONSource
+                        ).setData({
+                            type: "Feature",
+                            properties: {},
+                            geometry: {
+                                type: "LineString",
+                                coordinates: routeCoordinates,
+                            },
+                        });
+                    } else {
+                        map.addSource("route", {
+                            type: "geojson",
+                            data: {
+                                type: "Feature",
+                                properties: {},
+                                geometry: {
+                                    type: "LineString",
+                                    coordinates: routeCoordinates,
+                                },
+                            },
+                        });
+
+                        map.addLayer({
+                            id: "route-layer",
+                            type: "line",
+                            source: "route",
+                            layout: {
+                                "line-join": "round",
+                                "line-cap": "round",
+                            },
+                            paint: {
+                                "line-color": "#111111",
+                                "line-width": 4,
+                                "line-opacity": 0.8,
+                            },
+                        });
+                    }
+                } else if (map.getLayer("route-layer")) {
+                    map.removeLayer("route-layer");
+                    map.removeSource("route");
+                }
             }
         }
-    }, [markers, activeMarkerId, onMarkerClick]);
+    }, [markers, activeMarkerId, onMarkerClick, routeCoordinates]);
 
     return (
         <div
