@@ -1,4 +1,4 @@
-import { IPricingService } from "@application/interfaces/services/IPricingService";
+import { IHotelPricingService } from "@application/interfaces/service/hotelPricingService";
 import { inject, injectable } from "tsyringe";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
@@ -7,7 +7,7 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { eachDayOfInterval, startOfDay } from "date-fns";
 
 @injectable()
-export class PricingService implements IPricingService {
+export class PricingService implements IHotelPricingService {
   constructor(
     @inject("IRoomVariantRepo")
     private readonly _roomVariantRepository: IRoomVariantRepo,

@@ -22,8 +22,8 @@ import { StorageService } from "@infrastructure/services/storageService";
 import { ChangeEmailTemplateGenerator } from "@infrastructure/services/emailTemplateGenerators/changeEmailTemplateGenerator";
 import { IPaymentService } from "@application/interfaces/service/paymentService.interface";
 import { PaymentService } from "@infrastructure/services/paymentService";
-import { IPricingService } from "@application/interfaces/services/IPricingService";
-import { PricingService } from "@infrastructure/services/pricingService";
+import { IHotelPricingService } from "@application/interfaces/service/hotelPricingService";
+import { PricingService } from "@infrastructure/services/hotelPricingService";
 import { IQueueService } from "application/interfaces/service/queueService.interface";
 import { QueueService } from "@infrastructure/services/queueService";
 import { ISocketRegistry } from "application/interfaces/service/socketRegistry.interface";
@@ -64,8 +64,8 @@ export function registerServices() {
     "IPaymentService",
     PaymentService,
   );
-  container.registerSingleton<IPricingService>(
-    "IPricingService",
+  container.registerSingleton<IHotelPricingService>(
+    "IHotelPricingService",
     PricingService,
   );
   container.registerSingleton<IQueueService>("IQueueService", QueueService);

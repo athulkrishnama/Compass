@@ -3,7 +3,7 @@ import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooki
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
-import { IPricingService } from "@application/interfaces/services/IPricingService";
+import { IHotelPricingService } from "@application/interfaces/service/hotelPricingService";
 import {
   IGetRoomAvailabilityRequestDTO,
   IGetRoomAvailabilityResponseDTO,
@@ -20,8 +20,8 @@ export class GetRoomAvailabilityUseCase implements IGetRoomAvailabilityUseCase {
     private readonly _roomLockRepository: IRoomLockRepo,
     @inject("IHotelBookingRepo")
     private readonly _hotelBookingRepository: IHotelBookingRepo,
-    @inject("IPricingService")
-    private readonly _pricingService: IPricingService,
+    @inject("IHotelPricingService")
+    private readonly _pricingService: IHotelPricingService,
   ) {}
 
   async execute(
