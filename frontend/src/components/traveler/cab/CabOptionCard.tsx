@@ -6,7 +6,7 @@ import {
     CAB_DESCRIPTIONS,
     CAB_CAPACITY,
 } from "@/constants/cabConstants";
-import type { FareOption } from "@/types/api/requests/fareRequests";
+import type { FareOption } from "@/types/api/fareOption";
 
 interface CabOptionCardProps {
     fare: FareOption;
@@ -66,7 +66,7 @@ const CabOptionCard = ({
                 </div>
                 <div className="text-right">
                     <p className="font-bold text-xl tracking-tight">
-                        ₹{Math.ceil(fare.total_fare)}
+                        ₹{Math.ceil(fare.fare)}
                     </p>
                 </div>
             </div>

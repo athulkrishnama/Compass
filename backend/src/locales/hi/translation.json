@@ -158,5 +158,7 @@
   "bookingCannotBeCancelled": "बुकिंग वर्तमान स्थिति में रद्द नहीं की जा सकती",
   "refundFailed": "रिफंड प्रक्रिया विफल रही। कृपया बाद में पुनः प्रयास करें",
   "roomHasActiveBooking": "इस कमरे में सक्रिय चेक-इन बुकिंग है",
-  "notFound": "संसाधन नहीं मिला"
+  "notFound": "संसाधन नहीं मिला",
+  "fareCreatedSuccessfully": "किराया सफलतापूर्वक बनाया गया",
+  "distanceFetchingFailed": "स्थानों के बीच दूरी और समय प्राप्त करने में विफल"
 }

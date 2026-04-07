@@ -24,6 +24,7 @@ import { WebHookRouter } from "@presentation/routes/webHook/webHookRouter";
 import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { RideRouter } from "@presentation/routes/ride/rideRouter";
 
 export class Server {
   private _app: Express;
@@ -43,11 +44,10 @@ export class Server {
     this._setPaymentRouter();
     this._setDestinationRouter();
     this._setBookingRouter();
+    this._setRideRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
-
- 
 
   private _setAuthRouter() {
     const authRouter = new AuthRouter();
@@ -95,6 +95,10 @@ export class Server {
     this._app.use(Routes.BOOKING, bookingRouter.getRouter());
   }
 
+  private _setRideRouter() {
+    const rideRouter = new RideRouter();
+    this._app.use(Routes.RIDE, rideRouter.getRouter());
+  }
 
   private _setMiddlewares() {
     this._app.use(express.json());

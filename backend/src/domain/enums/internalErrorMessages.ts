@@ -153,4 +153,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   NOT_FOUND = "notFound",
   MAPBOX_API_ERROR = "mapboxApiError",
   NO_ROUTE_FOUND = "noRouteFound",
+  DISTANCE_FETCHING_FAILED = "distanceFetchingFailed",
 }

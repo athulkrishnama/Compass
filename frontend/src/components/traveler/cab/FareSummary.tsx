@@ -1,4 +1,7 @@
 import { Navigation, Clock } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import translationKey from "@/utils/i18n/translationKey";
+import { formatTravelTime } from "@/utils/timeFormat";
 
 interface FareSummaryProps {
     distance: number;
@@ -6,6 +9,9 @@ interface FareSummaryProps {
 }
 
 const FareSummary = ({ distance, time }: FareSummaryProps) => {
+    const { t } = useTranslation();
+    const timeString = formatTravelTime(time, t);
+
     return (
         <div className="flex items-center space-x-4 text-sm font-medium text-gray-800 mt-4 bg-white p-4 rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-gray-100">
             <div className="flex items-center flex-1">
@@ -14,10 +20,10 @@ const FareSummary = ({ distance, time }: FareSummaryProps) => {
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs text-gray-500 font-normal">
-                        Distance
+                        {t(translationKey.fareSummary.distance)}
                     </span>
                     <span className="font-bold text-base">
-                        {distance.toFixed(1)} km
+                        {(distance / 1000).toFixed(1)} km
                     </span>
                 </div>
             </div>
@@ -28,10 +34,10 @@ const FareSummary = ({ distance, time }: FareSummaryProps) => {
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs text-gray-500 font-normal">
-                        Est. Time
+                        {t(translationKey.fareSummary.estTime)}   
                     </span>
                     <span className="font-bold text-base">
-                        {Math.ceil(time)} min
+                        {timeString}
                     </span>
                 </div>
             </div>
@@ -40,3 +46,4 @@ const FareSummary = ({ distance, time }: FareSummaryProps) => {
 };
 
 export default FareSummary;
+

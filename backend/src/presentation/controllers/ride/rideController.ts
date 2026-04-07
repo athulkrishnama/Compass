@@ -1,0 +1,41 @@
+import { InvalideDataException } from "@application/constants/Exceptions";
+import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createFareUseCase.interface";
+import { Messages } from "@domain/enums/messages";
+import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
+import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
+import { calculateFareValidationSchema } from "@presentation/validationSchemas/fareValidation";
+import { NextFunction, Request, Response } from "express";
+import { inject, injectable } from "tsyringe";
+
+@injectable()
+export class RideController {
+  constructor(
+    @inject("ICreateFareUseCase")
+    private _createFareUseCase: ICreateFareUseCase,
+  ) {}
+
+  async handleCreateFare(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = calculateFareValidationSchema.safeParse(req.body);
+
+      if (!data.success) {
+        throw new InvalideDataException(data.error.issues[0].message);
+      }
+
+      const fare = await this._createFareUseCase.execute({
+        ...data.data,
+        travelerId: req.user.id,
+      });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.FARE_CREATED_SUCCESSFULLY,
+        fare,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+}

@@ -127,7 +127,8 @@ import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/tr
 import { GetAdminTransactionsUseCase } from "@useCases/transaction/GetAdminTransactionsUseCase";
 import { IGetAdminDashboardStatsUseCase } from "@application/interfaces/useCase/admin/getAdminDashboardStatsUseCase.interface";
 import { GetAdminDashboardStatsUseCase } from "../../application/useCases/admin/GetAdminDashboardStatsUseCase";
-
+import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createFareUseCase.interface";
+import { CreateFareUseCase } from "@useCases/ride/createFareUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -381,5 +382,9 @@ export function registerUsecases() {
   container.registerSingleton<IGetAdminDashboardStatsUseCase>(
     "IGetAdminDashboardStatsUseCase",
     GetAdminDashboardStatsUseCase,
+  );
+  container.registerSingleton<ICreateFareUseCase>(
+    "ICreateFareUseCase",
+    CreateFareUseCase,
   );
 }

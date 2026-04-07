@@ -43,4 +43,5 @@ export enum Messages {
   AVAILABLE_ROOMS_FETCHED = "availableRoomsFetched",
   WALLET_FETCHED_SUCCESSFULLY = "walletFetchedSuccessfully",
   TRANSACTIONS_FETCHED_SUCCESSFULLY = "transactionsFetchedSuccessfully",
+  FARE_CREATED_SUCCESSFULLY = "fareCreatedSuccessfully",
 }

@@ -1,5 +1,5 @@
 import { Coordinate } from "@domain/types/coordinate";
-import { FareOption } from "@domain/entities/fare/fare.entity";
+import { FareType } from "@domain/types/fareType";
 
 export interface ICalculateFareRequestDTO {
   travelerId: string;
@@ -11,5 +11,5 @@ export interface ICalculateFareResponseDTO {
   id: string;
   distance: number;
   time: number;
-  fares: FareOption[];
+  fares: FareType[];
 }

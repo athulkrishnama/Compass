@@ -1015,4 +1015,12 @@ export default {
         selectFromPastTrips: "cabHome.selectFromPastTrips",
         searchResults: "cabHome.searchResults",
     },
+    fareSummary: {
+        distance: "fareSummary.distance",
+        estTime: "fareSummary.estTime",
+        hour: "fareSummary.hour",
+        hours: "fareSummary.hours",
+        min: "fareSummary.min",
+        mins: "fareSummary.mins",
+    },
 };

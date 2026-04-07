@@ -1014,5 +1014,13 @@
         "gettingLocation": "Getting your location...",
         "selectFromPastTrips": "Select from past trips",
         "searchResults": "Search Results"
+    },
+    "fareSummary": {
+        "distance": "Distance",
+        "estTime": "Est. Time",
+        "hour": "hr",
+        "hours": "hrs",
+        "min": "min",
+        "mins": "mins"
     }
 }
