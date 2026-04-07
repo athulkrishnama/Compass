@@ -24,13 +24,6 @@ import { IPaymentService } from "@application/interfaces/service/paymentService.
 import { PaymentService } from "@infrastructure/services/paymentService";
 import { IHotelPricingService } from "@application/interfaces/service/hotelPricingService";
 import { PricingService } from "@infrastructure/services/hotelPricingService";
-import { IQueueService } from "application/interfaces/service/queueService.interface";
-import { QueueService } from "@infrastructure/services/queueService";
-import { ISocketRegistry } from "application/interfaces/service/socketRegistry.interface";
-import { SocketRegistry } from "@infrastructure/services/socketRegistry";
-import { ICabPricingService } from "@application/interfaces/service/cabPricingService.interface";
-import { CabPricingService } from "@infrastructure/services/cabPricingService";
-
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
   container.registerSingleton<IOtpService>("IOtpService", OtpService);
@@ -70,13 +63,5 @@ export function registerServices() {
     "IHotelPricingService",
     PricingService,
   );
-  container.registerSingleton<IQueueService>("IQueueService", QueueService);
-  container.registerSingleton<ISocketRegistry>(
-    "ISocketRegistry",
-    SocketRegistry,
-  );
-  container.registerSingleton<ICabPricingService>(
-    "ICabPricingService",
-    CabPricingService,
-  );
+
 }

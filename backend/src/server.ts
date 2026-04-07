@@ -1,11 +1,5 @@
 import express, { Express, Response, Request } from "express";
 import { createServer, Server as HttpServer } from "http";
-import { Server as SocketIOServer } from "socket.io";
-import { createAdapter } from "@socket.io/redis-adapter";
-import Redis from "ioredis";
-import { ISocketRegistry } from "application/interfaces/service/socketRegistry.interface";
-import { container } from "tsyringe";
-import { setupSocketHandlers } from "@presentation/sockets/socketHandlers";
 import { env } from "./config/envConfig";
 import { Errors } from "./presentation/constants/Error";
 import { Messages } from "./presentation/constants/messages";
@@ -28,7 +22,6 @@ import { DestinationRouter } from "@presentation/routes/destination/destinationR
 import { PaymentRouter } from "@presentation/routes/payment/paymentRouter";
 import { WebHookRouter } from "@presentation/routes/webHook/webHookRouter";
 import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
-import { FareRouter } from "@presentation/routes/fare/fareRouter";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
@@ -50,26 +43,11 @@ export class Server {
     this._setPaymentRouter();
     this._setDestinationRouter();
     this._setBookingRouter();
-    this._setFareRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
-    this._setSocketIo();
   }
 
-  private _setSocketIo() {
-    const io = new SocketIOServer(this._httpServer, {
-      cors: corsOptions,
-    });
-
-    const pubClient = new Redis(env.REDIS_URL);
-    const subClient = pubClient.duplicate();
-    io.adapter(createAdapter(pubClient, subClient));
-
-    const socketRegistry =
-      container.resolve<ISocketRegistry>("ISocketRegistry");
-    socketRegistry.init(io);
-    setupSocketHandlers(io, socketRegistry);
-  }
+ 
 
   private _setAuthRouter() {
     const authRouter = new AuthRouter();
@@ -117,10 +95,6 @@ export class Server {
     this._app.use(Routes.BOOKING, bookingRouter.getRouter());
   }
 
-  private _setFareRouter() {
-    const fareRouter = new FareRouter();
-    this._app.use(Routes.FARE, fareRouter.getRouter());
-  }
 
   private _setMiddlewares() {
     this._app.use(express.json());

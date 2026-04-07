@@ -20,12 +20,6 @@ import { WalletRepo } from "@infrastructure/repository/wallet/wallet.repo";
 import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
 import { TransactionRepo } from "@infrastructure/repository/transaction/transaction.repo";
 
-import { IFareRepo } from "@application/interfaces/repository/fare/fare.repo.interface";
-import { FareRepo } from "@infrastructure/repository/fare/fare.repo";
-
-import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
-import { RideRepo } from "@infrastructure/repository/ride/ride.repo";
-
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
   container.registerSingleton<ICabRepo>("ICabRepo", CabRepo);
@@ -52,6 +46,4 @@ export function registerRepositories() {
     "ITransactionRepo",
     TransactionRepo,
   );
-  container.registerSingleton<IFareRepo>("IFareRepo", FareRepo);
-  container.registerSingleton<IRideRepo>("IRideRepo", RideRepo);
 }
