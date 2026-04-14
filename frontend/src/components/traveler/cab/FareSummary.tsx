@@ -34,11 +34,9 @@ const FareSummary = ({ distance, time }: FareSummaryProps) => {
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs text-gray-500 font-normal">
-                        {t(translationKey.fareSummary.estTime)}   
+                        {t(translationKey.fareSummary.estTime)}
                     </span>
-                    <span className="font-bold text-base">
-                        {timeString}
-                    </span>
+                    <span className="font-bold text-base">{timeString}</span>
                 </div>
             </div>
         </div>
@@ -46,4 +44,3 @@ const FareSummary = ({ distance, time }: FareSummaryProps) => {
 };
 
 export default FareSummary;
-

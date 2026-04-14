@@ -1,7 +1,10 @@
-import {type TFunction } from "i18next";
+import { type TFunction } from "i18next";
 import translationKey from "@/utils/i18n/translationKey";
 
-export const formatTravelTime = (timeInSeconds: number, t: TFunction): string => {
+export const formatTravelTime = (
+    timeInSeconds: number,
+    t: TFunction
+): string => {
     const totalMinutes = Math.ceil(timeInSeconds / 60);
 
     if (totalMinutes >= 60) {

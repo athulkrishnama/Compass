@@ -37,11 +37,11 @@ export class RideRepo
       attempt_id: doc.attempt_id,
       otp: doc.otp,
       otp_attempts: doc.otp_attempts,
-      status: doc.status as any,
-      cancelled_by: doc.cancelled_by as any,
+      status: doc.status,
+      cancelled_by: doc.cancelled_by,
       events: doc.events
         ? doc.events.map((event) => ({
-            event_name: event.event_name as any,
+            event_name: event.event_name,
             actor: event.actor,
             timestamp: event.timestamp,
           }))

@@ -1,4 +1,4 @@
-import { FARE_STATUS } from "@domain/types/fareStatus";
+import { FARE_STATUS, FareStatus } from "@domain/types/fareStatus";
 import { VEHICLE_TYPES } from "@domain/types/vehicleType";
 import { FareType } from "@domain/types/fareType";
 import { Document, Schema, Types } from "mongoose";
@@ -18,7 +18,7 @@ export interface IFareDocument extends Document {
   time: number;
   created_at: Date;
   expires_at: Date;
-  status: string;
+  status: FareStatus;
   fares: FareType[];
 }
 

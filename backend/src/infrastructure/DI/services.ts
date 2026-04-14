@@ -26,11 +26,13 @@ import { IHotelPricingService } from "@application/interfaces/service/hotelPrici
 import { PricingService } from "@infrastructure/services/hotelPricingService";
 import { ILocationService } from "@application/interfaces/service/locationService.interface";
 import { LocationService } from "@infrastructure/services/locationService";
+import { IGeoService } from "@application/interfaces/service/geoService.interface";
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
   container.registerSingleton<IOtpService>("IOtpService", OtpService);
   container.registerSingleton<IEmailService>("IEmailService", EmailService);
   container.registerSingleton<ICacheService>("ICacheService", CacheService);
+  container.registerSingleton<IGeoService>("IGeoService", CacheService);
   container.registerSingleton<IJwtService>("IJwtService", JwtService);
   container.registerSingleton<IEmailTemplateGenerator>(
     "IOtpMailService",

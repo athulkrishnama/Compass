@@ -25,6 +25,7 @@ import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { RideRouter } from "@presentation/routes/ride/rideRouter";
+import { SocketServer } from "@presentation/webSocket/socketServer";
 
 export class Server {
   private _app: Express;
@@ -33,6 +34,7 @@ export class Server {
   constructor() {
     this._app = express();
     this._httpServer = createServer(this._app);
+    new SocketServer(this._httpServer);
     this._setLoggingMiddleware();
     this._setWebHookRouter();
     this._setMiddlewares();

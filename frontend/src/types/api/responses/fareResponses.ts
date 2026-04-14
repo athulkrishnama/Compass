@@ -1,4 +1,4 @@
-import type { FareOption } from '../fareOption';
+import type { FareOption } from "../fareOption";
 
 export interface ICalculateFareResponseDTO {
     id: string;

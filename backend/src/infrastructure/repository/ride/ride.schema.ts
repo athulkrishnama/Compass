@@ -1,6 +1,6 @@
-import { RIDE_STATUSES } from "@domain/types/rideStatus";
+import { RIDE_STATUSES, RideStatus } from "@domain/types/rideStatus";
 import { FareType } from "@domain/types/fareType";
-import { RIDE_EVENT_NAMES } from "@domain/types/rideEvent";
+import { RIDE_EVENT_NAMES, RideEventName } from "@domain/types/rideEvent";
 import { VEHICLE_TYPES } from "@domain/types/vehicleType";
 import { Document, Schema, Types } from "mongoose";
 import { ROLES } from "@domain/types/roles";
@@ -26,9 +26,9 @@ export interface IRideDocument extends Document {
   attempt_id: string;
   otp: string;
   otp_attempts: number;
-  status: string;
+  status: RideStatus;
   cancelled_by: ROLES | null;
-  events: { event_name: string; actor: string; timestamp: Date }[];
+  events: { event_name: RideEventName; actor: string; timestamp: Date }[];
 }
 
 export const rideSchema = new Schema<IRideDocument>({

@@ -15,7 +15,10 @@ export const Route = createFileRoute("/traveler/cab/search")({
         return queryClient.ensureQueryData(
             createCalculateFareQueryOptions({
                 pickup: { latitude: deps.pickupLat, longitude: deps.pickupLng },
-                dropoff: { latitude: deps.dropoffLat, longitude: deps.dropoffLng },
+                dropoff: {
+                    latitude: deps.dropoffLat,
+                    longitude: deps.dropoffLng,
+                },
             })
         );
     },

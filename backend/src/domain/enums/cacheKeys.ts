@@ -1,10 +1,7 @@
+import { VehicleType } from "@domain/types/vehicleType";
+
 export const RedisKeys = {
-  driverGeo: "driver:geo",
-  driverAvailableSet: (type: string) => `driver:available:${type}`,
-  driverSocketId: (driverId: string) => `socket:driver:${driverId}`,
-  driverLock: (driverId: string) => `driver:lock:${driverId}`,
-  rideLock: (rideId: string) => `ride:lock:${rideId}`,
-  rideState: (rideId: string) => `ride:state:${rideId}`,
-  rideAttempted: (rideId: string) => `ride:attempted:${rideId}`,
-  pricingConfig: "pricing:config",
+  DRIVER_LOCATION: (vehicle_type: VehicleType) =>
+    `driver:location:${vehicle_type}`,
+  DRIVER_AVAILABLE: (driverId: string) => `driver:available:${driverId}`,
 } as const;

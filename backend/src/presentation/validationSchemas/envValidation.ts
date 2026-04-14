@@ -46,4 +46,11 @@ export const envSchema = z.object({
     .min(0)
     .max(100),
   MAPBOX_ACCESS_TOKEN: z.string({ error: Errors.MAPBOX_ACCESS_TOKEN_ERROR }),
+  SOCKET_UI_ORIGIN: z.url({ error: Errors.ENV_SOCKET_UI_ORIGIN_ERROR }),
+  SOCKET_ADMIN_USERNAME: z.string({
+    error: Errors.ENV_SOCKET_ADMIN_USERNAME_ERROR,
+  }),
+  SOCKET_ADMIN_PASSWORD: z.string({
+    error: Errors.ENV_SOCKET_ADMIN_PASSWORD_ERROR,
+  }),
 });

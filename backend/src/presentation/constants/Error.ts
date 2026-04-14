@@ -25,4 +25,7 @@ export enum Errors {
   ROOM_LOCK_EXPIRATION_TIME_ERROR = "Provide room lock expiration time in seconds",
   COMMISSION_PERCENTAGE_ERROR = "Provide commission percentage (0-100)",
   MAPBOX_ACCESS_TOKEN_ERROR = "Provide mapbox access token in environment variables",
+  ENV_SOCKET_UI_ORIGIN_ERROR = "Provide socket UI origin in environment variables",
+  ENV_SOCKET_ADMIN_USERNAME_ERROR = "Provide socket admin username in environment variables",
+  ENV_SOCKET_ADMIN_PASSWORD_ERROR = "Provide socket admin password in environment variables",
 }

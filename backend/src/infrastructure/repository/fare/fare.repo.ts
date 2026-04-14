@@ -63,7 +63,7 @@ export class FareRepo
       time: doc.time,
       created_at: doc.created_at,
       expires_at: doc.expires_at,
-      status: doc.status as any,
+      status: doc.status,
       fares: doc.fares,
     };
   }

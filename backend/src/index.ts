@@ -14,12 +14,17 @@ dotenv.config({ path: envPath });
 
 import { Server } from "./server";
 import { MongodbConfig } from "@config/mongoConfig";
+import { container } from "tsyringe";
+import { CronService } from "@presentation/cron-service";
 
 async function start() {
   try {
     MongodbConfig.connect();
     const server = new Server();
     server.listen();
+
+    const cronService = container.resolve(CronService);
+    cronService.start();
   } catch (error) {
     if (error instanceof Error) {
       console.log(error);
