@@ -1,4 +1,5 @@
 import { FareEntity } from "@domain/entities/fare/fare.entity";
+import { FARE_STATUS } from "@domain/types/fareStatus";
 
 export class FareMapper {
   static toEntityFromCreateFareDTO(
@@ -7,13 +8,12 @@ export class FareMapper {
     return {
       _id: "",
       rider_id: data.rider_id,
-      pickup_coordinates: data.pickup_coordinates,
-      drop_coordinates: data.drop_coordinates,
-      distance_km: data.distance_km,
-      duration_minutes: data.duration_minutes,
-      fare_options: data.fare_options,
-      selected_option: data.selected_option,
-      status: "PENDING_SELECTION",
+      pickup_location: data.pickup_location,
+      dropoff_location: data.dropoff_location,
+      distance: data.distance,
+      time: data.time,
+      fares: data.fares,
+      status: FARE_STATUS.CREATED,
       expires_at: data.expires_at,
       created_at: new Date(),
     };

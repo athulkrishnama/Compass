@@ -1,5 +1,4 @@
-import rfs from "rotating-file-stream";
-import path from "path";
+import { createStream } from "rotating-file-stream";
 
 type intervalType =
   | `${number}M`
@@ -14,14 +13,16 @@ export const createRotatingFileStream = (
   maxFiles: number,
   filePath: string,
 ) => {
-  return rfs.createStream(
-    (time) => {
-      if (!time) return path.join(filePath, "buffer.txt");
-      return path.join(filePath, new Date().toDateString() + ".txt");
+  return createStream(
+    (time: Date | number) => {
+      if (!time) return "buffer.txt";
+      const d = time instanceof Date ? time : new Date(time);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}.txt`;
     },
     {
       interval,
       maxFiles,
+      path: filePath,
     },
   );
 };
