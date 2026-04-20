@@ -52,7 +52,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             map.remove();
             mapRef.current = null;
         };
-    }, []);
+    }, [initialCenter, initialZoom]);
 
     useEffect(() => {
         const map = mapRef.current;
