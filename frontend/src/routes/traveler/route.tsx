@@ -2,7 +2,6 @@ import CommonErrorComponent from "@/components/errorBoundries/CommonErrorCompone
 import NotFoundComponent from "@/components/notFound";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import { ROLES } from "@/constants/roles";
-import type { FileRoutesByTo } from "@/routeTree.gen";
 import translationKey from "@/utils/i18n/translationKey";
 import {
     createFileRoute,
@@ -14,16 +13,18 @@ import { useTranslation } from "react-i18next";
 export const Route = createFileRoute("/traveler")({
     component: RouteComponent,
     beforeLoad: ({ context, location }) => {
-        const allowedRoutes: (keyof FileRoutesByTo)[] = [
+        const allowedRoutes: string[] = [
             "/traveler/login",
             "/traveler/signup",
             "/traveler/forgetPassword",
             "/traveler/destinations",
             "/traveler/hotels",
+            "/traveler",
+            "/traveler/",
         ];
 
         const isAllowedRoute =
-            allowedRoutes.includes(location.pathname as keyof FileRoutesByTo) ||
+            allowedRoutes.includes(location.pathname) ||
             location.pathname.startsWith("/traveler/destination/");
 
         if (
@@ -60,6 +61,7 @@ function RouteComponent() {
         },
         { name: t(translationKey.button.history), route: "/traveler/history" },
         { name: t(translationKey.button.profile), route: "/traveler/profile" },
+        { name: t(translationKey.button.cabs), route: "/traveler/cab" },
     ];
 
     const noNavbarRoutes = [

@@ -151,4 +151,7 @@ export enum INTERNAL_ERROR_MESSAGES {
   ROOM_NOT_AVAILABLE_FOR_CHECKIN = "roomNotAvailableForCheckin",
   ROOM_HAS_ACTIVE_BOOKING = "roomHasActiveBooking",
   NOT_FOUND = "notFound",
+  MAPBOX_API_ERROR = "mapboxApiError",
+  NO_ROUTE_FOUND = "noRouteFound",
+  DISTANCE_FETCHING_FAILED = "distanceFetchingFailed",
 }

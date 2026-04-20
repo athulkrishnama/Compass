@@ -1,4 +1,4 @@
-export interface IPricingService {
+export interface IHotelPricingService {
   calculateDynamicPrice(data: {
     roomVariantId: string;
     checkInDate: Date;

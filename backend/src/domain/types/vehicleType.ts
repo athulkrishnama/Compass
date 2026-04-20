@@ -1,21 +1,2 @@
-export const VEHICLE_TYPES = [
-  "sedan",
-  "hatchback",
-  "van",
-  "jeep",
-  "suv",
-  "coupe",
-  "convertible",
-  "wagon",
-  "pickup",
-  "minivan",
-  "truck",
-  "luxury",
-  "limousine",
-  "microcar",
-  "roadster",
-  "crossover",
-  "offroad",
-  "rickshaw",
-] as const;
+export const VEHICLE_TYPES = ["RICKSHAW", "SUV", "SEDAN"] as const;
 export type VehicleType = (typeof VEHICLE_TYPES)[number];

@@ -3,6 +3,7 @@ import { registerModel } from "@infrastructure/DI/model";
 import { registerRepositories } from "@infrastructure/DI/repository";
 import { registerServices } from "@infrastructure/DI/services";
 import { registerUsecases } from "@infrastructure/DI/useCases";
+import { registerEventHandlers } from "./eventHandlers";
 
 export function registerDI() {
   registerModel();
@@ -10,4 +11,5 @@ export function registerDI() {
   registerRepositories();
   registerUsecases();
   registerController();
+  registerEventHandlers();
 }

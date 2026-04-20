@@ -384,9 +384,8 @@
         "saveRoomVariant": "रूम वैरिएंट सहेजें",
         "addRoomVariant": "रूम वैरिएंट जोड़ें",
         "updateRoomVariant": "रूम वैरिएंट अपडेट करें",
-        "createInstance": "इंस्टेंस बनाएं",
-        "viewRoomVariant": "रूम वैरिएंट देखें",
-        "destinations": "गंतव्य"
+        "destinations": "गंतव्य",
+        "cabs": "कैब्स"
     },
     "text": {
         "alreadyHaveAccount": "क्या आपके पास पहले से खाता है?",
@@ -922,5 +921,13 @@
             "hotel": "होटल?",
             "taxi": "टैक्सी"
         }
+    },
+    "fareSummary": {
+        "distance": "दूरी",
+        "estTime": "अनुमानित समय",
+        "hour": "घंटा",
+        "hours": "घंटे",
+        "min": "मिनट",
+        "mins": "मिनट"
     }
 }

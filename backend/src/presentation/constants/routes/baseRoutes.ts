@@ -9,4 +9,5 @@ export enum Routes {
   PAYMENT = "/api/v1/payment",
   BOOKING = "/api/v1/bookings",
   WEBHOOK = "/api/v1/webhooks",
+  RIDE = "/api/v1/ride",
 }

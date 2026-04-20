@@ -160,5 +160,7 @@
   "bookingCannotBeCancelled": "Booking cannot be cancelled in its current state",
   "refundFailed": "Failed to process refund. Please try again later",
   "roomHasActiveBooking": "This room has an active checked-in booking",
-  "notFound": "Resource not found"
+  "notFound": "Resource not found",
+  "fareCreatedSuccessfully": "Fare created successfully",
+  "distanceFetchingFailed": "Failed to fetch distance and time between the locations"
 }

@@ -1,4 +1,5 @@
 import express, { Express, Response, Request } from "express";
+import { createServer, Server as HttpServer } from "http";
 import { env } from "./config/envConfig";
 import { Errors } from "./presentation/constants/Error";
 import { Messages } from "./presentation/constants/messages";
@@ -23,12 +24,17 @@ import { WebHookRouter } from "@presentation/routes/webHook/webHookRouter";
 import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { RideRouter } from "@presentation/routes/ride/rideRouter";
+import { SocketServer } from "@presentation/webSocket/socketServer";
 
 export class Server {
   private _app: Express;
+  private _httpServer: HttpServer;
 
   constructor() {
     this._app = express();
+    this._httpServer = createServer(this._app);
+    new SocketServer(this._httpServer);
     this._setLoggingMiddleware();
     this._setWebHookRouter();
     this._setMiddlewares();
@@ -40,6 +46,7 @@ export class Server {
     this._setPaymentRouter();
     this._setDestinationRouter();
     this._setBookingRouter();
+    this._setRideRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
@@ -90,6 +97,11 @@ export class Server {
     this._app.use(Routes.BOOKING, bookingRouter.getRouter());
   }
 
+  private _setRideRouter() {
+    const rideRouter = new RideRouter();
+    this._app.use(Routes.RIDE, rideRouter.getRouter());
+  }
+
   private _setMiddlewares() {
     this._app.use(express.json());
     this._app.use(express.urlencoded());
@@ -122,7 +134,7 @@ export class Server {
   }
 
   public listen() {
-    this._app.listen(env.PORT, (err) => {
+    this._httpServer.listen(env.PORT, (err?: Error) => {
       if (err) {
         console.log(Errors.SERVER_STARTING_ERROR);
       }

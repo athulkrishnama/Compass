@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import translationKeys from "@/utils/i18n/translationKey";
 import logo from "@/assets/images/logo.png";
 import gsap from "gsap";
+import { useAppSelector } from "@/hooks/reduxHooks";
 
 const k = translationKeys.landingPage;
 
@@ -34,6 +35,8 @@ function HeroSection() {
     const { t } = useTranslation();
     const [currentSlide, setCurrentSlide] = useState(0);
     const statsRef = useRef<HTMLDivElement>(null);
+
+    const isLoggedIn = useAppSelector((store) => store.user.isLoggedin);
 
     const nextSlide = useCallback(() => {
         setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -134,7 +137,7 @@ function HeroSection() {
                             {t(k.destinations)}
                         </Link>
                         <Link
-                            to="/traveler/hotels"
+                            to="/traveler/cab"
                             className="hover:text-white transition-colors duration-200 flex items-center gap-1.5"
                         >
                             {t(k.cabs)}
@@ -142,14 +145,16 @@ function HeroSection() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <Link to="/traveler/login">
-                            <Button
-                                variant="ghost"
-                                className="text-white/80 hover:text-white hover:bg-white/10 rounded-full text-sm"
-                            >
-                                {t(k.login)}
-                            </Button>
-                        </Link>
+                        {!isLoggedIn && (
+                            <Link to="/traveler/login">
+                                <Button
+                                    variant="ghost"
+                                    className="text-white/80 hover:text-white hover:bg-white/10 rounded-full text-sm"
+                                >
+                                    {t(k.login)}
+                                </Button>
+                            </Link>
+                        )}
                         <Link to="/traveler/signup">
                             <Button className="bg-white text-black hover:bg-white/90 rounded-full px-5 text-sm font-semibold">
                                 {t(k.signup)}

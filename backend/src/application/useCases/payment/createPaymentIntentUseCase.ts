@@ -11,7 +11,7 @@ import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomL
 import { ResourceNotFoundException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 
-import { IPricingService } from "@application/interfaces/services/IPricingService";
+import { IHotelPricingService } from "@application/interfaces/service/hotelPricingService";
 
 @injectable()
 export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
@@ -22,7 +22,8 @@ export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
     @inject("IHotelBookingRepo")
     private _hotelBookingRepository: IHotelBookingRepo,
     @inject("IRoomLockRepo") private _roomLockRepository: IRoomLockRepo,
-    @inject("IPricingService") private _pricingService: IPricingService,
+    @inject("IHotelPricingService")
+    private _pricingService: IHotelPricingService,
   ) {}
   async execute(
     data: ICreateIndentRequestDTO,

@@ -176,6 +176,7 @@ export class AuthController {
         maxAge: env.REFRESH_TOKEN_EXPIRATION_TIME * 1000,
         httpOnly: true,
         secure: true,
+        sameSite: "none",
       });
 
       HTTPResponseBuilder.buildSuccessResponse(
