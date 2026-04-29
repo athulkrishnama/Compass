@@ -51,6 +51,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({
                     accessToken={env.VITE_MAPBOX_ACCESS_TOKEN}
                     placeholder={placeholder}
                     value={value}
+                    options={{ country: "in" }}
                     onRetrieve={handleRetrieve}
                     theme={{
                         variables: {

@@ -922,6 +922,23 @@
             "taxi": "टैक्सी"
         }
     },
+    "cabHome": {
+        "bookRide": "सवारी बुक करें",
+        "whereAreYouGoing": "आप कहां जा रहे हैं?",
+        "pickup": "पिकअप",
+        "dropoff": "ड्रॉप-ऑफ",
+        "selectPickup": "पिकअप बिंदु चुनें...",
+        "selectDropoff": "गंतव्य चुनें...",
+        "useCurrentLocation": "वर्तमान स्थान का उपयोग करें",
+        "currentLocation": "वर्तमान स्थान",
+        "swapPoints": "पिकअप और ड्रॉप-ऑफ बदलें",
+        "searchRides": "सवारी खोजें",
+        "gettingLocation": "आपका स्थान प्राप्त कर रहे हैं...",
+        "selectFromPastTrips": "पिछली यात्राओं में से चुनें",
+        "searchResults": "खोज परिणाम",
+        "maxDistanceExceeded": "पिकअप और ड्रॉप-ऑफ स्थान 100 किमी से अधिक दूर नहीं होने चाहिए।",
+        "noRouteFound": "इन स्थानों के बीच कोई ड्राइविंग मार्ग नहीं मिला।"
+    },
     "fareSummary": {
         "distance": "दूरी",
         "estTime": "अनुमानित समय",

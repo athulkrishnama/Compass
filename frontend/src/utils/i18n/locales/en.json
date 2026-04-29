@@ -1013,7 +1013,9 @@
         "searchRides": "Search Rides",
         "gettingLocation": "Getting your location...",
         "selectFromPastTrips": "Select from past trips",
-        "searchResults": "Search Results"
+        "searchResults": "Search Results",
+        "maxDistanceExceeded": "The pickup and drop-off locations should not be more than 100 km apart.",
+        "noRouteFound": "No driving route found between these locations."
     },
     "fareSummary": {
         "distance": "Distance",

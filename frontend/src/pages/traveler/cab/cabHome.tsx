@@ -1,12 +1,17 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import CabHomeHeader from "@/components/traveler/cab/CabHomeHeader";
 import LocationCard from "@/components/traveler/cab/LocationCard";
 import PastTripsList from "@/components/traveler/cab/PastTripsList";
 import MapboxMap, { type MapboxMarker } from "@/components/shared/MapboxMap";
 import { type PastTrip } from "@/components/traveler/cab/PastTripCard";
+import { calculateDistance } from "@/utils/distance";
+import translationKey from "@/utils/i18n/translationKey";
+import { env } from "@/config/env";
 
 const PAST_TRIPS: PastTrip[] = [
     {
@@ -55,6 +60,7 @@ interface LocationPoint {
 
 const CabHome = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const [pickup, setPickup] = useState<LocationPoint | null>(null);
     const [dropoff, setDropoff] = useState<LocationPoint | null>(null);
@@ -63,6 +69,9 @@ const CabHome = () => {
     const [gettingLoc, setGettingLoc] = useState<"pickup" | "dropoff" | null>(
         null
     );
+    const [routeCoordinates, setRouteCoordinates] = useState<
+        [number, number][]
+    >([]);
 
     const mapMarkers: MapboxMarker[] = [
         pickup && {
@@ -113,6 +122,19 @@ const CabHome = () => {
 
     const handleSearch = () => {
         if (!pickup || !dropoff) return;
+
+        const distance = calculateDistance(
+            pickup.lat,
+            pickup.lng,
+            dropoff.lat,
+            dropoff.lng
+        );
+
+        if (distance > 100) {
+            toast.error(t(translationKey.cabHome.maxDistanceExceeded));
+            return;
+        }
+
         navigate({
             to: "/traveler/cab/search",
             search: {
@@ -123,6 +145,47 @@ const CabHome = () => {
             },
         });
     };
+
+    useEffect(() => {
+        const fetchRoute = async () => {
+            if (!pickup || !dropoff) {
+                setRouteCoordinates([]);
+                return;
+            }
+
+            const distance = calculateDistance(
+                pickup.lat,
+                pickup.lng,
+                dropoff.lat,
+                dropoff.lng
+            );
+
+            if (distance > 100) {
+                setRouteCoordinates([]);
+                toast.error(t(translationKey.cabHome.maxDistanceExceeded));
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `https://api.mapbox.com/directions/v5/mapbox/driving/${pickup.lng},${pickup.lat};${dropoff.lng},${dropoff.lat}?overview=full&geometries=geojson&access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`
+                );
+                const data = await response.json();
+                const coordinates = data.routes?.[0]?.geometry?.coordinates;
+                if (coordinates && coordinates.length > 0) {
+                    setRouteCoordinates(coordinates);
+                } else {
+                    setRouteCoordinates([]);
+                    toast.error(t(translationKey.cabHome.noRouteFound));
+                }
+            } catch (error: any) {
+                console.error("Error fetching route:", error);
+                setRouteCoordinates([]);
+            }
+        };
+
+        fetchRoute();
+    }, [pickup?.lat, pickup?.lng, dropoff?.lat, dropoff?.lng]);
 
     const handleSelectPastTrip = (trip: PastTrip) => {
         setPickup({
@@ -182,7 +245,11 @@ const CabHome = () => {
                                     "0 4px 32px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)",
                             }}
                         >
-                            <MapboxMap markers={mapMarkers} className="h-56" />
+                            <MapboxMap
+                                markers={mapMarkers}
+                                routeCoordinates={routeCoordinates}
+                                className="h-56"
+                            />
                         </motion.div>
 
                         <PastTripsList
@@ -204,6 +271,7 @@ const CabHome = () => {
                     >
                         <MapboxMap
                             markers={mapMarkers}
+                            routeCoordinates={routeCoordinates}
                             className="w-full h-full"
                         />
                     </motion.div>

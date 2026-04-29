@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useLoaderData, useSearch } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import translationKey from "@/utils/i18n/translationKey";
 import { env } from "@/config/env";
 import MapboxMap from "@/components/shared/MapboxMap";
 import FareSummary from "@/components/traveler/cab/FareSummary";
 import CabOptionList from "@/components/traveler/cab/CabOptionList";
 import BookingAction from "@/components/traveler/cab/BookingAction";
+import { calculateDistance } from "@/utils/distance";
 
 const CabSearch = () => {
     const { t } = useTranslation();
@@ -21,31 +23,52 @@ const CabSearch = () => {
 
     useEffect(() => {
         const fetchRoute = async () => {
+            const { pickupLat, pickupLng, dropoffLat, dropoffLng } =
+                searchParams;
+
+            if (!pickupLat || !pickupLng || !dropoffLat || !dropoffLng) {
+                setRouteCoordinates([]);
+                return;
+            }
+
+            const distance = calculateDistance(
+                pickupLat,
+                pickupLng,
+                dropoffLat,
+                dropoffLng
+            );
+
+            if (distance > 100) {
+                setRouteCoordinates([]);
+                toast.error(t(translationKey.cabHome.maxDistanceExceeded));
+                return;
+            }
+
             try {
-                const p1 = {
-                    lng: searchParams.pickupLng,
-                    lat: searchParams.pickupLat,
-                };
-                const p2 = {
-                    lng: searchParams.dropoffLng,
-                    lat: searchParams.dropoffLat,
-                };
-                const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${p1.lng},${p1.lat};${p2.lng},${p2.lat}?geometries=geojson&access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`;
+                const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${pickupLng},${pickupLat};${dropoffLng},${dropoffLat}?overview=full&geometries=geojson&access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`;
                 const res = await fetch(url);
                 const data = await res.json();
 
-                if (data.routes && data.routes.length > 0) {
-                    setRouteCoordinates(data.routes[0].geometry.coordinates);
+                const coordinates = data.routes?.[0]?.geometry?.coordinates;
+                if (coordinates && coordinates.length > 0) {
+                    setRouteCoordinates(coordinates);
+                } else {
+                    setRouteCoordinates([]);
+                    toast.error(t(translationKey.cabHome.noRouteFound));
                 }
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Failed to fetch route", error);
+                setRouteCoordinates([]);
             }
         };
 
-        if (searchParams.pickupLat && searchParams.dropoffLat) {
-            fetchRoute();
-        }
-    }, [searchParams]);
+        fetchRoute();
+    }, [
+        searchParams.pickupLat,
+        searchParams.pickupLng,
+        searchParams.dropoffLat,
+        searchParams.dropoffLng,
+    ]);
 
     const markers = [
         {

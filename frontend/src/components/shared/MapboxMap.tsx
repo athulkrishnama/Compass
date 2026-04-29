@@ -20,10 +20,13 @@ interface MapboxMapProps {
     routeCoordinates?: [number, number][];
 }
 
+const DEFAULT_CENTER: [number, number] = [77.5946, 12.9716];
+const DEFAULT_ZOOM = 11;
+
 const MapboxMap: React.FC<MapboxMapProps> = ({
     markers = [],
-    initialCenter = [77.5946, 12.9716],
-    initialZoom = 11,
+    initialCenter = DEFAULT_CENTER,
+    initialZoom = DEFAULT_ZOOM,
     className = "",
     onMarkerClick,
     routeCoordinates,
@@ -52,7 +55,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             map.remove();
             mapRef.current = null;
         };
-    }, [initialCenter, initialZoom]);
+    }, [initialCenter[0], initialCenter[1], initialZoom]);
 
     useEffect(() => {
         const map = mapRef.current;

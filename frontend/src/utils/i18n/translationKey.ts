@@ -1014,6 +1014,8 @@ export default {
         gettingLocation: "cabHome.gettingLocation",
         selectFromPastTrips: "cabHome.selectFromPastTrips",
         searchResults: "cabHome.searchResults",
+        maxDistanceExceeded: "cabHome.maxDistanceExceeded",
+        noRouteFound: "cabHome.noRouteFound",
     },
     fareSummary: {
         distance: "fareSummary.distance",
