@@ -1,9 +1,7 @@
 import { env } from "@config/envConfig";
 import { Express } from "express";
-import { createRotatingFileStream } from "presentation/utils/rfs";
 import path from "path";
 import { pinoHttp } from "pino-http";
-
 export function setErrorHandlingMiddleware(app: Express) {
   if (env.NODE_ENV === "DEVELOPMENT") {
     app.use(
@@ -34,17 +32,6 @@ export function setErrorHandlingMiddleware(app: Express) {
       }),
     );
   } else {
-    const accessLogStream = createRotatingFileStream(
-      "1d",
-      7,
-      path.join(process.cwd(), "logs", "accessLogs"),
-    );
-    const errorLogStream = createRotatingFileStream(
-      "1d",
-      7,
-      path.join(process.cwd(), "logs", "errorLogs"),
-    );
-
     const requestLogger = pinoHttp({
       customLogLevel(req, res, err) {
         if (res.statusCode >= 500 || err) return "error";
@@ -76,15 +63,34 @@ export function setErrorHandlingMiddleware(app: Express) {
           };
         },
       },
-      stream: {
-        write(msg: string) {
-          accessLogStream.write(msg);
-
-          const parsed = JSON.parse(msg);
-          if (parsed.res?.statusCode >= 400) {
-            errorLogStream.write(msg);
-          }
-        },
+      transport: {
+        targets: [
+          {
+            target: "pino-roll",
+            options: {
+              file: path.join(
+                process.cwd(),
+                "logs",
+                "accessLogs",
+                "access.log",
+              ),
+              frequency: "daily",
+              mkdir: true,
+              size: "10m",
+            },
+            level: "info",
+          },
+          {
+            target: "pino-roll",
+            options: {
+              file: path.join(process.cwd(), "logs", "errorLogs", "error.log"),
+              frequency: "daily",
+              mkdir: true,
+              size: "10m",
+            },
+            level: "warn",
+          },
+        ],
       },
     });
 
