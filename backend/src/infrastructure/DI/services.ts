@@ -27,6 +27,8 @@ import { PricingService } from "@infrastructure/services/hotelPricingService";
 import { ILocationService } from "@application/interfaces/service/locationService.interface";
 import { LocationService } from "@infrastructure/services/locationService";
 import { IGeoService } from "@application/interfaces/service/geoService.interface";
+import { IQueueService } from "@application/interfaces/service/queueService.interface";
+import { QueueService } from "@infrastructure/services/queueService";
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
   container.registerSingleton<IOtpService>("IOtpService", OtpService);
@@ -71,4 +73,5 @@ export function registerServices() {
     "ILocationService",
     LocationService,
   );
+  container.registerSingleton<IQueueService>("IQueueService", QueueService);
 }
