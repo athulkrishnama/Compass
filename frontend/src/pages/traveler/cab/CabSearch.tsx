@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { useLoaderData, useSearch } from "@tanstack/react-router";
+import { useLoaderData, useSearch, useNavigate } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
+import { createRideMutationOptions } from "@/queryOptions/rideQueryOptions";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import translationKey from "@/utils/i18n/translationKey";
@@ -9,14 +11,18 @@ import FareSummary from "@/components/traveler/cab/FareSummary";
 import CabOptionList from "@/components/traveler/cab/CabOptionList";
 import BookingAction from "@/components/traveler/cab/BookingAction";
 import { calculateDistance } from "@/utils/distance";
+import type { VehicleType } from "@/types/vehicleType";
 
 const CabSearch = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const searchParams = useSearch({ from: "/traveler/cab/search" });
     const loaderData = useLoaderData({ from: "/traveler/cab/search" });
     const fareData = loaderData.data;
 
-    const [selectedCab, setSelectedCab] = useState<string | null>(null);
+    const { mutate: createRide } = useMutation(createRideMutationOptions());
+
+    const [selectedCab, setSelectedCab] = useState<VehicleType | null>(null);
     const [routeCoordinates, setRouteCoordinates] = useState<
         [number, number][]
     >([]);
@@ -56,8 +62,8 @@ const CabSearch = () => {
                     setRouteCoordinates([]);
                     toast.error(t(translationKey.cabHome.noRouteFound));
                 }
-            } catch (error: any) {
-                console.error("Failed to fetch route", error);
+            } catch {
+                console.error("Failed to fetch route");
                 setRouteCoordinates([]);
             }
         };
@@ -68,7 +74,31 @@ const CabSearch = () => {
         searchParams.pickupLng,
         searchParams.dropoffLat,
         searchParams.dropoffLng,
+        searchParams,
+        t,
     ]);
+
+    function handleStartSearch() {
+        if (selectedCab && fareData) {
+            createRide(
+                {
+                    fareId: fareData.id,
+                    vehicleType: selectedCab,
+                },
+                {
+                    onSuccess: (response) => {
+                        if (!response.data?.rideId) return;
+                        navigate({
+                            to: `/traveler/cab/ride/${response.data.rideId}`,
+                        });
+                    },
+                    onError: (error) => {
+                        toast.error(error.message);
+                    },
+                }
+            );
+        }
+    }
 
     const markers = [
         {
@@ -112,7 +142,10 @@ const CabSearch = () => {
                     />
                 )}
 
-                <BookingAction selectedCab={selectedCab} />
+                <BookingAction
+                    selectedCab={selectedCab}
+                    onClick={handleStartSearch}
+                />
             </div>
 
             <div className="w-full md:flex-1 h-[50vh] md:h-full relative order-first md:order-last bg-gray-100">
