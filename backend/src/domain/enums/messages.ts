@@ -45,4 +45,5 @@ export enum Messages {
   TRANSACTIONS_FETCHED_SUCCESSFULLY = "transactionsFetchedSuccessfully",
   FARE_CREATED_SUCCESSFULLY = "fareCreatedSuccessfully",
   RIDE_CREATED_SUCCESSFULLY = "rideCreatedSuccessfully",
+  RIDE_DETAILS_FETCHED_SUCCESSFULLY = "rideDetailsFetchedSuccessfully",
 }

@@ -157,4 +157,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   FARE_NOT_FOUND = "fareNotFound",
   FARE_EXPIRED = "fareExpired",
   INVALID_VEHICLE_TYPE = "invalidVehicleType",
+  RIDE_NOT_FOUND = "rideNotFound",
 }

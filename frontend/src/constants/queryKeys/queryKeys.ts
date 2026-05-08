@@ -15,4 +15,5 @@ export enum QUERY_KEYS {
     HOTEL_BOOKINGS = "HOTEL_BOOKINGS",
     AVAILABLE_ROOMS = "availableRooms",
     FARE_CALCULATE = "fare-calculate",
+    RIDE_DETAILS = "ride-details",
 }

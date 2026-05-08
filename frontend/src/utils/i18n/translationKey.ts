@@ -1025,4 +1025,15 @@ export default {
         min: "fareSummary.min",
         mins: "fareSummary.mins",
     },
+    rideDetails: {
+        rideDetailsNotAvailable: "rideDetails.rideDetailsNotAvailable",
+        yourRide: "rideDetails.yourRide",
+        searching: "rideDetails.searching",
+        driverMatched: "rideDetails.driverMatched",
+        inTransit: "rideDetails.inTransit",
+        arrived: "rideDetails.arrived",
+        cancelled: "rideDetails.cancelled",
+        findingYourDriver: "rideDetails.findingYourDriver",
+        holdTightMatching: "rideDetails.holdTightMatching",
+    },
 };

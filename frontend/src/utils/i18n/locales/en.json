@@ -1024,5 +1024,16 @@
         "hours": "hrs",
         "min": "min",
         "mins": "mins"
+    },
+    "rideDetails": {
+        "rideDetailsNotAvailable": "Ride details not available.",
+        "yourRide": "Your Ride",
+        "searching": "Searching",
+        "driverMatched": "Driver Matched",
+        "inTransit": "In Transit",
+        "arrived": "Arrived",
+        "cancelled": "Cancelled",
+        "findingYourDriver": "Finding your driver",
+        "holdTightMatching": "Hold tight — we're matching you with a nearby driver"
     }
 }

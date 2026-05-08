@@ -1,8 +1,12 @@
-import { mutationOptions } from "@tanstack/react-query";
+import { mutationOptions, queryOptions } from "@tanstack/react-query";
 import type { ICreateRideRequestDTO } from "@/types/api/requests/rideRequests";
-import type { ICreateRideResponseDTO } from "@/types/api/responses/rideResponses";
 import type { HttpResponse } from "@/types/api/responseType";
-import { createRide } from "@/services/api/rideApiService";
+import { createRide, getRideDetails } from "@/services/api/rideApiService";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import type {
+    ICreateRideResponseDTO,
+    IRideDetailsResponseDTO,
+} from "@/types/api/responses/rideResponses";
 
 export const createRideMutationOptions = () => {
     return mutationOptions<
@@ -13,3 +17,10 @@ export const createRideMutationOptions = () => {
         mutationFn: createRide,
     });
 };
+
+export function getRideDetailsQueryOptions(rideId: string) {
+    return queryOptions<HttpResponse<IRideDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.RIDE_DETAILS, rideId],
+        queryFn: () => getRideDetails(rideId),
+    });
+}

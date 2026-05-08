@@ -133,6 +133,8 @@ import { IUpdateLocationUseCase } from "@application/interfaces/useCase/cab/upda
 import { UpdateLocationUseCase } from "@useCases/cab/updateLocationUseCase";
 import { ICreateRideUseCase } from "@application/interfaces/useCase/ride/createRideUseCase.interface";
 import { CreateRideUseCase } from "@useCases/ride/createRideUseCase";
+import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/getRideDetailsUseCase.interface";
+import { GetRideDetailsUseCase } from "@useCases/ride/getRideDetailsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -398,5 +400,9 @@ export function registerUsecases() {
   container.registerSingleton<ICreateRideUseCase>(
     "ICreateRideUseCase",
     CreateRideUseCase,
+  );
+  container.registerSingleton<IGetRideDetailsUseCase>(
+    "IGetRideDetailsUseCase",
+    GetRideDetailsUseCase,
   );
 }

@@ -28,6 +28,15 @@ export class RideRouter {
         rideController.handleCreateRide(req, res, next);
       },
     );
+
+    this._router.get(
+      "/:id",
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => {
+        rideController.handleGetRideDetails(req, res, next);
+      },
+    );
   }
 
   getRouter() {
