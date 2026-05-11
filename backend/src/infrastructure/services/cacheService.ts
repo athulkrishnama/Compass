@@ -73,8 +73,45 @@ export class CacheService implements ICacheService, IGeoService {
     coordinates: Coordinate,
     radius: number,
     vehicleType: VehicleType,
-  ): Promise<string[]> {
-    return [];
+    count?: number,
+    attemptedDrivers: string[] = [],
+  ): Promise<string | null> {
+    const results = await this._redisClient.call(
+      "GEOSEARCH",
+      RedisKeys.DRIVER_LOCATION(vehicleType),
+      "FROMLONLAT",
+      coordinates.longitude.toString(),
+      coordinates.latitude.toString(),
+      "BYRADIUS",
+      radius.toString(),
+      "km",
+      "ASC",
+      ...(count ? ["COUNT", count.toString()] : []),
+    );
+
+    const candidates = (results as string[]) || [];
+    if (candidates.length === 0) return null;
+
+    const attemptedSet = new Set(attemptedDrivers);
+    const filtered = candidates.filter((id) => !attemptedSet.has(id));
+    if (filtered.length === 0) return null;
+
+    const pipeline = this._redisClient.pipeline();
+    for (const driverId of filtered) {
+      pipeline.exists(RedisKeys.DRIVER_AVAILABLE(driverId));
+    }
+
+    const pipelineResults = await pipeline.exec();
+    if (!pipelineResults) return null;
+
+    for (let i = 0; i < filtered.length; i++) {
+      const [err, exists] = pipelineResults[i] as [Error | null, number];
+      if (!err && exists === 1) {
+        return filtered[i];
+      }
+    }
+
+    return null;
   }
 
   async cleanupStaleDrivers(): Promise<void> {

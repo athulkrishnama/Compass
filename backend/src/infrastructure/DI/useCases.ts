@@ -135,6 +135,8 @@ import { ICreateRideUseCase } from "@application/interfaces/useCase/ride/createR
 import { CreateRideUseCase } from "@useCases/ride/createRideUseCase";
 import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/getRideDetailsUseCase.interface";
 import { GetRideDetailsUseCase } from "@useCases/ride/getRideDetailsUseCase";
+import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/driverMatchingUseCase.interface";
+import { DriverMatchingUseCase } from "@useCases/ride/driverMatchUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -404,5 +406,9 @@ export function registerUsecases() {
   container.registerSingleton<IGetRideDetailsUseCase>(
     "IGetRideDetailsUseCase",
     GetRideDetailsUseCase,
+  );
+  container.registerSingleton<IDriverMatchingUseCase>(
+    "IDriverMatchingUseCase",
+    DriverMatchingUseCase,
   );
 }

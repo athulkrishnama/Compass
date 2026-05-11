@@ -12,7 +12,7 @@ export function setErrorHandlingMiddleware(app: Express) {
             colorize: true,
             translateTime: "SYS:standard",
             ignore: "pid,hostname",
-            singleLine: false,
+            singleLine: true,
           },
         },
         serializers: {

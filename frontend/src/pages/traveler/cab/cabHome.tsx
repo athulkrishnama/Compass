@@ -178,7 +178,7 @@ const CabHome = () => {
                     setRouteCoordinates([]);
                     toast.error(t(translationKey.cabHome.noRouteFound));
                 }
-            } catch (error: any) {
+            } catch (error) {
                 console.error("Error fetching route:", error);
                 setRouteCoordinates([]);
             }

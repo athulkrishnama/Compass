@@ -20,8 +20,14 @@ export class RideRepo
     return result._id.toString();
   }
 
-  toMongoDoc(entity: RideEntity) {
-    return {
+  async update(entity: RideEntity, id: string): Promise<void> {
+    const updateData = this.toMongoDoc(entity);
+    await this._model.findByIdAndUpdate(id, { $set: updateData });
+  }
+
+  toMongoDoc(entity: RideEntity): IRideDocument {
+    return new this._model({
+      _id: entity._id ? new Types.ObjectId(entity._id) : new Types.ObjectId(),
       rider_id: new Types.ObjectId(entity.rider_id),
       driver_id: entity.driver_id ? new Types.ObjectId(entity.driver_id) : null,
       fare_id: new Types.ObjectId(entity.fare_id),
@@ -51,7 +57,7 @@ export class RideRepo
       status: entity.status,
       cancelled_by: entity.cancelled_by,
       events: entity.events,
-    };
+    });
   }
 
   toEntity(doc: IRideDocument): RideEntity {

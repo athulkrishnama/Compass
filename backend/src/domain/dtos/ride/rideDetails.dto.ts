@@ -18,6 +18,6 @@ export interface RideDetailsResponseDTO {
   time: number;
   selected_fare: FareType;
   otp: string | null;
-  cancelled_by: ROLES | null;
+  cancelled_by: ROLES | "timeout" | null;
   events: RideEvent[];
 }
