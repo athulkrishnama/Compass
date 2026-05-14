@@ -5,6 +5,7 @@ export default {
     common: {
         language: "common.language",
         openMainMenu: "common.openMainMenu",
+        notifications: "common.notifications",
     },
     headings: {
         signup: "headings.signup",

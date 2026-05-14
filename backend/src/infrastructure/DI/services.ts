@@ -29,6 +29,10 @@ import { LocationService } from "@infrastructure/services/locationService";
 import { IGeoService } from "@application/interfaces/service/geoService.interface";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
 import { QueueService } from "@infrastructure/services/queueService";
+import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
+import { SocketEmitter } from "@presentation/webSocket/socketEmitter";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NotificationService } from "@infrastructure/services/notificationService";
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
   container.registerSingleton<IOtpService>("IOtpService", OtpService);
@@ -74,4 +78,9 @@ export function registerServices() {
     LocationService,
   );
   container.registerSingleton<IQueueService>("IQueueService", QueueService);
+  container.registerSingleton<ISocketEmitter>("ISocketEmitter", SocketEmitter);
+  container.registerSingleton<INotificationService>(
+    "INotificationService",
+    NotificationService,
+  );
 }

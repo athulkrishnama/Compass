@@ -28,6 +28,8 @@ declare module "@tanstack/react-router" {
     }
 }
 
+import { SocketProvider } from "./components/providers/SocketProvider.tsx";
+
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <GoogleOAuthProvider clientId={env.VITE_GOOGLE_CLIENT_ID}>
@@ -38,7 +40,9 @@ createRoot(document.getElementById("root")!).render(
             <QueryClientProvider client={queryClient}>
                 <Provider store={store}>
                     <PersistGate persistor={persistor}>
-                        <RouterProvider router={router} />
+                        <SocketProvider>
+                            <RouterProvider router={router} />
+                        </SocketProvider>
                     </PersistGate>
                 </Provider>
                 <ReactQueryDevtools />

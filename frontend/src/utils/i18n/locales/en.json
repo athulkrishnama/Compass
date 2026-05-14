@@ -4,7 +4,8 @@
     },
     "common": {
         "language": "Language",
-        "openMainMenu": "Open main menu"
+        "openMainMenu": "Open main menu",
+        "notifications": "Notifications"
     },
     "headings": {
         "signup": "Sign Up",

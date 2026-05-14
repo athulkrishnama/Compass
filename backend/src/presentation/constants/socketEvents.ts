@@ -19,6 +19,9 @@ export const SocketEvents = {
   DRIVER_LOCATION_BROADCAST: "driver:location-broadcast",
   PAYMENT_COMPLETED: "payment:completed",
   PAYMENT_FAILED: "payment:failed",
+
+  NOTIFICATION_NEW: "notification:new",
+  NOTIFICATION_READ: "notification:read",
 } as const;
 
 export const SocketConstants = {

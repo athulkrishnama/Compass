@@ -46,4 +46,10 @@ export enum Messages {
   FARE_CREATED_SUCCESSFULLY = "fareCreatedSuccessfully",
   RIDE_CREATED_SUCCESSFULLY = "rideCreatedSuccessfully",
   RIDE_DETAILS_FETCHED_SUCCESSFULLY = "rideDetailsFetchedSuccessfully",
+  NOTIFICATIONS_FETCHED_SUCCESSFULLY = "notificationsFetchedSuccessfully",
+  UNREAD_COUNT_FETCHED_SUCCESSFULLY = "unreadCountFetchedSuccessfully",
+  NOTIFICATION_MARKED_AS_READ = "notificationMarkedAsRead",
+  ALL_NOTIFICATIONS_MARKED_AS_READ = "allNotificationsMarkedAsRead",
+  DRIVER_MATCH_TIMEOUT = "driverMatchTimeout",
+  NO_DRIVERS_AVAILABLE = "noDriversAvailable",
 }

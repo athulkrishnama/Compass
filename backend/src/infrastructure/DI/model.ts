@@ -25,6 +25,8 @@ import { IFareDocument } from "@infrastructure/repository/fare/fare.schema";
 import { IRideDocument } from "@infrastructure/repository/ride/ride.schema";
 import { fareModel } from "@infrastructure/repository/fare/fareModel";
 import { rideModel } from "@infrastructure/repository/ride/rideModel";
+import { INotificationDocument } from "@infrastructure/repository/notification/notification.schema";
+import { notificationModel } from "@infrastructure/repository/notification/notificationModel";
 
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
@@ -62,5 +64,8 @@ export function registerModel() {
   });
   container.register<Model<IRideDocument>>("IRideModel", {
     useValue: rideModel,
+  });
+  container.register<Model<INotificationDocument>>("INotificationModel", {
+    useValue: notificationModel,
   });
 }

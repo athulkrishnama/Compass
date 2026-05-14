@@ -137,6 +137,14 @@ import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/get
 import { GetRideDetailsUseCase } from "@useCases/ride/getRideDetailsUseCase";
 import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/driverMatchingUseCase.interface";
 import { DriverMatchingUseCase } from "@useCases/ride/driverMatchUseCase";
+import { IGetNotificationsUseCase } from "@application/interfaces/useCase/notification/getNotificationsUseCase.interface";
+import { GetNotificationsUseCase } from "@useCases/notification/getNotificationsUseCase";
+import { IGetUnreadCountUseCase } from "@application/interfaces/useCase/notification/getUnreadCountUseCase.interface";
+import { GetUnreadCountUseCase } from "@useCases/notification/getUnreadCountUseCase";
+import { IMarkNotificationReadUseCase } from "@application/interfaces/useCase/notification/markNotificationReadUseCase.interface";
+import { MarkNotificationReadUseCase } from "@useCases/notification/markNotificationReadUseCase";
+import { IMarkAllNotificationsReadUseCase } from "@application/interfaces/useCase/notification/markAllNotificationsReadUseCase.interface";
+import { MarkAllNotificationsReadUseCase } from "@useCases/notification/markAllNotificationsReadUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -410,5 +418,21 @@ export function registerUsecases() {
   container.registerSingleton<IDriverMatchingUseCase>(
     "IDriverMatchingUseCase",
     DriverMatchingUseCase,
+  );
+  container.registerSingleton<IGetNotificationsUseCase>(
+    "IGetNotificationsUseCase",
+    GetNotificationsUseCase,
+  );
+  container.registerSingleton<IGetUnreadCountUseCase>(
+    "IGetUnreadCountUseCase",
+    GetUnreadCountUseCase,
+  );
+  container.registerSingleton<IMarkNotificationReadUseCase>(
+    "IMarkNotificationReadUseCase",
+    MarkNotificationReadUseCase,
+  );
+  container.registerSingleton<IMarkAllNotificationsReadUseCase>(
+    "IMarkAllNotificationsReadUseCase",
+    MarkAllNotificationsReadUseCase,
   );
 }

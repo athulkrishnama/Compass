@@ -4,12 +4,15 @@ import { inject, injectable } from "tsyringe";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { IGeoService } from "@application/interfaces/service/geoService.interface";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
+import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
 import { RIDE_EVENT_NAMES } from "@domain/types/rideEvent";
 import { QUEUE_JOB_NAMES } from "@domain/constants/queueJobNames";
+import { SocketEvents } from "@presentation/constants/socketEvents";
 import { VALUES } from "@presentation/constants/values";
 import { randomUUID } from "crypto";
 import { ROLES } from "@domain/enums/roles";
+import { Messages } from "@domain/enums/messages";
 
 @injectable()
 export class DriverMatchingUseCase implements IDriverMatchingUseCase {
@@ -17,6 +20,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("IGeoService") private _geoService: IGeoService,
     @inject("IQueueService") private _queueService: IQueueService,
+    @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
   ) {}
 
   async execute({
@@ -65,7 +69,14 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
       });
       await this._rideRepo.update(ride, ride_id);
 
-      // TODO: Emit ride:no_drivers_found to rider via WebSocket
+      this._socketEmitter.emitToUser(
+        ride.rider_id,
+        SocketEvents.RIDE_NO_DRIVERS,
+        {
+          ride_id,
+          message: Messages.DRIVER_MATCH_TIMEOUT,
+        },
+      );
       return;
     }
     const validDriverId = await this._geoService.getNearbyDrivers(
@@ -82,8 +93,19 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
       ride.attempted_drivers.push(validDriverId);
       await this._rideRepo.update(ride, ride_id);
 
-      // TODO: Emit ride:request to driver via WebSocket
-      // { trip_id, fare, pickup_location, dropoff_location, distance, time }
+      // Emit ride request to driver via WebSocket
+      this._socketEmitter.emitToUser(
+        validDriverId,
+        SocketEvents.RIDE_NEW_REQUEST,
+        {
+          ride_id,
+          fare: ride.selected_fare,
+          pickup: ride.pickup_point,
+          dropoff: ride.dropoff_point,
+          distance: ride.distance,
+          time: ride.time,
+        },
+      );
       console.log(
         `[DriverMatch] Ride ${ride_id} → requesting driver ${validDriverId} (attempt: ${newAttemptId})`,
       );
@@ -113,7 +135,14 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
         `[DriverMatch] Ride ${ride_id} → no drivers found. Cancelled.`,
       );
 
-      // TODO: Emit ride:no_drivers_found to rider via WebSocket
+      this._socketEmitter.emitToUser(
+        ride.rider_id,
+        SocketEvents.RIDE_NO_DRIVERS,
+        {
+          ride_id,
+          message: Messages.NO_DRIVERS_AVAILABLE,
+        },
+      );
     }
   }
 }

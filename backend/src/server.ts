@@ -25,6 +25,7 @@ import { BookingRouter } from "@presentation/routes/hotelBooking/BookingRoutes";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { RideRouter } from "@presentation/routes/ride/rideRouter";
+import { NotificationRouter } from "@presentation/routes/notification/notificationRouter";
 import { SocketServer } from "@presentation/webSocket/socketServer";
 
 export class Server {
@@ -47,6 +48,7 @@ export class Server {
     this._setDestinationRouter();
     this._setBookingRouter();
     this._setRideRouter();
+    this._setNotificationRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
@@ -100,6 +102,11 @@ export class Server {
   private _setRideRouter() {
     const rideRouter = new RideRouter();
     this._app.use(Routes.RIDE, rideRouter.getRouter());
+  }
+
+  private _setNotificationRouter() {
+    const notificationRouter = new NotificationRouter();
+    this._app.use(Routes.NOTIFICATION, notificationRouter.getRouter());
   }
 
   private _setMiddlewares() {

@@ -10,4 +10,5 @@ export enum Routes {
   BOOKING = "/api/v1/bookings",
   WEBHOOK = "/api/v1/webhooks",
   RIDE = "/api/v1/ride",
+  NOTIFICATION = "/api/v1/notifications",
 }

@@ -23,6 +23,7 @@ import { removeUser } from "@/store/slices/userSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { isLoggedin } from "@/utils/authChecker";
 import { useState } from "react";
+import { NotificationBell } from "../notification/NotificationBell";
 
 interface propTypes {
     routes: {
@@ -111,6 +112,7 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                     </div>
 
                     <div className="hidden lg:flex items-center gap-4">
+                        {isLoggedin() && <NotificationBell />}
                         <Select
                             value={lang}
                             onValueChange={handleLanguageChange}
@@ -200,25 +202,63 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                             <div className="pt-4 border-t border-gray-100 space-y-4">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm font-medium text-gray-500">
-                                        {t(translationKey.common.language)}
+                                        {isLoggedin()
+                                            ? t(
+                                                  translationKey.common
+                                                      .notifications
+                                              )
+                                            : t(translationKey.common.language)}
                                     </span>
-                                    <Select
-                                        value={lang}
-                                        onValueChange={handleLanguageChange}
-                                    >
-                                        <SelectTrigger className="w-[140px]">
-                                            <LanguagesIcon className="mr-2 h-4 w-4" />
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {Languages.map((l, i) => (
-                                                <SelectItem key={i} value={l}>
-                                                    {l}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    {isLoggedin() ? (
+                                        <NotificationBell />
+                                    ) : (
+                                        <Select
+                                            value={lang}
+                                            onValueChange={handleLanguageChange}
+                                        >
+                                            <SelectTrigger className="w-[140px]">
+                                                <LanguagesIcon className="mr-2 h-4 w-4" />
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {Languages.map((l, i) => (
+                                                    <SelectItem
+                                                        key={i}
+                                                        value={l}
+                                                    >
+                                                        {l}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    )}
                                 </div>
+                                {isLoggedin() && (
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium text-gray-500">
+                                            {t(translationKey.common.language)}
+                                        </span>
+                                        <Select
+                                            value={lang}
+                                            onValueChange={handleLanguageChange}
+                                        >
+                                            <SelectTrigger className="w-[140px]">
+                                                <LanguagesIcon className="mr-2 h-4 w-4" />
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {Languages.map((l, i) => (
+                                                    <SelectItem
+                                                        key={i}
+                                                        value={l}
+                                                    >
+                                                        {l}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                )}
 
                                 {isLoggedin() ? (
                                     <Button
