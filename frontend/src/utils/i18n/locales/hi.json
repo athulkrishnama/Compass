@@ -946,5 +946,16 @@
         "hours": "घंटे",
         "min": "मिनट",
         "mins": "मिनट"
+    },
+    "rideDetails": {
+        "rideDetailsNotAvailable": "सवारी का विवरण उपलब्ध नहीं है।",
+        "yourRide": "आपकी सवारी",
+        "searching": "खोज की जा रही है",
+        "driverMatched": "ड्राइवर मिल गया",
+        "inTransit": "मार्ग में",
+        "arrived": "पहुंच गए",
+        "cancelled": "रद्द",
+        "findingYourDriver": "आपके ड्राइवर की खोज की जा रही है",
+        "holdTightMatching": "धैर्य रखें — हम आपके लिए नजदीकी ड्राइवर खोज रहे हैं"
     }
 }

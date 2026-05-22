@@ -23,7 +23,7 @@ export interface IRideDocument extends Document {
     coordinates: [number, number];
   };
   attempted_drivers: Types.ObjectId[];
-  attempt_id: string;
+  attempt_id: string | null;
   otp: string;
   otp_attempts: number;
   status: RideStatus;
@@ -95,7 +95,6 @@ export const rideSchema = new Schema<IRideDocument>({
   },
   attempt_id: {
     type: String,
-    required: true,
   },
   otp: {
     type: String,

@@ -7,11 +7,12 @@ import {
     CAB_CAPACITY,
 } from "@/constants/cabConstants";
 import type { FareOption } from "@/types/api/fareOption";
+import type { VehicleType } from "@/types/vehicleType";
 
 interface CabOptionCardProps {
     fare: FareOption;
     isSelected: boolean;
-    onSelect: (cabType: string) => void;
+    onSelect: (cabType: VehicleType) => void;
     variants: Variants;
 }
 

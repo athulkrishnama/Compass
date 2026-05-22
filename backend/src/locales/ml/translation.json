@@ -161,5 +161,6 @@
   "roomHasActiveBooking": "ഈ മുറിയിൽ സജീവമായ ചെക്ക്-ഇൻ ബുക്കിംഗ് ഉണ്ട്",
   "notFound": "വിഭവം കണ്ടെത്താനായില്ല",
   "fareCreatedSuccessfully": "നിരക്ക് വിജയകരമായി സൃഷ്ടിച്ചു",
+  "rideCreatedSuccessfully": "യാത്ര വിജയകരമായി സൃഷ്ടിച്ചു",
   "distanceFetchingFailed": "ലൊക്കേഷനുകൾക്കിടയിലുള്ള ദൂരവും സമയവും കണ്ടെത്തുന്നതിൽ പരാജയപ്പെട്ടു"
 }

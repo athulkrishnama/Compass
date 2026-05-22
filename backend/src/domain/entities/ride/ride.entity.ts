@@ -19,6 +19,6 @@ export interface RideEntity {
   otp: string | null;
   otp_attempts: number;
   status: RideStatus;
-  cancelled_by: ROLES | null;
+  cancelled_by: ROLES | "timeout" | null;
   events: RideEvent[];
 }

@@ -3,7 +3,7 @@ import { BaseRepository } from "../base/base.repo";
 import { IRideDocument } from "./ride.schema";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { inject, injectable } from "tsyringe";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 @injectable()
 export class RideRepo
@@ -12,6 +12,52 @@ export class RideRepo
 {
   constructor(@inject("IRideModel") model: Model<IRideDocument>) {
     super(model);
+  }
+
+  async create(data: RideEntity): Promise<string> {
+    const doc = this.toMongoDoc(data);
+    const result = await this._model.create(doc);
+    return result._id.toString();
+  }
+
+  async update(entity: RideEntity, id: string): Promise<void> {
+    const updateData = this.toMongoDoc(entity);
+    await this._model.findByIdAndUpdate(id, { $set: updateData });
+  }
+
+  toMongoDoc(entity: RideEntity): IRideDocument {
+    return new this._model({
+      _id: entity._id ? new Types.ObjectId(entity._id) : new Types.ObjectId(),
+      rider_id: new Types.ObjectId(entity.rider_id),
+      driver_id: entity.driver_id ? new Types.ObjectId(entity.driver_id) : null,
+      fare_id: new Types.ObjectId(entity.fare_id),
+      selected_fare: entity.selected_fare,
+      distance: entity.distance,
+      time: entity.time,
+      pickup_point: {
+        type: "Point",
+        coordinates: [
+          entity.pickup_point.longitude,
+          entity.pickup_point.latitude,
+        ],
+      },
+      dropoff_point: {
+        type: "Point",
+        coordinates: [
+          entity.dropoff_point.longitude,
+          entity.dropoff_point.latitude,
+        ],
+      },
+      attempted_drivers: entity.attempted_drivers.map(
+        (id) => new Types.ObjectId(id),
+      ),
+      attempt_id: entity.attempt_id ?? "",
+      otp: entity.otp ?? "",
+      otp_attempts: entity.otp_attempts,
+      status: entity.status,
+      cancelled_by: entity.cancelled_by,
+      events: entity.events,
+    });
   }
 
   toEntity(doc: IRideDocument): RideEntity {

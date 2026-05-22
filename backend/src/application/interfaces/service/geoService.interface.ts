@@ -11,6 +11,8 @@ export interface IGeoService {
     coordinates: Coordinate,
     radius: number,
     vehicleType: VehicleType,
-  ): Promise<string[]>;
+    count?: number,
+    attemptedDrivers?: string[],
+  ): Promise<string | null>;
   cleanupStaleDrivers(): Promise<void>;
 }

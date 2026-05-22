@@ -1,0 +1,34 @@
+import { axiosInstance } from "@/axios/instance";
+import { RIDE_ROUTES } from "@/constants/routes/rideRoutes";
+import type { ICreateRideRequestDTO } from "@/types/api/requests/rideRequests";
+import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
+import type { HttpResponse } from "@/types/api/responseType";
+import { AxiosError } from "axios";
+
+export async function createRide(data: ICreateRideRequestDTO) {
+    try {
+        const response = await axiosInstance.post(RIDE_ROUTES.SEARCH, data);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
+export async function getRideDetails(
+    rideId: string
+): Promise<HttpResponse<IRideDetailsResponseDTO>> {
+    try {
+        const response = await axiosInstance.get(
+            `${RIDE_ROUTES.GET_RIDE_DETAILS}/${rideId}`
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}

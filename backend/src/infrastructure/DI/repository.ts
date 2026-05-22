@@ -23,6 +23,8 @@ import { IFareRepo } from "@application/interfaces/repository/fare/fare.repo.int
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { RideRepo } from "@infrastructure/repository/ride/ride.repo";
 import { FareRepo } from "@infrastructure/repository/fare/fare.repo";
+import { INotificationRepo } from "@application/interfaces/repository/notification/notification.repo.interface";
+import { NotificationRepo } from "@infrastructure/repository/notification/notification.repo";
 
 export function registerRepositories() {
   container.registerSingleton<IUserRepo>("IUserRepo", UserRepository);
@@ -52,4 +54,8 @@ export function registerRepositories() {
   );
   container.registerSingleton<IFareRepo>("IFareRepo", FareRepo);
   container.registerSingleton<IRideRepo>("IRideRepo", RideRepo);
+  container.registerSingleton<INotificationRepo>(
+    "INotificationRepo",
+    NotificationRepo,
+  );
 }

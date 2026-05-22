@@ -162,5 +162,6 @@
   "roomHasActiveBooking": "This room has an active checked-in booking",
   "notFound": "Resource not found",
   "fareCreatedSuccessfully": "Fare created successfully",
+  "rideCreatedSuccessfully": "Ride created successfully",
   "distanceFetchingFailed": "Failed to fetch distance and time between the locations"
 }

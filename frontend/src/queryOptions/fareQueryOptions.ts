@@ -1,9 +1,7 @@
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import { calculateFare } from "@/services/api/fareApiService";
-import {
-    type ICalculateFareRequestDTO,
-    type ICalculateFareResponseDTO,
-} from "@/types/api/requests/fareRequests";
+import { type ICalculateFareRequestDTO } from "@/types/api/requests/fareRequests";
+import type { ICalculateFareResponseDTO } from "@/types/api/responses/fareResponses";
 import type { HttpResponse } from "@/types/api/responseType";
 import { queryOptions } from "@tanstack/react-query";
 export function createCalculateFareQueryOptions(

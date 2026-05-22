@@ -11,14 +11,15 @@ export const SocketEvents = {
   DRIVER_RIDE_STARTED: "driver:ride-started",
   DRIVER_RIDE_COMPLETED: "driver:ride-completed",
 
-  RIDE_NEW_REQUEST: "ride:new-request",
-  RIDE_DRIVER_ASSIGNED: "ride:driver-assigned",
-  RIDE_CANCELLED: "ride:cancelled",
+  RIDER_EVENTS: "rider:events",
+  DRIVER_EVENTS: "driver:events",
   RIDE_ACCEPTANCE_REJECTED: "ride:acceptance-rejected",
-  RIDE_NO_DRIVERS: "ride:no-drivers-found",
   DRIVER_LOCATION_BROADCAST: "driver:location-broadcast",
   PAYMENT_COMPLETED: "payment:completed",
   PAYMENT_FAILED: "payment:failed",
+
+  NOTIFICATION_NEW: "notification:new",
+  NOTIFICATION_READ: "notification:read",
 } as const;
 
 export const SocketConstants = {

@@ -3,13 +3,21 @@ import { Server as HttpServer } from "http";
 import { LOCATION_EVENTS } from "@presentation/constants/events/locationEvents";
 import { instrument } from "@socket.io/admin-ui";
 import { env } from "@config/envConfig";
-import { locationEventHandler, socketAuth } from "@infrastructure/DI/resolve";
+import {
+  locationEventHandler,
+  rideEventHandler,
+  socketAuth,
+  socketEmitter,
+} from "@infrastructure/DI/resolve";
+import { SocketEmitter } from "./socketEmitter";
 import { Messages } from "../constants/messages";
 import {
   InvalideDataException,
   TokenMissingException,
 } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { SocketConstants } from "@presentation/constants/socketEvents";
+import { cacheService } from "@infrastructure/DI/resolve";
 
 export class SocketServer {
   private _io: Server;
@@ -21,6 +29,7 @@ export class SocketServer {
         credentials: true,
       },
     });
+    (socketEmitter as SocketEmitter).setServer(this._io);
     this._start();
     instrument(this._io, {
       auth: {
@@ -47,18 +56,31 @@ export class SocketServer {
             INTERNAL_ERROR_MESSAGES.INVALID_TOKEN_ERROR,
           );
         }
-        socket.handshake.auth.userId = decodedToken.id;
 
-        socket.on("disconnect", () => {
-          console.log("User disconnected");
+        const userId = decodedToken.id;
+        socket.handshake.auth.userId = userId;
+
+        socket.join(userId);
+
+        await cacheService.setValue(
+          SocketConstants.USER_SOCKET_PREFIX + userId,
+          socket.id,
+        );
+
+        socket.on("disconnect", async () => {
+          console.log("User disconnected:", userId);
+          await cacheService.deleteValue(
+            SocketConstants.USER_SOCKET_PREFIX + userId,
+          );
         });
-
         socket.on(LOCATION_EVENTS.LOCATION_UPDATE, (data) => {
           locationEventHandler.handleLocationUpdate({
             ...data,
             user_id: socket.handshake.auth.userId,
           });
         });
+
+        rideEventHandler.registerHandlers(socket);
       } catch {
         socket.disconnect();
       }

@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import CabOptionCard from "./CabOptionCard";
 import type { ICalculateFareResponseDTO } from "@/types/api/responses/fareResponses";
+import type { VehicleType } from "@/types/vehicleType";
 
 interface CabOptionListProps {
     fares: ICalculateFareResponseDTO["fares"];
-    selectedCab: string | null;
-    onSelect: (cabType: string) => void;
+    selectedCab: VehicleType | null;
+    onSelect: (cabType: VehicleType) => void;
 }
 
 const containerVariants = {

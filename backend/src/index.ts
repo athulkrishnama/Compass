@@ -16,6 +16,7 @@ import { Server } from "./server";
 import { MongodbConfig } from "@config/mongoConfig";
 import { container } from "tsyringe";
 import { CronService } from "@presentation/cron-service";
+import { QueueWorker } from "@infrastructure/worker/queueWorker";
 
 async function start() {
   try {
@@ -25,6 +26,8 @@ async function start() {
 
     const cronService = container.resolve(CronService);
     cronService.start();
+
+    container.resolve(QueueWorker);
   } catch (error) {
     if (error instanceof Error) {
       console.log(error);

@@ -19,6 +19,24 @@ export class RideRouter {
         rideController.handleCreateFare(req, res, next);
       },
     );
+
+    this._router.post(
+      RIDE_ROUTES.SEARCH,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => {
+        rideController.handleCreateRide(req, res, next);
+      },
+    );
+
+    this._router.get(
+      "/:id",
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => {
+        rideController.handleGetRideDetails(req, res, next);
+      },
+    );
   }
 
   getRouter() {
