@@ -14,9 +14,10 @@
   "author": "athulkrishnama",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "preview": "cross-env NODE_ENV=DEVELOPMENT node dist/index.js",
-    "production": "cross-env NODE_ENV=PRODUCTION node dist/index.js",
+    "preinstall": "npx only-allow pnpm",
+    "dev": "npx cross-env NODE_ENV=DEVELOPMENT nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "preview": "npx cross-env NODE_ENV=DEVELOPMENT node dist/index.js",
+    "production": "npx cross-env NODE_ENV=PRODUCTION node dist/index.js",
     "build": "tsc && tsc-alias",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
