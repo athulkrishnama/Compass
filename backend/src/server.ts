@@ -1,4 +1,4 @@
-import express, { Express, Response, Request } from "express";
+import express, { Express, Response, Request, NextFunction } from "express";
 import { createServer, Server as HttpServer } from "http";
 import { env } from "./config/envConfig";
 import { Errors } from "./presentation/constants/Error";
@@ -9,7 +9,6 @@ import { setErrorHandlingMiddleware } from "./presentation/middlewares/loggingMi
 import { corsOptions } from "./presentation/constants/corsOptions";
 import { AuthRouter } from "./presentation/routes/auth/authRouter";
 import { errorHandlingMiddleware } from "./presentation/middlewares/errorHandlingMiddleware";
-import { NextFunction } from "express-serve-static-core";
 import { AdminRouter } from "presentation/routes/admin/adminRouter";
 import cookieParser from "cookie-parser";
 import "@config/i18nConfig";
