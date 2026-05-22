@@ -73,7 +73,6 @@ export class SocketServer {
             SocketConstants.USER_SOCKET_PREFIX + userId,
           );
         });
-
         socket.on(LOCATION_EVENTS.LOCATION_UPDATE, (data) => {
           locationEventHandler.handleLocationUpdate({
             ...data,

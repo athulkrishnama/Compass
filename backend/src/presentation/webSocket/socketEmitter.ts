@@ -18,6 +18,7 @@ export class SocketEmitter implements ISocketEmitter {
       return;
     }
     this._io.to(userId).emit(event, data);
+    this._io.in(userId).fetchSockets().then((sockets) => console.log("Sockets memers are "+ sockets.map((obj)=>obj.id)))
   }
 
   emitToRoom(room: string, event: string, data: unknown): void {
