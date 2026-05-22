@@ -11,8 +11,15 @@ import {
     updateRideStatus,
     setActiveRide,
 } from "../../store/slices/activeRideSlice";
+import { openRideRequestPopup } from "../../store/slices/rideRequestPopupSlice";
 import { toast } from "sonner";
 import { SocketContext } from "./SocketContext";
+import {
+    DRIVER_EVENTS_TYPES,
+    RIDER_EVENTS_TYPES,
+    type DriverEventPayload,
+    type RiderEventPayload,
+} from "@/types/socketPayloads";
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -47,66 +54,57 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
             cleanups.push(
                 socketService.onPersistent(
-                    SocketEvents.RIDE_DRIVER_ASSIGNED,
-                    (data: { driver: unknown }) => {
-                        console.log("[SocketProvider] Driver Assigned:", data);
-                        dispatch(
-                            setActiveRide({
-                                status: "matched",
-                                driver: data.driver,
-                            })
-                        );
-                        toast.success("Driver Assigned!", {
-                            description:
-                                "A driver has been assigned to your ride.",
-                        });
+                    SocketEvents.RIDER_EVENTS,
+                    (data: RiderEventPayload) => {
+                        console.log("[SocketProvider] Rider Event:", data);
+                        switch (data.type) {
+                            case RIDER_EVENTS_TYPES.ASSIGNED:
+                                dispatch(
+                                    setActiveRide({
+                                        status: "matched",
+                                    })
+                                );
+                                toast.success("Driver Assigned!", {
+                                    description:
+                                        "A driver has been assigned to your ride.",
+                                });
+                                break;
+                            case RIDER_EVENTS_TYPES.CANCELLED:
+                                dispatch(updateRideStatus("cancelled"));
+                                toast.error("Ride Cancelled", {
+                                    description:
+                                        (data.payload as { message?: string })
+                                            .message ||
+                                        "Your ride has been cancelled.",
+                                });
+                                break;
+                            case RIDER_EVENTS_TYPES.NO_DRIVERS:
+                                dispatch(updateRideStatus("cancelled"));
+                                toast.error("No Drivers Found", {
+                                    description:
+                                        "We couldn't find a driver for your ride.",
+                                });
+                                break;
+                            // Add other rider events (arrived, completed, etc.)
+                        }
                     }
                 )
             );
 
             cleanups.push(
                 socketService.onPersistent(
-                    SocketEvents.RIDE_CANCELLED,
-                    (data: { message?: string }) => {
-                        console.log("[SocketProvider] Ride Cancelled:", data);
-                        dispatch(updateRideStatus("cancelled"));
-                        toast.error("Ride Cancelled", {
-                            description:
-                                data.message || "Your ride has been cancelled.",
-                        });
-                    }
-                )
-            );
-
-            cleanups.push(
-                socketService.onPersistent(
-                    SocketEvents.RIDE_NO_DRIVERS,
-                    (data: unknown) => {
-                        console.log("[SocketProvider] No Drivers:", data);
-                        dispatch(updateRideStatus("cancelled"));
-                        toast.error("No Drivers Found", {
-                            description:
-                                "We couldn't find a driver for your ride.",
-                        });
-                    }
-                )
-            );
-
-            cleanups.push(
-                socketService.onPersistent(
-                    SocketEvents.RIDE_NEW_REQUEST,
-                    (data: { ride_id: string }) => {
-                        console.log("[SocketProvider] New Ride Request:", data);
-                        toast.info("New Ride Request", {
-                            description: "You have a new ride request nearby.",
-                            duration: 30000,
-                            action: {
-                                label: "View",
-                                onClick: () => {
-                                    console.log("View request", data.ride_id);
-                                },
-                            },
-                        });
+                    SocketEvents.DRIVER_EVENTS,
+                    (data: DriverEventPayload) => {
+                        console.log("[SocketProvider] Driver Event:", data);
+                        switch (data.type) {
+                            case DRIVER_EVENTS_TYPES.REQUESTED: {
+                                const payload = data.payload as {
+                                    ride_id: string;
+                                };
+                                dispatch(openRideRequestPopup(payload.ride_id));
+                                break;
+                            }
+                        }
                     }
                 )
             );
