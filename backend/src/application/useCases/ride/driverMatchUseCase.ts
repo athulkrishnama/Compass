@@ -76,6 +76,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
           message: Messages.DRIVER_MATCH_TIMEOUT,
         },
       });
+      });
       return;
     }
     const validDriverId = await this._geoService.getNearbyDrivers(
@@ -95,6 +96,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
       // Emit ride request to driver via WebSocket
       this._socketEmitter.emitToUser(
         validDriverId,
+        SocketEvents.DRIVER_EVENTS,
         SocketEvents.DRIVER_EVENTS,
         {
           type: DRIVER_EVENTS_TYPES.REQUESTED,
@@ -142,6 +144,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
         payload: {
           message: Messages.NO_DRIVERS_AVAILABLE,
         },
+      });
       });
     }
   }

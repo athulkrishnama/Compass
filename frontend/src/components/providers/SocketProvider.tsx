@@ -12,8 +12,15 @@ import {
     setActiveRide,
 } from "../../store/slices/activeRideSlice";
 import { openRideRequestPopup } from "../../store/slices/rideRequestPopupSlice";
+import { openRideRequestPopup } from "../../store/slices/rideRequestPopupSlice";
 import { toast } from "sonner";
 import { SocketContext } from "./SocketContext";
+import {
+    DRIVER_EVENTS_TYPES,
+    RIDER_EVENTS_TYPES,
+    type DriverEventPayload,
+    type RiderEventPayload,
+} from "@/types/socketPayloads";
 import {
     DRIVER_EVENTS_TYPES,
     RIDER_EVENTS_TYPES,
@@ -54,6 +61,39 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
             cleanups.push(
                 socketService.onPersistent(
+                    SocketEvents.RIDER_EVENTS,
+                    (data: RiderEventPayload) => {
+                        console.log("[SocketProvider] Rider Event:", data);
+                        switch (data.type) {
+                            case RIDER_EVENTS_TYPES.ASSIGNED:
+                                dispatch(
+                                    setActiveRide({
+                                        status: "matched",
+                                    })
+                                );
+                                toast.success("Driver Assigned!", {
+                                    description:
+                                        "A driver has been assigned to your ride.",
+                                });
+                                break;
+                            case RIDER_EVENTS_TYPES.CANCELLED:
+                                dispatch(updateRideStatus("cancelled"));
+                                toast.error("Ride Cancelled", {
+                                    description:
+                                        (data.payload as { message?: string })
+                                            .message ||
+                                        "Your ride has been cancelled.",
+                                });
+                                break;
+                            case RIDER_EVENTS_TYPES.NO_DRIVERS:
+                                dispatch(updateRideStatus("cancelled"));
+                                toast.error("No Drivers Found", {
+                                    description:
+                                        "We couldn't find a driver for your ride.",
+                                });
+                                break;
+                            // Add other rider events (arrived, completed, etc.)
+                        }
                     SocketEvents.RIDER_EVENTS,
                     (data: RiderEventPayload) => {
                         console.log("[SocketProvider] Rider Event:", data);
