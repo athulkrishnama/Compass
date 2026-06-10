@@ -13,6 +13,7 @@ import { VALUES } from "@presentation/constants/values";
 import { randomUUID } from "crypto";
 import { ROLES } from "@domain/enums/roles";
 import { Messages } from "@domain/enums/messages";
+import { DRIVER_EVENTS_TYPES, RIDER_EVENTS_TYPES } from "@domain/types/socketPayloads";
 
 @injectable()
 export class DriverMatchingUseCase implements IDriverMatchingUseCase {
@@ -69,14 +70,12 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
       });
       await this._rideRepo.update(ride, ride_id);
 
-      this._socketEmitter.emitToUser(
-        ride.rider_id,
-        SocketEvents.RIDE_NO_DRIVERS,
-        {
-          ride_id,
+      this._socketEmitter.emitToUser(ride.rider_id, SocketEvents.RIDER_EVENTS, {
+        type: RIDER_EVENTS_TYPES.REQUESTED,
+        payload: {
           message: Messages.DRIVER_MATCH_TIMEOUT,
         },
-      );
+      });
       return;
     }
     const validDriverId = await this._geoService.getNearbyDrivers(
@@ -96,14 +95,17 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
       // Emit ride request to driver via WebSocket
       this._socketEmitter.emitToUser(
         validDriverId,
-        SocketEvents.RIDE_NEW_REQUEST,
+        SocketEvents.DRIVER_EVENTS,
         {
-          ride_id,
-          fare: ride.selected_fare,
-          pickup: ride.pickup_point,
-          dropoff: ride.dropoff_point,
-          distance: ride.distance,
-          time: ride.time,
+          type: DRIVER_EVENTS_TYPES.REQUESTED,
+          payload: {
+            ride_id,
+            fare: ride.selected_fare,
+            pickup: ride.pickup_point,
+            dropoff: ride.dropoff_point,
+            distance: ride.distance,
+            time: ride.time,
+          },
         },
       );
       console.log(
@@ -135,14 +137,12 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
         `[DriverMatch] Ride ${ride_id} → no drivers found. Cancelled.`,
       );
 
-      this._socketEmitter.emitToUser(
-        ride.rider_id,
-        SocketEvents.RIDE_NO_DRIVERS,
-        {
-          ride_id,
+      this._socketEmitter.emitToUser(ride.rider_id, SocketEvents.RIDER_EVENTS, {
+        type: RIDER_EVENTS_TYPES.NO_DRIVERS,
+        payload: {
           message: Messages.NO_DRIVERS_AVAILABLE,
         },
-      );
+      });
     }
   }
 }

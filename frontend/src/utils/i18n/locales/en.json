@@ -1036,5 +1036,17 @@
         "cancelled": "Cancelled",
         "findingYourDriver": "Finding your driver",
         "holdTightMatching": "Hold tight — we're matching you with a nearby driver"
+    },
+    "rideRequestPopup": {
+        "newRideRequest": "New Ride Request",
+        "timeLeft": "{{timeLeft}}s left",
+        "rideDetails": "Ride Details",
+        "failedToLoadDetails": "Failed to load ride details.",
+        "lightTraffic": "Light Traffic",
+        "dropoff": "Dropoff",
+        "earnings": "Earnings",
+        "kmAway": "{{distance}} km away",
+        "decline": "Decline",
+        "acceptRide": "Accept Ride"
     }
 }

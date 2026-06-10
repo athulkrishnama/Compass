@@ -14,7 +14,7 @@ import translationKey from "@/utils/i18n/translationKey";
 const RideDetails = () => {
     const { t } = useTranslation();
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
-    const [ride, setRide] = useState<IRideDetailsResponseDTO | undefined>(
+    const [ride] = useState<IRideDetailsResponseDTO | undefined>(
         loaderData.data
     );
 

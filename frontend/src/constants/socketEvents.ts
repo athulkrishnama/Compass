@@ -1,11 +1,7 @@
 export const SocketEvents = {
     // Ride events (Client <- Server)
-    RIDE_NEW_REQUEST: "ride:new-request",
-    RIDE_DRIVER_ASSIGNED: "ride:driver-assigned",
-    RIDE_NO_DRIVERS: "ride:no-drivers-found",
-    RIDE_CANCELLED: "ride:cancelled",
-    RIDE_STARTED: "ride:started",
-    RIDE_COMPLETED: "ride:completed",
+    RIDER_EVENTS: "rider:events",
+    DRIVER_EVENTS: "driver:events",
 
     // Ride events (Client -> Server)
     DRIVER_ACCEPT_RIDE: "driver:accept-ride",

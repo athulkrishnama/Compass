@@ -1,18 +1,17 @@
+import type { Coordinate } from "@/types/coordinate";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface ActiveRideState {
     rideId: string | null;
     status: string | null;
-    driver: any | null;
-    pickup: any | null;
-    dropoff: any | null;
-    fare: any | null;
+    pickup: Coordinate | null;
+    dropoff: Coordinate | null;
+    fare: number | null;
 }
 
 const initialState: ActiveRideState = {
     rideId: null,
     status: null,
-    driver: null,
     pickup: null,
     dropoff: null,
     fare: null,

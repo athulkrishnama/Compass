@@ -1026,6 +1026,18 @@ export default {
         min: "fareSummary.min",
         mins: "fareSummary.mins",
     },
+    rideRequestPopup: {
+        newRideRequest: "rideRequestPopup.newRideRequest",
+        timeLeft: "rideRequestPopup.timeLeft",
+        rideDetails: "rideRequestPopup.rideDetails",
+        failedToLoadDetails: "rideRequestPopup.failedToLoadDetails",
+        lightTraffic: "rideRequestPopup.lightTraffic",
+        dropoff: "rideRequestPopup.dropoff",
+        earnings: "rideRequestPopup.earnings",
+        kmAway: "rideRequestPopup.kmAway",
+        decline: "rideRequestPopup.decline",
+        acceptRide: "rideRequestPopup.acceptRide",
+    },
     rideDetails: {
         rideDetailsNotAvailable: "rideDetails.rideDetailsNotAvailable",
         yourRide: "rideDetails.yourRide",

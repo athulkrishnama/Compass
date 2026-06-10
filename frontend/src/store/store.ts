@@ -7,6 +7,7 @@ import tokenSlice from "./slices/tokenSlice";
 import langSlice from "./slices/langSlice";
 import notificationSlice from "./slices/notificationSlice";
 import activeRideSlice from "./slices/activeRideSlice";
+import rideRequestPopupSlice from "./slices/rideRequestPopupSlice";
 
 const persistConfig = {
     key: "root",
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     lang: langSlice,
     notification: notificationSlice,
     activeRide: activeRideSlice,
+    rideRequestPopup: rideRequestPopupSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

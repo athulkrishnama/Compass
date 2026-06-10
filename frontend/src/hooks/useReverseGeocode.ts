@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { env } from "@/config/env";
+import { fetchAddressFromCoordinates } from "@/utils/mapbox";
 import type { Coordinate } from "@/types/coordinate";
 
 export function useReverseGeocode(coordinate: Coordinate | undefined) {
@@ -14,13 +14,9 @@ export function useReverseGeocode(coordinate: Coordinate | undefined) {
         const fetchAddress = async () => {
             setLoading(true);
             try {
-                const res = await fetch(
-                    `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinate.longitude},${coordinate.latitude}.json?access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}&limit=1`
-                );
-                const data = await res.json();
-                const placeName = data.features?.[0]?.place_name;
-                if (!cancelled && placeName) {
-                    setAddress(placeName);
+                const addr = await fetchAddressFromCoordinates(coordinate);
+                if (!cancelled) {
+                    setAddress(addr);
                 }
             } catch {
                 if (!cancelled) {

@@ -957,5 +957,17 @@
         "cancelled": "रद्द",
         "findingYourDriver": "आपके ड्राइवर की खोज की जा रही है",
         "holdTightMatching": "धैर्य रखें — हम आपके लिए नजदीकी ड्राइवर खोज रहे हैं"
+    },
+    "rideRequestPopup": {
+        "newRideRequest": "नया सवारी अनुरोध",
+        "timeLeft": "{{timeLeft}} सेकंड शेष",
+        "rideDetails": "सवारी का विवरण",
+        "failedToLoadDetails": "सवारी विवरण लोड करने में विफल।",
+        "lightTraffic": "हल्का ट्रैफ़िक",
+        "dropoff": "ड्रॉपऑफ़",
+        "earnings": "कमाई",
+        "kmAway": "{{distance}} किमी दूर",
+        "decline": "अस्वीकार करें",
+        "acceptRide": "सवारी स्वीकार करें"
     }
 }

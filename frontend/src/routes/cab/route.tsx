@@ -1,6 +1,7 @@
 import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
 import NotFoundComponent from "@/components/notFound";
 import Navbar from "@/components/shared/Navbar/Navbar";
+import RideRequestPopup from "@/components/cab/RideRequestPopup";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
 import translationKey from "@/utils/i18n/translationKey";
@@ -11,6 +12,8 @@ import {
     useLocation,
 } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 export const Route = createFileRoute("/cab")({
     component: RouteComponent,
@@ -38,6 +41,9 @@ export const Route = createFileRoute("/cab")({
 function RouteComponent() {
     const { pathname } = useLocation();
     const { t } = useTranslation();
+    const { isOpen } = useSelector(
+        (state: RootState) => state.rideRequestPopup
+    );
 
     const routes = [
         { name: t(translationKey.button.home), route: "/cab" },
@@ -58,6 +64,7 @@ function RouteComponent() {
                     <Outlet />
                 </div>
             )}
+            {isOpen && <RideRequestPopup />}
         </div>
     );
 }

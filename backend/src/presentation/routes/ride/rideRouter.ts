@@ -32,7 +32,7 @@ export class RideRouter {
     this._router.get(
       "/:id",
       authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      authMiddleware.authorizeRole([ROLES.TRAVELER, ROLES.CAB]),
       (req, res, next) => {
         rideController.handleGetRideDetails(req, res, next);
       },

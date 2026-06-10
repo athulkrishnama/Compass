@@ -959,5 +959,17 @@
         "cancelled": "ரத்து செய்யப்பட்டது",
         "findingYourDriver": "உங்கள் ஓட்டுநரைத் தேடுகிறது",
         "holdTightMatching": "காத்திருங்கள் — அருகிலுள்ள ஓட்டுநருடன் உங்களை இணைக்கிறோம்"
+    },
+    "rideRequestPopup": {
+        "newRideRequest": "புதிய சவாரி கோரிக்கை",
+        "timeLeft": "{{timeLeft}} வினாடிகள் மீதமுள்ளன",
+        "rideDetails": "சவாரி விவரங்கள்",
+        "failedToLoadDetails": "சவாரி விவரங்களை ஏற்ற முடியவில்லை.",
+        "lightTraffic": "குறைந்த போக்குவரத்து",
+        "dropoff": "டிராப்ஆஃப்",
+        "earnings": "வருவாய்",
+        "kmAway": "{{distance}} கிமீ தொலைவில்",
+        "decline": "நிராகரி",
+        "acceptRide": "சவாரி ஏற்க"
     }
 }
