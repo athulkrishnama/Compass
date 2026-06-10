@@ -12,15 +12,8 @@ import {
     setActiveRide,
 } from "../../store/slices/activeRideSlice";
 import { openRideRequestPopup } from "../../store/slices/rideRequestPopupSlice";
-import { openRideRequestPopup } from "../../store/slices/rideRequestPopupSlice";
 import { toast } from "sonner";
 import { SocketContext } from "./SocketContext";
-import {
-    DRIVER_EVENTS_TYPES,
-    RIDER_EVENTS_TYPES,
-    type DriverEventPayload,
-    type RiderEventPayload,
-} from "@/types/socketPayloads";
 import {
     DRIVER_EVENTS_TYPES,
     RIDER_EVENTS_TYPES,
@@ -94,6 +87,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 break;
                             // Add other rider events (arrived, completed, etc.)
                         }
+                    }
+                )
+            );
+
+            cleanups.push(
+                socketService.onPersistent(
                     SocketEvents.RIDER_EVENTS,
                     (data: RiderEventPayload) => {
                         console.log("[SocketProvider] Rider Event:", data);
