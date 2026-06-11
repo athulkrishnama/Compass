@@ -1035,7 +1035,15 @@
         "arrived": "Arrived",
         "cancelled": "Cancelled",
         "findingYourDriver": "Finding your driver",
-        "holdTightMatching": "Hold tight — we're matching you with a nearby driver"
+        "holdTightMatching": "Hold tight — we're matching you with a nearby driver",
+        "timeline": "Timeline",
+        "rideCancelled": "Ride Cancelled",
+        "cancelledBySystem": "Cancelled by system / no drivers found",
+        "cancelledByYou": "Cancelled by you",
+        "cancelledByDriver": "Cancelled by the driver",
+        "cancelledByAdmin": "Cancelled by admin",
+        "showHistory": "Show History",
+        "hideHistory": "Hide History"
     },
     "rideRequestPopup": {
         "newRideRequest": "New Ride Request",

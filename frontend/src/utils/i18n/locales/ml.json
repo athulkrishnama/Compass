@@ -963,7 +963,15 @@
         "arrived": "എത്തിച്ചേർന്നു",
         "cancelled": "റദ്ദാക്കി",
         "findingYourDriver": "നിങ്ങളുടെ ഡ്രൈവറെ കണ്ടെത്തുന്നു",
-        "holdTightMatching": "കാത്തിരിക്കൂ — ഞങ്ങൾ നിങ്ങളെ അടുത്തുള്ള ഒരു ഡ്രൈവറുമായി ബന്ധിപ്പിക്കുന്നു"
+        "holdTightMatching": "കാത്തിരിക്കൂ — ഞങ്ങൾ നിങ്ങളെ അടുത്തുള്ള ഒരു ഡ്രൈവറുമായി ബന്ധിപ്പിക്കുന്നു",
+        "timeline": "സമയരേഖ",
+        "rideCancelled": "യാത്ര റദ്ദാക്കി",
+        "cancelledBySystem": "സിസ്റ്റം റദ്ദാക്കി / ഡ്രൈവർമാരെ കണ്ടെത്തിയില്ല",
+        "cancelledByYou": "നിങ്ങൾ റദ്ദാക്കി",
+        "cancelledByDriver": "ഡ്രൈവർ റദ്ദാക്കി",
+        "cancelledByAdmin": "അഡ്മിൻ റദ്ദാക്കി",
+        "showHistory": "ചരിത്രം കാണിക്കുക",
+        "hideHistory": "ചരിത്രം മറയ്ക്കുക"
     },
     "rideRequestPopup": {
         "newRideRequest": "പുതിയ റൈഡ് അഭ്യർത്ഥന",

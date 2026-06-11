@@ -36,6 +36,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const markersRef = useRef<Map<string, mapboxgl.Marker>>(new Map());
     const popupsRef = useRef<Map<string, mapboxgl.Popup>>(new Map());
     const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
+    const [isMapLoaded, setIsMapLoaded] = useState(false);
 
     useEffect(() => {
         if (!mapContainer.current || mapRef.current) return;
@@ -49,17 +50,22 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             zoom: initialZoom,
         });
 
+        map.on("load", () => {
+            setIsMapLoaded(true);
+        });
+
         mapRef.current = map;
 
         return () => {
             map.remove();
             mapRef.current = null;
+            setIsMapLoaded(false);
         };
-    }, [initialCenter[0], initialCenter[1], initialZoom]);
+    }, []); // Intentionally empty to prevent re-initializing the map
 
     useEffect(() => {
         const map = mapRef.current;
-        if (!map) return;
+        if (!map || !isMapLoaded) return;
 
         markersRef.current.forEach((marker) => marker.remove());
         popupsRef.current.forEach((popup) => popup.remove());
@@ -183,7 +189,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 }
             }
         }
-    }, [markers, activeMarkerId, onMarkerClick, routeCoordinates]);
+    }, [markers, activeMarkerId, onMarkerClick, routeCoordinates, isMapLoaded]);
 
     return (
         <div

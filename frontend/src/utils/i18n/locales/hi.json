@@ -956,7 +956,15 @@
         "arrived": "पहुंच गए",
         "cancelled": "रद्द",
         "findingYourDriver": "आपके ड्राइवर की खोज की जा रही है",
-        "holdTightMatching": "धैर्य रखें — हम आपके लिए नजदीकी ड्राइवर खोज रहे हैं"
+        "holdTightMatching": "धैर्य रखें — हम आपके लिए नजदीकी ड्राइवर खोज रहे हैं",
+        "timeline": "समयरेखा",
+        "rideCancelled": "सवारी रद्द की गई",
+        "cancelledBySystem": "सिस्टम द्वारा रद्द / कोई ड्राइवर नहीं मिला",
+        "cancelledByYou": "आपके द्वारा रद्द",
+        "cancelledByDriver": "ड्राइवर द्वारा रद्द",
+        "cancelledByAdmin": "एडमिन द्वारा रद्द",
+        "showHistory": "इतिहास दिखाएं",
+        "hideHistory": "इतिहास छिपाएं"
     },
     "rideRequestPopup": {
         "newRideRequest": "नया सवारी अनुरोध",

@@ -76,7 +76,7 @@ const RideDetails = () => {
         <div className="min-h-[calc(100vh-80px)] bg-neutral-50 text-black flex flex-col lg:flex-row overflow-hidden font-sans">
             <div className="w-full lg:w-[420px] xl:w-[460px] flex-shrink-0 overflow-y-auto bg-white border-r border-neutral-100 shadow-[4px_0_24px_rgba(0,0,0,0.04)]">
                 <div className="p-6 md:p-8 space-y-6">
-                    <RideHeader status={ride.status} />
+                    <RideHeader ride={ride} />
                     <Separator className="bg-neutral-100" />
                     <RideLocations
                         pickup={ride.pickup_point}
