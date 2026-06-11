@@ -7,10 +7,7 @@ import {
     addNotification,
     type Notification,
 } from "../../store/slices/notificationSlice";
-import {
-    updateRideStatus,
-    setActiveRide,
-} from "../../store/slices/activeRideSlice";
+import { updateRideStatus } from "../../store/slices/activeRideSlice";
 import { openRideRequestPopup } from "../../store/slices/rideRequestPopupSlice";
 import { toast } from "sonner";
 import { SocketContext } from "./SocketContext";
@@ -22,6 +19,7 @@ import {
 } from "@/types/socketPayloads";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import { RIDE_STATUSES } from "@/types/rideStatus";
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -63,9 +61,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                         switch (data.type) {
                             case RIDER_EVENTS_TYPES.ASSIGNED:
                                 dispatch(
-                                    setActiveRide({
-                                        status: "matched",
-                                    })
+                                    updateRideStatus(RIDE_STATUSES.MATCHED)
                                 );
                                 toast.success(
                                     t(translationKey.toasts.driverAssigned),
@@ -78,7 +74,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 );
                                 break;
                             case RIDER_EVENTS_TYPES.CANCELLED:
-                                dispatch(updateRideStatus("cancelled"));
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.CANCELLED)
+                                );
                                 toast.error(
                                     t(translationKey.toasts.rideCancelled),
                                     {
@@ -96,7 +94,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 );
                                 break;
                             case RIDER_EVENTS_TYPES.NO_DRIVERS:
-                                dispatch(updateRideStatus("cancelled"));
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.CANCELLED)
+                                );
                                 toast.error(
                                     t(translationKey.toasts.noDrivers),
                                     {
@@ -106,7 +106,6 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                     }
                                 );
                                 break;
-                            // Add other rider events (arrived, completed, etc.)
                         }
                     }
                 )

@@ -7,20 +7,26 @@ import RideHeader from "@/components/traveler/cab/ride/RideHeader";
 import RideLocations from "@/components/traveler/cab/ride/RideLocations";
 import TripStats from "@/components/traveler/cab/ride/TripStats";
 import RideStatusSection from "@/components/traveler/cab/ride/RideStatusSection";
-import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { setActiveRide } from "@/store/slices/activeRideSlice";
 import { fetchRouteCoordinates } from "@/utils/mapbox";
 import translationKey from "@/utils/i18n/translationKey";
 
 const RideDetails = () => {
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
-    const [ride] = useState<IRideDetailsResponseDTO | undefined>(
-        loaderData.data
-    );
+    const ride = useAppSelector((state) => state.activeRide);
 
     const [routeCoordinates, setRouteCoordinates] = useState<
         [number, number][]
     >([]);
+
+    useEffect(() => {
+        if (loaderData.data) {
+            dispatch(setActiveRide(loaderData.data));
+        }
+    }, [loaderData.data, dispatch]);
 
     useEffect(() => {
         if (!ride) return;
@@ -82,7 +88,7 @@ const RideDetails = () => {
                 <MapboxMap
                     markers={markers}
                     routeCoordinates={routeCoordinates}
-                    className="h-full w-full !rounded-none"
+                    className="h-full w-full rounded-none"
                     initialZoom={12}
                 />
             </div>
