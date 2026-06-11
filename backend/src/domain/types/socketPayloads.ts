@@ -1,13 +1,14 @@
 export enum DRIVER_EVENTS_TYPES {
-  REQUESTED = "requested",
+  REQUESTED = "driver:requested",
+  ACCEPTED = "driver:accepted",
 }
 export type DRIVER_EVENTS_TYPE = DRIVER_EVENTS_TYPES;
 
 export enum RIDER_EVENTS_TYPES {
-  ASSIGNED = "assigned",
-  CANCELLED = "cancelled",
-  NO_DRIVERS = "no_drivers",
-  REQUESTED = "requested",
+  ASSIGNED = "rider:assigned",
+  CANCELLED = "rider:cancelled",
+  NO_DRIVERS = "rider:no_drivers",
+  REQUESTED = "rider:requested",
 }
 export type RIDER_EVENTS_TYPE = RIDER_EVENTS_TYPES;
 

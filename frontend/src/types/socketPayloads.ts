@@ -1,13 +1,14 @@
 export const DRIVER_EVENTS_TYPES = {
-    REQUESTED: "requested",
+    REQUESTED: "driver:requested",
+    ACCEPTED: "driver:accepted",
 } as const;
 export type DRIVER_EVENTS_TYPE =
     (typeof DRIVER_EVENTS_TYPES)[keyof typeof DRIVER_EVENTS_TYPES];
 
 export const RIDER_EVENTS_TYPES = {
-    ASSIGNED: "assigned",
-    CANCELLED: "cancelled",
-    NO_DRIVERS: "no_drivers",
+    ASSIGNED: "rider:assigned",
+    CANCELLED: "rider:cancelled",
+    NO_DRIVERS: "rider:no_drivers",
 } as const;
 export type RIDER_EVENTS_TYPE =
     (typeof RIDER_EVENTS_TYPES)[keyof typeof RIDER_EVENTS_TYPES];
@@ -28,7 +29,15 @@ export interface DriverRequestedPayload {
     };
 }
 
-export type DriverEventPayload = DriverRequestedPayload;
+export type DriverEventPayload = DriverRequestedPayload | DriverAcceptedPayload;
+
+export interface DriverAcceptedPayload {
+    type: typeof DRIVER_EVENTS_TYPES.ACCEPTED;
+    payload: {
+        ride_id: string;
+        rider_id: string;
+    };
+}
 
 export interface RiderAssignedPayload {
     type: typeof RIDER_EVENTS_TYPES.ASSIGNED;

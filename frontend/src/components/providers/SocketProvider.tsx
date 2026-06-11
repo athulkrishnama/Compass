@@ -22,6 +22,7 @@ import translationKey from "@/utils/i18n/translationKey";
 import { RIDE_STATUSES } from "@/types/rideStatus";
 import { queryClient } from "@/config/tanstackQueryConfig";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import { router } from "@/main";
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -150,6 +151,10 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         attempt_id: data.payload.attempt_id,
                                     })
                                 );
+                                break;
+                            }
+                            case DRIVER_EVENTS_TYPES.ACCEPTED: {
+                                router.navigate({ to: "/cab/activeTrip" });
                                 break;
                             }
                         }

@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 import { SocketEvents } from "@presentation/constants/socketEvents";
 import { inject, injectable } from "tsyringe";
 import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/driverMatchingUseCase.interface";
+import { IAcceptRideUseCase } from "@application/interfaces/useCase/ride/acceptRideUseCase.interface";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
@@ -11,6 +12,8 @@ export class RideEventHandler {
   constructor(
     @inject("IDriverMatchingUseCase")
     private _driverMatchingUseCase: IDriverMatchingUseCase,
+    @inject("IAcceptRideUseCase")
+    private _acceptRideUseCase: IAcceptRideUseCase,
     @inject("IQueueService")
     private _queueService: IQueueService,
   ) {}
@@ -26,8 +29,11 @@ export class RideEventHandler {
         if (!data.ride_id || !data.attempt_id) {
           throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
         }
-        // await this._driverMatchingUseCase.execute({data.rideId, data.attempt_id});
-        await this._queueService.removeJob(data.attempt_id);
+        await this._acceptRideUseCase.execute({
+          ride_id: data.ride_id,
+          rider_id: userId,
+          attempt_id: data.attempt_id,
+        });
       } catch (error) {
         console.error("[RideEventHandler] Error handling accept-ride:", error);
       }
@@ -58,7 +64,6 @@ export class RideEventHandler {
           `[RideEventHandler] rider:cancel-ride from ${userId}`,
           data,
         );
-        // TODO: Wire up CancelRideUseCase when created
       } catch (error) {
         console.error("[RideEventHandler] Error handling cancel-ride:", error);
       }
