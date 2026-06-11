@@ -969,5 +969,13 @@
         "kmAway": "{{distance}} किमी दूर",
         "decline": "अस्वीकार करें",
         "acceptRide": "सवारी स्वीकार करें"
+    },
+    "toasts": {
+        "driverAssigned": "ड्राइवर मिल गया!",
+        "driverAssignedDesc": "आपकी सवारी के लिए एक driver नियुक्त किया गया है।",
+        "rideCancelled": "यात्रा रद्द",
+        "rideCancelledDesc": "आपकी सवारी रद्द कर दी गई है।",
+        "noDrivers": "कोई ड्राइवर नहीं मिला",
+        "noDriversDesc": "हमें आपकी सवारी के लिए कोई ड्राइवर नहीं मिला।"
     }
 }

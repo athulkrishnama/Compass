@@ -1048,5 +1048,13 @@
         "kmAway": "{{distance}} km away",
         "decline": "Decline",
         "acceptRide": "Accept Ride"
+    },
+    "toasts": {
+        "driverAssigned": "Driver Assigned!",
+        "driverAssignedDesc": "A driver has been assigned to your ride.",
+        "rideCancelled": "Ride Cancelled",
+        "rideCancelledDesc": "Your ride has been cancelled.",
+        "noDrivers": "No Drivers Found",
+        "noDriversDesc": "We couldn't find a driver for your ride."
     }
 }

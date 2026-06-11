@@ -20,6 +20,8 @@ import {
     type DriverEventPayload,
     type RiderEventPayload,
 } from "@/types/socketPayloads";
+import { useTranslation } from "react-i18next";
+import translationKey from "@/utils/i18n/translationKey";
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -28,6 +30,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     const { isLoggedin } = useSelector((state: RootState) => state.user);
     const { accessToken } = useSelector((state: RootState) => state.token);
     const [isConnected, setIsConnected] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const cleanups: Array<() => void> = [];
@@ -64,65 +67,44 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         status: "matched",
                                     })
                                 );
-                                toast.success("Driver Assigned!", {
-                                    description:
-                                        "A driver has been assigned to your ride.",
-                                });
-                                break;
-                            case RIDER_EVENTS_TYPES.CANCELLED:
-                                dispatch(updateRideStatus("cancelled"));
-                                toast.error("Ride Cancelled", {
-                                    description:
-                                        (data.payload as { message?: string })
-                                            .message ||
-                                        "Your ride has been cancelled.",
-                                });
-                                break;
-                            case RIDER_EVENTS_TYPES.NO_DRIVERS:
-                                dispatch(updateRideStatus("cancelled"));
-                                toast.error("No Drivers Found", {
-                                    description:
-                                        "We couldn't find a driver for your ride.",
-                                });
-                                break;
-                            // Add other rider events (arrived, completed, etc.)
-                        }
-                    }
-                )
-            );
-
-            cleanups.push(
-                socketService.onPersistent(
-                    SocketEvents.RIDER_EVENTS,
-                    (data: RiderEventPayload) => {
-                        console.log("[SocketProvider] Rider Event:", data);
-                        switch (data.type) {
-                            case RIDER_EVENTS_TYPES.ASSIGNED:
-                                dispatch(
-                                    setActiveRide({
-                                        status: "matched",
-                                    })
+                                toast.success(
+                                    t(translationKey.toasts.driverAssigned),
+                                    {
+                                        description: t(
+                                            translationKey.toasts
+                                                .driverAssignedDesc
+                                        ),
+                                    }
                                 );
-                                toast.success("Driver Assigned!", {
-                                    description:
-                                        "A driver has been assigned to your ride.",
-                                });
                                 break;
                             case RIDER_EVENTS_TYPES.CANCELLED:
                                 dispatch(updateRideStatus("cancelled"));
-                                toast.error("Ride Cancelled", {
-                                    description:
-                                        (data.payload as { message?: string })
-                                            .message ||
-                                        "Your ride has been cancelled.",
-                                });
+                                toast.error(
+                                    t(translationKey.toasts.rideCancelled),
+                                    {
+                                        description:
+                                            (
+                                                data.payload as {
+                                                    message?: string;
+                                                }
+                                            ).message ||
+                                            t(
+                                                translationKey.toasts
+                                                    .rideCancelledDesc
+                                            ),
+                                    }
+                                );
                                 break;
                             case RIDER_EVENTS_TYPES.NO_DRIVERS:
                                 dispatch(updateRideStatus("cancelled"));
-                                toast.error("No Drivers Found", {
-                                    description:
-                                        "We couldn't find a driver for your ride.",
-                                });
+                                toast.error(
+                                    t(translationKey.toasts.noDrivers),
+                                    {
+                                        description: t(
+                                            translationKey.toasts.noDriversDesc
+                                        ),
+                                    }
+                                );
                                 break;
                             // Add other rider events (arrived, completed, etc.)
                         }
@@ -154,7 +136,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
         return () => {
             cleanups.forEach((cleanup) => cleanup());
         };
-    }, [isLoggedin, accessToken, dispatch]);
+    }, [isLoggedin, accessToken, dispatch, t]);
 
     return (
         <SocketContext.Provider value={{ isConnected }}>

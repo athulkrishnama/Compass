@@ -1049,4 +1049,13 @@ export default {
         findingYourDriver: "rideDetails.findingYourDriver",
         holdTightMatching: "rideDetails.holdTightMatching",
     },
+    toasts: {
+        driverAssigned: "toasts.driverAssigned",
+        driverAssignedDesc: "toasts.driverAssignedDesc",
+        rideCancelled: "toasts.rideCancelled",
+        rideCancelledDesc: "toasts.rideCancelledDesc",
+        noDrivers: "toasts.noDrivers",
+        noDriversDesc: "toasts.noDriversDesc",
+    },
 };
+
