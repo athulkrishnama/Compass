@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { socketService } from "../services/socket/socketService";
 
-export function useSocketEvent<T = any>(
+export function useSocketEvent<T>(
     event: string,
     handler: (data: T) => void,
     enabled: boolean = true

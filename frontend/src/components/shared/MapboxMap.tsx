@@ -61,7 +61,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             mapRef.current = null;
             setIsMapLoaded(false);
         };
-    }, []); // Intentionally empty to prevent re-initializing the map
+    }, [initialCenter, initialZoom]);
 
     useEffect(() => {
         const map = mapRef.current;
