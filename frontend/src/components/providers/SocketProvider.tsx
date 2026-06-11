@@ -145,7 +145,10 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                         switch (data.type) {
                             case DRIVER_EVENTS_TYPES.REQUESTED: {
                                 dispatch(
-                                    openRideRequestPopup(data.payload.ride_id)
+                                    openRideRequestPopup({
+                                        rideId: data.payload.ride_id,
+                                        attempt_id: data.payload.attempt_id,
+                                    })
                                 );
                                 break;
                             }

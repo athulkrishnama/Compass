@@ -24,6 +24,7 @@ export interface DriverRequestedPayload {
         dropoff: { latitude: number; longitude: number };
         distance: number;
         time: number;
+        attempt_id: string;
     };
 }
 

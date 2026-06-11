@@ -10,13 +10,13 @@ import { RIDE_EVENT_NAMES } from "@domain/types/rideEvent";
 import { QUEUE_JOB_NAMES } from "@domain/constants/queueJobNames";
 import { SocketEvents } from "@presentation/constants/socketEvents";
 import { VALUES } from "@presentation/constants/values";
-import { randomUUID } from "crypto";
 import { ROLES } from "@domain/enums/roles";
 import { Messages } from "@domain/enums/messages";
 import {
   DRIVER_EVENTS_TYPES,
   RIDER_EVENTS_TYPES,
 } from "@domain/types/socketPayloads";
+import { ITokenService } from "@application/interfaces/service/tokenService.interface";
 
 @injectable()
 export class DriverMatchingUseCase implements IDriverMatchingUseCase {
@@ -25,6 +25,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
     @inject("IGeoService") private _geoService: IGeoService,
     @inject("IQueueService") private _queueService: IQueueService,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
+    @inject("ITokenService") private _tokenSerivce: ITokenService,
   ) {}
 
   async execute({
@@ -65,7 +66,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
         `[DriverMatch] Ride ${ride_id} exceeded 5 minutes searching. Cancelling.`,
       );
       ride.status = RIDE_STATUSES.CANCELLED;
-      ride.cancelled_by = null; // Reverted to null based on schema change
+      ride.cancelled_by = null;
       ride.events.push({
         event_name: RIDE_EVENT_NAMES.TIMED_OUT,
         actor: ROLES.ADMIN,
@@ -90,12 +91,11 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
     );
 
     if (validDriverId) {
-      const newAttemptId = randomUUID();
+      const newAttemptId = this._tokenSerivce.createToken();
       ride.attempt_id = newAttemptId;
       ride.attempted_drivers.push(validDriverId);
       await this._rideRepo.update(ride, ride_id);
 
-      // Emit ride request to driver via WebSocket
       this._socketEmitter.emitToUser(
         validDriverId,
         SocketEvents.DRIVER_EVENTS,
@@ -108,6 +108,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
             dropoff: ride.dropoff_point,
             distance: ride.distance,
             time: ride.time,
+            attempt_id: newAttemptId,
           },
         },
       );

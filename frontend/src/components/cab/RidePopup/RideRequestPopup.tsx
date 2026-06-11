@@ -21,7 +21,7 @@ import { fetchRouteCoordinates } from "@/utils/mapbox";
 export default function RideRequestPopup() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isOpen, rideId } = useSelector(
+    const { isOpen, rideId, attempt_id } = useSelector(
         (state: RootState) => state.rideRequestPopup
     );
     const [timeLeft, setTimeLeft] = useState(10);
@@ -38,6 +38,7 @@ export default function RideRequestPopup() {
         if (rideId) {
             socketService.emit(SocketEvents.DRIVER_REJECT_RIDE, {
                 ride_id: rideId,
+                attempt_id,
             });
         }
         dispatch(closeRideRequestPopup());
@@ -47,6 +48,7 @@ export default function RideRequestPopup() {
         if (rideId) {
             socketService.emit(SocketEvents.DRIVER_ACCEPT_RIDE, {
                 ride_id: rideId,
+                attempt_id,
             });
         }
         dispatch(closeRideRequestPopup());

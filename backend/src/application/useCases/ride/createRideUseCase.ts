@@ -14,6 +14,7 @@ import {
 } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { QUEUE_JOB_NAMES } from "@domain/constants/queueJobNames";
+import { ITokenService } from "@application/interfaces/service/tokenService.interface";
 
 @injectable()
 export class CreateRideUseCase implements ICreateRideUseCase {
@@ -22,6 +23,7 @@ export class CreateRideUseCase implements ICreateRideUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("IOtpService") private _otpService: IOtpService,
     @inject("IQueueService") private _queueService: IQueueService,
+    @inject("ITokenService") private _tokenSerivce: ITokenService,
   ) {}
 
   async execute({
@@ -61,7 +63,7 @@ export class CreateRideUseCase implements ICreateRideUseCase {
       pickup_point: fare.pickup_location,
       dropoff_point: fare.dropoff_location,
       attempted_drivers: [],
-      attempt_id: null,
+      attempt_id: this._tokenSerivce.createToken(),
       otp,
       otp_attempts: 0,
       status: RIDE_STATUSES.SEARCHING,
@@ -79,6 +81,7 @@ export class CreateRideUseCase implements ICreateRideUseCase {
 
     await this._queueService.addJob(QUEUE_JOB_NAMES.MATCH_DRIVER, {
       ride_id: rideId,
+      job_id: this._tokenSerivce.createToken(),
     });
 
     return rideId;
