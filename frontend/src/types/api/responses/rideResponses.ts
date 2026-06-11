@@ -16,6 +16,6 @@ export interface IRideDetailsResponseDTO {
     time: number;
     selected_fare: FareOption;
     otp: string | null;
-    cancelled_by: ROLES | null;
+    cancelled_by: ROLES | "timeout" | null;
     events: { event_name: string; actor: ROLES; timestamp: string }[];
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLoaderData } from "@tanstack/react-router";
+import { useLoaderData, useParams } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
 import MapboxMap from "@/components/shared/MapboxMap";
@@ -11,11 +11,20 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { setActiveRide } from "@/store/slices/activeRideSlice";
 import { fetchRouteCoordinates } from "@/utils/mapbox";
 import translationKey from "@/utils/i18n/translationKey";
+import { useQuery } from "@tanstack/react-query";
+import { getRideDetailsQueryOptions } from "@/queryOptions/rideQueryOptions";
 
 const RideDetails = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
+    const { id } = useParams({ from: "/traveler/cab/ride/$id" });
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
+
+    const { data: rideQueryData } = useQuery({
+        ...getRideDetailsQueryOptions(id),
+        initialData: loaderData,
+    });
+
     const ride = useAppSelector((state) => state.activeRide);
 
     const [routeCoordinates, setRouteCoordinates] = useState<
@@ -23,10 +32,10 @@ const RideDetails = () => {
     >([]);
 
     useEffect(() => {
-        if (loaderData.data) {
-            dispatch(setActiveRide(loaderData.data));
+        if (rideQueryData?.data) {
+            dispatch(setActiveRide(rideQueryData.data));
         }
-    }, [loaderData.data, dispatch]);
+    }, [rideQueryData, dispatch]);
 
     useEffect(() => {
         if (!ride) return;

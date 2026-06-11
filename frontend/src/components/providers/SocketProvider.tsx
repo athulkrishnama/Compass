@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { type RootState } from "../../store/store";
+import { store, type RootState } from "../../store/store";
 import { socketService } from "../../services/socket/socketService";
 import { SocketEvents } from "../../constants/socketEvents";
 import {
@@ -20,6 +20,8 @@ import {
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { RIDE_STATUSES } from "@/types/rideStatus";
+import { queryClient } from "@/config/tanstackQueryConfig";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -77,6 +79,18 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 dispatch(
                                     updateRideStatus(RIDE_STATUSES.CANCELLED)
                                 );
+                                alert(
+                                    "invalidate" +
+                                        QUERY_KEYS.RIDE_DETAILS +
+                                        " " +
+                                        store.getState().activeRide?._id
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
                                 toast.error(
                                     t(translationKey.toasts.rideCancelled),
                                     {
@@ -96,6 +110,18 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                             case RIDER_EVENTS_TYPES.NO_DRIVERS:
                                 dispatch(
                                     updateRideStatus(RIDE_STATUSES.CANCELLED)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                console.log(
+                                    "invalidate" +
+                                        QUERY_KEYS.RIDE_DETAILS +
+                                        " " +
+                                        store.getState().activeRide?._id
                                 );
                                 toast.error(
                                     t(translationKey.toasts.noDrivers),
