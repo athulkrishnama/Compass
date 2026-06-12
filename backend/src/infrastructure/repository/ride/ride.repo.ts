@@ -4,7 +4,7 @@ import { IRideDocument } from "./ride.schema";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { inject, injectable } from "tsyringe";
 import { Model, Types } from "mongoose";
-
+import { RIDE_STATUSES } from "@domain/types/rideStatus";
 @injectable()
 export class RideRepo
   extends BaseRepository<RideEntity, IRideDocument>
@@ -23,6 +23,20 @@ export class RideRepo
   async update(entity: RideEntity, id: string): Promise<void> {
     const updateData = this.toMongoDoc(entity);
     await this._model.findByIdAndUpdate(id, { $set: updateData });
+  }
+
+  async fetchCabActiveRide(driver_id: string): Promise<RideEntity | null> {
+    const doc = await this._model.findOne({
+      driver_id: new Types.ObjectId(driver_id),
+      status: {
+        $in: [
+          RIDE_STATUSES.MATCHED,
+          RIDE_STATUSES.IN_TRANSIT,
+          RIDE_STATUSES.ARRIVED,
+        ],
+      },
+    });
+    return doc ? this.toEntity(doc) : null;
   }
 
   toMongoDoc(entity: RideEntity): IRideDocument {
