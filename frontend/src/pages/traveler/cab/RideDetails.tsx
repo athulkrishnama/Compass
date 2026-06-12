@@ -13,12 +13,22 @@ import { fetchRouteCoordinates } from "@/utils/mapbox";
 import translationKey from "@/utils/i18n/translationKey";
 import { useQuery } from "@tanstack/react-query";
 import { getRideDetailsQueryOptions } from "@/queryOptions/rideQueryOptions";
+import { socketService } from "@/services/socket/socketService";
+import { SocketEvents } from "@/constants/socketEvents";
+import { RIDE_STATUSES, type RideStatus } from "@/types/rideStatus";
+import { toast } from "sonner";
+
+const CANCELLABLE_STATUSES: RideStatus[] = [
+    RIDE_STATUSES.SEARCHING,
+    RIDE_STATUSES.MATCHED,
+];
 
 const RideDetails = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const { id } = useParams({ from: "/traveler/cab/ride/$id" });
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
+    const [isCancelling, setIsCancelling] = useState(false);
 
     const { data: rideQueryData } = useQuery({
         ...getRideDetailsQueryOptions(id),
@@ -44,6 +54,18 @@ const RideDetails = () => {
             .then((coords) => setRouteCoordinates(coords))
             .catch(() => console.error("Failed to fetch route"));
     }, [ride]);
+
+    const handleCancelRide = () => {
+        if (!ride || isCancelling) return;
+        setIsCancelling(true);
+        socketService.emit(SocketEvents.RIDER_CANCEL_RIDE, {
+            ride_id: ride._id,
+        });
+        toast.info("Cancellation requested", {
+            description: "Your ride is being cancelled…",
+        });
+        setTimeout(() => setIsCancelling(false), 3000);
+    };
 
     if (!ride) {
         return (
@@ -90,6 +112,16 @@ const RideDetails = () => {
                     />
                     <Separator className="bg-neutral-100" />
                     <RideStatusSection status={ride.status} />
+
+                    {CANCELLABLE_STATUSES.includes(ride.status) && (
+                        <button
+                            onClick={handleCancelRide}
+                            disabled={isCancelling}
+                            className="w-full mt-2 py-3 px-4 rounded-xl border border-red-200 bg-red-50 text-red-600 text-sm font-medium hover:bg-red-100 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isCancelling ? "Cancelling…" : "Cancel Ride"}
+                        </button>
+                    )}
                 </div>
             </div>
 

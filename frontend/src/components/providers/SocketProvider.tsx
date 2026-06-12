@@ -80,12 +80,6 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 dispatch(
                                     updateRideStatus(RIDE_STATUSES.CANCELLED)
                                 );
-                                alert(
-                                    "invalidate" +
-                                        QUERY_KEYS.RIDE_DETAILS +
-                                        " " +
-                                        store.getState().activeRide?._id
-                                );
                                 queryClient.invalidateQueries({
                                     queryKey: [
                                         QUERY_KEYS.RIDE_DETAILS,
@@ -118,12 +112,6 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         store.getState().activeRide?._id,
                                     ],
                                 });
-                                console.log(
-                                    "invalidate" +
-                                        QUERY_KEYS.RIDE_DETAILS +
-                                        " " +
-                                        store.getState().activeRide?._id
-                                );
                                 toast.error(
                                     t(translationKey.toasts.noDrivers),
                                     {
@@ -155,6 +143,13 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                             }
                             case DRIVER_EVENTS_TYPES.ACCEPTED: {
                                 router.navigate({ to: "/cab/activeTrip" });
+                                break;
+                            }
+                            case DRIVER_EVENTS_TYPES.CANCELLED: {
+                                toast.error("Ride Cancelled", {
+                                    description:
+                                        "The rider has cancelled the trip.",
+                                });
                                 break;
                             }
                         }

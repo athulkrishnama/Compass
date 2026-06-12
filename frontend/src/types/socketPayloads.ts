@@ -1,6 +1,7 @@
 export const DRIVER_EVENTS_TYPES = {
     REQUESTED: "driver:requested",
     ACCEPTED: "driver:accepted",
+    CANCELLED: "driver:cancelled",
 } as const;
 export type DRIVER_EVENTS_TYPE =
     (typeof DRIVER_EVENTS_TYPES)[keyof typeof DRIVER_EVENTS_TYPES];
@@ -29,7 +30,18 @@ export interface DriverRequestedPayload {
     };
 }
 
-export type DriverEventPayload = DriverRequestedPayload | DriverAcceptedPayload;
+export type DriverEventPayload =
+    | DriverRequestedPayload
+    | DriverAcceptedPayload
+    | DriverCancelledPayload;
+
+export interface DriverCancelledPayload {
+    type: typeof DRIVER_EVENTS_TYPES.CANCELLED;
+    payload: {
+        ride_id: string;
+        message?: string;
+    };
+}
 
 export interface DriverAcceptedPayload {
     type: typeof DRIVER_EVENTS_TYPES.ACCEPTED;

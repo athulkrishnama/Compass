@@ -3,6 +3,7 @@ import { SocketEvents } from "@presentation/constants/socketEvents";
 import { inject, injectable } from "tsyringe";
 import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/driverMatchingUseCase.interface";
 import { IAcceptRideUseCase } from "@application/interfaces/useCase/ride/acceptRideUseCase.interface";
+import { ICancelRideUseCase } from "@application/interfaces/useCase/ride/cancelRideUseCase.interface";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
@@ -14,6 +15,8 @@ export class RideEventHandler {
     private _driverMatchingUseCase: IDriverMatchingUseCase,
     @inject("IAcceptRideUseCase")
     private _acceptRideUseCase: IAcceptRideUseCase,
+    @inject("ICancelRideUseCase")
+    private _cancelRideUseCase: ICancelRideUseCase,
     @inject("IQueueService")
     private _queueService: IQueueService,
   ) {}
@@ -58,12 +61,19 @@ export class RideEventHandler {
       }
     });
 
-    socket.on(SocketEvents.RIDER_CANCEL_RIDE, (data) => {
+    socket.on(SocketEvents.RIDER_CANCEL_RIDE, async (data) => {
       try {
         console.log(
           `[RideEventHandler] rider:cancel-ride from ${userId}`,
           data,
         );
+        if (!data.ride_id) {
+          throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+        }
+        await this._cancelRideUseCase.execute({
+          ride_id: data.ride_id,
+          user_id: userId,
+        });
       } catch (error) {
         console.error("[RideEventHandler] Error handling cancel-ride:", error);
       }

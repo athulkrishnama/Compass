@@ -1,6 +1,7 @@
 export enum DRIVER_EVENTS_TYPES {
   REQUESTED = "driver:requested",
   ACCEPTED = "driver:accepted",
+  CANCELLED = "driver:cancelled",
 }
 export type DRIVER_EVENTS_TYPE = DRIVER_EVENTS_TYPES;
 

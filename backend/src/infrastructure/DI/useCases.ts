@@ -139,6 +139,8 @@ import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/dri
 import { DriverMatchingUseCase } from "@useCases/ride/driverMatchUseCase";
 import { IAcceptRideUseCase } from "@application/interfaces/useCase/ride/acceptRideUseCase.interface";
 import { AcceptRideUseCase } from "@useCases/ride/acceptRideUseCase";
+import { ICancelRideUseCase } from "@application/interfaces/useCase/ride/cancelRideUseCase.interface";
+import { CancelRideUseCase } from "@useCases/ride/cancelRideUseCase";
 import { IGetNotificationsUseCase } from "@application/interfaces/useCase/notification/getNotificationsUseCase.interface";
 import { GetNotificationsUseCase } from "@useCases/notification/getNotificationsUseCase";
 import { IGetUnreadCountUseCase } from "@application/interfaces/useCase/notification/getUnreadCountUseCase.interface";
@@ -424,6 +426,10 @@ export function registerUsecases() {
   container.registerSingleton<IAcceptRideUseCase>(
     "IAcceptRideUseCase",
     AcceptRideUseCase,
+  );
+  container.registerSingleton<ICancelRideUseCase>(
+    "ICancelRideUseCase",
+    CancelRideUseCase,
   );
   container.registerSingleton<IGetNotificationsUseCase>(
     "IGetNotificationsUseCase",
