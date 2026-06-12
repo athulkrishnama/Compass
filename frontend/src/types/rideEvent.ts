@@ -1,3 +1,5 @@
+import type { ROLE } from "./role";
+
 export const RIDE_EVENT_NAMES = {
     REQUESTED: "REQUESTED",
     ACCEPTED: "ACCEPTED",
@@ -12,6 +14,6 @@ export type RideEventName =
 
 export interface RideEvent {
     event_name: RideEventName;
-    actor: string;
+    actor: ROLE;
     timestamp: string;
 }

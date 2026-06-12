@@ -1,7 +1,11 @@
-import { InvalideDataException } from "@application/constants/Exceptions";
+import {
+  InvalideDataException,
+  ResourceNotFoundException,
+} from "@application/constants/Exceptions";
 import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createFareUseCase.interface";
 import { ICreateRideUseCase } from "@application/interfaces/useCase/ride/createRideUseCase.interface";
 import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/getRideDetailsUseCase.interface";
+import { IGetDriverActiveRideUseCase } from "@application/interfaces/useCase/ride/getDriverActiveRideUseCase.interface";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
@@ -20,6 +24,8 @@ export class RideController {
     private _createRideUseCase: ICreateRideUseCase,
     @inject("IGetRideDetailsUseCase")
     private _getRideDetailsUseCase: IGetRideDetailsUseCase,
+    @inject("IGetDriverActiveRideUseCase")
+    private _getDriverActiveRideUseCase: IGetDriverActiveRideUseCase,
   ) {}
 
   async handleCreateFare(req: Request, res: Response, next: NextFunction) {
@@ -92,6 +98,39 @@ export class RideController {
         HTTP_STATUS_CODE.OK,
         Messages.RIDE_DETAILS_FETCHED_SUCCESSFULLY,
         rideDetails,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetDriverActiveRide(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const driverId = req.user.id;
+
+      if (!driverId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
+      }
+
+      const activeRide =
+        await this._getDriverActiveRideUseCase.execute(driverId);
+
+      if (!activeRide) {
+        throw new ResourceNotFoundException(
+          INTERNAL_ERROR_MESSAGES.RIDE_NOT_FOUND,
+        );
+      }
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        activeRide,
       );
     } catch (error) {
       next(error);

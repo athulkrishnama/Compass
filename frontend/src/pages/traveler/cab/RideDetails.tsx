@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLoaderData } from "@tanstack/react-router";
+import { useLoaderData, useParams } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
 import MapboxMap from "@/components/shared/MapboxMap";
@@ -7,20 +7,45 @@ import RideHeader from "@/components/traveler/cab/ride/RideHeader";
 import RideLocations from "@/components/traveler/cab/ride/RideLocations";
 import TripStats from "@/components/traveler/cab/ride/TripStats";
 import RideStatusSection from "@/components/traveler/cab/ride/RideStatusSection";
-import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { setActiveRide } from "@/store/slices/activeRideSlice";
 import { fetchRouteCoordinates } from "@/utils/mapbox";
 import translationKey from "@/utils/i18n/translationKey";
+import { useQuery } from "@tanstack/react-query";
+import { getRideDetailsQueryOptions } from "@/queryOptions/rideQueryOptions";
+import { socketService } from "@/services/socket/socketService";
+import { SocketEvents } from "@/constants/socketEvents";
+import { RIDE_STATUSES, type RideStatus } from "@/types/rideStatus";
+import { toast } from "sonner";
+
+const CANCELLABLE_STATUSES: RideStatus[] = [
+    RIDE_STATUSES.SEARCHING,
+    RIDE_STATUSES.MATCHED,
+];
 
 const RideDetails = () => {
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
+    const { id } = useParams({ from: "/traveler/cab/ride/$id" });
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
-    const [ride, setRide] = useState<IRideDetailsResponseDTO | undefined>(
-        loaderData.data
-    );
+    const [isCancelling, setIsCancelling] = useState(false);
+
+    const { data: rideQueryData } = useQuery({
+        ...getRideDetailsQueryOptions(id),
+        initialData: loaderData,
+    });
+
+    const ride = useAppSelector((state) => state.activeRide);
 
     const [routeCoordinates, setRouteCoordinates] = useState<
         [number, number][]
     >([]);
+
+    useEffect(() => {
+        if (rideQueryData?.data) {
+            dispatch(setActiveRide(rideQueryData.data));
+        }
+    }, [rideQueryData, dispatch]);
 
     useEffect(() => {
         if (!ride) return;
@@ -29,6 +54,18 @@ const RideDetails = () => {
             .then((coords) => setRouteCoordinates(coords))
             .catch(() => console.error("Failed to fetch route"));
     }, [ride]);
+
+    const handleCancelRide = () => {
+        if (!ride || isCancelling) return;
+        setIsCancelling(true);
+        socketService.emit(SocketEvents.RIDER_CANCEL_RIDE, {
+            ride_id: ride._id,
+        });
+        toast.info("Cancellation requested", {
+            description: "Your ride is being cancelled…",
+        });
+        setTimeout(() => setIsCancelling(false), 3000);
+    };
 
     if (!ride) {
         return (
@@ -61,7 +98,7 @@ const RideDetails = () => {
         <div className="min-h-[calc(100vh-80px)] bg-neutral-50 text-black flex flex-col lg:flex-row overflow-hidden font-sans">
             <div className="w-full lg:w-[420px] xl:w-[460px] flex-shrink-0 overflow-y-auto bg-white border-r border-neutral-100 shadow-[4px_0_24px_rgba(0,0,0,0.04)]">
                 <div className="p-6 md:p-8 space-y-6">
-                    <RideHeader status={ride.status} />
+                    <RideHeader ride={ride} />
                     <Separator className="bg-neutral-100" />
                     <RideLocations
                         pickup={ride.pickup_point}
@@ -75,6 +112,16 @@ const RideDetails = () => {
                     />
                     <Separator className="bg-neutral-100" />
                     <RideStatusSection status={ride.status} />
+
+                    {CANCELLABLE_STATUSES.includes(ride.status) && (
+                        <button
+                            onClick={handleCancelRide}
+                            disabled={isCancelling}
+                            className="w-full mt-2 py-3 px-4 rounded-xl border border-red-200 bg-red-50 text-red-600 text-sm font-medium hover:bg-red-100 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isCancelling ? "Cancelling…" : "Cancel Ride"}
+                        </button>
+                    )}
                 </div>
             </div>
 
@@ -82,7 +129,7 @@ const RideDetails = () => {
                 <MapboxMap
                     markers={markers}
                     routeCoordinates={routeCoordinates}
-                    className="h-full w-full !rounded-none"
+                    className="h-full w-full rounded-none"
                     initialZoom={12}
                 />
             </div>

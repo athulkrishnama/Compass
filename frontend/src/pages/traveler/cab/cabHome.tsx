@@ -185,7 +185,15 @@ const CabHome = () => {
         };
 
         fetchRoute();
-    }, [pickup?.lat, pickup?.lng, dropoff?.lat, dropoff?.lng]);
+    }, [
+        pickup?.lat,
+        pickup?.lng,
+        dropoff?.lat,
+        dropoff?.lng,
+        dropoff,
+        pickup,
+        t,
+    ]);
 
     const handleSelectPastTrip = (trip: PastTrip) => {
         setPickup({

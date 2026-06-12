@@ -16,15 +16,19 @@ export class QueueService implements IQueueService {
     this.queue = new Queue(QUEUE_NAMES.DEFAULT, { connection });
   }
 
-  async addJob(name: string, data: object): Promise<void> {
-    await this.queue.add(name, data);
+  async addJob(name: string, data: object & { job_id: string }): Promise<void> {
+    await this.queue.add(name, data, { jobId: data.job_id });
   }
 
   async addDelayedJob(
     name: string,
-    data: object,
+    data: object & { job_id: string },
     delay: number,
   ): Promise<void> {
-    await this.queue.add(name, data, { delay });
+    await this.queue.add(name, data, { delay, jobId: data.job_id });
+  }
+
+  async removeJob(job_id: string): Promise<void> {
+    await this.queue.remove(job_id);
   }
 }

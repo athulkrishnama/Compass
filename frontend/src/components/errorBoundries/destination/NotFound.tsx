@@ -5,9 +5,7 @@ const YouAreDreamingError = lazy(
 );
 const YouHaveReachedNoWhereError = lazy(
     () =>
-        import(
-            "@/components/errorBoundries/destination/YouHaveReachedNoWhereError"
-        )
+        import("@/components/errorBoundries/destination/YouHaveReachedNoWhereError")
 );
 
 export default function NotFound() {

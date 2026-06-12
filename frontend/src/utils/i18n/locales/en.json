@@ -1035,6 +1035,34 @@
         "arrived": "Arrived",
         "cancelled": "Cancelled",
         "findingYourDriver": "Finding your driver",
-        "holdTightMatching": "Hold tight — we're matching you with a nearby driver"
+        "holdTightMatching": "Hold tight — we're matching you with a nearby driver",
+        "timeline": "Timeline",
+        "rideCancelled": "Ride Cancelled",
+        "cancelledBySystem": "Cancelled by system / no drivers found",
+        "cancelledByYou": "Cancelled by you",
+        "cancelledByDriver": "Cancelled by the driver",
+        "cancelledByAdmin": "Cancelled by admin",
+        "showHistory": "Show History",
+        "hideHistory": "Hide History"
+    },
+    "rideRequestPopup": {
+        "newRideRequest": "New Ride Request",
+        "timeLeft": "{{timeLeft}}s left",
+        "rideDetails": "Ride Details",
+        "failedToLoadDetails": "Failed to load ride details.",
+        "lightTraffic": "Light Traffic",
+        "dropoff": "Dropoff",
+        "earnings": "Earnings",
+        "kmAway": "{{distance}} km away",
+        "decline": "Decline",
+        "acceptRide": "Accept Ride"
+    },
+    "toasts": {
+        "driverAssigned": "Driver Assigned!",
+        "driverAssignedDesc": "A driver has been assigned to your ride.",
+        "rideCancelled": "Ride Cancelled",
+        "rideCancelledDesc": "Your ride has been cancelled.",
+        "noDrivers": "No Drivers Found",
+        "noDriversDesc": "We couldn't find a driver for your ride."
     }
 }

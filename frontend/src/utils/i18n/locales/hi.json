@@ -956,6 +956,34 @@
         "arrived": "पहुंच गए",
         "cancelled": "रद्द",
         "findingYourDriver": "आपके ड्राइवर की खोज की जा रही है",
-        "holdTightMatching": "धैर्य रखें — हम आपके लिए नजदीकी ड्राइवर खोज रहे हैं"
+        "holdTightMatching": "धैर्य रखें — हम आपके लिए नजदीकी ड्राइवर खोज रहे हैं",
+        "timeline": "समयरेखा",
+        "rideCancelled": "सवारी रद्द की गई",
+        "cancelledBySystem": "सिस्टम द्वारा रद्द / कोई ड्राइवर नहीं मिला",
+        "cancelledByYou": "आपके द्वारा रद्द",
+        "cancelledByDriver": "ड्राइवर द्वारा रद्द",
+        "cancelledByAdmin": "एडमिन द्वारा रद्द",
+        "showHistory": "इतिहास दिखाएं",
+        "hideHistory": "इतिहास छिपाएं"
+    },
+    "rideRequestPopup": {
+        "newRideRequest": "नया सवारी अनुरोध",
+        "timeLeft": "{{timeLeft}} सेकंड शेष",
+        "rideDetails": "सवारी का विवरण",
+        "failedToLoadDetails": "सवारी विवरण लोड करने में विफल।",
+        "lightTraffic": "हल्का ट्रैफ़िक",
+        "dropoff": "ड्रॉपऑफ़",
+        "earnings": "कमाई",
+        "kmAway": "{{distance}} किमी दूर",
+        "decline": "अस्वीकार करें",
+        "acceptRide": "सवारी स्वीकार करें"
+    },
+    "toasts": {
+        "driverAssigned": "ड्राइवर मिल गया!",
+        "driverAssignedDesc": "आपकी सवारी के लिए एक driver नियुक्त किया गया है।",
+        "rideCancelled": "यात्रा रद्द",
+        "rideCancelledDesc": "आपकी सवारी रद्द कर दी गई है।",
+        "noDrivers": "कोई ड्राइवर नहीं मिला",
+        "noDriversDesc": "हमें आपकी सवारी के लिए कोई ड्राइवर नहीं मिला।"
     }
 }

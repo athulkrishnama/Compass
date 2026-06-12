@@ -1,12 +1,17 @@
-export const DRIVER_EVENTS_TYPES = ["requested"] as const;
-export type DRIVER_EVENTS_TYPE = (typeof DRIVER_EVENTS_TYPES)[number];
+export enum DRIVER_EVENTS_TYPES {
+  REQUESTED = "driver:requested",
+  ACCEPTED = "driver:accepted",
+  CANCELLED = "driver:cancelled",
+}
+export type DRIVER_EVENTS_TYPE = DRIVER_EVENTS_TYPES;
 
-export const RIDER_EVENTS_TYPES = [
-  "assigned",
-  "cancelled",
-  "no_drivers",
-] as const;
-export type RIDER_EVENTS_TYPE = (typeof RIDER_EVENTS_TYPES)[number];
+export enum RIDER_EVENTS_TYPES {
+  ASSIGNED = "rider:assigned",
+  CANCELLED = "rider:cancelled",
+  NO_DRIVERS = "rider:no_drivers",
+  REQUESTED = "rider:requested",
+}
+export type RIDER_EVENTS_TYPE = RIDER_EVENTS_TYPES;
 
 export type SocketEventPayload<T> = {
   type: T;

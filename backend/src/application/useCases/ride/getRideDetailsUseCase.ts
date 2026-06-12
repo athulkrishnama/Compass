@@ -24,7 +24,7 @@ export class GetRideDetailsUseCase implements IGetRideDetailsUseCase {
       );
     }
 
-    if (ride.rider_id !== userId) {
+    if (ride.rider_id !== userId && !ride.attempted_drivers?.includes(userId)) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.RIDE_NOT_FOUND,
       );

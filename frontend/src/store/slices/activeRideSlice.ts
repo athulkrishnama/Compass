@@ -1,31 +1,25 @@
-import type { Coordinate } from "@/types/coordinate";
+import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
+import type { RideStatus } from "@/types/rideStatus";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface ActiveRideState {
-    rideId: string | null;
-    status: string | null;
-    pickup: Coordinate | null;
-    dropoff: Coordinate | null;
-    fare: number | null;
-}
+export type ActiveRideState = IRideDetailsResponseDTO | null;
 
-const initialState: ActiveRideState = {
-    rideId: null,
-    status: null,
-    pickup: null,
-    dropoff: null,
-    fare: null,
-};
+const initialState: ActiveRideState = null;
 
 const activeRideSlice = createSlice({
     name: "activeRide",
-    initialState,
+    initialState: initialState as ActiveRideState,
     reducers: {
-        setActiveRide(state, action: PayloadAction<Partial<ActiveRideState>>) {
-            return { ...state, ...action.payload };
+        setActiveRide(
+            _state,
+            action: PayloadAction<IRideDetailsResponseDTO | null>
+        ) {
+            return action.payload;
         },
-        updateRideStatus(state, action: PayloadAction<string>) {
-            state.status = action.payload;
+        updateRideStatus(state, action: PayloadAction<RideStatus>) {
+            if (state) {
+                state.status = action.payload;
+            }
         },
         clearActiveRide() {
             return initialState;

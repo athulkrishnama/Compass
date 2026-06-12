@@ -1,7 +1,7 @@
 import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
 import NotFoundComponent from "@/components/notFound";
 import Navbar from "@/components/shared/Navbar/Navbar";
-import RideRequestPopup from "@/components/cab/RideRequestPopup";
+import RideRequestPopup from "@/components/cab/RidePopup/RideRequestPopup";
 import { ROLES } from "@/constants/roles";
 import type { FileRoutesByTo } from "@/routeTree.gen";
 import translationKey from "@/utils/i18n/translationKey";

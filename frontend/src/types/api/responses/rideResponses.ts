@@ -2,6 +2,7 @@ import type { Coordinate } from "@/types/coordinate";
 import type { FareOption } from "../fareOption";
 import type { RideStatus } from "@/types/rideStatus";
 import type { ROLES } from "@/constants/roles";
+import type { RideEvent } from "@/types/rideEvent";
 
 export interface ICreateRideResponseDTO {
     rideId: string;
@@ -16,6 +17,6 @@ export interface IRideDetailsResponseDTO {
     time: number;
     selected_fare: FareOption;
     otp: string | null;
-    cancelled_by: ROLES | null;
-    events: { event_name: string; actor: ROLES; timestamp: string }[];
+    cancelled_by: ROLES | "timeout" | null;
+    events: RideEvent[];
 }
