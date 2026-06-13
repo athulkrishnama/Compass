@@ -30,15 +30,6 @@ export class RideRouter {
     );
 
     this._router.get(
-      RIDE_ROUTES.DRIVER_ACTIVE_RIDE,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.CAB]),
-      (req, res, next) => {
-        rideController.handleGetDriverActiveRide(req, res, next);
-      },
-    );
-
-    this._router.get(
       "/:id",
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.TRAVELER, ROLES.CAB]),

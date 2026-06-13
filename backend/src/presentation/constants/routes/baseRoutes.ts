@@ -11,4 +11,5 @@ export enum Routes {
   WEBHOOK = "/api/v1/webhooks",
   RIDE = "/api/v1/ride",
   NOTIFICATION = "/api/v1/notifications",
+  MONITORING = "/api/v1/monitoring",
 }
