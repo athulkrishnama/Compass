@@ -26,6 +26,8 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { RideRouter } from "@presentation/routes/ride/rideRouter";
 import { NotificationRouter } from "@presentation/routes/notification/notificationRouter";
 import { SocketServer } from "@presentation/webSocket/socketServer";
+import { MonitoringRouter } from "@presentation/routes/monitoring/monitoringRouter";
+import { promotheusMiddlware } from "@presentation/middlewares/promotheusMiddleware";
 
 export class Server {
   private _app: Express;
@@ -48,6 +50,7 @@ export class Server {
     this._setBookingRouter();
     this._setRideRouter();
     this._setNotificationRouter();
+    this._setMonitoringRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
@@ -114,6 +117,7 @@ export class Server {
     this._app.use(cors(corsOptions));
     this._app.use(cookieParser());
     this._app.use(middleware.handle(i18next));
+    this._app.use(promotheusMiddlware());
   }
 
   private _setNotFoundRouter() {
@@ -133,6 +137,11 @@ export class Server {
         errorHandlingMiddleware(err, req, res, next);
       },
     );
+  }
+
+  private _setMonitoringRouter() {
+    const monitoringRouter = new MonitoringRouter();
+    this._app.use(Routes.MONITORING, monitoringRouter.getRouter());
   }
 
   private _setLoggingMiddleware() {
