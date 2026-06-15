@@ -1,22 +1,26 @@
-FROM node:22.21.1-alpine3.21 AS build
+FROM node:alpine AS build
 
 WORKDIR /app
 
-COPY package*.json .
+COPY pnpm-lock.yaml package.json ./
 
-RUN npm install
+RUN npm install -g pnpm@10
+
+RUN pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
-FROM node:22.21.1-alpine3.21  AS production
+FROM node:alpine  AS production
 
 WORKDIR /app
 
-COPY package*.json .
+COPY pnpm-lock.yaml package.json ./
 
-RUN npm ci --only=production
+RUN npm install -g pnpm@10
+
+RUN pnpm install 
 
 COPY --from=build /app/dist ./dist
 
