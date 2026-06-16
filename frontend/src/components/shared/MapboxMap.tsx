@@ -45,7 +45,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
         const map = new mapboxgl.Map({
             container: mapContainer.current,
-            style: "mapbox://styles/mapbox/light-v11",
+            style: "mapbox://styles/mapbox/streets-v12",
             center: initialCenter,
             zoom: initialZoom,
         });
@@ -177,7 +177,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                                 "line-cap": "round",
                             },
                             paint: {
-                                "line-color": "#111111",
+                                "line-color": "#0099F4",
                                 "line-width": 4,
                                 "line-opacity": 0.8,
                             },
