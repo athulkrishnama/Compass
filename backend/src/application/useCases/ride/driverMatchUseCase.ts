@@ -122,6 +122,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
           ride_id,
           attempt_id: newAttemptId,
           driver_id: validDriverId,
+          job_id: newAttemptId,
         },
         VALUES.DRIVER_MATCH_TIMEOUT_DELAY,
       );

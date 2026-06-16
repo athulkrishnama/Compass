@@ -79,9 +79,9 @@ export class CreateRideUseCase implements ICreateRideUseCase {
 
     const rideId = await this._rideRepo.create(ride);
 
-    await this._queueService.addJob(QUEUE_JOB_NAMES.MATCH_DRIVER, {
+    await this._queueService.addJob(QUEUE_JOB_NAMES.DRIVER_MATCH_TIMEOUT, {
       ride_id: rideId,
-      job_id: this._tokenSerivce.createToken(),
+      job_id: ride.attempt_id,
     });
 
     return rideId;
