@@ -1,7 +1,11 @@
-import { InvalideDataException } from "@application/constants/Exceptions";
+import {
+  InvalideDataException,
+  ResourceNotFoundException,
+} from "@application/constants/Exceptions";
 import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createFareUseCase.interface";
 import { ICreateRideUseCase } from "@application/interfaces/useCase/ride/createRideUseCase.interface";
 import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/getRideDetailsUseCase.interface";
+import { IActiveRideDetailsUseCase } from "@application/interfaces/useCase/ride/activeRideDetailsUseCase.interface";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
@@ -20,6 +24,8 @@ export class RideController {
     private _createRideUseCase: ICreateRideUseCase,
     @inject("IGetRideDetailsUseCase")
     private _getRideDetailsUseCase: IGetRideDetailsUseCase,
+    @inject("IActiveRideDetailsUseCase")
+    private _activeRideDetailsUseCase: IActiveRideDetailsUseCase,
   ) {}
 
   async handleCreateFare(req: Request, res: Response, next: NextFunction) {
@@ -85,6 +91,39 @@ export class RideController {
         rideId,
         userId,
       });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.RIDE_DETAILS_FETCHED_SUCCESSFULLY,
+        rideDetails,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetActiveRideDetails(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const driverId = req.user.id;
+
+      if (!driverId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
+      }
+
+      const rideDetails =
+        await this._activeRideDetailsUseCase.execute(driverId);
+
+      if (!rideDetails) {
+        throw new ResourceNotFoundException(
+          INTERNAL_ERROR_MESSAGES.RIDE_NOT_FOUND,
+        );
+      }
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,
