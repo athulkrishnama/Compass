@@ -18,4 +18,5 @@ export enum QUERY_KEYS {
     RIDE_DETAILS = "ride-details",
     NOTIFICATIONS = "notifications",
     UNREAD_NOTIFICATIONS_COUNT = "unread-count",
+    ACTIVE_RIDE = "active-ride",
 }

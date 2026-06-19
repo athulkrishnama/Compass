@@ -20,3 +20,18 @@ export interface IRideDetailsResponseDTO {
     cancelled_by: ROLES | "timeout" | null;
     events: RideEvent[];
 }
+
+export interface IActiveRideDetailsResponseDTO {
+    _id: string;
+    pickup_point: Coordinate;
+    dropoff_point: Coordinate;
+    status: RideStatus;
+    distance: number;
+    time: number;
+    rider: {
+        _id: string;
+        full_name: string;
+        mobile?: string;
+        profile_image?: string;
+    };
+}

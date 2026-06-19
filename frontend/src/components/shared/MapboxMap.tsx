@@ -35,6 +35,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const mapRef = useRef<mapboxgl.Map | null>(null);
     const markersRef = useRef<Map<string, mapboxgl.Marker>>(new Map());
     const popupsRef = useRef<Map<string, mapboxgl.Popup>>(new Map());
+    const lastFittedSignatureRef = useRef<string>("");
     const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
 
@@ -50,7 +51,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             zoom: initialZoom,
         });
 
-        map.on("load", () => {
+        map.once("idle", () => {
             setIsMapLoaded(true);
         });
 
@@ -61,8 +62,16 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             mapRef.current = null;
             setIsMapLoaded(false);
         };
-    }, [initialCenter, initialZoom]);
+    }, []);
 
+    // Keep a live ref to markers so the route effect can read them without
+    // listing `markers` as a dependency (which would cause double fitBounds).
+    const markersDataRef = useRef<MapboxMarker[]>(markers);
+    useEffect(() => {
+        markersDataRef.current = markers;
+    }, [markers]);
+
+    // ── Effect 1: Markers only — never triggers fitBounds ────────────────────
     useEffect(() => {
         const map = mapRef.current;
         if (!map || !isMapLoaded) return;
@@ -111,85 +120,105 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             markersRef.current.set(markerData.id, marker);
             popupsRef.current.set(markerData.id, popup);
 
-            if (isActive) {
-                marker.togglePopup();
-            }
+            if (isActive) marker.togglePopup();
         });
 
-        if (markers.length > 0) {
-            if (markers.length === 1) {
-                map.flyTo({
-                    center: [markers[0].lng, markers[0].lat],
-                    zoom: 13,
-                    duration: 800,
-                });
-            } else {
-                const bounds = markers.reduce(
-                    (b, m) => b.extend([m.lng, m.lat]),
-                    new mapboxgl.LngLatBounds(
-                        [markers[0].lng, markers[0].lat],
-                        [markers[0].lng, markers[0].lat]
-                    )
-                );
+        // flyTo only for single-marker case, and only if the signature changed
+        const signature = markers.map((m) => m.id).join(",");
+        if (
+            markers.length === 1 &&
+            lastFittedSignatureRef.current !== signature
+        ) {
+            map.flyTo({
+                center: [markers[0].lng, markers[0].lat],
+                zoom: 13,
+                duration: 800,
+            });
+            lastFittedSignatureRef.current = signature;
+        }
+        // Multi-marker fitBounds is intentionally handled in the route effect
+        // so it only fires once when the route is ready — not twice.
+    }, [markers, activeMarkerId, onMarkerClick, isMapLoaded]);
 
-                // If routeCoordinates is provided, pad the bounds more to account for the drawn line
-                const padding =
-                    routeCoordinates && routeCoordinates.length > 0
-                        ? { top: 80, bottom: 80, left: 80, right: 80 }
-                        : 60;
-                map.fitBounds(bounds, {
-                    padding,
-                    maxZoom: 14,
-                    duration: 800,
-                });
+    // ── Effect 2: Route drawing + fitBounds (fires only when route changes) ──
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map || !isMapLoaded) return;
 
-                if (routeCoordinates && routeCoordinates.length > 0) {
-                    if (map.getSource("route")) {
-                        (
-                            map.getSource("route") as mapboxgl.GeoJSONSource
-                        ).setData({
+        const applyRoute = () => {
+            if (!mapRef.current) return;
+            const m = mapRef.current;
+
+            if (routeCoordinates && routeCoordinates.length > 0) {
+                // Update or create the route source/layer
+                if (m.getSource("route")) {
+                    (m.getSource("route") as mapboxgl.GeoJSONSource).setData({
+                        type: "Feature",
+                        properties: {},
+                        geometry: {
+                            type: "LineString",
+                            coordinates: routeCoordinates,
+                        },
+                    });
+                } else {
+                    m.addSource("route", {
+                        type: "geojson",
+                        data: {
                             type: "Feature",
                             properties: {},
                             geometry: {
                                 type: "LineString",
                                 coordinates: routeCoordinates,
                             },
-                        });
-                    } else {
-                        map.addSource("route", {
-                            type: "geojson",
-                            data: {
-                                type: "Feature",
-                                properties: {},
-                                geometry: {
-                                    type: "LineString",
-                                    coordinates: routeCoordinates,
-                                },
-                            },
-                        });
-
-                        map.addLayer({
-                            id: "route-layer",
-                            type: "line",
-                            source: "route",
-                            layout: {
-                                "line-join": "round",
-                                "line-cap": "round",
-                            },
-                            paint: {
-                                "line-color": "#0099F4",
-                                "line-width": 4,
-                                "line-opacity": 0.8,
-                            },
-                        });
-                    }
-                } else if (map.getLayer("route-layer")) {
-                    map.removeLayer("route-layer");
-                    map.removeSource("route");
+                        },
+                    });
+                    m.addLayer({
+                        id: "route-layer",
+                        type: "line",
+                        source: "route",
+                        layout: { "line-join": "round", "line-cap": "round" },
+                        paint: {
+                            "line-color": "#111111",
+                            "line-width": 4,
+                            "line-opacity": 0.85,
+                        },
+                    });
                 }
+
+                // Fit bounds to show all markers + the full route — only when marker IDs change
+                const current = markersDataRef.current;
+                const signature = current.map((m) => m.id).join(",");
+                if (
+                    current.length > 1 &&
+                    lastFittedSignatureRef.current !== signature
+                ) {
+                    const bounds = current.reduce(
+                        (b, m) => b.extend([m.lng, m.lat]),
+                        new mapboxgl.LngLatBounds(
+                            [current[0].lng, current[0].lat],
+                            [current[0].lng, current[0].lat]
+                        )
+                    );
+                    mapRef.current?.fitBounds(bounds, {
+                        padding: { top: 80, bottom: 200, left: 60, right: 60 },
+                        maxZoom: 14,
+                        duration: 900,
+                    });
+                    lastFittedSignatureRef.current = signature;
+                }
+            } else {
+                // Clear the route if coordinates were removed
+                if (m.getLayer("route-layer")) m.removeLayer("route-layer");
+                if (m.getSource("route")) m.removeSource("route");
             }
+        };
+
+        if (map.isStyleLoaded()) {
+            applyRoute();
+        } else {
+            map.once("style.load", applyRoute);
         }
-    }, [markers, activeMarkerId, onMarkerClick, routeCoordinates, isMapLoaded]);
+    }, [routeCoordinates, isMapLoaded]);
 
     return (
         <div
