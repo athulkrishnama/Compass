@@ -4,6 +4,7 @@ export const RIDE_STATUSES = {
     IN_TRANSIT: "in_transit",
     ARRIVED: "arrived",
     CANCELLED: "cancelled",
+    COMPLETED: "completed",
 } as const;
 
 export type RideStatus = (typeof RIDE_STATUSES)[keyof typeof RIDE_STATUSES];

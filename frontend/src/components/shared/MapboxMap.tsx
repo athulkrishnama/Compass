@@ -64,14 +64,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         };
     }, []);
 
-    // Keep a live ref to markers so the route effect can read them without
-    // listing `markers` as a dependency (which would cause double fitBounds).
     const markersDataRef = useRef<MapboxMarker[]>(markers);
     useEffect(() => {
         markersDataRef.current = markers;
     }, [markers]);
 
-    // ── Effect 1: Markers only — never triggers fitBounds ────────────────────
     useEffect(() => {
         const map = mapRef.current;
         if (!map || !isMapLoaded) return;
@@ -123,7 +120,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             if (isActive) marker.togglePopup();
         });
 
-        // flyTo only for single-marker case, and only if the signature changed
         const signature = markers.map((m) => m.id).join(",");
         if (
             markers.length === 1 &&
@@ -136,11 +132,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             });
             lastFittedSignatureRef.current = signature;
         }
-        // Multi-marker fitBounds is intentionally handled in the route effect
-        // so it only fires once when the route is ready — not twice.
     }, [markers, activeMarkerId, onMarkerClick, isMapLoaded]);
 
-    // ── Effect 2: Route drawing + fitBounds (fires only when route changes) ──
     useEffect(() => {
         const map = mapRef.current;
         if (!map || !isMapLoaded) return;
@@ -150,7 +143,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             const m = mapRef.current;
 
             if (routeCoordinates && routeCoordinates.length > 0) {
-                // Update or create the route source/layer
                 if (m.getSource("route")) {
                     (m.getSource("route") as mapboxgl.GeoJSONSource).setData({
                         type: "Feature",
@@ -185,7 +177,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     });
                 }
 
-                // Fit bounds to show all markers + the full route — only when marker IDs change
                 const current = markersDataRef.current;
                 const signature = current.map((m) => m.id).join(",");
                 if (
@@ -207,7 +198,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     lastFittedSignatureRef.current = signature;
                 }
             } else {
-                // Clear the route if coordinates were removed
                 if (m.getLayer("route-layer")) m.removeLayer("route-layer");
                 if (m.getSource("route")) m.removeSource("route");
             }

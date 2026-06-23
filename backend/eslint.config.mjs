@@ -7,7 +7,12 @@ import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 export default defineConfig([
   ...tseslint.configs.recommended,
   eslintPluginPrettier,
-  globalIgnores(["./dist/*"]),
+  globalIgnores([
+    "dist/**",
+    "node_modules/**",
+    "grafana_data/**",
+    "prometheus-data/**",
+  ]),
   {
     rules: {
       "prettier/prettier": [

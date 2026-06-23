@@ -6,6 +6,10 @@ export const SocketEvents = {
     // Ride events (Client -> Server)
     DRIVER_ACCEPT_RIDE: "driver:accept-ride",
     DRIVER_REJECT_RIDE: "driver:reject-ride",
+    DRIVER_ARRIVED: "driver:arrived",
+    DRIVER_VERIFY_OTP: "driver:verify-otp",
+    DRIVER_RIDE_COMPLETED: "driver:ride-completed",
+    DRIVER_CANCEL_RIDE: "driver:cancel-ride",
     RIDER_CANCEL_RIDE: "rider:cancel-ride",
 
     // Location events

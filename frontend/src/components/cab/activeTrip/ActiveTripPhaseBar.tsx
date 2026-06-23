@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Map } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { type RideStatus, RIDE_STATUSES } from "@/types/rideStatus";
@@ -8,6 +9,7 @@ interface ActiveTripPhaseBarProps {
     distanceMetres: number;
     eta: string;
     minToArrival: number;
+    onOpenMaps?: () => void;
 }
 
 const phaseConfig: Partial<
@@ -35,6 +37,7 @@ export function ActiveTripPhaseBar({
     distanceMetres,
     eta,
     minToArrival,
+    onOpenMaps,
 }: ActiveTripPhaseBarProps) {
     const { t } = useTranslation();
     const config = phaseConfig[phase] ?? phaseConfig[RIDE_STATUSES.MATCHED]!;
@@ -80,6 +83,16 @@ export function ActiveTripPhaseBar({
                     <p className="text-xl font-black text-gray-900">{eta}</p>
                 </div>
             </div>
+
+            {onOpenMaps && (
+                <button
+                    onClick={onOpenMaps}
+                    className="mt-3 w-full flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs rounded-xl px-3 py-2.5 active:scale-95 transition-all shrink-0"
+                >
+                    <Map className="w-4 h-4" />
+                    {t(translationKey.activeTrip.openInMaps)}
+                </button>
+            )}
         </motion.div>
     );
 }

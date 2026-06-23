@@ -73,9 +73,21 @@ class SocketService {
         this.socket?.off(event, cb as (...args: unknown[]) => void);
     }
 
-    emit(event: string, data?: unknown): void {
+    emit<T extends unknown[]>(
+        event: string,
+        data?: unknown,
+        callback?: (...args: T) => void
+    ): void {
         if (this.socket?.connected) {
-            this.socket.emit(event, data);
+            if (callback) {
+                this.socket.emit(
+                    event,
+                    data,
+                    callback as (...args: unknown[]) => void
+                );
+            } else {
+                this.socket.emit(event, data);
+            }
         } else {
             console.warn(
                 `[SocketService] Cannot emit "${event}" — socket not connected.`

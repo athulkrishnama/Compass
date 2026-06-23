@@ -10,6 +10,9 @@ export const SocketEvents = {
   RIDER_CANCEL_RIDE: "rider:cancel-ride",
   DRIVER_RIDE_STARTED: "driver:ride-started",
   DRIVER_RIDE_COMPLETED: "driver:ride-completed",
+  DRIVER_ARRIVED: "driver:arrived",
+  DRIVER_VERIFY_OTP: "driver:verify-otp",
+  DRIVER_CANCEL_RIDE: "driver:cancel-ride",
 
   RIDER_EVENTS: "rider:events",
   DRIVER_EVENTS: "driver:events",

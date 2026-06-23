@@ -1093,6 +1093,9 @@
         "openInMaps": "Maps",
         "passenger": "Passenger",
         "tripOtp": "Trip OTP",
-        "shareOtpWithPassenger": "Share this OTP with your passenger"
+        "shareOtpWithPassenger": "Share this OTP with your passenger",
+        "noActiveRideTitle": "No Active Ride",
+        "noActiveRideDescription": "You don't have any active rides at the moment. Return to the dashboard to accept new requests.",
+        "droppedOffPassenger": "You have successfully dropped off the passenger. Great job!"
     }
 }

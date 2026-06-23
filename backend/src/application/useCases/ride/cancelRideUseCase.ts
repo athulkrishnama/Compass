@@ -21,6 +21,8 @@ import {
 const CANCELLABLE_STATUSES = [
   RIDE_STATUSES.SEARCHING,
   RIDE_STATUSES.MATCHED,
+  RIDE_STATUSES.ARRIVED,
+  RIDE_STATUSES.IN_TRANSIT,
 ] as const;
 
 @injectable()
@@ -39,7 +41,12 @@ export class CancelRideUseCase implements ICancelRideUseCase {
       );
     }
 
-    if (ride.rider_id !== user_id) {
+    let cancelledByRole: ROLES;
+    if (ride.rider_id === user_id) {
+      cancelledByRole = ROLES.TRAVELER;
+    } else if (ride.driver_id === user_id) {
+      cancelledByRole = ROLES.CAB;
+    } else {
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.UNAUTHORIZED);
     }
     if (
@@ -56,10 +63,10 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     const now = new Date();
 
     ride.status = RIDE_STATUSES.CANCELLED;
-    ride.cancelled_by = ROLES.TRAVELER;
+    ride.cancelled_by = cancelledByRole;
     ride.events.push({
       event_name: RIDE_EVENT_NAMES.CANCELLED,
-      actor: user_id,
+      actor: cancelledByRole,
       timestamp: now,
     });
 

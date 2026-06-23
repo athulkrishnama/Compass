@@ -34,5 +34,6 @@ export function getActiveRideDetailsQueryOptions() {
     return queryOptions<HttpResponse<IActiveRideDetailsResponseDTO>, Error>({
         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
         queryFn: getActiveRideDetails,
+        retry: false,
     });
 }

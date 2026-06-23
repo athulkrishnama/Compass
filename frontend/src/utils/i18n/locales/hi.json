@@ -1014,6 +1014,9 @@
         "openInMaps": "मैप्स",
         "passenger": "यात्री",
         "tripOtp": "यात्रा OTP",
-        "shareOtpWithPassenger": "यह OTP अपने यात्री के साथ साझा करें"
+        "shareOtpWithPassenger": "यह OTP अपने यात्री के साथ साझा करें",
+        "noActiveRideTitle": "कोई सक्रिय सवारी नहीं",
+        "noActiveRideDescription": "आपके पास इस समय कोई सक्रिय सवारी नहीं है। नए अनुरोध स्वीकार करने के लिए डैशबोर्ड पर वापस जाएं।",
+        "droppedOffPassenger": "आपने यात्री को सफलतापूर्वक छोड़ दिया है। बहुत बढ़िया!"
     }
 }

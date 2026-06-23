@@ -8,6 +8,10 @@ import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
 
+import { IDriverArrivedUseCase } from "@application/interfaces/useCase/ride/driverArrivedUseCase.interface";
+import { IStartRideUseCase } from "@application/interfaces/useCase/ride/startRideUseCase.interface";
+import { IEndRideUseCase } from "@application/interfaces/useCase/ride/endRideUseCase.interface";
+
 @injectable()
 export class RideEventHandler {
   constructor(
@@ -19,6 +23,12 @@ export class RideEventHandler {
     private _cancelRideUseCase: ICancelRideUseCase,
     @inject("IQueueService")
     private _queueService: IQueueService,
+    @inject("IDriverArrivedUseCase")
+    private _driverArrivedUseCase: IDriverArrivedUseCase,
+    @inject("IStartRideUseCase")
+    private _startRideUseCase: IStartRideUseCase,
+    @inject("IEndRideUseCase")
+    private _endRideUseCase: IEndRideUseCase,
   ) {}
   registerHandlers(socket: Socket): void {
     const userId = socket.handshake.auth.userId;
@@ -76,6 +86,117 @@ export class RideEventHandler {
         });
       } catch (error) {
         console.error("[RideEventHandler] Error handling cancel-ride:", error);
+      }
+    });
+
+    socket.on(SocketEvents.DRIVER_CANCEL_RIDE, async (data, callback) => {
+      try {
+        console.log(
+          `[RideEventHandler] driver:cancel-ride from ${userId}`,
+          data,
+        );
+        if (!data.ride_id)
+          throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+        await this._cancelRideUseCase.execute({
+          ride_id: data.ride_id,
+          user_id: userId,
+        });
+        if (typeof callback === "function") callback({ success: true });
+      } catch (error) {
+        console.error(
+          "[RideEventHandler] Error handling driver cancel-ride:",
+          error,
+        );
+        if (typeof callback === "function")
+          callback({
+            success: false,
+            message:
+              error instanceof Error
+                ? error.message
+                : "An unknown error occurred",
+          });
+      }
+    });
+
+    socket.on(SocketEvents.DRIVER_ARRIVED, async (data, callback) => {
+      try {
+        console.log(`[RideEventHandler] driver:arrived from ${userId}`, data);
+        if (!data.ride_id)
+          throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+        await this._driverArrivedUseCase.execute({
+          ride_id: data.ride_id,
+          driver_id: userId,
+        });
+        if (typeof callback === "function") callback({ success: true });
+      } catch (error) {
+        console.error(
+          "[RideEventHandler] Error handling driver arrived:",
+          error,
+        );
+        if (typeof callback === "function")
+          callback({
+            success: false,
+            message:
+              error instanceof Error
+                ? error.message
+                : "An unknown error occurred",
+          });
+      }
+    });
+
+    socket.on(SocketEvents.DRIVER_VERIFY_OTP, async (data, callback) => {
+      try {
+        console.log(
+          `[RideEventHandler] driver:verify-otp from ${userId}`,
+          data,
+        );
+        if (!data.ride_id || !data.otp)
+          throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+        await this._startRideUseCase.execute({
+          ride_id: data.ride_id,
+          driver_id: userId,
+          otp: data.otp,
+        });
+        if (typeof callback === "function") callback({ success: true });
+      } catch (error) {
+        console.error("[RideEventHandler] Error handling verify otp:", error);
+        if (typeof callback === "function")
+          callback({
+            success: false,
+            message:
+              error instanceof Error
+                ? error.message
+                : "An unknown error occurred",
+          });
+      }
+    });
+
+    socket.on(SocketEvents.DRIVER_RIDE_COMPLETED, async (data, callback) => {
+      try {
+        console.log(
+          `[RideEventHandler] driver:ride-completed from ${userId}`,
+          data,
+        );
+        if (!data.ride_id)
+          throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+        await this._endRideUseCase.execute({
+          ride_id: data.ride_id,
+          driver_id: userId,
+        });
+        if (typeof callback === "function") callback({ success: true });
+      } catch (error) {
+        console.error(
+          "[RideEventHandler] Error handling ride completed:",
+          error,
+        );
+        if (typeof callback === "function")
+          callback({
+            success: false,
+            message:
+              error instanceof Error
+                ? error.message
+                : "An unknown error occurred",
+          });
       }
     });
   }

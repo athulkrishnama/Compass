@@ -121,6 +121,58 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                     }
                                 );
                                 break;
+                            case RIDER_EVENTS_TYPES.ARRIVED:
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.ARRIVED)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                toast.success(
+                                    t(
+                                        translationKey.activeTrip
+                                            .arrivedAtPickup,
+                                        "Driver arrived at pickup location"
+                                    )
+                                );
+                                break;
+                            case RIDER_EVENTS_TYPES.STARTED:
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.IN_TRANSIT)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                toast.success(
+                                    t(
+                                        translationKey.activeTrip.inTransit,
+                                        "Ride started"
+                                    )
+                                );
+                                break;
+                            case RIDER_EVENTS_TYPES.COMPLETED:
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.COMPLETED)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                toast.success(
+                                    t(
+                                        translationKey.bookingStatus.COMPLETED,
+                                        "Ride completed"
+                                    )
+                                );
+                                break;
                         }
                     }
                 )

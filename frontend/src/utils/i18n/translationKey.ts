@@ -1094,5 +1094,8 @@ export default {
         passenger: "activeTrip.passenger",
         tripOtp: "activeTrip.tripOtp",
         shareOtpWithPassenger: "activeTrip.shareOtpWithPassenger",
+        noActiveRideTitle: "activeTrip.noActiveRideTitle",
+        noActiveRideDescription: "activeTrip.noActiveRideDescription",
+        droppedOffPassenger: "activeTrip.droppedOffPassenger",
     },
 };

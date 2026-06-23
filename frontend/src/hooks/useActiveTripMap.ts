@@ -65,14 +65,19 @@ export function useActiveTripMap({
                 }
 
                 if (!from || !to) {
-                    setRouteCoordinates([]);
+                    setRouteCoordinates((prev) =>
+                        prev.length === 0 ? prev : []
+                    );
                     return;
                 }
 
                 const coords = await fetchRouteCoordinates(from, to);
                 if (!cancelled) setRouteCoordinates(coords);
             } catch {
-                if (!cancelled) setRouteCoordinates([]);
+                if (!cancelled)
+                    setRouteCoordinates((prev) =>
+                        prev.length === 0 ? prev : []
+                    );
             }
         };
 

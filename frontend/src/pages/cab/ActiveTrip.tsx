@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { AnimatePresence } from "framer-motion";
 import { ActiveTripPhaseBar } from "@/components/cab/activeTrip/ActiveTripPhaseBar";
 import { ActiveTripPanel } from "@/components/cab/activeTrip/ActiveTripPanel";
 import { ActiveTripMapOverlay } from "@/components/cab/activeTrip/ActiveTripMapOverlay";
 import { ActiveTripCancelModal } from "@/components/cab/activeTrip/ActiveTripCancelModal";
 import { RIDE_STATUSES, type RideStatus } from "@/types/rideStatus";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import { getActiveRideDetailsQueryOptions } from "@/queryOptions/rideQueryOptions";
 import MapboxMap from "@/components/shared/MapboxMap";
 import { useActiveTripMap } from "@/hooks/useActiveTripMap";
+import { socketService } from "@/services/socket/socketService";
+import { SocketEvents } from "@/constants/socketEvents";
+import { useSocketEvent } from "@/hooks/useSocketEvent";
+import Loading from "@/components/shared/loading/Loading";
+import { NoActiveRide } from "@/components/cab/activeTrip/NoActiveRide";
+import { ActiveTripCompletedOverlay } from "@/components/cab/activeTrip/ActiveTripCompletedOverlay";
+import { toast } from "sonner";
+import {
+    DRIVER_EVENTS_TYPES,
+    type DriverEventPayload,
+} from "@/types/socketPayloads";
+import { calculateDistance } from "@/utils/distance";
 function calcEta(minutesFromNow: number): string {
     const d = new Date(Date.now() + minutesFromNow * 60 * 1000);
     return d.toLocaleTimeString([], {
@@ -18,7 +31,10 @@ function calcEta(minutesFromNow: number): string {
     });
 }
 
+const DEFAULT_COORDINATE = { latitude: 0, longitude: 0 };
+
 export default function ActiveTripPage() {
+    const queryClient = useQueryClient();
     const {
         data: rideResponse,
         isLoading: isQueryLoading,
@@ -32,34 +48,102 @@ export default function ActiveTripPage() {
     const [isLoading, setIsLoading] = useState(false);
 
     // Initialize phase when data is fetched
-    if (rideDetails && !phase) {
-        setPhase(rideDetails.status);
-    }
+    useEffect(() => {
+        if (rideDetails && !phase) {
+            setPhase(rideDetails.status);
+        }
+    }, [rideDetails, phase]);
 
-    const { routeCoordinates, markers, mapCenter } = useActiveTripMap({
-        phase: phase ?? RIDE_STATUSES.MATCHED,
-        pickupCoordinate: rideDetails?.pickup_point ?? {
-            latitude: 0,
-            longitude: 0,
-        },
-        dropoffCoordinate: rideDetails?.dropoff_point ?? {
-            latitude: 0,
-            longitude: 0,
-        },
-    });
+    const { driverCoordinate, routeCoordinates, markers, mapCenter } =
+        useActiveTripMap({
+            phase: phase ?? RIDE_STATUSES.MATCHED,
+            pickupCoordinate: rideDetails?.pickup_point ?? DEFAULT_COORDINATE,
+            dropoffCoordinate: rideDetails?.dropoff_point ?? DEFAULT_COORDINATE,
+        });
 
-    if (isQueryLoading || !rideDetails || !phase) {
+    const isActionDisabled = useMemo(() => {
+        if (!rideDetails) return false;
+
+        if (phase === RIDE_STATUSES.MATCHED) {
+            if (!driverCoordinate) return true;
+            const dist = calculateDistance(
+                driverCoordinate.latitude,
+                driverCoordinate.longitude,
+                rideDetails.pickup_point.latitude,
+                rideDetails.pickup_point.longitude
+            );
+            return dist > 0.5;
+        }
+        if (phase === RIDE_STATUSES.ARRIVED) {
+            return otpInput.length < 4;
+        }
+        if (phase === RIDE_STATUSES.IN_TRANSIT) {
+            if (!driverCoordinate) return true;
+            const dist = calculateDistance(
+                driverCoordinate.latitude,
+                driverCoordinate.longitude,
+                rideDetails.dropoff_point.latitude,
+                rideDetails.dropoff_point.longitude
+            );
+            return dist > 0.5;
+        }
+        return false;
+    }, [phase, driverCoordinate, rideDetails, otpInput]);
+
+    useSocketEvent(
+        SocketEvents.DRIVER_EVENTS,
+        (data: DriverEventPayload) => {
+            if (data.payload.ride_id !== rideDetails?._id) return;
+
+            switch (data.type) {
+                case DRIVER_EVENTS_TYPES.ARRIVED:
+                    setPhase(RIDE_STATUSES.ARRIVED);
+                    break;
+                case DRIVER_EVENTS_TYPES.STARTED:
+                    setIsLoading(false);
+                    setPhase(RIDE_STATUSES.IN_TRANSIT);
+                    break;
+                case DRIVER_EVENTS_TYPES.COMPLETED:
+                    setPhase(RIDE_STATUSES.COMPLETED);
+                    // Optionally navigate away here
+                    break;
+                case DRIVER_EVENTS_TYPES.CANCELLED:
+                    setPhase(RIDE_STATUSES.CANCELLED);
+                    break;
+            }
+        },
+        !!rideDetails
+    );
+
+    if (isQueryLoading) {
         return (
-            <div className="w-full h-screen flex items-center justify-center bg-gray-50">
-                <div className="w-8 h-8 border-4 border-gray-900 border-t-transparent rounded-full animate-spin" />
+            <div className="w-full h-[100dvh]">
+                <Loading />
             </div>
         );
     }
 
-    if (error) {
+    if (!rideDetails) {
+        return <NoActiveRide />;
+    }
+
+    if (!phase) {
         return (
-            <div className="w-full h-screen flex items-center justify-center bg-gray-50 text-red-500 font-medium">
-                Failed to load active ride details.
+            <div className="w-full h-[100dvh]">
+                <Loading />
+            </div>
+        );
+    }
+
+    if (
+        error &&
+        error.message !== "Ride not found" &&
+        error.message !== "Internal Server Error"
+    ) {
+        // Note: Adjust based on exact backend message
+        return (
+            <div className="w-full h-[100dvh] flex items-center justify-center bg-gray-50 text-red-500 font-medium">
+                {error.message || "Failed to load active ride details."}
             </div>
         );
     }
@@ -68,29 +152,75 @@ export default function ActiveTripPage() {
 
     const handlePrimaryAction = () => {
         if (phase === RIDE_STATUSES.MATCHED) {
-            // TODO: emit DRIVER_ARRIVED socket event
-            setPhase(RIDE_STATUSES.ARRIVED);
+            socketService.emit(
+                SocketEvents.DRIVER_ARRIVED,
+                { ride_id: rideDetails._id },
+                (res: { success: boolean; message?: string }) => {
+                    if (!res.success) {
+                        toast.error("Failed to arrive", {
+                            description: res.message,
+                        });
+                    }
+                }
+            );
             return;
         }
         if (phase === RIDE_STATUSES.ARRIVED) {
             if (otpInput.length < 4) return;
             setIsLoading(true);
-            // TODO: verify OTP via socket/API
-            setTimeout(() => {
-                setIsLoading(false);
-                setPhase(RIDE_STATUSES.IN_TRANSIT);
-            }, 800);
+            socketService.emit(
+                SocketEvents.DRIVER_VERIFY_OTP,
+                { ride_id: rideDetails._id, otp: otpInput },
+                (res: { success: boolean; message?: string }) => {
+                    if (!res.success) {
+                        setIsLoading(false);
+                        toast.error("Invalid OTP", {
+                            description: res.message,
+                        });
+                    }
+                }
+            );
+            // State will be updated when DRIVER_EVENTS.STARTED is received
             return;
         }
         if (phase === RIDE_STATUSES.IN_TRANSIT) {
-            // TODO: emit END_TRIP socket event
-            console.log("End trip");
+            socketService.emit(
+                SocketEvents.DRIVER_RIDE_COMPLETED,
+                { ride_id: rideDetails._id },
+                (res: { success: boolean; message?: string }) => {
+                    if (!res.success) {
+                        toast.error("Failed to complete ride", {
+                            description: res.message,
+                        });
+                    }
+                }
+            );
         }
     };
 
     const handleCancelConfirm = () => {
-        // TODO: emit CANCEL_RIDE socket event
-        setCancelOpen(false);
+        socketService.emit(
+            SocketEvents.DRIVER_CANCEL_RIDE,
+            { ride_id: rideDetails._id },
+            (res: { success: boolean; message?: string }) => {
+                if (!res.success) {
+                    toast.error("Failed to cancel ride", {
+                        description: res.message,
+                    });
+                } else {
+                    setCancelOpen(false);
+                }
+            }
+        );
+    };
+
+    const handleOpenMaps = () => {
+        let target = rideDetails.pickup_point;
+        if (phase === RIDE_STATUSES.IN_TRANSIT) {
+            target = rideDetails.dropoff_point;
+        }
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${target.latitude},${target.longitude}`;
+        window.open(url, "_blank");
     };
 
     const passenger = {
@@ -109,7 +239,14 @@ export default function ActiveTripPage() {
         onCancelRide: () => setCancelOpen(true),
         onPrimaryAction: handlePrimaryAction,
         isActionLoading: isLoading,
-        onCall: () => console.log("Call passenger"),
+        isActionDisabled,
+        onCall: () => {
+            if (passenger.phone) {
+                window.location.href = `tel:${passenger.phone}`;
+            } else {
+                toast.error("Phone number not available");
+            }
+        },
         onMessage: () => console.log("Message passenger"),
     };
 
@@ -118,44 +255,80 @@ export default function ActiveTripPage() {
         distanceMetres: rideDetails.distance,
         eta,
         minToArrival: rideDetails.time,
+        onOpenMaps: handleOpenMaps,
     };
 
     return (
-        <div className="relative w-full h-screen flex flex-col bg-gray-50 overflow-hidden">
-            <div className="flex-1 relative">
+        <div className="relative w-full h-[100dvh] bg-gray-50 overflow-hidden">
+            {/* Background Map */}
+            <div className="absolute inset-0 z-0">
                 <MapboxMap
                     markers={markers}
                     routeCoordinates={routeCoordinates}
                     initialCenter={mapCenter}
                     initialZoom={13}
-                    className="absolute inset-0 h-full rounded-none"
+                    className="w-full h-full rounded-none"
                 />
+            </div>
 
-                <div className="hidden md:block">
-                    <ActiveTripMapOverlay
-                        distanceMetres={rideDetails.distance}
-                        eta={eta}
-                    />
+            {/* Foreground UI Layer */}
+            <div className="relative z-10 w-full h-full flex flex-col pointer-events-none">
+                {/* Desktop top-right overlay */}
+                <div className="w-full flex justify-end p-4 shrink-0">
+                    <div className="hidden md:block pointer-events-auto">
+                        <ActiveTripMapOverlay
+                            distanceMetres={rideDetails.distance}
+                            eta={eta}
+                            onOpenMaps={handleOpenMaps}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="md:hidden px-4 pt-4 bg-white">
-                <ActiveTripPhaseBar {...sharedPhaseBarProps} />
-            </div>
+                {/* Desktop left-side panel */}
+                {phase !== RIDE_STATUSES.COMPLETED && (
+                    <div className="hidden md:flex absolute top-4 left-4 bottom-4 w-[360px] pointer-events-auto flex-col gap-4">
+                        <ActiveTripPhaseBar {...sharedPhaseBarProps} />
+                        <div className="flex-1">
+                            <AnimatePresence mode="wait">
+                                <ActiveTripPanel
+                                    key={phase}
+                                    {...sharedPanelProps}
+                                />
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                )}
 
-            <div className="shrink-0 md:hidden">
-                <AnimatePresence mode="wait">
-                    <ActiveTripPanel key={phase} {...sharedPanelProps} />
-                </AnimatePresence>
-            </div>
+                {/* Spacer to push content to bottom */}
+                <div className="flex-1 pointer-events-none" />
 
-            <div className="hidden md:flex absolute top-4 left-4 bottom-4 w-80 z-20 flex-col gap-3">
-                <ActiveTripPhaseBar {...sharedPhaseBarProps} />
-                <div className="flex-1 overflow-hidden">
-                    <AnimatePresence mode="wait">
-                        <ActiveTripPanel key={phase} {...sharedPanelProps} />
-                    </AnimatePresence>
-                </div>
+                {phase === RIDE_STATUSES.COMPLETED ? (
+                    <div className="pointer-events-auto">
+                        <ActiveTripCompletedOverlay
+                            onAcknowledge={() => {
+                                setPhase(null);
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                });
+                            }}
+                        />
+                    </div>
+                ) : (
+                    <div className="pointer-events-auto flex flex-col justify-end shrink-0 w-full">
+                        <div className="md:hidden px-4 pt-4 pb-2 bg-transparent w-full">
+                            <ActiveTripPhaseBar {...sharedPhaseBarProps} />
+                        </div>
+
+                        <div className="md:hidden w-full">
+                            <AnimatePresence mode="wait">
+                                <ActiveTripPanel
+                                    key={phase}
+                                    {...sharedPanelProps}
+                                />
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <ActiveTripCancelModal

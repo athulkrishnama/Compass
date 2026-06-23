@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
@@ -25,6 +24,7 @@ interface ActiveTripPanelProps {
     onCall?: () => void;
     onMessage?: () => void;
     isActionLoading?: boolean;
+    isActionDisabled?: boolean;
 }
 
 export function ActiveTripPanel({
@@ -39,9 +39,9 @@ export function ActiveTripPanel({
     onCall,
     onMessage,
     isActionLoading,
+    isActionDisabled,
 }: ActiveTripPanelProps) {
     const { t } = useTranslation();
-    const scrollRef = useRef<HTMLDivElement>(null);
 
     return (
         <motion.div
@@ -49,16 +49,13 @@ export function ActiveTripPanel({
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 320, damping: 28 }}
-            className="bg-white rounded-t-3xl shadow-2xl flex flex-col max-h-[65vh] overflow-hidden"
+            className="bg-white rounded-t-3xl shadow-2xl max-h-[65vh] overflow-y-auto hide-scroll-bar flex flex-col relative w-full"
         >
-            <div className="flex justify-center pt-3 pb-1 shrink-0">
+            <div className="flex justify-center pt-3 pb-1 shrink-0 sticky top-0 bg-white z-20">
                 <div className="w-10 h-1 rounded-full bg-gray-200" />
             </div>
 
-            <div
-                ref={scrollRef}
-                className="flex-1 overflow-y-auto hide-scroll-bar px-4 pb-2"
-            >
+            <div className="px-4 pb-2 shrink-0">
                 <h2 className="text-xl font-black text-gray-900 mb-3 mt-1">
                     {t(translationKey.activeTrip.tripDetails)}
                 </h2>
@@ -93,14 +90,18 @@ export function ActiveTripPanel({
                 )}
             </div>
 
-            <div className="shrink-0">
+            <div
+                className="shrink-0 sticky bottom-0 bg-white pt-2 px-4 z-20 border-t border-gray-50"
+                style={{
+                    paddingBottom:
+                        "calc(1rem + env(safe-area-inset-bottom, 0px))",
+                }}
+            >
                 <ActiveTripActionButton
                     phase={phase}
                     onClick={onPrimaryAction}
                     isLoading={isActionLoading}
-                    disabled={
-                        phase === RIDE_STATUSES.ARRIVED && otpInput.length < 4
-                    }
+                    disabled={isActionDisabled}
                 />
             </div>
         </motion.div>

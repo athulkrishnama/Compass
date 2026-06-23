@@ -1021,6 +1021,9 @@
         "openInMaps": "മാപ്സ്",
         "passenger": "യാത്രക്കാരൻ",
         "tripOtp": "യാത്രാ OTP",
-        "shareOtpWithPassenger": "ഈ OTP യാത്രക്കാരനുമായി പങ്കിടുക"
+        "shareOtpWithPassenger": "ഈ OTP യാത്രക്കാരനുമായി പങ്കിടുക",
+        "noActiveRideTitle": "സജീവമായ റൈഡുകളില്ല",
+        "noActiveRideDescription": "നിങ്ങൾക്ക് നിലവിൽ സജീവമായ റൈഡുകളൊന്നുമില്ല. പുതിയ അഭ്യർത്ഥനകൾ സ്വീകരിക്കുന്നതിന് ഡാഷ്‌ബോർഡിലേക്ക് മടങ്ങുക.",
+        "droppedOffPassenger": "നിങ്ങൾ യാത്രക്കാരനെ വിജയകരമായി ഇറക്കിവിട്ടു. മികച്ച ജോലി!"
     }
 }

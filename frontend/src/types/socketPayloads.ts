@@ -2,6 +2,9 @@ export const DRIVER_EVENTS_TYPES = {
     REQUESTED: "driver:requested",
     ACCEPTED: "driver:accepted",
     CANCELLED: "driver:cancelled",
+    ARRIVED: "driver:arrived",
+    STARTED: "driver:started",
+    COMPLETED: "driver:completed",
 } as const;
 export type DRIVER_EVENTS_TYPE =
     (typeof DRIVER_EVENTS_TYPES)[keyof typeof DRIVER_EVENTS_TYPES];
@@ -10,6 +13,9 @@ export const RIDER_EVENTS_TYPES = {
     ASSIGNED: "rider:assigned",
     CANCELLED: "rider:cancelled",
     NO_DRIVERS: "rider:no_drivers",
+    ARRIVED: "rider:arrived",
+    STARTED: "rider:started",
+    COMPLETED: "rider:completed",
 } as const;
 export type RIDER_EVENTS_TYPE =
     (typeof RIDER_EVENTS_TYPES)[keyof typeof RIDER_EVENTS_TYPES];
@@ -33,7 +39,25 @@ export interface DriverRequestedPayload {
 export type DriverEventPayload =
     | DriverRequestedPayload
     | DriverAcceptedPayload
-    | DriverCancelledPayload;
+    | DriverCancelledPayload
+    | DriverArrivedPayload
+    | DriverStartedPayload
+    | DriverCompletedPayload;
+
+export interface DriverArrivedPayload {
+    type: typeof DRIVER_EVENTS_TYPES.ARRIVED;
+    payload: { ride_id: string };
+}
+
+export interface DriverStartedPayload {
+    type: typeof DRIVER_EVENTS_TYPES.STARTED;
+    payload: { ride_id: string };
+}
+
+export interface DriverCompletedPayload {
+    type: typeof DRIVER_EVENTS_TYPES.COMPLETED;
+    payload: { ride_id: string };
+}
 
 export interface DriverCancelledPayload {
     type: typeof DRIVER_EVENTS_TYPES.CANCELLED;
@@ -61,6 +85,7 @@ export interface RiderAssignedPayload {
 export interface RiderCancelledPayload {
     type: typeof RIDER_EVENTS_TYPES.CANCELLED;
     payload: {
+        ride_id: string;
         message?: string;
     };
 }
@@ -72,7 +97,25 @@ export interface RiderNoDriversPayload {
     };
 }
 
+export interface RiderArrivedPayload {
+    type: typeof RIDER_EVENTS_TYPES.ARRIVED;
+    payload: { ride_id: string };
+}
+
+export interface RiderStartedPayload {
+    type: typeof RIDER_EVENTS_TYPES.STARTED;
+    payload: { ride_id: string };
+}
+
+export interface RiderCompletedPayload {
+    type: typeof RIDER_EVENTS_TYPES.COMPLETED;
+    payload: { ride_id: string };
+}
+
 export type RiderEventPayload =
     | RiderAssignedPayload
     | RiderCancelledPayload
-    | RiderNoDriversPayload;
+    | RiderNoDriversPayload
+    | RiderArrivedPayload
+    | RiderStartedPayload
+    | RiderCompletedPayload;
