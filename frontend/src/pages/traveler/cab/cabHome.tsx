@@ -13,44 +13,8 @@ import { calculateDistance } from "@/utils/distance";
 import translationKey from "@/utils/i18n/translationKey";
 import { env } from "@/config/env";
 
-const PAST_TRIPS: PastTrip[] = [
-    {
-        id: "1",
-        pickup: "Cochin International Airport, Nedumbassery",
-        dropoff: "Marine Drive, Ernakulam",
-        price: "₹480",
-        duration: "42 min",
-        date: "24 Mar 2026",
-        pickupLat: 10.1535,
-        pickupLng: 76.3913,
-        dropoffLat: 9.9658,
-        dropoffLng: 76.2812,
-    },
-    {
-        id: "2",
-        pickup: "Lulu Mall, Edapally",
-        dropoff: "Fort Kochi, Kochi",
-        price: "₹310",
-        duration: "31 min",
-        date: "21 Mar 2026",
-        pickupLat: 10.017,
-        pickupLng: 76.306,
-        dropoffLat: 9.964,
-        dropoffLng: 76.241,
-    },
-    {
-        id: "3",
-        pickup: "Ernakulam Junction Railway Station",
-        dropoff: "Aluva Metro Station",
-        price: "₹195",
-        duration: "22 min",
-        date: "18 Mar 2026",
-        pickupLat: 9.9889,
-        pickupLng: 76.2906,
-        dropoffLat: 10.1004,
-        dropoffLng: 76.3527,
-    },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getRiderPastTripsQueryOptions } from "@/queryOptions/rideQueryOptions";
 
 interface LocationPoint {
     lat: number;
@@ -195,19 +159,28 @@ const CabHome = () => {
         t,
     ]);
 
-    const handleSelectPastTrip = (trip: PastTrip) => {
+    const { data: pastTripsResponse } = useQuery(
+        getRiderPastTripsQueryOptions(1, 3)
+    );
+    const pastTrips = pastTripsResponse?.data?.trips || [];
+
+    const handleSelectPastTrip = (
+        trip: PastTrip,
+        pickupAddr: string,
+        dropoffAddr: string
+    ) => {
         setPickup({
-            lat: trip.pickupLat,
-            lng: trip.pickupLng,
-            name: trip.pickup,
+            lat: trip.pickup_point.latitude,
+            lng: trip.pickup_point.longitude,
+            name: pickupAddr || "Pickup Location",
         });
         setDropoff({
-            lat: trip.dropoffLat,
-            lng: trip.dropoffLng,
-            name: trip.dropoff,
+            lat: trip.dropoff_point.latitude,
+            lng: trip.dropoff_point.longitude,
+            name: dropoffAddr || "Drop-off Location",
         });
-        setPickupValue(trip.pickup);
-        setDropoffValue(trip.dropoff);
+        setPickupValue(pickupAddr || "Pickup Location");
+        setDropoffValue(dropoffAddr || "Drop-off Location");
     };
 
     return (
@@ -260,10 +233,12 @@ const CabHome = () => {
                             />
                         </motion.div>
 
-                        <PastTripsList
-                            trips={PAST_TRIPS}
-                            onSelect={handleSelectPastTrip}
-                        />
+                        {pastTrips.length > 0 && (
+                            <PastTripsList
+                                trips={pastTrips}
+                                onSelect={handleSelectPastTrip}
+                            />
+                        )}
                     </div>
 
                     <motion.div

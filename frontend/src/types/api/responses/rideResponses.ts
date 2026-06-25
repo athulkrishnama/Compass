@@ -55,3 +55,15 @@ export interface IRideCabDetailsResponseDTO {
         images: string[];
     };
 }
+
+export interface IRiderPastTripResponseDTO {
+    _id: string;
+    status: RideStatus;
+    pickup_point: Coordinate;
+    dropoff_point: Coordinate;
+    distance: number;
+    time: number;
+    selected_fare: FareOption;
+    date: string;
+    paymentStatus?: string;
+}

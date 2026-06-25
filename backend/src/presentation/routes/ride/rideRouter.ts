@@ -39,6 +39,15 @@ export class RideRouter {
     );
 
     this._router.get(
+      RIDE_ROUTES.PAST_TRIPS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => {
+        rideController.handleGetRiderPastTrips(req, res, next);
+      },
+    );
+
+    this._router.get(
       "/:id",
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.TRAVELER, ROLES.CAB]),

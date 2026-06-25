@@ -6,6 +6,7 @@ import {
     getRideDetails,
     getActiveRideDetails,
     getRideCabDetails,
+    getRiderPastTrips,
 } from "@/services/api/rideApiService";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type {
@@ -13,6 +14,7 @@ import type {
     IRideDetailsResponseDTO,
     IActiveRideDetailsResponseDTO,
     IRideCabDetailsResponseDTO,
+    IRiderPastTripResponseDTO,
 } from "@/types/api/responses/rideResponses";
 
 export const createRideMutationOptions = () => {
@@ -45,5 +47,18 @@ export function getRideCabDetailsQueryOptions(rideId: string) {
         queryKey: [QUERY_KEYS.RIDE_CAB_DETAILS, rideId],
         queryFn: () => getRideCabDetails(rideId),
         enabled: !!rideId,
+    });
+}
+
+export function getRiderPastTripsQueryOptions(
+    page: number = 1,
+    limit: number = 10
+) {
+    return queryOptions<
+        HttpResponse<{ trips: IRiderPastTripResponseDTO[]; total: number }>,
+        Error
+    >({
+        queryKey: [QUERY_KEYS.RIDER_PAST_TRIPS, page, limit],
+        queryFn: () => getRiderPastTrips(page, limit),
     });
 }

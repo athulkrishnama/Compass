@@ -172,6 +172,8 @@ import { GetCabPaymentStatusUseCase } from "@useCases/cabPayment/GetCabPaymentSt
 import { WalletPaymentProcessor } from "@useCases/cabPayment/strategies/WalletPaymentProcessor";
 import { StripePaymentProcessor } from "@useCases/cabPayment/strategies/StripePaymentProcessor";
 import { CashPaymentProcessor } from "@useCases/cabPayment/strategies/CashPaymentProcessor";
+import { IGetRiderPastTripsUseCase } from "@application/interfaces/useCase/ride/getRiderPastTripsUseCase.interface";
+import { GetRiderPastTripsUseCase } from "@useCases/ride/getRiderPastTripsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -473,6 +475,10 @@ export function registerUsecases() {
   container.registerSingleton<IEndRideUseCase>(
     "IEndRideUseCase",
     EndRideUseCase,
+  );
+  container.registerSingleton<IGetRiderPastTripsUseCase>(
+    "IGetRiderPastTripsUseCase",
+    GetRiderPastTripsUseCase,
   );
   container.registerSingleton<IGetNotificationsUseCase>(
     "IGetNotificationsUseCase",

@@ -12,12 +12,9 @@ interface ActiveTripRecordCashModalProps {
     onSuccess: () => void;
 }
 
-export const ActiveTripRecordCashModal: React.FC<ActiveTripRecordCashModalProps> = ({
-    isOpen,
-    tripId,
-    expectedAmount,
-    onSuccess,
-}) => {
+export const ActiveTripRecordCashModal: React.FC<
+    ActiveTripRecordCashModalProps
+> = ({ isOpen, tripId, expectedAmount, onSuccess }) => {
     const [amount, setAmount] = useState<string>(expectedAmount.toString());
 
     const { mutate, isPending } = useMutation({
@@ -54,9 +51,12 @@ export const ActiveTripRecordCashModal: React.FC<ActiveTripRecordCashModalProps>
                         exit={{ opacity: 0, y: 20 }}
                         className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-sm"
                     >
-                        <h2 className="text-xl font-bold text-gray-900 mb-2">Collect Cash</h2>
+                        <h2 className="text-xl font-bold text-gray-900 mb-2">
+                            Collect Cash
+                        </h2>
                         <p className="text-sm text-gray-500 mb-6">
-                            The rider chose to pay with cash. Please collect the fare and enter the amount received.
+                            The rider chose to pay with cash. Please collect the
+                            fare and enter the amount received.
                         </p>
 
                         <div className="mb-6">
@@ -76,7 +76,11 @@ export const ActiveTripRecordCashModal: React.FC<ActiveTripRecordCashModalProps>
                             disabled={isPending}
                             className="w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition-all flex justify-center items-center gap-2"
                         >
-                            {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Confirm Payment"}
+                            {isPending ? (
+                                <Loader2 className="w-5 h-5 animate-spin" />
+                            ) : (
+                                "Confirm Payment"
+                            )}
                         </button>
                     </motion.div>
                 </div>

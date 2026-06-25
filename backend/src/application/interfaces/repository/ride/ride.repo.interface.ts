@@ -3,4 +3,9 @@ import { IBaseRepository } from "@application/interfaces/repository/base/base.re
 
 export interface IRideRepo extends IBaseRepository<RideEntity> {
   fetchCabActiveRide(driver_id: string): Promise<RideEntity | null>;
+  fetchRiderPastTrips(
+    rider_id: string,
+    page: number,
+    limit: number,
+  ): Promise<{ trips: RideEntity[]; total: number }>;
 }

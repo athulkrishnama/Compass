@@ -5,7 +5,11 @@ import translationKey from "@/utils/i18n/translationKey";
 
 interface PastTripsListProps {
     trips: PastTrip[];
-    onSelect: (trip: PastTrip) => void;
+    onSelect: (
+        trip: PastTrip,
+        pickupAddress: string,
+        dropoffAddress: string
+    ) => void;
 }
 
 const PastTripsList = ({ trips, onSelect }: PastTripsListProps) => {
@@ -23,7 +27,7 @@ const PastTripsList = ({ trips, onSelect }: PastTripsListProps) => {
             <div className="space-y-3">
                 {trips.map((trip, i) => (
                     <PastTripCard
-                        key={trip.id}
+                        key={trip._id}
                         trip={trip}
                         index={i}
                         onSelect={onSelect}
