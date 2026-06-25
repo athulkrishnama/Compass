@@ -3,7 +3,7 @@ import {
   ICreateIndentRequestDTO,
   ICreateIndentResponseDTO,
 } from "@domain/dtos/payment/createIndent.dto";
-import { PaymentService } from "@infrastructure/services/paymentService";
+import { IPaymentService } from "@application/interfaces/service/paymentService.interface";
 import { inject, injectable } from "tsyringe";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
@@ -16,7 +16,7 @@ import { IHotelPricingService } from "@application/interfaces/service/hotelPrici
 @injectable()
 export class CreatePaymentIntentUseCase implements ICreatePaymentIntentUseCase {
   constructor(
-    @inject("IPaymentService") private _paymentService: PaymentService,
+    @inject("IPaymentService") private _paymentService: IPaymentService,
     @inject("IRoomVariantRepo")
     private _roomVariantRepository: IRoomVariantRepo,
     @inject("IHotelBookingRepo")

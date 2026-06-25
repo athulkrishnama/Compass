@@ -1,9 +1,7 @@
 import { IBaseRepository } from "application/interfaces/repository/base/base.repo.interface";
 import { Model, UpdateQuery } from "mongoose";
 
-export abstract class BaseRepository<T, Doc>
-  implements IBaseRepository<T, Doc>
-{
+export abstract class BaseRepository<T, Doc> implements IBaseRepository<T> {
   constructor(protected _model: Model<Doc>) {}
 
   async create(data: T): Promise<string> {

@@ -194,7 +194,11 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 break;
                             }
                             case DRIVER_EVENTS_TYPES.ACCEPTED: {
-                                router.navigate({ to: "/cab/activeTrip" });
+                                const currentPath =
+                                    router.state.location.pathname;
+                                if (currentPath !== "/cab/activeTrip") {
+                                    router.navigate({ to: "/cab/activeTrip" });
+                                }
                                 break;
                             }
                             case DRIVER_EVENTS_TYPES.CANCELLED: {

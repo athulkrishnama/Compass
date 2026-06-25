@@ -60,7 +60,7 @@ export function useActiveTripMap({
                     from = driverCoordinate;
                     to = pickupCoordinate;
                 } else if (phase === RIDE_STATUSES.IN_TRANSIT) {
-                    from = pickupCoordinate;
+                    from = driverCoordinate || pickupCoordinate;
                     to = dropoffCoordinate;
                 }
 
@@ -116,13 +116,15 @@ export function useActiveTripMap({
                 color: "#22c55e",
             });
         } else if (phase === RIDE_STATUSES.IN_TRANSIT) {
-            list.push({
-                id: "pickup",
-                lat: pickupCoordinate.latitude,
-                lng: pickupCoordinate.longitude,
-                label: "Pickup",
-                color: "#000000",
-            });
+            if (driverCoordinate) {
+                list.push({
+                    id: "driver",
+                    lat: driverCoordinate.latitude,
+                    lng: driverCoordinate.longitude,
+                    label: "You",
+                    color: "#000000",
+                });
+            }
             list.push({
                 id: "dropoff",
                 lat: dropoffCoordinate.latitude,

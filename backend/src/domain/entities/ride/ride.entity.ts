@@ -3,6 +3,8 @@ import { FareType } from "@domain/types/fareType";
 import { RideStatus } from "@domain/types/rideStatus";
 import { RideEvent } from "@domain/types/rideEvent";
 import { ROLES } from "@domain/types/roles";
+import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
+import { PAYMENT_METHOD } from "@domain/enums/paymentMethod";
 
 export interface RideEntity {
   _id: string;
@@ -21,4 +23,7 @@ export interface RideEntity {
   status: RideStatus;
   cancelled_by: ROLES | "timeout" | null;
   events: RideEvent[];
+  paymentStatus?: PAYMENT_STATUS;
+  paymentMethod?: PAYMENT_METHOD;
+  remainingAmount?: number;
 }

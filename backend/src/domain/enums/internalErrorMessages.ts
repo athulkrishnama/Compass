@@ -158,4 +158,12 @@ export enum INTERNAL_ERROR_MESSAGES {
   FARE_EXPIRED = "fareExpired",
   INVALID_VEHICLE_TYPE = "invalidVehicleType",
   RIDE_NOT_FOUND = "rideNotFound",
+  TRIP_NOT_COMPLETED = "tripNotCompleted",
+  PAYMENT_ALREADY_SUCCESSFUL = "paymentAlreadySuccessful",
+  INSUFFICIENT_WALLET_BALANCE = "insufficientWalletBalance",
+  INVALID_PAYMENT_METHOD = "invalidPaymentMethod",
+  DRIVER_NOT_FOUND = "driverNotFound",
+  TRIP_ID_REQUIRED = "tripIdRequired",
+  CAB_PAYMENT_FAILED = "cabPaymentFailed",
+  INSUFFICIENT_PAYMENT_AMOUNT = "insufficientPaymentAmount",
 }

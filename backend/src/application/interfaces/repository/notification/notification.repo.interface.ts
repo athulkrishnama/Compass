@@ -1,9 +1,7 @@
 import { NotificationEntity } from "@domain/entities/notification/notification.entity";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { INotificationDocument } from "@infrastructure/repository/notification/notification.schema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface INotificationRepo
-  extends BaseRepository<NotificationEntity, INotificationDocument> {
+export interface INotificationRepo extends IBaseRepository<NotificationEntity> {
   findByUserId(
     userId: string,
     page: number,

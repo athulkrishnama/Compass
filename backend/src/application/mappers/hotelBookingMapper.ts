@@ -44,7 +44,7 @@ export class HotelBookingMapper {
       totalAmount: b.totalAmount,
       paymentIntendId: b.paymentIntendId,
       hotel: {
-        id: b.hotel._id.toString(),
+        id: b.hotel._id!.toString(),
         name: b.hotel.name,
         coverImage: b.hotel.coverImage,
         city: b.hotel.address.city,

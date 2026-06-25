@@ -3,6 +3,7 @@ import type { FareOption } from "../fareOption";
 import type { RideStatus } from "@/types/rideStatus";
 import type { ROLES } from "@/constants/roles";
 import type { RideEvent } from "@/types/rideEvent";
+import { PaymentStatus } from "@/enums/paymentStatus";
 
 export interface ICreateRideResponseDTO {
     rideId: string;
@@ -19,6 +20,7 @@ export interface IRideDetailsResponseDTO {
     otp: string | null;
     cancelled_by: ROLES | "timeout" | null;
     events: RideEvent[];
+    paymentStatus?: PaymentStatus;
 }
 
 export interface IActiveRideDetailsResponseDTO {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
 import { ActiveTripPhaseBar } from "@/components/cab/activeTrip/ActiveTripPhaseBar";
 import { ActiveTripPanel } from "@/components/cab/activeTrip/ActiveTripPanel";
@@ -35,6 +36,7 @@ const DEFAULT_COORDINATE = { latitude: 0, longitude: 0 };
 
 export default function ActiveTripPage() {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
     const {
         data: rideResponse,
         isLoading: isQueryLoading,
@@ -310,6 +312,7 @@ export default function ActiveTripPage() {
                                 queryClient.invalidateQueries({
                                     queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                                 });
+                                navigate({ to: "/cab" });
                             }}
                         />
                     </div>

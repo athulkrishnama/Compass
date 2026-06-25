@@ -157,6 +157,19 @@ import { IMarkNotificationReadUseCase } from "@application/interfaces/useCase/no
 import { MarkNotificationReadUseCase } from "@useCases/notification/markNotificationReadUseCase";
 import { IMarkAllNotificationsReadUseCase } from "@application/interfaces/useCase/notification/markAllNotificationsReadUseCase.interface";
 import { MarkAllNotificationsReadUseCase } from "@useCases/notification/markAllNotificationsReadUseCase";
+import { IInitiateCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IInitiateCabPaymentUseCase";
+import { InitiateCabPaymentUseCase } from "@useCases/cabPayment/InitiateCabPaymentUseCase";
+import { IProcessWalletCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IProcessWalletCabPaymentUseCase";
+import { ProcessWalletCabPaymentUseCase } from "@useCases/cabPayment/ProcessWalletCabPaymentUseCase";
+import { IVerifyStripeCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IVerifyStripeCabPaymentUseCase";
+import { VerifyStripeCabPaymentUseCase } from "@useCases/cabPayment/VerifyStripeCabPaymentUseCase";
+import { IRecordCashPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IRecordCashPaymentUseCase";
+import { RecordCashPaymentUseCase } from "@useCases/cabPayment/RecordCashPaymentUseCase";
+import { IGetCabPaymentStatusUseCase } from "@application/interfaces/useCase/cabPayment/IGetCabPaymentStatusUseCase";
+import { GetCabPaymentStatusUseCase } from "@useCases/cabPayment/GetCabPaymentStatusUseCase";
+import { WalletPaymentProcessor } from "@useCases/cabPayment/strategies/WalletPaymentProcessor";
+import { StripePaymentProcessor } from "@useCases/cabPayment/strategies/StripePaymentProcessor";
+import { CashPaymentProcessor } from "@useCases/cabPayment/strategies/CashPaymentProcessor";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -470,5 +483,32 @@ export function registerUsecases() {
   container.registerSingleton<IMarkAllNotificationsReadUseCase>(
     "IMarkAllNotificationsReadUseCase",
     MarkAllNotificationsReadUseCase,
+  );
+
+  // ─── Cab Payment Strategies (named registrations for injection by key) ────
+  container.registerSingleton("WalletPaymentProcessor", WalletPaymentProcessor);
+  container.registerSingleton("StripePaymentProcessor", StripePaymentProcessor);
+  container.registerSingleton("CashPaymentProcessor", CashPaymentProcessor);
+
+  // ─── Cab Payment Use Cases ────────────────────────────────────────────────
+  container.registerSingleton<IInitiateCabPaymentUseCase>(
+    "IInitiateCabPaymentUseCase",
+    InitiateCabPaymentUseCase,
+  );
+  container.registerSingleton<IProcessWalletCabPaymentUseCase>(
+    "IProcessWalletCabPaymentUseCase",
+    ProcessWalletCabPaymentUseCase,
+  );
+  container.registerSingleton<IVerifyStripeCabPaymentUseCase>(
+    "IVerifyStripeCabPaymentUseCase",
+    VerifyStripeCabPaymentUseCase,
+  );
+  container.registerSingleton<IRecordCashPaymentUseCase>(
+    "IRecordCashPaymentUseCase",
+    RecordCashPaymentUseCase,
+  );
+  container.registerSingleton<IGetCabPaymentStatusUseCase>(
+    "IGetCabPaymentStatusUseCase",
+    GetCabPaymentStatusUseCase,
   );
 }

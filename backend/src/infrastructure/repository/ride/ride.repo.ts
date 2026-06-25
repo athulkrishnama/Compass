@@ -71,6 +71,9 @@ export class RideRepo
       status: entity.status,
       cancelled_by: entity.cancelled_by,
       events: entity.events,
+      paymentStatus: entity.paymentStatus,
+      paymentMethod: entity.paymentMethod,
+      remainingAmount: entity.remainingAmount ?? 0,
     });
   }
 
@@ -106,6 +109,9 @@ export class RideRepo
             timestamp: event.timestamp,
           }))
         : [],
+      paymentStatus: doc.paymentStatus,
+      paymentMethod: doc.paymentMethod,
+      remainingAmount: doc.remainingAmount ?? 0,
     };
   }
 }

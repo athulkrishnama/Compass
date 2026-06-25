@@ -9,12 +9,13 @@ import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
+import { SERVICE_TYPE } from "@domain/enums/serviceType";
 import { inject, injectable } from "tsyringe";
 
 import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
 import { TRANSACTION_TYPE } from "@domain/enums/transactionType";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
-import { SERVICE_TYPE } from "@domain/enums/serviceType";
+import { IVerifyStripeCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IVerifyStripeCabPaymentUseCase";
 
 @injectable()
 export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
@@ -31,6 +32,8 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     private _transactionRepo: ITransactionRepo,
     @inject("IHotelRepo")
     private _hotelRepo: IHotelRepo,
+    @inject("IVerifyStripeCabPaymentUseCase")
+    private _verifyCabPayment: IVerifyStripeCabPaymentUseCase,
   ) {}
 
   async execute(data: {
@@ -40,9 +43,24 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     const { status, metadata, paymentIntentId } =
       await this._paymentService.confirmPayment(data.signature, data.body);
 
+    if (!status || !paymentIntentId || !metadata) {
+      throw new InvalidOperationException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+    }
+
+    if (metadata.serviceType === SERVICE_TYPE.CAB) {
+      const { tripId, riderId } = metadata;
+      if (!tripId || !riderId) {
+        throw new InvalidOperationException(
+          INTERNAL_ERROR_MESSAGES.INVALID_DATA,
+        );
+      }
+      await this._verifyCabPayment.execute(tripId, riderId);
+      return Messages.CAB_PAYMENT_VERIFIED;
+    }
+
     const { traverlerId, guests } = metadata || {};
 
-    if (!status || !paymentIntentId || !traverlerId || !guests) {
+    if (!traverlerId || !guests) {
       throw new InvalidOperationException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
     }
 

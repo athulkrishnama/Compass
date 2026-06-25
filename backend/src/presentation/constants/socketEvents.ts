@@ -18,8 +18,8 @@ export const SocketEvents = {
   DRIVER_EVENTS: "driver:events",
   RIDE_ACCEPTANCE_REJECTED: "ride:acceptance-rejected",
   DRIVER_LOCATION_BROADCAST: "driver:location-broadcast",
-  PAYMENT_COMPLETED: "payment:completed",
-  PAYMENT_FAILED: "payment:failed",
+  PAYMENT_SUCCESS: "payment:success",
+  PAYMENT_RECEIVED: "payment:received",
 
   NOTIFICATION_NEW: "notification:new",
   NOTIFICATION_READ: "notification:read",

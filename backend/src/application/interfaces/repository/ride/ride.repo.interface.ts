@@ -1,7 +1,6 @@
 import { RideEntity } from "@domain/entities/ride/ride.entity";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IRideDocument } from "@infrastructure/repository/ride/ride.schema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IRideRepo extends BaseRepository<RideEntity, IRideDocument> {
+export interface IRideRepo extends IBaseRepository<RideEntity> {
   fetchCabActiveRide(driver_id: string): Promise<RideEntity | null>;
 }

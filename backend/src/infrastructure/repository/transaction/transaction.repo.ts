@@ -5,7 +5,7 @@ import { ITransactionRepo } from "@application/interfaces/repository/transaction
 import { ITransactionAggregation } from "@domain/dtos/transaction/transactionListing.dto";
 import { TRANSACTION_TYPE } from "@domain/enums/transactionType";
 import { inject, injectable } from "tsyringe";
-import { Model, PipelineStage } from "mongoose";
+import { ClientSession, Model, PipelineStage } from "mongoose";
 import { VALUES } from "@presentation/constants/values";
 
 @injectable()
@@ -15,6 +15,14 @@ export class TransactionRepo
 {
   constructor(@inject("ITransactionModel") model: Model<ITransactionDocument>) {
     super(model);
+  }
+
+  async createInSession(
+    data: TransactionEntity,
+    session: ClientSession,
+  ): Promise<string> {
+    const [doc] = await this._model.create([data], { session });
+    return (doc._id as unknown as string).toString();
   }
 
   async getProviderTransactions(
@@ -129,13 +137,17 @@ export class TransactionRepo
     return {
       _id: doc._id.toString(),
       bookingId: doc.bookingId,
+      userId: doc.userId,
+      driverId: doc.driverId,
       serviceType: doc.serviceType,
       providerId: doc.providerId,
+      paymentMethod: doc.paymentMethod,
       amount: doc.amount,
       commissionRate: doc.commissionRate,
       commissionAmount: doc.commissionAmount,
       providerAmount: doc.providerAmount,
       type: doc.type,
+      description: doc.description,
       createdAt: doc.createdAt,
     };
   }

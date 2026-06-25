@@ -1,9 +1,7 @@
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IRoomVariantDocument } from "@infrastructure/repository/roomVariant/roomVariantSchema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IRoomVariantRepo
-  extends BaseRepository<RoomVariantEntity, IRoomVariantDocument> {
+export interface IRoomVariantRepo extends IBaseRepository<RoomVariantEntity> {
   findByHotelId(hotelId: string): Promise<RoomVariantEntity[]>;
   findByName(hotelId: string, name: string): Promise<RoomVariantEntity | null>;
   findByPrefix(

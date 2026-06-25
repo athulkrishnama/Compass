@@ -1,10 +1,9 @@
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { IBaseRepository } from "../base/base.repo.interface";
-import { IUserDocument } from "@infrastructure/repository/users/userSchema";
 import { ROLES } from "@domain/types/roles";
 import { VERIFICATION_STATUS } from "@domain/types/verficationStatus";
 
-export interface IUserRepo extends IBaseRepository<UserEntity, IUserDocument> {
+export interface IUserRepo extends IBaseRepository<UserEntity> {
   findByEmail(email: string): Promise<UserEntity | null>;
   findByIdAndUpdatePassword(email: string, password: string): Promise<void>;
   getUsersWithFilter(filter: {

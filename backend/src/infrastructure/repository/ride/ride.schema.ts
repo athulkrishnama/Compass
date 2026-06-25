@@ -5,6 +5,8 @@ import { VEHICLE_TYPES } from "@domain/types/vehicleType";
 import { Document, Schema, Types } from "mongoose";
 import { ROLES } from "@domain/types/roles";
 import { ROLES as RoleValues } from "@domain/enums/roles";
+import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
+import { PAYMENT_METHOD } from "@domain/enums/paymentMethod";
 
 export interface IRideDocument extends Document {
   _id: Types.ObjectId;
@@ -29,6 +31,9 @@ export interface IRideDocument extends Document {
   status: RideStatus;
   cancelled_by: ROLES | null;
   events: { event_name: RideEventName; actor: string; timestamp: Date }[];
+  paymentStatus?: PAYMENT_STATUS;
+  paymentMethod?: PAYMENT_METHOD;
+  remainingAmount?: number;
 }
 
 export const rideSchema = new Schema<IRideDocument>({
@@ -128,5 +133,18 @@ export const rideSchema = new Schema<IRideDocument>({
       },
     ],
     default: [],
+  },
+  paymentStatus: {
+    type: String,
+    enum: Object.values(PAYMENT_STATUS),
+    default: PAYMENT_STATUS.PENDING,
+  },
+  paymentMethod: {
+    type: String,
+    enum: Object.values(PAYMENT_METHOD),
+  },
+  remainingAmount: {
+    type: Number,
+    default: 0,
   },
 });
