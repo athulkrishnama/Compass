@@ -18,6 +18,9 @@ interface MapboxMapProps {
     className?: string;
     onMarkerClick?: (marker: MapboxMarker) => void;
     routeCoordinates?: [number, number][];
+    fitBoundsPadding?:
+        | { top: number; bottom: number; left: number; right: number }
+        | number;
 }
 
 const DEFAULT_CENTER: [number, number] = [77.5946, 12.9716];
@@ -30,6 +33,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     className = "",
     onMarkerClick,
     routeCoordinates,
+    fitBoundsPadding = { top: 80, bottom: 200, left: 60, right: 60 },
 }) => {
     const mapContainer = useRef<HTMLDivElement>(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -191,7 +195,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                         )
                     );
                     mapRef.current?.fitBounds(bounds, {
-                        padding: { top: 80, bottom: 200, left: 60, right: 60 },
+                        padding: fitBoundsPadding,
                         maxZoom: 14,
                         duration: 900,
                     });

@@ -174,6 +174,7 @@ export default function RideRequestPopup() {
                                 markers={mapMarkers}
                                 routeCoordinates={routeCoordinates}
                                 className="w-full h-full min-h-0"
+                                fitBoundsPadding={20}
                             />
                         </div>
 
