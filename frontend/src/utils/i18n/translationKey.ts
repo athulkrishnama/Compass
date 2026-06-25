@@ -1098,6 +1098,8 @@ export default {
         noActiveRideTitle: "activeTrip.noActiveRideTitle",
         noActiveRideDescription: "activeTrip.noActiveRideDescription",
         droppedOffPassenger: "activeTrip.droppedOffPassenger",
+        clickToViewDetails: "activeTrip.clickToViewDetails",
+        kmTrip: "activeTrip.kmTrip",
     },
     cabHistory: {
         title: "cabHistory.title",

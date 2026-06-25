@@ -8,6 +8,7 @@ import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/get
 import { IActiveRideDetailsUseCase } from "@application/interfaces/useCase/ride/activeRideDetailsUseCase.interface";
 import { IGetRideCabDetailsUseCase } from "@application/interfaces/useCase/ride/getRideCabDetailsUseCase.interface";
 import { IGetRiderPastTripsUseCase } from "@application/interfaces/useCase/ride/getRiderPastTripsUseCase.interface";
+import { IGetRiderActiveRideUseCase } from "@application/interfaces/useCase/ride/getRiderActiveRideUseCase.interface";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
@@ -32,6 +33,8 @@ export class RideController {
     private _getRideCabDetailsUseCase: IGetRideCabDetailsUseCase,
     @inject("IGetRiderPastTripsUseCase")
     private _getRiderPastTripsUseCase: IGetRiderPastTripsUseCase,
+    @inject("IGetRiderActiveRideUseCase")
+    private _getRiderActiveRideUseCase: IGetRiderActiveRideUseCase,
   ) {}
 
   async handleCreateFare(req: Request, res: Response, next: NextFunction) {
@@ -195,6 +198,30 @@ export class RideController {
         HTTP_STATUS_CODE.OK,
         Messages.DATA_FETCHED_SUCCESSFULLY,
         pastTripsData,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getRiderActiveRide(req: Request, res: Response, next: NextFunction) {
+    try {
+      const riderId = req.user.id;
+
+      if (!riderId) {
+        throw new ResourceNotFoundException(
+          INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND,
+        );
+      }
+
+      const ride = await this._getRiderActiveRideUseCase.execute(riderId);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.RIDE_DETAILS_FETCHED_SUCCESSFULLY,
+        ride || undefined, // it can be null if no active ride
       );
     } catch (error) {
       next(error);

@@ -54,6 +54,20 @@ export async function getActiveRideDetails(): Promise<
     }
 }
 
+export async function getRiderActiveRide(): Promise<
+    HttpResponse<IRideDetailsResponseDTO>
+> {
+    try {
+        const response = await axiosInstance.get(RIDE_ROUTES.RIDER_ACTIVE_RIDE);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
 export async function getRideCabDetails(
     rideId: string
 ): Promise<HttpResponse<IRideCabDetailsResponseDTO>> {

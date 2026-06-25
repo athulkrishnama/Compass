@@ -1,4 +1,5 @@
 import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
+import { ActiveTripOverlay } from "@/components/traveler/cab/ActiveTripOverlay";
 import NotFoundComponent from "@/components/notFound";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import { ROLES } from "@/constants/roles";
@@ -85,6 +86,8 @@ function RouteComponent() {
                     </div>
                 </div>
             )}
+
+            {!hideNavbar && <ActiveTripOverlay />}
         </div>
     );
 }

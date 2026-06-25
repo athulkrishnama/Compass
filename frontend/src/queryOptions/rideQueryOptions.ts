@@ -7,6 +7,7 @@ import {
     getActiveRideDetails,
     getRideCabDetails,
     getRiderPastTrips,
+    getRiderActiveRide,
 } from "@/services/api/rideApiService";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type {
@@ -60,5 +61,13 @@ export function getRiderPastTripsQueryOptions(
     >({
         queryKey: [QUERY_KEYS.RIDER_PAST_TRIPS, page, limit],
         queryFn: () => getRiderPastTrips(page, limit),
+    });
+}
+
+export function getRiderActiveRideQueryOptions() {
+    return queryOptions<HttpResponse<IRideDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.RIDER_ACTIVE_RIDE],
+        queryFn: getRiderActiveRide,
+        retry: false,
     });
 }

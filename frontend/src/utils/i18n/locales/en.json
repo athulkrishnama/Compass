@@ -1097,7 +1097,9 @@
         "shareOtpWithPassenger": "Share this OTP with your passenger",
         "noActiveRideTitle": "No Active Ride",
         "noActiveRideDescription": "You don't have any active rides at the moment. Return to the dashboard to accept new requests.",
-        "droppedOffPassenger": "You have successfully dropped off the passenger. Great job!"
+        "droppedOffPassenger": "You have successfully dropped off the passenger. Great job!",
+        "clickToViewDetails": "Click to view details",
+        "kmTrip": "{{distance}} km trip"
     },
     "cabHistory": {
         "title": "Your Past Rides",

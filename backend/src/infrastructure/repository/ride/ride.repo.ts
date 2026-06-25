@@ -46,6 +46,30 @@ export class RideRepo
     });
     return doc ? this.toEntity(doc) : null;
   }
+  async fetchRiderActiveRide(rider_id: string): Promise<RideEntity | null> {
+    const doc = await this._model
+      .findOne({
+        rider_id: new Types.ObjectId(rider_id),
+        $or: [
+          {
+            status: {
+              $in: [
+                RIDE_STATUSES.SEARCHING,
+                RIDE_STATUSES.MATCHED,
+                RIDE_STATUSES.IN_TRANSIT,
+                RIDE_STATUSES.ARRIVED,
+              ],
+            },
+          },
+          {
+            status: RIDE_STATUSES.COMPLETED,
+            paymentStatus: { $ne: "SUCCESS" },
+          },
+        ],
+      })
+      .sort({ createdAt: -1 }); // Get the most recent one just in case
+    return doc ? this.toEntity(doc) : null;
+  }
 
   async fetchRiderPastTrips(
     rider_id: string,

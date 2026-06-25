@@ -8,4 +8,5 @@ export interface IRideRepo extends IBaseRepository<RideEntity> {
     page: number,
     limit: number,
   ): Promise<{ trips: RideEntity[]; total: number }>;
+  fetchRiderActiveRide(rider_id: string): Promise<RideEntity | null>;
 }
