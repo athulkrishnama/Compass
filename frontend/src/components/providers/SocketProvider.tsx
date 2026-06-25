@@ -66,6 +66,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 dispatch(
                                     updateRideStatus(RIDE_STATUSES.MATCHED)
                                 );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
                                 toast.success(
                                     t(translationKey.toasts.driverAssigned),
                                     {

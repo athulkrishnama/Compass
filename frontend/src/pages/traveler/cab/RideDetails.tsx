@@ -56,15 +56,9 @@ const RideDetails = () => {
 
     useEffect(() => {
         if (rideQueryData?.data) {
-            if (
-                ride?.status === RIDE_STATUSES.COMPLETED &&
-                rideQueryData.data.status !== RIDE_STATUSES.COMPLETED
-            ) {
-                return;
-            }
             dispatch(setActiveRide(rideQueryData.data));
         }
-    }, [rideQueryData, dispatch, ride?.status]);
+    }, [rideQueryData, dispatch]);
 
     useEffect(() => {
         if (
