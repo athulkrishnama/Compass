@@ -69,3 +69,24 @@ export async function getCabPaymentStatus(tripId: string) {
         throw new Error("Something went wrong");
     }
 }
+
+export async function recordCashPayment(
+    tripId: string,
+    amountReceived: number
+) {
+    try {
+        const response = await axiosInstance.post(
+            CAB_PAYMENT_ROUTES.RECORD_CASH,
+            {
+                tripId,
+                amountReceived,
+            }
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}

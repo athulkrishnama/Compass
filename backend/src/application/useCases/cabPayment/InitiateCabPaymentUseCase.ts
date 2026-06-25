@@ -5,6 +5,7 @@ import { IPaymentProcessor } from "@application/interfaces/service/IPaymentProce
 import { WalletPaymentProcessor } from "@useCases/cabPayment/strategies/WalletPaymentProcessor";
 import { StripePaymentProcessor } from "@useCases/cabPayment/strategies/StripePaymentProcessor";
 import { CashPaymentProcessor } from "@useCases/cabPayment/strategies/CashPaymentProcessor";
+import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import {
   IInitiateCabPaymentRequestDTO,
   IInitiateCabPaymentResponseDTO,
@@ -12,6 +13,8 @@ import {
 import { PAYMENT_METHOD } from "@domain/enums/paymentMethod";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
+import { SocketEvents } from "@presentation/constants/socketEvents";
+import { DRIVER_EVENTS_TYPES } from "@domain/types/socketPayloads";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import {
   InvalideDataException,
@@ -25,6 +28,7 @@ export class InitiateCabPaymentUseCase implements IInitiateCabPaymentUseCase {
 
   constructor(
     @inject("IRideRepo") private _rideRepo: IRideRepo,
+    @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("WalletPaymentProcessor")
     walletProcessor: WalletPaymentProcessor,
     @inject("StripePaymentProcessor")
@@ -75,6 +79,17 @@ export class InitiateCabPaymentUseCase implements IInitiateCabPaymentUseCase {
     ride.paymentStatus = PAYMENT_STATUS.PROCESSING;
     ride.paymentMethod = paymentMethod;
     await this._rideRepo.update(ride, tripId);
+
+    if (ride.driver_id) {
+      this._socketEmitter.emitToUser(
+        ride.driver_id,
+        SocketEvents.DRIVER_EVENTS,
+        {
+          type: DRIVER_EVENTS_TYPES.PAYMENT_INITIATED,
+          payload: { ride_id: tripId, event: SocketEvents.PAYMENT_INITIATED },
+        },
+      );
+    }
 
     return result;
   }

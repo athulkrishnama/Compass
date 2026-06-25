@@ -20,6 +20,7 @@ export const SocketEvents = {
   DRIVER_LOCATION_BROADCAST: "driver:location-broadcast",
   PAYMENT_SUCCESS: "payment:success",
   PAYMENT_RECEIVED: "payment:received",
+  PAYMENT_INITIATED: "payment:initiated",
 
   NOTIFICATION_NEW: "notification:new",
   NOTIFICATION_READ: "notification:read",

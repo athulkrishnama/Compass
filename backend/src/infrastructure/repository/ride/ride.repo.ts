@@ -28,13 +28,21 @@ export class RideRepo
   async fetchCabActiveRide(driver_id: string): Promise<RideEntity | null> {
     const doc = await this._model.findOne({
       driver_id: new Types.ObjectId(driver_id),
-      status: {
-        $in: [
-          RIDE_STATUSES.MATCHED,
-          RIDE_STATUSES.IN_TRANSIT,
-          RIDE_STATUSES.ARRIVED,
-        ],
-      },
+      $or: [
+        {
+          status: {
+            $in: [
+              RIDE_STATUSES.MATCHED,
+              RIDE_STATUSES.IN_TRANSIT,
+              RIDE_STATUSES.ARRIVED,
+            ],
+          },
+        },
+        {
+          status: RIDE_STATUSES.COMPLETED,
+          paymentStatus: { $ne: "SUCCESS" },
+        },
+      ],
     });
     return doc ? this.toEntity(doc) : null;
   }

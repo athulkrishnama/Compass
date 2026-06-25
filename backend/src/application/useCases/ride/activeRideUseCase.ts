@@ -1,5 +1,6 @@
 import { IActiveRideDetailsUseCase } from "@application/interfaces/useCase/ride/activeRideDetailsUseCase.interface";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { IActiveRideDetailsResponseDTO } from "@domain/dtos/ride/activeRideDetails.dto";
 import { ResourceNotFoundException } from "@application/constants/Exceptions";
@@ -15,12 +16,20 @@ export class ActiveRideUseCase implements IActiveRideDetailsUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("IUserRepo") private _userRepo: IUserRepo,
     @inject("IStorageService") private _storageService: IStorageService,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
   ) {}
 
   async execute(
     driverId: string,
   ): Promise<IActiveRideDetailsResponseDTO | null> {
-    const ride = await this._rideRepo.fetchCabActiveRide(driverId);
+    const cab = await this._cabRepo.findByUserId(driverId);
+    if (!cab || !cab.active_ride_id) {
+      throw new ResourceNotFoundException(
+        INTERNAL_ERROR_MESSAGES.RIDE_NOT_FOUND,
+      );
+    }
+
+    const ride = await this._rideRepo.findById(cab.active_ride_id);
     if (!ride) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.RIDE_NOT_FOUND,

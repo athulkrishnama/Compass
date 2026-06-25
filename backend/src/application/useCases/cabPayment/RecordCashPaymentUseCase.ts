@@ -3,6 +3,7 @@ import { IRecordCashPaymentUseCase } from "@application/interfaces/useCase/cabPa
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { IWalletRepo } from "@application/interfaces/repository/wallet/wallet.repo.interface";
 import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { ITransactionManager } from "@application/interfaces/service/ITransactionManager";
 import {
@@ -34,6 +35,7 @@ export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
     @inject("IWalletRepo") private _walletRepo: IWalletRepo,
     @inject("ITransactionRepo") private _transactionRepo: ITransactionRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
     @inject("ITransactionManager")
     private _transactionManager: ITransactionManager,
   ) {}
@@ -148,19 +150,21 @@ export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
         ride.paymentMethod = PAYMENT_METHOD.CASH;
         ride.remainingAmount = 0;
         await this._rideRepo.update(ride, tripId);
+
+        await this._cabRepo.updateActiveRide(driverId, null, session);
       });
     } finally {
       this._transactionManager.endSession(session);
     }
 
     this._socketEmitter.emitToUser(ride.rider_id, SocketEvents.RIDER_EVENTS, {
-      type: RIDER_EVENTS_TYPES.COMPLETED,
-      payload: { tripId, event: SocketEvents.PAYMENT_SUCCESS },
+      type: RIDER_EVENTS_TYPES.PAYMENT_SUCCESS,
+      payload: { ride_id: tripId, event: SocketEvents.PAYMENT_SUCCESS },
     });
 
     this._socketEmitter.emitToUser(driverId, SocketEvents.DRIVER_EVENTS, {
-      type: DRIVER_EVENTS_TYPES.COMPLETED,
-      payload: { tripId, event: SocketEvents.PAYMENT_RECEIVED },
+      type: DRIVER_EVENTS_TYPES.PAYMENT_RECEIVED,
+      payload: { ride_id: tripId, event: SocketEvents.PAYMENT_RECEIVED },
     });
 
     return {

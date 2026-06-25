@@ -32,6 +32,9 @@ export class RideMapper {
       status: ride.status,
       distance: ride.distance,
       time: ride.time,
+      selected_fare: ride.selected_fare,
+      paymentStatus: ride.paymentStatus,
+      paymentMethod: ride.paymentMethod,
       rider: {
         _id: rider._id ?? "",
         full_name: rider.full_name,

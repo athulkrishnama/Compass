@@ -2,8 +2,9 @@ import { CabEntity } from "@domain/entities/cab/cab.entity";
 import { BaseRepository } from "../base/base.repo";
 import { ICabDocument } from "./cabSchema";
 import { inject, injectable } from "tsyringe";
-import { Model, Types } from "mongoose";
+import { Model, Types, ClientSession, UpdateQuery } from "mongoose";
 import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
+import { IDbSession } from "@application/interfaces/repository/base/dbSession.interface";
 
 @injectable()
 export class CabRepo
@@ -31,6 +32,9 @@ export class CabRepo
       _id: new Types.ObjectId(entity._id),
       userId: entity.userId,
       isOnline: entity.isOnline,
+      active_ride_id: entity.active_ride_id
+        ? new Types.ObjectId(entity.active_ride_id)
+        : null,
       vehicleDetails: entity.vehicleDetails,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
@@ -56,6 +60,9 @@ export class CabRepo
       _id: doc._id.toString(),
       userId: doc.userId,
       isOnline: doc.isOnline,
+      active_ride_id: doc.active_ride_id
+        ? doc.active_ride_id.toString()
+        : undefined,
       vehicleDetails: doc.vehicleDetails,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
@@ -75,5 +82,26 @@ export class CabRepo
 
   async countCabs(): Promise<number> {
     return await this._model.countDocuments();
+  }
+
+  async updateActiveRide(
+    driverId: string,
+    rideId: string | null,
+    session?: IDbSession,
+  ): Promise<void> {
+    const update: UpdateQuery<ICabDocument> = {};
+    if (rideId) {
+      update.$set = { active_ride_id: new Types.ObjectId(rideId) };
+    } else {
+      update.$unset = { active_ride_id: 1 };
+    }
+
+    if (session) {
+      await this._model.updateOne({ userId: driverId }, update, {
+        session: session as ClientSession,
+      });
+    } else {
+      await this._model.updateOne({ userId: driverId }, update);
+    }
   }
 }

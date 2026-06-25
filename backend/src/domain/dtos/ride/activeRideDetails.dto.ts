@@ -8,6 +8,9 @@ export interface IActiveRideDetailsResponseDTO {
   status: RideStatus;
   distance: number;
   time: number;
+  selected_fare: any;
+  paymentStatus?: string;
+  paymentMethod?: string;
   rider: {
     _id: string;
     full_name: string;

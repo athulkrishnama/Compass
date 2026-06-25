@@ -2,6 +2,7 @@ import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/dri
 import { IDriverMatchingRequestDTO } from "@domain/dtos/ride/driverMatching.dto";
 import { inject, injectable } from "tsyringe";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { IGeoService } from "@application/interfaces/service/geoService.interface";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
@@ -26,6 +27,7 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
     @inject("IQueueService") private _queueService: IQueueService,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("ITokenService") private _tokenSerivce: ITokenService,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
   ) {}
 
   async execute({
@@ -82,13 +84,29 @@ export class DriverMatchingUseCase implements IDriverMatchingUseCase {
       });
       return;
     }
-    const validDriverId = await this._geoService.getNearbyDrivers(
-      ride.pickup_point,
-      VALUES.DRIVER_MATCH_RADIUS_KM,
-      ride.selected_fare.cab_type,
-      VALUES.DRIVER_MATCH_MAX_CANDIDATES,
-      ride.attempted_drivers,
-    );
+    let validDriverId: string | null = null;
+    let foundValid = false;
+
+    while (!foundValid) {
+      validDriverId = await this._geoService.getNearbyDrivers(
+        ride.pickup_point,
+        VALUES.DRIVER_MATCH_RADIUS_KM,
+        ride.selected_fare.cab_type,
+        VALUES.DRIVER_MATCH_MAX_CANDIDATES,
+        ride.attempted_drivers,
+      );
+
+      if (!validDriverId) {
+        break;
+      }
+
+      const cab = await this._cabRepo.findByUserId(validDriverId);
+      if (cab && !cab.active_ride_id) {
+        foundValid = true;
+      } else {
+        ride.attempted_drivers.push(validDriverId);
+      }
+    }
 
     if (validDriverId) {
       const newAttemptId = this._tokenSerivce.createToken();

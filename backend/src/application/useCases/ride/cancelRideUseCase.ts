@@ -2,6 +2,7 @@ import { ICancelRideUseCase } from "@application/interfaces/useCase/ride/cancelR
 import { ICancelRideRequestDTO } from "@domain/dtos/ride/cancelRide.dto";
 import { inject, injectable } from "tsyringe";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
@@ -31,6 +32,7 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("IQueueService") private _queueService: IQueueService,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
   ) {}
 
   async execute({ ride_id, user_id }: ICancelRideRequestDTO): Promise<void> {
@@ -88,6 +90,7 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     }
 
     if (ride.driver_id) {
+      await this._cabRepo.updateActiveRide(ride.driver_id, null);
       this._socketEmitter.emitToUser(
         ride.driver_id,
         SocketEvents.DRIVER_EVENTS,

@@ -7,6 +7,7 @@ import RideHeader from "@/components/traveler/cab/ride/RideHeader";
 import RideLocations from "@/components/traveler/cab/ride/RideLocations";
 import TripStats from "@/components/traveler/cab/ride/TripStats";
 import RideStatusSection from "@/components/traveler/cab/ride/RideStatusSection";
+import { ActiveTripOtpDisplay } from "@/components/cab/activeTrip/ActiveTripOtpDisplay";
 import { RidePaymentModal } from "@/components/traveler/cab/ride/RidePaymentModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
@@ -91,6 +92,11 @@ const RideDetails = () => {
                     description: "Please proceed to payment.",
                 });
                 setIsPaymentOpen(true);
+            } else if (data.type === RIDER_EVENTS_TYPES.PAYMENT_SUCCESS) {
+                setIsPaymentOpen(false);
+                toast.success("Payment Successful!", {
+                    description: "Thank you for riding with us.",
+                });
             }
         },
         !!ride
@@ -154,6 +160,10 @@ const RideDetails = () => {
                         />
                         <Separator className="bg-neutral-100" />
                         <RideStatusSection status={ride.status} />
+
+                        {ride.status === RIDE_STATUSES.ARRIVED && ride.otp && (
+                            <ActiveTripOtpDisplay otp={ride.otp} />
+                        )}
 
                         {CANCELLABLE_STATUSES.includes(ride.status) && (
                             <button

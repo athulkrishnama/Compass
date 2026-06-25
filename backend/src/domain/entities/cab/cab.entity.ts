@@ -11,6 +11,7 @@ export interface CabEntity {
   _id?: string;
   userId: string;
   isOnline: boolean;
+  active_ride_id?: string;
   vehicleDetails?: vehicle;
   baseLocation?: {
     city: string;

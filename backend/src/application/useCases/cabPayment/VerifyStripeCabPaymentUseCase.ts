@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IVerifyStripeCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IVerifyStripeCabPaymentUseCase";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { ITransactionManager } from "@application/interfaces/service/ITransactionManager";
 import { StripePaymentProcessor } from "@useCases/cabPayment/strategies/StripePaymentProcessor";
@@ -22,6 +23,7 @@ export class VerifyStripeCabPaymentUseCase
     @inject("StripePaymentProcessor")
     private _stripeProcessor: StripePaymentProcessor,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
     @inject("ITransactionManager")
     private _transactionManager: ITransactionManager,
   ) {}
@@ -49,19 +51,24 @@ export class VerifyStripeCabPaymentUseCase
       await this._transactionManager.withTransaction(session, async () => {
         await this._stripeProcessor.processPayment(ride, session);
         await this._rideRepo.update(ride, tripId);
+        await this._cabRepo.updateActiveRide(ride.driver_id!, null, session);
       });
     } finally {
       this._transactionManager.endSession(session);
     }
 
     this._socketEmitter.emitToUser(riderId, SocketEvents.RIDER_EVENTS, {
-      type: RIDER_EVENTS_TYPES.COMPLETED,
-      payload: { tripId, event: SocketEvents.PAYMENT_SUCCESS },
+      type: RIDER_EVENTS_TYPES.PAYMENT_SUCCESS,
+      payload: { ride_id: tripId, event: SocketEvents.PAYMENT_SUCCESS },
     });
 
-    this._socketEmitter.emitToUser(ride.driver_id, SocketEvents.DRIVER_EVENTS, {
-      type: DRIVER_EVENTS_TYPES.COMPLETED,
-      payload: { tripId, event: SocketEvents.PAYMENT_RECEIVED },
-    });
+    this._socketEmitter.emitToUser(
+      ride.driver_id!,
+      SocketEvents.DRIVER_EVENTS,
+      {
+        type: DRIVER_EVENTS_TYPES.PAYMENT_RECEIVED,
+        payload: { ride_id: tripId, event: SocketEvents.PAYMENT_RECEIVED },
+      },
+    );
   }
 }

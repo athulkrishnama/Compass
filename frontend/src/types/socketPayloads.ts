@@ -5,6 +5,8 @@ export const DRIVER_EVENTS_TYPES = {
     ARRIVED: "driver:arrived",
     STARTED: "driver:started",
     COMPLETED: "driver:completed",
+    PAYMENT_INITIATED: "driver:payment_initiated",
+    PAYMENT_RECEIVED: "driver:payment_received",
 } as const;
 export type DRIVER_EVENTS_TYPE =
     (typeof DRIVER_EVENTS_TYPES)[keyof typeof DRIVER_EVENTS_TYPES];
@@ -16,6 +18,7 @@ export const RIDER_EVENTS_TYPES = {
     ARRIVED: "rider:arrived",
     STARTED: "rider:started",
     COMPLETED: "rider:completed",
+    PAYMENT_SUCCESS: "rider:payment_success",
 } as const;
 export type RIDER_EVENTS_TYPE =
     (typeof RIDER_EVENTS_TYPES)[keyof typeof RIDER_EVENTS_TYPES];
@@ -36,13 +39,25 @@ export interface DriverRequestedPayload {
     };
 }
 
+export interface DriverPaymentInitiatedPayload {
+    type: typeof DRIVER_EVENTS_TYPES.PAYMENT_INITIATED;
+    payload: { ride_id: string; event: string };
+}
+
+export interface DriverPaymentReceivedPayload {
+    type: typeof DRIVER_EVENTS_TYPES.PAYMENT_RECEIVED;
+    payload: { ride_id: string; event: string };
+}
+
 export type DriverEventPayload =
     | DriverRequestedPayload
     | DriverAcceptedPayload
     | DriverCancelledPayload
     | DriverArrivedPayload
     | DriverStartedPayload
-    | DriverCompletedPayload;
+    | DriverCompletedPayload
+    | DriverPaymentInitiatedPayload
+    | DriverPaymentReceivedPayload;
 
 export interface DriverArrivedPayload {
     type: typeof DRIVER_EVENTS_TYPES.ARRIVED;
@@ -112,10 +127,16 @@ export interface RiderCompletedPayload {
     payload: { ride_id: string };
 }
 
+export interface RiderPaymentSuccessPayload {
+    type: typeof RIDER_EVENTS_TYPES.PAYMENT_SUCCESS;
+    payload: { ride_id: string; event: string };
+}
+
 export type RiderEventPayload =
     | RiderAssignedPayload
     | RiderCancelledPayload
     | RiderNoDriversPayload
     | RiderArrivedPayload
     | RiderStartedPayload
-    | RiderCompletedPayload;
+    | RiderCompletedPayload
+    | RiderPaymentSuccessPayload;

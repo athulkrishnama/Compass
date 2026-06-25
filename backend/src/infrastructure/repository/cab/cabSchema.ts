@@ -10,6 +10,7 @@ export interface ICabDocument extends Document {
   vehicleDetails?: vehicle;
   isOnline: boolean;
   userId: string;
+  active_ride_id?: Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -63,6 +64,11 @@ export const cabSchema = new Schema<ICabDocument>({
     type: String,
     required: true,
     ref: "users",
+  },
+  active_ride_id: {
+    type: Schema.Types.ObjectId,
+    ref: "rides",
+    default: null,
   },
   createdAt: {
     type: Date,

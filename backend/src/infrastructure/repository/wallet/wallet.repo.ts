@@ -53,9 +53,10 @@ export class WalletRepo
       { ownerId, ownerType },
       {
         $inc: { balance: -amount },
+        $setOnInsert: { ownerId, ownerType, createdAt: new Date() },
         $set: { updatedAt: new Date() },
       },
-      { session },
+      { upsert: true, session },
     );
   }
 

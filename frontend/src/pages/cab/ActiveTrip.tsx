@@ -17,6 +17,7 @@ import { useSocketEvent } from "@/hooks/useSocketEvent";
 import Loading from "@/components/shared/loading/Loading";
 import { NoActiveRide } from "@/components/cab/activeTrip/NoActiveRide";
 import { ActiveTripCompletedOverlay } from "@/components/cab/activeTrip/ActiveTripCompletedOverlay";
+import { ActiveTripRecordCashModal } from "@/components/cab/activeTrip/ActiveTripRecordCashModal";
 import { toast } from "sonner";
 import {
     DRIVER_EVENTS_TYPES,
@@ -107,7 +108,17 @@ export default function ActiveTripPage() {
                     break;
                 case DRIVER_EVENTS_TYPES.COMPLETED:
                     setPhase(RIDE_STATUSES.COMPLETED);
-                    // Optionally navigate away here
+                    break;
+                case DRIVER_EVENTS_TYPES.PAYMENT_INITIATED:
+                    queryClient.invalidateQueries({
+                        queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                    });
+                    break;
+                case DRIVER_EVENTS_TYPES.PAYMENT_RECEIVED:
+                    queryClient.invalidateQueries({
+                        queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                    });
+                    toast.success("Payment Received!");
                     break;
                 case DRIVER_EVENTS_TYPES.CANCELLED:
                     setPhase(RIDE_STATUSES.CANCELLED);
@@ -306,15 +317,29 @@ export default function ActiveTripPage() {
 
                 {phase === RIDE_STATUSES.COMPLETED ? (
                     <div className="pointer-events-auto">
-                        <ActiveTripCompletedOverlay
-                            onAcknowledge={() => {
-                                setPhase(null);
-                                queryClient.invalidateQueries({
-                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
-                                });
-                                navigate({ to: "/cab" });
-                            }}
-                        />
+                        {rideDetails.paymentStatus === "SUCCESS" ? (
+                            <ActiveTripCompletedOverlay
+                                onAcknowledge={() => {
+                                    setPhase(null);
+                                    queryClient.invalidateQueries({
+                                        queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                    });
+                                    navigate({ to: "/cab" });
+                                }}
+                            />
+                        ) : (
+                            <div className="bg-white rounded-t-3xl shadow-2xl p-8 flex flex-col items-center justify-center text-center">
+                                <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4" />
+                                <h2 className="text-xl font-bold text-gray-900">
+                                    Waiting for Payment
+                                </h2>
+                                <p className="text-gray-500 mt-2">
+                                    {rideDetails.paymentMethod === "CASH"
+                                        ? "Please collect cash from the rider."
+                                        : "Waiting for the rider to complete payment..."}
+                                </p>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div className="pointer-events-auto flex flex-col justify-end shrink-0 w-full">
@@ -338,6 +363,21 @@ export default function ActiveTripPage() {
                 isOpen={cancelOpen}
                 onClose={() => setCancelOpen(false)}
                 onConfirm={handleCancelConfirm}
+            />
+
+            <ActiveTripRecordCashModal
+                isOpen={
+                    phase === RIDE_STATUSES.COMPLETED &&
+                    rideDetails.paymentMethod === "CASH" &&
+                    rideDetails.paymentStatus !== "SUCCESS"
+                }
+                tripId={rideDetails._id}
+                expectedAmount={rideDetails.selected_fare?.fare ?? 0}
+                onSuccess={() => {
+                    queryClient.invalidateQueries({
+                        queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                    });
+                }}
             />
         </div>
     );
