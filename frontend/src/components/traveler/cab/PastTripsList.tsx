@@ -21,9 +21,11 @@ const PastTripsList = ({ trips, onSelect }: PastTripsListProps) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.24 }}
         >
-            <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase mb-3">
-                {t(translationKey.cabHome.selectFromPastTrips)}
-            </p>
+            <div className="mb-3">
+                <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase">
+                    {t(translationKey.cabHome.selectFromPastTrips)}
+                </p>
+            </div>
             <div className="space-y-3">
                 {trips.map((trip, i) => (
                     <PastTripCard

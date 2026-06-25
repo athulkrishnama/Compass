@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -234,10 +234,18 @@ const CabHome = () => {
                         </motion.div>
 
                         {pastTrips.length > 0 && (
-                            <PastTripsList
-                                trips={pastTrips}
-                                onSelect={handleSelectPastTrip}
-                            />
+                            <div className="space-y-4">
+                                <PastTripsList
+                                    trips={pastTrips}
+                                    onSelect={handleSelectPastTrip}
+                                />
+                                <Link
+                                    to="/traveler/cab/history"
+                                    className="inline-flex items-center justify-center w-full py-2.5 text-sm font-medium text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+                                >
+                                    {t(translationKey.cabHome.showAllRides)}
+                                </Link>
+                            </div>
                         )}
                     </div>
 

@@ -1017,6 +1017,7 @@ export default {
         searchResults: "cabHome.searchResults",
         maxDistanceExceeded: "cabHome.maxDistanceExceeded",
         noRouteFound: "cabHome.noRouteFound",
+        showAllRides: "cabHome.showAllRides",
     },
     fareSummary: {
         distance: "fareSummary.distance",
@@ -1097,5 +1098,13 @@ export default {
         noActiveRideTitle: "activeTrip.noActiveRideTitle",
         noActiveRideDescription: "activeTrip.noActiveRideDescription",
         droppedOffPassenger: "activeTrip.droppedOffPassenger",
+    },
+    cabHistory: {
+        title: "cabHistory.title",
+        subtitle: "cabHistory.subtitle",
+        noTrips: "cabHistory.noTrips",
+        noTripsDescription: "cabHistory.noTripsDescription",
+        retryPayment: "cabHistory.retryPayment",
+        paymentPending: "cabHistory.paymentPending",
     },
 };

@@ -1016,7 +1016,8 @@
         "selectFromPastTrips": "Select from past trips",
         "searchResults": "Search Results",
         "maxDistanceExceeded": "The pickup and drop-off locations should not be more than 100 km apart.",
-        "noRouteFound": "No driving route found between these locations."
+        "noRouteFound": "No driving route found between these locations.",
+        "showAllRides": "Show all rides"
     },
     "fareSummary": {
         "distance": "Distance",
@@ -1097,5 +1098,13 @@
         "noActiveRideTitle": "No Active Ride",
         "noActiveRideDescription": "You don't have any active rides at the moment. Return to the dashboard to accept new requests.",
         "droppedOffPassenger": "You have successfully dropped off the passenger. Great job!"
+    },
+    "cabHistory": {
+        "title": "Your Past Rides",
+        "subtitle": "Review your previous journeys, receipts, and payment statuses.",
+        "noTrips": "No trips found",
+        "noTripsDescription": "You haven't completed any rides yet. Book a cab to get started!",
+        "retryPayment": "Complete Payment",
+        "paymentPending": "Payment Pending"
     }
 }
