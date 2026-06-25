@@ -197,7 +197,11 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 const currentPath =
                                     router.state.location.pathname;
                                 if (currentPath !== "/cab/activeTrip") {
-                                    router.navigate({ to: "/cab/activeTrip" });
+                                    setTimeout(() => {
+                                        router.navigate({
+                                            to: "/cab/activeTrip",
+                                        });
+                                    }, 500);
                                 }
                                 break;
                             }
