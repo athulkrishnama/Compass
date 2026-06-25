@@ -8,6 +8,7 @@ import RideLocations from "@/components/traveler/cab/ride/RideLocations";
 import TripStats from "@/components/traveler/cab/ride/TripStats";
 import RideStatusSection from "@/components/traveler/cab/ride/RideStatusSection";
 import { ActiveTripOtpDisplay } from "@/components/cab/activeTrip/ActiveTripOtpDisplay";
+import RideCabDetails from "@/components/cab/RideCabDetails";
 import { RidePaymentModal } from "@/components/traveler/cab/ride/RidePaymentModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
@@ -160,6 +161,17 @@ const RideDetails = () => {
                         />
                         <Separator className="bg-neutral-100" />
                         <RideStatusSection status={ride.status} />
+
+                        {(
+                            [
+                                RIDE_STATUSES.MATCHED,
+                                RIDE_STATUSES.ARRIVED,
+                                RIDE_STATUSES.IN_TRANSIT,
+                                RIDE_STATUSES.COMPLETED,
+                            ] as string[]
+                        ).includes(ride.status) && (
+                            <RideCabDetails rideId={ride._id} />
+                        )}
 
                         {ride.status === RIDE_STATUSES.ARRIVED && ride.otp && (
                             <ActiveTripOtpDisplay otp={ride.otp} />

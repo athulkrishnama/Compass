@@ -3,4 +3,5 @@ export enum RIDE_ROUTES {
     SEARCH = "/ride/search",
     GET_RIDE_DETAILS = "/ride",
     DRIVER_ACTIVE_RIDE = "/ride/active-ride",
+    CAB_DETAILS = "/cab-details",
 }

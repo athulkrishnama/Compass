@@ -5,12 +5,14 @@ import {
     createRide,
     getRideDetails,
     getActiveRideDetails,
+    getRideCabDetails,
 } from "@/services/api/rideApiService";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type {
     ICreateRideResponseDTO,
     IRideDetailsResponseDTO,
     IActiveRideDetailsResponseDTO,
+    IRideCabDetailsResponseDTO,
 } from "@/types/api/responses/rideResponses";
 
 export const createRideMutationOptions = () => {
@@ -35,5 +37,13 @@ export function getActiveRideDetailsQueryOptions() {
         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
         queryFn: getActiveRideDetails,
         retry: false,
+    });
+}
+
+export function getRideCabDetailsQueryOptions(rideId: string) {
+    return queryOptions<HttpResponse<IRideCabDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.RIDE_CAB_DETAILS, rideId],
+        queryFn: () => getRideCabDetails(rideId),
+        enabled: !!rideId,
     });
 }

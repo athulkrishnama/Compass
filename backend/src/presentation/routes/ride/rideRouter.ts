@@ -46,6 +46,15 @@ export class RideRouter {
         rideController.handleGetRideDetails(req, res, next);
       },
     );
+
+    this._router.get(
+      RIDE_ROUTES.CAB_DETAILS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER, ROLES.CAB]),
+      (req, res, next) => {
+        rideController.handleGetRideCabDetails(req, res, next);
+      },
+    );
   }
 
   getRouter() {

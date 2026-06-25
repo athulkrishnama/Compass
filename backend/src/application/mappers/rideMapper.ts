@@ -2,6 +2,9 @@ import { RideEntity } from "@domain/entities/ride/ride.entity";
 import { RideDetailsResponseDTO } from "@domain/dtos/ride/rideDetails.dto";
 import { IActiveRideDetailsResponseDTO } from "@domain/dtos/ride/activeRideDetails.dto";
 import { UserEntity } from "@domain/entities/user/user.entity";
+import { CabEntity } from "@domain/entities/cab/cab.entity";
+import { RideCabDetailsResponseDTO } from "@domain/dtos/ride/rideCabDetails.dto";
+import { VEHICLE_TYPES } from "@domain/types/vehicleType";
 
 export class RideMapper {
   static toRideDetailsResponseDTOFromEntity(
@@ -18,6 +21,8 @@ export class RideMapper {
       otp: entity.otp,
       cancelled_by: entity.cancelled_by,
       events: entity.events,
+      paymentStatus: entity.paymentStatus,
+      paymentMethod: entity.paymentMethod,
     };
   }
 
@@ -40,6 +45,26 @@ export class RideMapper {
         full_name: rider.full_name,
         mobile: rider.mobile,
         profile_image: rider.profile_image,
+      },
+    };
+  }
+
+  static toRideCabDetailsResponseDTO(
+    driver: UserEntity,
+    cab: CabEntity,
+  ): RideCabDetailsResponseDTO {
+    return {
+      driver: {
+        _id: driver._id ?? "",
+        full_name: driver.full_name,
+        mobile: driver.mobile,
+        profile_image: driver.profile_image,
+      },
+      cab: {
+        model: cab.vehicleDetails?.model ?? "",
+        type: cab.vehicleDetails?.type ?? VEHICLE_TYPES[0],
+        registrationNumber: cab.vehicleDetails?.registrationNumber ?? "",
+        images: cab.vehicleDetails?.images ?? [],
       },
     };
   }

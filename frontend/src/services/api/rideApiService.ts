@@ -4,6 +4,7 @@ import type { ICreateRideRequestDTO } from "@/types/api/requests/rideRequests";
 import type {
     IRideDetailsResponseDTO,
     IActiveRideDetailsResponseDTO,
+    IRideCabDetailsResponseDTO,
 } from "@/types/api/responses/rideResponses";
 import type { HttpResponse } from "@/types/api/responseType";
 import { AxiosError } from "axios";
@@ -42,6 +43,22 @@ export async function getActiveRideDetails(): Promise<
     try {
         const response = await axiosInstance.get(
             RIDE_ROUTES.DRIVER_ACTIVE_RIDE
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
+export async function getRideCabDetails(
+    rideId: string
+): Promise<HttpResponse<IRideCabDetailsResponseDTO>> {
+    try {
+        const response = await axiosInstance.get(
+            `${RIDE_ROUTES.GET_RIDE_DETAILS}/${rideId}${RIDE_ROUTES.CAB_DETAILS}`
         );
         return response.data;
     } catch (error) {

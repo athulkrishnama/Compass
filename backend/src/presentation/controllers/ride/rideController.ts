@@ -6,6 +6,7 @@ import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createF
 import { ICreateRideUseCase } from "@application/interfaces/useCase/ride/createRideUseCase.interface";
 import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/getRideDetailsUseCase.interface";
 import { IActiveRideDetailsUseCase } from "@application/interfaces/useCase/ride/activeRideDetailsUseCase.interface";
+import { IGetRideCabDetailsUseCase } from "@application/interfaces/useCase/ride/getRideCabDetailsUseCase.interface";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
@@ -26,6 +27,8 @@ export class RideController {
     private _getRideDetailsUseCase: IGetRideDetailsUseCase,
     @inject("IActiveRideDetailsUseCase")
     private _activeRideDetailsUseCase: IActiveRideDetailsUseCase,
+    @inject("IGetRideCabDetailsUseCase")
+    private _getRideCabDetailsUseCase: IGetRideCabDetailsUseCase,
   ) {}
 
   async handleCreateFare(req: Request, res: Response, next: NextFunction) {
@@ -131,6 +134,32 @@ export class RideController {
         HTTP_STATUS_CODE.OK,
         Messages.RIDE_DETAILS_FETCHED_SUCCESSFULLY,
         rideDetails,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetRideCabDetails(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const rideId = req.params.id;
+
+      if (!rideId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
+      }
+
+      const cabDetails = await this._getRideCabDetailsUseCase.execute(rideId);
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        cabDetails,
       );
     } catch (error) {
       next(error);

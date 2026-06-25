@@ -202,6 +202,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                             to: "/cab/activeTrip",
                                         });
                                     }, 500);
+                                } else {
+                                    setTimeout(() => {
+                                        queryClient.invalidateQueries({
+                                            queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                        });
+                                    }, 500);
                                 }
                                 break;
                             }

@@ -40,3 +40,18 @@ export interface IActiveRideDetailsResponseDTO {
         profile_image?: string;
     };
 }
+
+export interface IRideCabDetailsResponseDTO {
+    driver: {
+        _id: string;
+        full_name: string;
+        mobile?: string;
+        profile_image?: string;
+    };
+    cab: {
+        model: string;
+        type: string;
+        registrationNumber: string;
+        images: string[];
+    };
+}
