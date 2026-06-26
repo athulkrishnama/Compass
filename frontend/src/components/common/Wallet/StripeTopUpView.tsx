@@ -19,11 +19,7 @@ interface StripeTopUpFormProps {
     onBack: () => void;
 }
 
-function StripeTopUpForm({
-    amount,
-    onSuccess,
-    onBack,
-}: StripeTopUpFormProps) {
+function StripeTopUpForm({ amount, onSuccess, onBack }: StripeTopUpFormProps) {
     const stripe = useStripe();
     const elements = useElements();
     const [isLoading, setIsLoading] = useState(false);

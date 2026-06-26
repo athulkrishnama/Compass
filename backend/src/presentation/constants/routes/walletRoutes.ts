@@ -3,4 +3,3 @@ export enum WalletRoutes {
   TRANSACTIONS = "/transactions",
   TOP_UP = "/top-up",
 }
-

@@ -12,7 +12,7 @@ import {
     getWalletSummary,
     getWalletTransactions,
     createTopUpPaymentIntent,
-    ITransaction,
+    type ITransaction,
 } from "@/services/api/walletService";
 import { StripeTopUpView } from "./StripeTopUpView";
 import translationKey from "@/utils/i18n/translationKey";
@@ -75,6 +75,9 @@ export function WalletComponent({
             </div>
         );
     }
+
+    const transactions = transactionsData?.transactions || [];
+    const totalPages = transactionsData?.totalPages || 0;
 
     return (
         <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
@@ -212,8 +215,8 @@ export function WalletComponent({
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                            {transactionsData?.transactions?.length > 0 ? (
-                                transactionsData.transactions.map((tx: ITransaction) => (
+                            {transactions.length > 0 ? (
+                                transactions.map((tx: ITransaction) => (
                                     <tr
                                         key={tx.id}
                                         className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
@@ -254,6 +257,7 @@ export function WalletComponent({
                                                     <p className="font-semibold text-neutral-800 mb-1">
                                                         {tx.type}
                                                     </p>
+                                                    <p className="text-neutral-500"></p>
                                                 </PopoverContent>
                                             </Popover>
                                         </td>
@@ -306,7 +310,7 @@ export function WalletComponent({
                 </div>
 
                 {/* Pagination */}
-                {transactionsData?.totalPages > 1 && (
+                {totalPages > 1 && (
                     <div className="p-4 border-t border-neutral-100 dark:border-neutral-700 flex justify-between items-center">
                         <button
                             disabled={page === 1}
@@ -316,10 +320,10 @@ export function WalletComponent({
                             Previous
                         </button>
                         <span className="text-sm text-neutral-500">
-                            Page {page} of {transactionsData.totalPages}
+                            Page {page} of {totalPages}
                         </span>
                         <button
-                            disabled={page === transactionsData.totalPages}
+                            disabled={page === totalPages}
                             onClick={() => setPage(page + 1)}
                             className="px-4 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-lg disabled:opacity-50"
                         >

@@ -7,9 +7,9 @@ export default function HotelTransactions() {
 
     return (
         <div className="pt-8">
-            <WalletComponent 
-                role="HOTEL" 
-                title={t(translationKeys.transactions.title)} 
+            <WalletComponent
+                role="HOTEL"
+                title={t(translationKeys.transactions.title)}
             />
         </div>
     );
