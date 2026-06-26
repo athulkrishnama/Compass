@@ -6,4 +6,5 @@ export enum RIDE_ROUTES {
   CAB_DETAILS = "/:id/cab-details",
   PAST_TRIPS = "/past-trips",
   RIDER_ACTIVE_RIDE = "/rider/active-ride",
+  DRIVER_PAST_TRIPS = "/driver-past-trips",
 }

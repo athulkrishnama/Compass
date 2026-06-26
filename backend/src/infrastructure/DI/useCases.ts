@@ -178,6 +178,8 @@ import { IGetRiderPastTripsUseCase } from "@application/interfaces/useCase/ride/
 import { GetRiderPastTripsUseCase } from "@useCases/ride/getRiderPastTripsUseCase";
 import { IGetRiderActiveRideUseCase } from "@application/interfaces/useCase/ride/getRiderActiveRideUseCase.interface";
 import { GetRiderActiveRideUseCase } from "@useCases/ride/getRiderActiveRideUseCase";
+import { IGetDriverPastTripsUseCase } from "@application/interfaces/useCase/ride/getDriverPastTripsUseCase.interface";
+import { GetDriverPastTripsUseCase } from "@useCases/ride/getDriverPastTripsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -491,6 +493,10 @@ export function registerUsecases() {
   container.registerSingleton<IGetRiderActiveRideUseCase>(
     "IGetRiderActiveRideUseCase",
     GetRiderActiveRideUseCase,
+  );
+  container.registerSingleton<IGetDriverPastTripsUseCase>(
+    "IGetDriverPastTripsUseCase",
+    GetDriverPastTripsUseCase,
   );
   container.registerSingleton<IGetNotificationsUseCase>(
     "IGetNotificationsUseCase",

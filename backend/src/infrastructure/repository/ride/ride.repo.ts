@@ -95,6 +95,30 @@ export class RideRepo
     };
   }
 
+  async fetchDriverPastTrips(
+    driver_id: string,
+    page: number,
+    limit: number,
+  ): Promise<{ trips: RideEntity[]; total: number }> {
+    const skip = (page - 1) * limit;
+    const filter = {
+      driver_id: new Types.ObjectId(driver_id),
+      status: {
+        $in: [RIDE_STATUSES.COMPLETED, RIDE_STATUSES.CANCELLED],
+      },
+    };
+
+    const [docs, total] = await Promise.all([
+      this._model.find(filter).sort({ _id: -1 }).skip(skip).limit(limit),
+      this._model.countDocuments(filter),
+    ]);
+
+    return {
+      trips: docs.map((doc) => this.toEntity(doc)),
+      total,
+    };
+  }
+
   toMongoDoc(entity: RideEntity): IRideDocument {
     return new this._model({
       _id: entity._id ? new Types.ObjectId(entity._id) : new Types.ObjectId(),

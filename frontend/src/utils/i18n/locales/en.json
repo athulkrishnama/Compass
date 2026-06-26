@@ -1108,5 +1108,11 @@
         "noTripsDescription": "You haven't completed any rides yet. Book a cab to get started!",
         "retryPayment": "Complete Payment",
         "paymentPending": "Payment Pending"
+    },
+    "driverHistory": {
+        "title": "Past Trips",
+        "subtitle": "Review all the trips you have completed as a driver.",
+        "noTrips": "No trips found",
+        "noTripsDescription": "You haven't completed any trips yet. Accept ride requests to get started!"
     }
 }

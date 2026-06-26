@@ -9,6 +9,7 @@ import { IActiveRideDetailsUseCase } from "@application/interfaces/useCase/ride/
 import { IGetRideCabDetailsUseCase } from "@application/interfaces/useCase/ride/getRideCabDetailsUseCase.interface";
 import { IGetRiderPastTripsUseCase } from "@application/interfaces/useCase/ride/getRiderPastTripsUseCase.interface";
 import { IGetRiderActiveRideUseCase } from "@application/interfaces/useCase/ride/getRiderActiveRideUseCase.interface";
+import { IGetDriverPastTripsUseCase } from "@application/interfaces/useCase/ride/getDriverPastTripsUseCase.interface";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
@@ -35,6 +36,8 @@ export class RideController {
     private _getRiderPastTripsUseCase: IGetRiderPastTripsUseCase,
     @inject("IGetRiderActiveRideUseCase")
     private _getRiderActiveRideUseCase: IGetRiderActiveRideUseCase,
+    @inject("IGetDriverPastTripsUseCase")
+    private _getDriverPastTripsUseCase: IGetDriverPastTripsUseCase,
   ) {}
 
   async handleCreateFare(req: Request, res: Response, next: NextFunction) {
@@ -188,6 +191,38 @@ export class RideController {
 
       const pastTripsData = await this._getRiderPastTripsUseCase.execute(
         riderId,
+        page,
+        limit,
+      );
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        pastTripsData,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetDriverPastTrips(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const driverId = req.user.id;
+      if (!driverId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_ID);
+      }
+
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
+      const pastTripsData = await this._getDriverPastTripsUseCase.execute(
+        driverId,
         page,
         limit,
       );

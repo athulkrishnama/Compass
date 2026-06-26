@@ -1115,4 +1115,10 @@ export default {
         totalBalance: "wallet.totalBalance",
         recentTransactions: "wallet.recentTransactions",
     },
+    driverHistory: {
+        title: "driverHistory.title",
+        subtitle: "driverHistory.subtitle",
+        noTrips: "driverHistory.noTrips",
+        noTripsDescription: "driverHistory.noTripsDescription",
+    },
 };

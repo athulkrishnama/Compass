@@ -6,6 +6,7 @@ import type {
     IActiveRideDetailsResponseDTO,
     IRideCabDetailsResponseDTO,
     IRiderPastTripResponseDTO,
+    IDriverPastTripResponseDTO,
 } from "@/types/api/responses/rideResponses";
 import type { HttpResponse } from "@/types/api/responseType";
 import { AxiosError } from "axios";
@@ -94,6 +95,26 @@ export async function getRiderPastTrips(
         const response = await axiosInstance.get(RIDE_ROUTES.PAST_TRIPS, {
             params: { page, limit },
         });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
+export async function getDriverPastTrips(
+    page: number = 1,
+    limit: number = 10
+): Promise<
+    HttpResponse<{ trips: IDriverPastTripResponseDTO[]; total: number }>
+> {
+    try {
+        const response = await axiosInstance.get(
+            RIDE_ROUTES.DRIVER_PAST_TRIPS,
+            { params: { page, limit } }
+        );
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {

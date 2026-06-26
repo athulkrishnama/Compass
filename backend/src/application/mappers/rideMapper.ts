@@ -7,14 +7,13 @@ import { RideCabDetailsResponseDTO } from "@domain/dtos/ride/rideCabDetails.dto"
 import { VEHICLE_TYPES } from "@domain/types/vehicleType";
 
 import { RiderPastTripResponseDTO } from "@domain/dtos/ride/riderPastTrip.dto";
+import { DriverPastTripResponseDTO } from "@domain/dtos/ride/driverPastTrip.dto";
 import { RIDE_EVENT_NAMES } from "@domain/types/rideEvent";
 
 export class RideMapper {
   static toRiderPastTripResponseDTO(
     entity: RideEntity,
   ): RiderPastTripResponseDTO {
-    // Find the requested event to use as the date, or fallback to current date.
-    // In a real scenario we'd use the document's createdAt timestamp if available.
     const requestedEvent = entity.events?.find(
       (e) => e.event_name === RIDE_EVENT_NAMES.REQUESTED,
     );
@@ -22,7 +21,36 @@ export class RideMapper {
       ? new Date(requestedEvent.timestamp)
       : new Date();
 
-    // Format date like "24 Mar 2026"
+    const dateOptions: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    };
+    const formattedDate = rideDate.toLocaleDateString("en-GB", dateOptions);
+
+    return {
+      _id: entity._id,
+      status: entity.status,
+      pickup_point: entity.pickup_point,
+      dropoff_point: entity.dropoff_point,
+      distance: entity.distance,
+      time: entity.time,
+      selected_fare: entity.selected_fare,
+      date: formattedDate,
+      paymentStatus: entity.paymentStatus,
+    };
+  }
+
+  static toDriverPastTripResponseDTO(
+    entity: RideEntity,
+  ): DriverPastTripResponseDTO {
+    const requestedEvent = entity.events?.find(
+      (e) => e.event_name === RIDE_EVENT_NAMES.REQUESTED,
+    );
+    const rideDate = requestedEvent
+      ? new Date(requestedEvent.timestamp)
+      : new Date();
+
     const dateOptions: Intl.DateTimeFormatOptions = {
       day: "numeric",
       month: "short",

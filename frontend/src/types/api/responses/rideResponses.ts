@@ -67,3 +67,15 @@ export interface IRiderPastTripResponseDTO {
     date: string;
     paymentStatus?: string;
 }
+
+export interface IDriverPastTripResponseDTO {
+    _id: string;
+    status: RideStatus;
+    pickup_point: Coordinate;
+    dropoff_point: Coordinate;
+    distance: number;
+    time: number;
+    selected_fare: FareOption;
+    date: string;
+    paymentStatus?: string;
+}
