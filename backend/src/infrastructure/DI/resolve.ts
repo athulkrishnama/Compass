@@ -11,6 +11,7 @@ import { PaymentController } from "@presentation/controllers/payment/paymentCont
 import { WebHookController } from "@presentation/controllers/webhook/webhookController";
 import { BookingController } from "@presentation/controllers/hotelBooking/BookingController";
 import { NotificationController } from "@presentation/controllers/notification/notificationController";
+import { WalletController } from "@presentation/controllers/wallet/walletController";
 import { RideController } from "@presentation/controllers/ride/rideController";
 import { LocationEventHandler } from "@presentation/webSocket/eventHandlers/locationEventHandler";
 import { RideEventHandler } from "@presentation/webSocket/eventHandlers/rideEventHandler";
@@ -30,6 +31,7 @@ export const paymentController = container.resolve(PaymentController);
 export const webhookController = container.resolve(WebHookController);
 export const bookingController = container.resolve(BookingController);
 export const notificationController = container.resolve(NotificationController);
+export const walletController = container.resolve(WalletController);
 export const rideController = container.resolve(RideController);
 export const locationEventHandler = container.resolve<LocationEventHandler>(
   "LocationEventHandler",

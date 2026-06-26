@@ -20,9 +20,9 @@ function ProfileLayout() {
             route: "/traveler/profile",
         },
         {
-            label: t(translationKey.button.wallet),
+            label: t(translationKey.wallet.myWallet) || "Wallet",
             icon: Wallet,
-            route: "/traveler/profile/wallet",
+            route: "/traveler/wallet" as keyof FileRoutesByTo,
         },
     ];
 

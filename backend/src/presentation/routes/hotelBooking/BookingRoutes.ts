@@ -93,21 +93,6 @@ export class BookingRouter {
     );
 
     this._router.get(
-      BookingRoutes.HOTEL_WALLET,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL]),
-      (req, res, next) => bookingController.getWallet(req, res, next),
-    );
-
-    this._router.get(
-      BookingRoutes.HOTEL_TRANSACTIONS,
-      authMiddleware.check,
-      authMiddleware.authorizeRole([ROLES.HOTEL]),
-      (req, res, next) =>
-        bookingController.getProviderTransactions(req, res, next),
-    );
-
-    this._router.get(
       BookingRoutes.GET_BOOKING_BY_PAYMENT_ID,
       (req, res, next) =>
         bookingController.getBookingByPaymentId(req, res, next),

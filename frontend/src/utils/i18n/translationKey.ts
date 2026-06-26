@@ -1109,4 +1109,10 @@ export default {
         retryPayment: "cabHistory.retryPayment",
         paymentPending: "cabHistory.paymentPending",
     },
+    wallet: {
+        myWallet: "wallet.myWallet",
+        manageTransactions: "wallet.manageTransactions",
+        totalBalance: "wallet.totalBalance",
+        recentTransactions: "wallet.recentTransactions",
+    },
 };

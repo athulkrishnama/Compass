@@ -24,7 +24,9 @@ import {
 
 @injectable()
 export class InitiateCabPaymentUseCase implements IInitiateCabPaymentUseCase {
-  private readonly _processors: Record<PAYMENT_METHOD, IPaymentProcessor>;
+  private readonly _processors: Partial<
+    Record<PAYMENT_METHOD, IPaymentProcessor>
+  >;
 
   constructor(
     @inject("IRideRepo") private _rideRepo: IRideRepo,

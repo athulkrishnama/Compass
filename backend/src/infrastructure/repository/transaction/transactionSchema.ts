@@ -6,15 +6,12 @@ import { Schema, Types } from "mongoose";
 export interface ITransactionDocument extends Document {
   _id: Types.ObjectId;
   bookingId: string;
-  userId?: string;
-  driverId?: string;
-  serviceType: SERVICE_TYPE;
-  providerId: string;
+  ownerType: SERVICE_TYPE;
+  ownerId: string;
   paymentMethod?: PAYMENT_METHOD;
   amount: number;
   commissionRate?: number;
   commissionAmount?: number;
-  providerAmount?: number;
   type: TRANSACTION_TYPE;
   description?: string;
   createdAt?: Date;
@@ -22,14 +19,12 @@ export interface ITransactionDocument extends Document {
 
 export const transactionSchema = new Schema<ITransactionDocument>({
   bookingId: { type: String, required: true },
-  userId: { type: String },
-  driverId: { type: String },
-  serviceType: {
+  ownerType: {
     type: String,
     enum: Object.values(SERVICE_TYPE),
     required: true,
   },
-  providerId: { type: String, required: true },
+  ownerId: { type: String, required: true },
   paymentMethod: {
     type: String,
     enum: Object.values(PAYMENT_METHOD),
@@ -37,7 +32,6 @@ export const transactionSchema = new Schema<ITransactionDocument>({
   amount: { type: Number, required: true },
   commissionRate: { type: Number },
   commissionAmount: { type: Number },
-  providerAmount: { type: Number },
   type: {
     type: String,
     enum: Object.values(TRANSACTION_TYPE),
@@ -46,3 +40,9 @@ export const transactionSchema = new Schema<ITransactionDocument>({
   description: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
+
+transactionSchema.index({ ownerId: 1, ownerType: 1, createdAt: -1 });
+transactionSchema.index({ type: 1 });
+transactionSchema.index({ paymentMethod: 1 });
+transactionSchema.index({ createdAt: -1 });
+transactionSchema.index({ bookingId: 1 });

@@ -3,6 +3,7 @@ import { IRecordCashPaymentUseCase } from "@application/interfaces/useCase/cabPa
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { IWalletRepo } from "@application/interfaces/repository/wallet/wallet.repo.interface";
 import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
+import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { ITransactionManager } from "@application/interfaces/service/ITransactionManager";
@@ -27,6 +28,7 @@ import {
   RIDER_EVENTS_TYPES,
 } from "@domain/types/socketPayloads";
 import { env } from "@config/envConfig";
+import { ROLES } from "@domain/enums/roles";
 
 @injectable()
 export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
@@ -34,6 +36,7 @@ export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("IWalletRepo") private _walletRepo: IWalletRepo,
     @inject("ITransactionRepo") private _transactionRepo: ITransactionRepo,
+    @inject("IUserRepo") private _userRepo: IUserRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("ICabRepo") private _cabRepo: ICabRepo,
     @inject("ITransactionManager")
@@ -79,6 +82,15 @@ export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
     }
 
     const change = amountReceived > fare ? amountReceived - fare : 0;
+
+    const adminUser = await this._userRepo.findByRole(ROLES.ADMIN);
+    if (!adminUser?._id) {
+      throw new ResourceNotFoundException(
+        INTERNAL_ERROR_MESSAGES.USER_NOT_FOUND,
+      );
+    }
+    const adminId = adminUser._id.toString();
+
     const session = await this._transactionManager.startSession();
 
     try {
@@ -90,24 +102,51 @@ export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
           session,
         );
 
+        await this._walletRepo.creditWallet(
+          adminId,
+          SERVICE_TYPE.ADMIN,
+          commissionAmount,
+          session,
+        );
+
         await this._transactionRepo.createInSession(
           {
             bookingId: tripId,
-            userId: ride.rider_id,
-            driverId,
-            serviceType: SERVICE_TYPE.CAB,
-            providerId: driverId,
+            ownerType: SERVICE_TYPE.CAB,
+            ownerId: driverId,
             paymentMethod: PAYMENT_METHOD.CASH,
             amount: commissionAmount,
             commissionRate: env.COMMISSION_PERCENTAGE,
             commissionAmount,
             type: TRANSACTION_TYPE.COMMISSION_DEBIT,
-            description: `Admin commission deducted for trip ${tripId}`,
+            description: `Commission deducted for trip ${tripId}`,
+          },
+          session,
+        );
+
+        await this._transactionRepo.createInSession(
+          {
+            bookingId: tripId,
+            ownerType: SERVICE_TYPE.ADMIN,
+            ownerId: adminId,
+            paymentMethod: PAYMENT_METHOD.CASH,
+            amount: commissionAmount,
+            commissionRate: env.COMMISSION_PERCENTAGE,
+            commissionAmount,
+            type: TRANSACTION_TYPE.COMMISSION,
+            description: `Commission received for trip ${tripId}`,
           },
           session,
         );
 
         if (change > 0) {
+          await this._walletRepo.debitWallet(
+            driverId,
+            SERVICE_TYPE.CAB,
+            change,
+            session,
+          );
+
           await this._walletRepo.creditWallet(
             ride.rider_id,
             SERVICE_TYPE.USER,
@@ -118,33 +157,29 @@ export class RecordCashPaymentUseCase implements IRecordCashPaymentUseCase {
           await this._transactionRepo.createInSession(
             {
               bookingId: tripId,
-              userId: ride.rider_id,
-              driverId,
-              serviceType: SERVICE_TYPE.CAB,
-              providerId: driverId,
+              ownerType: SERVICE_TYPE.USER,
+              ownerId: ride.rider_id,
               paymentMethod: PAYMENT_METHOD.CASH,
               amount: change,
               type: TRANSACTION_TYPE.WALLET_CREDIT,
-              description: `Change returned to rider wallet for trip ${tripId}`,
+              description: `Change returned for trip ${tripId}`,
+            },
+            session,
+          );
+
+          await this._transactionRepo.createInSession(
+            {
+              bookingId: tripId,
+              ownerType: SERVICE_TYPE.CAB,
+              ownerId: driverId,
+              paymentMethod: PAYMENT_METHOD.CASH,
+              amount: change,
+              type: TRANSACTION_TYPE.WALLET_DEBIT,
+              description: `Change returned to rider for trip ${tripId}`,
             },
             session,
           );
         }
-
-        await this._transactionRepo.createInSession(
-          {
-            bookingId: tripId,
-            userId: ride.rider_id,
-            driverId,
-            serviceType: SERVICE_TYPE.CAB,
-            providerId: driverId,
-            paymentMethod: PAYMENT_METHOD.CASH,
-            amount: fare,
-            type: TRANSACTION_TYPE.PAYMENT,
-            description: `Cash payment received for trip ${tripId}`,
-          },
-          session,
-        );
 
         ride.paymentStatus = PAYMENT_STATUS.SUCCESS;
         ride.paymentMethod = PAYMENT_METHOD.CASH;

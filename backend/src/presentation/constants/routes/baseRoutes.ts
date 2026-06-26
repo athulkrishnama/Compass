@@ -12,4 +12,5 @@ export enum Routes {
   RIDE = "/api/v1/ride",
   NOTIFICATION = "/api/v1/notifications",
   MONITORING = "/api/v1/monitoring",
+  WALLET = "/api/v1/wallet",
 }

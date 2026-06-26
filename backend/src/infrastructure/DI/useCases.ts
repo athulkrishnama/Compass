@@ -119,12 +119,14 @@ import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotel
 import { GetHotelDashboardUseCase } from "@useCases/hotelBooking/GetHotelDashboardUseCase";
 import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
 import { GetHotelBookingsUseCase } from "@useCases/hotelBooking/GetHotelBookingsUseCase";
-import { IGetWalletUseCase } from "@application/interfaces/useCase/wallet/IGetWalletUseCase";
-import { GetWalletUseCase } from "@useCases/wallet/GetWalletUseCase";
-import { IGetProviderTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetProviderTransactionsUseCase";
-import { GetProviderTransactionsUseCase } from "@useCases/transaction/GetProviderTransactionsUseCase";
-import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAdminTransactionsUseCase";
-import { GetAdminTransactionsUseCase } from "@useCases/transaction/GetAdminTransactionsUseCase";
+import { IGetWalletSummaryUseCase } from "@application/interfaces/useCase/wallet/IGetWalletSummaryUseCase";
+import { GetWalletSummaryUseCase } from "@useCases/wallet/GetWalletSummaryUseCase";
+import { IGetWalletTransactionsUseCase } from "@application/interfaces/useCase/wallet/IGetWalletTransactionsUseCase";
+import { GetWalletTransactionsUseCase } from "@useCases/wallet/GetWalletTransactionsUseCase";
+import { ITopUpWalletUseCase } from "@application/interfaces/useCase/wallet/ITopUpWalletUseCase";
+import { TopUpWalletUseCase } from "@useCases/wallet/TopUpWalletUseCase";
+import { IGetAllTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAllTransactionsUseCase";
+import { GetAllTransactionsUseCase } from "@useCases/transaction/GetAllTransactionsUseCase";
 import { IGetAdminDashboardStatsUseCase } from "@application/interfaces/useCase/admin/getAdminDashboardStatsUseCase.interface";
 import { GetAdminDashboardStatsUseCase } from "../../application/useCases/admin/GetAdminDashboardStatsUseCase";
 import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createFareUseCase.interface";
@@ -414,17 +416,21 @@ export function registerUsecases() {
     "ICheckOutBookingUseCase",
     CheckOutBookingUseCase,
   );
-  container.registerSingleton<IGetWalletUseCase>(
-    "IGetWalletUseCase",
-    GetWalletUseCase,
+  container.registerSingleton<IGetWalletSummaryUseCase>(
+    "IGetWalletSummaryUseCase",
+    GetWalletSummaryUseCase,
   );
-  container.registerSingleton<IGetProviderTransactionsUseCase>(
-    "IGetProviderTransactionsUseCase",
-    GetProviderTransactionsUseCase,
+  container.registerSingleton<ITopUpWalletUseCase>(
+    "ITopUpWalletUseCase",
+    TopUpWalletUseCase,
   );
-  container.registerSingleton<IGetAdminTransactionsUseCase>(
-    "IGetAdminTransactionsUseCase",
-    GetAdminTransactionsUseCase,
+  container.registerSingleton<IGetWalletTransactionsUseCase>(
+    "IGetWalletTransactionsUseCase",
+    GetWalletTransactionsUseCase,
+  );
+  container.registerSingleton<IGetAllTransactionsUseCase>(
+    "IGetAllTransactionsUseCase",
+    GetAllTransactionsUseCase,
   );
   container.registerSingleton<IGetAdminDashboardStatsUseCase>(
     "IGetAdminDashboardStatsUseCase",

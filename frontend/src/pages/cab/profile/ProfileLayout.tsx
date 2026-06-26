@@ -25,9 +25,9 @@ function ProfileLayout() {
             route: "/cab/profile/cabDetails",
         },
         {
-            label: t(translationKey.button.wallet),
+            label: t(translationKey.wallet.myWallet) || "Wallet",
             icon: Wallet,
-            route: "/cab/profile/wallet",
+            route: "/cab/wallet" as keyof FileRoutesByTo,
         },
     ];
 

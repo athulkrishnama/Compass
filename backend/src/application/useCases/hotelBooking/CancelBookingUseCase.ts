@@ -2,6 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { ICancelBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICancelBookingUseCase";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { IPaymentService } from "@application/interfaces/service/paymentService.interface";
+import { ITransactionRepo } from "@application/interfaces/repository/transaction/transaction.repo.interface";
+import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import {
   InvalidOperationException,
   ResourceNotFoundException,
@@ -10,6 +12,10 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { REFUND_STATUS } from "@domain/enums/refundStatus";
 import { calculateRefundAmount } from "@domain/constants/cancellationPolicy";
+import { TRANSACTION_TYPE } from "@domain/enums/transactionType";
+import { SERVICE_TYPE } from "@domain/enums/serviceType";
+import { PAYMENT_METHOD } from "@domain/enums/paymentMethod";
+import { ROLES } from "@domain/enums/roles";
 
 @injectable()
 export class CancelBookingUseCase implements ICancelBookingUseCase {
@@ -18,6 +24,10 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
     private _hotelBookingRepo: IHotelBookingRepo,
     @inject("IPaymentService")
     private _paymentService: IPaymentService,
+    @inject("ITransactionRepo")
+    private _transactionRepo: ITransactionRepo,
+    @inject("IUserRepo")
+    private _userRepo: IUserRepo,
   ) {}
 
   async execute(
@@ -64,6 +74,29 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
           refundAmount,
         );
         refundStatus = REFUND_STATUS.COMPLETED;
+
+        const adminUser = await this._userRepo.findByRole(ROLES.ADMIN);
+        if (adminUser && adminUser._id) {
+          await this._transactionRepo.create({
+            bookingId,
+            ownerType: SERVICE_TYPE.USER,
+            ownerId: travelerId,
+            amount: refundAmount,
+            type: TRANSACTION_TYPE.REFUND,
+            paymentMethod: PAYMENT_METHOD.STRIPE,
+            description: `Refund for cancelled booking ${bookingId}`,
+          });
+
+          await this._transactionRepo.create({
+            bookingId,
+            ownerType: SERVICE_TYPE.ADMIN,
+            ownerId: adminUser._id.toString(),
+            amount: refundAmount,
+            type: TRANSACTION_TYPE.REFUND,
+            paymentMethod: PAYMENT_METHOD.STRIPE,
+            description: `Refund issued for booking ${bookingId}`,
+          });
+        }
       } catch {
         refundStatus = REFUND_STATUS.FAILED;
         throw new InvalidOperationException(

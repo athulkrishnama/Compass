@@ -17,4 +17,5 @@ export interface IUserRepo extends IBaseRepository<UserEntity> {
   getUserStatus(id: string): Promise<boolean>;
   googleSignUp(user: UserEntity): Promise<string>;
   countUsers(role?: ROLES): Promise<number>;
+  findByRole(role: ROLES): Promise<UserEntity | null>;
 }

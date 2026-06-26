@@ -27,6 +27,7 @@ import { RideRouter } from "@presentation/routes/ride/rideRouter";
 import { NotificationRouter } from "@presentation/routes/notification/notificationRouter";
 import { SocketServer } from "@presentation/webSocket/socketServer";
 import { MonitoringRouter } from "@presentation/routes/monitoring/monitoringRouter";
+import { WalletRouter } from "@presentation/routes/wallet/walletRouter";
 import { promotheusMiddlware } from "@presentation/middlewares/promotheusMiddleware";
 
 export class Server {
@@ -51,6 +52,7 @@ export class Server {
     this._setRideRouter();
     this._setNotificationRouter();
     this._setMonitoringRouter();
+    this._setWalletRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
@@ -142,6 +144,11 @@ export class Server {
   private _setMonitoringRouter() {
     const monitoringRouter = new MonitoringRouter();
     this._app.use(Routes.MONITORING, monitoringRouter.getRouter());
+  }
+
+  private _setWalletRouter() {
+    const walletRouter = new WalletRouter();
+    this._app.use(Routes.WALLET, walletRouter.getRouter());
   }
 
   private _setLoggingMiddleware() {
