@@ -167,30 +167,54 @@ export function WalletComponent({
                                     <SelectItem value="ALL">
                                         All Transactions
                                     </SelectItem>
-                                    <SelectItem value="SERVICE_CREDIT">
-                                        Service Credit
-                                    </SelectItem>
-                                    <SelectItem value="PAYMENT">
-                                        Payment
-                                    </SelectItem>
-                                    <SelectItem value="REFUND">
-                                        Refund
-                                    </SelectItem>
-                                    <SelectItem value="TOP_UP">
-                                        Top Up
-                                    </SelectItem>
-                                    <SelectItem value="WALLET_CREDIT">
-                                        Wallet Credit
-                                    </SelectItem>
-                                    <SelectItem value="COMMISSION">
-                                        Commission
-                                    </SelectItem>
-                                    <SelectItem value="WALLET_DEBIT">
-                                        Wallet Debit
-                                    </SelectItem>
-                                    <SelectItem value="COMMISSION_DEBIT">
-                                        Commission Debit
-                                    </SelectItem>
+                                    {role === "ADMIN" && (
+                                        <>
+                                            <SelectItem value="SERVICE_CREDIT">
+                                                Service Credit
+                                            </SelectItem>
+                                            <SelectItem value="COMMISSION">
+                                                Commission
+                                            </SelectItem>
+                                            <SelectItem value="COMMISSION_DEBIT">
+                                                Commission Debit
+                                            </SelectItem>
+                                            <SelectItem value="WALLET_DEBIT">
+                                                Wallet Debit
+                                            </SelectItem>
+                                            <SelectItem value="REFUND">
+                                                Refund
+                                            </SelectItem>
+                                        </>
+                                    )}
+                                    {role === "USER" && (
+                                        <>
+                                            <SelectItem value="PAYMENT">
+                                                Payment
+                                            </SelectItem>
+                                            <SelectItem value="REFUND">
+                                                Refund
+                                            </SelectItem>
+                                            <SelectItem value="TOP_UP">
+                                                Top Up
+                                            </SelectItem>
+                                        </>
+                                    )}
+                                    {(role === "CAB" || role === "HOTEL") && (
+                                        <>
+                                            <SelectItem value="WALLET_CREDIT">
+                                                Wallet Credit
+                                            </SelectItem>
+                                            <SelectItem value="WALLET_DEBIT">
+                                                Wallet Debit
+                                            </SelectItem>
+                                            <SelectItem value="COMMISSION_DEBIT">
+                                                Commission Debit
+                                            </SelectItem>
+                                            <SelectItem value="REFUND">
+                                                Refund
+                                            </SelectItem>
+                                        </>
+                                    )}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -266,9 +290,6 @@ export function WalletComponent({
                                         </td>
                                         <td className="py-4 px-6 text-right">
                                             {(() => {
-                                                // With the new ownerType model, each transaction belongs
-                                                // to exactly one owner and the sign is determined purely
-                                                // by transaction type, not role-switching heuristics.
                                                 const DEBIT_TYPES = [
                                                     "PAYMENT",
                                                     "WALLET_DEBIT",
@@ -309,7 +330,6 @@ export function WalletComponent({
                     </table>
                 </div>
 
-                {/* Pagination */}
                 {totalPages > 1 && (
                     <div className="p-4 border-t border-neutral-100 dark:border-neutral-700 flex justify-between items-center">
                         <button
@@ -333,7 +353,6 @@ export function WalletComponent({
                 )}
             </div>
 
-            {/* Top Up Modal */}
             {isTopUpModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
                     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 w-full max-w-md shadow-xl border border-neutral-100 dark:border-neutral-700">
@@ -345,7 +364,6 @@ export function WalletComponent({
                                     setIsTopUpModalOpen(false);
                                     setTopUpAmount("");
                                     setClientSecret(null);
-                                    // Refresh wallet data
                                     window.location.reload();
                                 }}
                                 onBack={() => setClientSecret(null)}
