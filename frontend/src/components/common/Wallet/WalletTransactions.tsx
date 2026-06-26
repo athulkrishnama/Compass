@@ -62,29 +62,55 @@ export function WalletTransactions({
                             </div>
                         </SelectTrigger>
                         <SelectContent className="rounded-xl border-neutral-200 shadow-xl">
-                            <SelectItem value="ALL">All Transactions</SelectItem>
+                            <SelectItem value="ALL">
+                                All Transactions
+                            </SelectItem>
                             {role === "ADMIN" && (
                                 <>
-                                    <SelectItem value="SERVICE_CREDIT">Service Credit</SelectItem>
-                                    <SelectItem value="COMMISSION">Commission</SelectItem>
-                                    <SelectItem value="COMMISSION_DEBIT">Commission Debit</SelectItem>
-                                    <SelectItem value="WALLET_DEBIT">Wallet Debit</SelectItem>
-                                    <SelectItem value="REFUND">Refund</SelectItem>
+                                    <SelectItem value="SERVICE_CREDIT">
+                                        Service Credit
+                                    </SelectItem>
+                                    <SelectItem value="COMMISSION">
+                                        Commission
+                                    </SelectItem>
+                                    <SelectItem value="COMMISSION_DEBIT">
+                                        Commission Debit
+                                    </SelectItem>
+                                    <SelectItem value="WALLET_DEBIT">
+                                        Wallet Debit
+                                    </SelectItem>
+                                    <SelectItem value="REFUND">
+                                        Refund
+                                    </SelectItem>
                                 </>
                             )}
                             {role === "USER" && (
                                 <>
-                                    <SelectItem value="PAYMENT">Payment</SelectItem>
-                                    <SelectItem value="REFUND">Refund</SelectItem>
-                                    <SelectItem value="TOP_UP">Top Up</SelectItem>
+                                    <SelectItem value="PAYMENT">
+                                        Payment
+                                    </SelectItem>
+                                    <SelectItem value="REFUND">
+                                        Refund
+                                    </SelectItem>
+                                    <SelectItem value="TOP_UP">
+                                        Top Up
+                                    </SelectItem>
                                 </>
                             )}
                             {(role === "CAB" || role === "HOTEL") && (
                                 <>
-                                    <SelectItem value="WALLET_CREDIT">Wallet Credit</SelectItem>
-                                    <SelectItem value="WALLET_DEBIT">Wallet Debit</SelectItem>
-                                    <SelectItem value="COMMISSION_DEBIT">Commission Debit</SelectItem>
-                                    <SelectItem value="REFUND">Refund</SelectItem>
+                                    <SelectItem value="WALLET_CREDIT">
+                                        Wallet Credit
+                                    </SelectItem>
+                                    <SelectItem value="WALLET_DEBIT">
+                                        Wallet Debit
+                                    </SelectItem>
+                                    <SelectItem value="COMMISSION_DEBIT">
+                                        Commission Debit
+                                    </SelectItem>
+                                    <SelectItem value="REFUND">
+                                        Refund
+                                    </SelectItem>
                                 </>
                             )}
                         </SelectContent>
@@ -114,10 +140,14 @@ export function WalletTransactions({
                                     >
                                         <td className="py-4 px-6 text-sm">
                                             <div className="font-medium text-neutral-900">
-                                                {new Date(tx.createdAt).toLocaleDateString()}
+                                                {new Date(
+                                                    tx.createdAt
+                                                ).toLocaleDateString()}
                                             </div>
                                             <div className="text-xs text-neutral-500 mt-1">
-                                                {new Date(tx.createdAt).toLocaleTimeString([], {
+                                                {new Date(
+                                                    tx.createdAt
+                                                ).toLocaleTimeString([], {
                                                     hour: "2-digit",
                                                     minute: "2-digit",
                                                 })}
@@ -134,20 +164,25 @@ export function WalletTransactions({
                                         <td className="py-4 px-6 text-sm">
                                             <Popover>
                                                 <PopoverTrigger>
-                                                    <Badge 
-                                                        variant="secondary" 
+                                                    <Badge
+                                                        variant="secondary"
                                                         className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border-none rounded-lg px-3 py-1 cursor-help flex items-center gap-1.5 font-medium transition-colors"
                                                     >
                                                         {tx.type}
                                                         <Info className="w-3 h-3 text-neutral-400" />
                                                     </Badge>
                                                 </PopoverTrigger>
-                                                <PopoverContent className="w-64 text-sm rounded-xl p-4 shadow-xl border-neutral-200" side="top">
+                                                <PopoverContent
+                                                    className="w-64 text-sm rounded-xl p-4 shadow-xl border-neutral-200"
+                                                    side="top"
+                                                >
                                                     <p className="font-bold text-neutral-900 mb-2">
                                                         {tx.type}
                                                     </p>
                                                     <p className="text-neutral-500 text-sm leading-relaxed">
-                                                        Detailed information regarding this specific transaction type.
+                                                        Detailed information
+                                                        regarding this specific
+                                                        transaction type.
                                                     </p>
                                                 </PopoverContent>
                                             </Popover>
@@ -158,10 +193,13 @@ export function WalletTransactions({
                                         <td className="py-4 px-6 text-right">
                                             <span
                                                 className={`text-sm font-bold ${
-                                                    isCredit ? "text-neutral-900" : "text-neutral-500"
+                                                    isCredit
+                                                        ? "text-neutral-900"
+                                                        : "text-neutral-500"
                                                 }`}
                                             >
-                                                {isCredit ? "+" : "-"}₹{tx.amount?.toFixed(2)}
+                                                {isCredit ? "+" : "-"}₹
+                                                {tx.amount?.toFixed(2)}
                                             </span>
                                         </td>
                                     </tr>

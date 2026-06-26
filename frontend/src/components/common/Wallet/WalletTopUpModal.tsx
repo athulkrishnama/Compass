@@ -24,10 +24,17 @@ export function WalletTopUpModal({ isOpen, onClose }: WalletTopUpModalProps) {
     const [clientSecret, setClientSecret] = useState<string | null>(null);
 
     const handleTopUp = async () => {
-        if (!topUpAmount || isNaN(Number(topUpAmount)) || Number(topUpAmount) <= 0) return;
+        if (
+            !topUpAmount ||
+            isNaN(Number(topUpAmount)) ||
+            Number(topUpAmount) <= 0
+        )
+            return;
         setIsToppingUp(true);
         try {
-            const { clientSecret } = await createTopUpPaymentIntent(Number(topUpAmount));
+            const { clientSecret } = await createTopUpPaymentIntent(
+                Number(topUpAmount)
+            );
             setClientSecret(clientSecret);
         } catch (error) {
             console.error("Top-up failed", error);
@@ -67,7 +74,10 @@ export function WalletTopUpModal({ isOpen, onClose }: WalletTopUpModalProps) {
                             </DialogHeader>
                             <div className="space-y-4 mb-8">
                                 <div className="space-y-3">
-                                    <Label htmlFor="amount" className="text-neutral-700 font-medium text-sm uppercase tracking-wider">
+                                    <Label
+                                        htmlFor="amount"
+                                        className="text-neutral-700 font-medium text-sm uppercase tracking-wider"
+                                    >
                                         Amount (₹)
                                     </Label>
                                     <Input
@@ -75,7 +85,9 @@ export function WalletTopUpModal({ isOpen, onClose }: WalletTopUpModalProps) {
                                         type="number"
                                         min="1"
                                         value={topUpAmount}
-                                        onChange={(e) => setTopUpAmount(e.target.value)}
+                                        onChange={(e) =>
+                                            setTopUpAmount(e.target.value)
+                                        }
                                         className="rounded-xl border-neutral-200 focus-visible:ring-black focus-visible:border-black h-14 text-lg bg-neutral-50"
                                         placeholder="Enter amount"
                                     />
@@ -92,10 +104,16 @@ export function WalletTopUpModal({ isOpen, onClose }: WalletTopUpModalProps) {
                                 </Button>
                                 <Button
                                     onClick={handleTopUp}
-                                    disabled={isToppingUp || !topUpAmount || Number(topUpAmount) <= 0}
+                                    disabled={
+                                        isToppingUp ||
+                                        !topUpAmount ||
+                                        Number(topUpAmount) <= 0
+                                    }
                                     className="bg-black hover:bg-neutral-800 text-white rounded-xl font-medium h-12 px-6 transition-all active:scale-[0.98]"
                                 >
-                                    {isToppingUp && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                                    {isToppingUp && (
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                    )}
                                     Proceed to Pay
                                 </Button>
                             </DialogFooter>
