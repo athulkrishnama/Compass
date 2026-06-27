@@ -74,7 +74,6 @@ const CabSearch = () => {
         searchParams.pickupLng,
         searchParams.dropoffLat,
         searchParams.dropoffLng,
-        searchParams,
         t,
     ]);
 
