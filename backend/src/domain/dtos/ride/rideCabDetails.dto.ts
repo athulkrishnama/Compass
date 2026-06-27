@@ -12,5 +12,7 @@ export interface RideCabDetailsResponseDTO {
     type: VehicleType;
     registrationNumber: string;
     images: string[];
+    averageRating?: number;
+    totalReviews?: number;
   };
 }

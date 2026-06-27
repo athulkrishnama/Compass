@@ -6,6 +6,8 @@ import { PaymentController } from "@presentation/controllers/payment/paymentCont
 import { BookingController } from "@presentation/controllers/hotelBooking/BookingController";
 import { NotificationController } from "@presentation/controllers/notification/notificationController";
 import { WalletController } from "@presentation/controllers/wallet/walletController";
+import { CabReviewController } from "@presentation/controllers/cabReview/cabReviewController";
+import { HotelReviewController } from "@presentation/controllers/hotelReview/hotelReviewController";
 
 export function registerController() {
   container.registerSingleton(AuthController, AuthController);
@@ -15,4 +17,6 @@ export function registerController() {
   container.registerSingleton(BookingController, BookingController);
   container.registerSingleton(NotificationController, NotificationController);
   container.registerSingleton(WalletController, WalletController);
+  container.registerSingleton(CabReviewController, CabReviewController);
+  container.registerSingleton(HotelReviewController, HotelReviewController);
 }

@@ -29,6 +29,10 @@ import {
 } from "@/types/socketPayloads";
 import { useSocketEvent } from "@/hooks/useSocketEvent";
 import { PaymentStatus } from "@/enums/paymentStatus";
+import ReviewFormModal from "@/components/shared/review/ReviewFormModal";
+import { createCabReview } from "@/services/api/reviewApiService";
+import { useNavigate } from "@tanstack/react-router";
+import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
 
 const CANCELLABLE_STATUSES: RideStatus[] = [
     RIDE_STATUSES.SEARCHING,
@@ -38,10 +42,12 @@ const CANCELLABLE_STATUSES: RideStatus[] = [
 const RideDetails = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { id } = useParams({ from: "/traveler/cab/ride/$id" });
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
     const [isCancelling, setIsCancelling] = useState(false);
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+    const [isReviewOpen, setIsReviewOpen] = useState(false);
 
     const [driverCoordinate, setDriverCoordinate] = useState<{
         lat: number;
@@ -171,13 +177,39 @@ const RideDetails = () => {
                 setIsPaymentOpen(true);
             } else if (data.type === RIDER_EVENTS_TYPES.PAYMENT_SUCCESS) {
                 setIsPaymentOpen(false);
+                dispatch(
+                    setActiveRide({
+                        ...ride,
+                        paymentStatus: PaymentStatus.SUCCESS,
+                    } as IRideDetailsResponseDTO) // Type override since we know it's a ride
+                );
                 toast.success("Payment Successful!", {
                     description: "Thank you for riding with us.",
                 });
+                setIsReviewOpen(true);
             }
         },
         !!ride
     );
+
+    const handleReviewSubmit = async (data: {
+        rating: number;
+        review: string;
+    }) => {
+        if (!ride) return;
+        await createCabReview({
+            rideId: ride._id,
+            rating: data.rating,
+            review: data.review,
+        });
+        toast.success("Review submitted!");
+        navigate({ to: "/traveler/cab/history" });
+    };
+
+    const handleReviewClose = () => {
+        setIsReviewOpen(false);
+        navigate({ to: "/traveler/cab/history" });
+    };
 
     const handleCancelRide = () => {
         if (!ride || isCancelling) return;
@@ -315,10 +347,19 @@ const RideDetails = () => {
                         setActiveRide({
                             ...ride,
                             paymentStatus: PaymentStatus.SUCCESS,
-                        })
+                        } as IRideDetailsResponseDTO)
                     );
+                    setIsPaymentOpen(false);
+                    setIsReviewOpen(true);
                 }}
                 onClose={() => setIsPaymentOpen(false)}
+            />
+            <ReviewFormModal
+                isOpen={isReviewOpen}
+                onClose={handleReviewClose}
+                onSubmit={handleReviewSubmit}
+                title="Rate Your Ride"
+                subtitle="How was your trip with your driver?"
             />
         </>
     );

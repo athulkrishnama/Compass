@@ -9,6 +9,10 @@ import { HotelRepo } from "@infrastructure/repository/hotel/hotel.repo";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
 import { RoomVariantRepo } from "@infrastructure/repository/roomVariant/roomVariant.repo";
+import { ICabReviewRepo } from "@application/interfaces/repository/cabReview/cabReview.repo.interface";
+import { CabReviewRepo } from "@infrastructure/repository/cabReview/cabReview.repo";
+import { IHotelReviewRepo } from "@application/interfaces/repository/hotelReview/hotelReview.repo.interface";
+import { HotelReviewRepo } from "@infrastructure/repository/hotelReview/hotelReview.repo";
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { RoomLockRepo } from "@infrastructure/repository/roomLock/roomLock.repo";
 import { HotelBookingRepo } from "@infrastructure/repository/hotelBooking/hotelBooking.repo";
@@ -57,5 +61,10 @@ export function registerRepositories() {
   container.registerSingleton<INotificationRepo>(
     "INotificationRepo",
     NotificationRepo,
+  );
+  container.registerSingleton<ICabReviewRepo>("ICabReviewRepo", CabReviewRepo);
+  container.registerSingleton<IHotelReviewRepo>(
+    "IHotelReviewRepo",
+    HotelReviewRepo,
   );
 }

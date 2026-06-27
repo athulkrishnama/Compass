@@ -14,4 +14,6 @@ export interface HotelEntity {
   coverImage: string;
   images: string[];
   address: Address;
+  averageRating?: number;
+  totalReviews?: number;
 }

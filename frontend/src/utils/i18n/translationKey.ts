@@ -361,6 +361,7 @@ export default {
         destinations: "button.destinations",
         viewRoomVariant: "button.viewRoomVariant",
         cabs: "button.cabs",
+        reviews: "button.reviews",
     },
     activities: {
         HIKING: "activities.HIKING",

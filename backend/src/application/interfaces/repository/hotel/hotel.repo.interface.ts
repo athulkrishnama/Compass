@@ -20,4 +20,9 @@ export interface IHotelRepo extends IBaseRepository<HotelEntity> {
     pageNo: number;
   }): Promise<IHotelWithAggregatedRoomVariantDTO>;
   countHotels(): Promise<number>;
+  updateRating(
+    hotelId: string,
+    averageRating: number,
+    totalReviews: number,
+  ): Promise<void>;
 }

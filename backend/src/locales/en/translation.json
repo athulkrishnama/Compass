@@ -223,5 +223,15 @@
   "verificationApproved": "Verification approved",
   "verificationRejected": "Verification rejected",
   "verificationTokenExpired": "Verification token expired",
-  "walletFetchedSuccessfully": "walletFetchedSuccessfully"
+  "walletFetchedSuccessfully": "walletFetchedSuccessfully",
+  "notAuthorizedToReviewRide": "You are not authorized to review this ride",
+  "rideMustBeCompleted": "Ride must be completed before reviewing",
+  "ridePaymentMustBeCompleted": "Payment must be completed before reviewing",
+  "alreadyReviewedRide": "You have already reviewed this ride",
+  "noDriverAssigned": "No driver assigned to this ride",
+  "driverCabNotFound": "Driver's cab not found",
+  "notAuthorizedToReviewBooking": "You are not authorized to review this booking",
+  "bookingMustBeCompleted": "Booking must be completed before reviewing",
+  "alreadyReviewedBooking": "You have already reviewed this booking",
+  "rideIdRequired": "Ride ID is required"
 }

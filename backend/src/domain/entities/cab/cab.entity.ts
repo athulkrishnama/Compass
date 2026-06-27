@@ -17,6 +17,8 @@ export interface CabEntity {
     city: string;
     coordinates: [number, number];
   };
+  averageRating?: number;
+  totalReviews?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

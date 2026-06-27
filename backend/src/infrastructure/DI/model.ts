@@ -27,6 +27,10 @@ import { fareModel } from "@infrastructure/repository/fare/fareModel";
 import { rideModel } from "@infrastructure/repository/ride/rideModel";
 import { INotificationDocument } from "@infrastructure/repository/notification/notification.schema";
 import { notificationModel } from "@infrastructure/repository/notification/notificationModel";
+import { ICabReviewDocument } from "@infrastructure/repository/cabReview/cabReviewSchema";
+import { cabReviewModel } from "@infrastructure/repository/cabReview/cabReviewModel";
+import { IHotelReviewDocument } from "@infrastructure/repository/hotelReview/hotelReviewSchema";
+import { hotelReviewModel } from "@infrastructure/repository/hotelReview/hotelReviewModel";
 
 export function registerModel() {
   container.register<Model<IUserDocument>>("IUserModel", {
@@ -67,5 +71,11 @@ export function registerModel() {
   });
   container.register<Model<INotificationDocument>>("INotificationModel", {
     useValue: notificationModel,
+  });
+  container.register<Model<ICabReviewDocument>>("ICabReviewModel", {
+    useValue: cabReviewModel,
+  });
+  container.register<Model<IHotelReviewDocument>>("IHotelReviewModel", {
+    useValue: hotelReviewModel,
   });
 }

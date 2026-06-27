@@ -18,6 +18,8 @@ import { RideEventHandler } from "@presentation/webSocket/eventHandlers/rideEven
 import { SocketAuth } from "@presentation/middlewares/socketAuth";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { ICacheService } from "@application/interfaces/service/cacheService.interface";
+import { CabReviewController } from "@presentation/controllers/cabReview/cabReviewController";
+import { HotelReviewController } from "@presentation/controllers/hotelReview/hotelReviewController";
 
 registerDI();
 export const authController = container.resolve(AuthController);
@@ -42,3 +44,5 @@ export const socketAuth = container.resolve(SocketAuth);
 export const socketEmitter =
   container.resolve<ISocketEmitter>("ISocketEmitter");
 export const cacheService = container.resolve<ICacheService>("ICacheService");
+export const cabReviewController = container.resolve(CabReviewController);
+export const hotelReviewController = container.resolve(HotelReviewController);

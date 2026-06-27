@@ -267,7 +267,8 @@
         "view": "View",
         "viewDetails": "View Details",
         "viewRoomVariant": "View Room Variant",
-        "wallet": "Wallet"
+        "wallet": "Wallet",
+        "reviews": "Reviews"
     },
     "cabHistory": {
         "noTrips": "No trips found",

@@ -15,6 +15,13 @@ import Pagination from "@/components/shared/Pagination/Pagination";
 import translationKey from "@/utils/i18n/translationKey";
 import { useReverseGeocode } from "@/hooks/useReverseGeocode";
 import type { IRiderPastTripResponseDTO } from "@/types/api/responses/rideResponses";
+import { Star } from "lucide-react";
+import ReviewFormModal from "@/components/shared/review/ReviewFormModal";
+import {
+    createCabReview,
+    checkCabReviewEligibility,
+} from "@/services/api/reviewApiService";
+import { toast } from "sonner";
 
 const TripItem = ({
     trip,
@@ -32,10 +39,46 @@ const TripItem = ({
     const isPaymentPending = !isCancelled && trip.paymentStatus !== "SUCCESS";
     const durationMins = Math.ceil(trip.time / 60);
 
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
+
     const handleViewRide = () => {
         navigate({
             to: `/traveler/cab/ride/${trip._id}`,
         });
+    };
+
+    const handleReviewClick = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        try {
+            setIsCheckingEligibility(true);
+            const res = await checkCabReviewEligibility(trip._id);
+            if (res.data?.eligible) {
+                setIsReviewModalOpen(true);
+            } else if (res.data?.alreadyReviewed) {
+                toast.info("You have already reviewed this ride.");
+            } else {
+                toast.error(
+                    res.data?.reason || "Not eligible to review this ride."
+                );
+            }
+        } catch {
+            toast.error("Failed to check review eligibility.");
+        } finally {
+            setIsCheckingEligibility(false);
+        }
+    };
+
+    const handleReviewSubmit = async (data: {
+        rating: number;
+        review: string;
+    }) => {
+        await createCabReview({
+            rideId: trip._id,
+            rating: data.rating,
+            review: data.review,
+        });
+        toast.success("Review submitted successfully!");
     };
 
     return (
@@ -100,7 +143,7 @@ const TripItem = ({
                 </div>
             </div>
 
-            {isPaymentPending && (
+            {isPaymentPending ? (
                 <div className="flex flex-col justify-center border-t sm:border-t-0 sm:border-l border-black/10 pt-4 sm:pt-0 sm:pl-6 sm:w-48 gap-3">
                     <div className="flex items-center gap-1.5 text-amber-600 text-sm font-medium">
                         <AlertCircle className="w-4 h-4" />
@@ -117,7 +160,26 @@ const TripItem = ({
                         {t(translationKey.cabHistory.retryPayment)}
                     </button>
                 </div>
-            )}
+            ) : trip.status === "completed" ? (
+                <div className="flex flex-col justify-center border-t sm:border-t-0 sm:border-l border-black/10 pt-4 sm:pt-0 sm:pl-6 sm:w-48 gap-3">
+                    <button
+                        disabled={isCheckingEligibility}
+                        onClick={handleReviewClick}
+                        className="flex items-center justify-center gap-2 w-full py-2.5 px-4 border border-black/10 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                        <Star className="w-4 h-4" />
+                        Rate Ride
+                    </button>
+                </div>
+            ) : null}
+
+            <ReviewFormModal
+                isOpen={isReviewModalOpen}
+                onClose={() => setIsReviewModalOpen(false)}
+                onSubmit={handleReviewSubmit}
+                title="Rate Your Ride"
+                subtitle="How was your trip with your driver?"
+            />
         </motion.div>
     );
 };

@@ -16,6 +16,7 @@ import {
     Settings,
     User,
     Wallet,
+    Star,
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { removeToken } from "@/store/slices/tokenSlice";
@@ -62,6 +63,11 @@ export default function SideBar() {
             to: "/admin/transactions",
             label: t(translationKey.transactions.adminTitle),
             icon: <Wallet className="w-5 h-5" />,
+        },
+        {
+            to: "/admin/reviews",
+            label: "Reviews",
+            icon: <Star className="w-5 h-5" />,
         },
     ];
 

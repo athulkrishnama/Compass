@@ -57,4 +57,6 @@ export enum Messages {
   CASH_PAYMENT_RECORDED = "cashPaymentRecorded",
   CAB_PAYMENT_STATUS_FETCHED = "cabPaymentStatusFetched",
   CAB_PAYMENT_VERIFIED = "cabPaymentVerified",
+  REVIEW_CREATED_SUCCESSFULLY = "reviewCreatedSuccessfully",
+  REVIEW_FETCHED_SUCCESSFULLY = "reviewFetchedSuccessfully",
 }

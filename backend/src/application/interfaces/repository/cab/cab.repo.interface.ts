@@ -10,4 +10,9 @@ export interface ICabRepo extends IBaseRepository<CabEntity> {
     rideId: string | null,
     session?: IDbSession,
   ): Promise<void>;
+  updateRating(
+    cabId: string,
+    averageRating: number,
+    totalReviews: number,
+  ): Promise<void>;
 }

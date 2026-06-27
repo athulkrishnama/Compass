@@ -69,6 +69,24 @@ import { CreateHotelUseCase } from "@useCases/hotel/createHotelUseCase";
 import { ICreateHotelUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
 import { IGetHotelsByUserIdUseCase } from "@application/interfaces/useCase/hotel/getHotelsByUserIdUseCase.interface";
 import { GetHotelsByUserIdUseCase } from "@useCases/hotel/getHotelsByUserIdUseCase";
+import { ICreateCabReviewUseCase } from "@application/interfaces/useCase/cabReview/createCabReviewUseCase.interface";
+import { CreateCabReviewUseCase } from "@application/useCases/cabReview/createCabReviewUseCase";
+import { IGetDriverReviewsUseCase } from "@application/interfaces/useCase/cabReview/getDriverReviewsUseCase.interface";
+import { GetDriverReviewsUseCase } from "@application/useCases/cabReview/getDriverReviewsUseCase";
+import { IGetAllCabReviewsUseCase } from "@application/interfaces/useCase/cabReview/getAllCabReviewsUseCase.interface";
+import { GetAllCabReviewsUseCase } from "@application/useCases/cabReview/getAllCabReviewsUseCase";
+import { ICheckCabReviewEligibilityUseCase } from "@application/interfaces/useCase/cabReview/checkCabReviewEligibilityUseCase.interface";
+import { CheckCabReviewEligibilityUseCase } from "@application/useCases/cabReview/checkCabReviewEligibilityUseCase";
+import { ICreateHotelReviewUseCase } from "@application/interfaces/useCase/hotelReview/createHotelReviewUseCase.interface";
+import { CreateHotelReviewUseCase } from "@application/useCases/hotelReview/createHotelReviewUseCase";
+import { IGetHotelReviewsUseCase } from "@application/interfaces/useCase/hotelReview/getHotelReviewsUseCase.interface";
+import { GetHotelReviewsUseCase } from "@application/useCases/hotelReview/getHotelReviewsUseCase";
+import { IGetOwnerHotelReviewsUseCase } from "@application/interfaces/useCase/hotelReview/getOwnerHotelReviewsUseCase.interface";
+import { GetOwnerHotelReviewsUseCase } from "@application/useCases/hotelReview/getOwnerHotelReviewsUseCase";
+import { IGetAllHotelReviewsUseCase } from "@application/interfaces/useCase/hotelReview/getAllHotelReviewsUseCase.interface";
+import { GetAllHotelReviewsUseCase } from "@application/useCases/hotelReview/getAllHotelReviewsUseCase";
+import { ICheckHotelReviewEligibilityUseCase } from "@application/interfaces/useCase/hotelReview/checkHotelReviewEligibilityUseCase.interface";
+import { CheckHotelReviewEligibilityUseCase } from "@application/useCases/hotelReview/checkHotelReviewEligibilityUseCase";
 import { IEditHotelUseCase } from "@application/interfaces/useCase/hotel/editHotelUseCase.interface";
 import { EditHotelUseCase } from "@useCases/hotel/editHotelUseCase";
 import { IGetHotelByIdUseCase } from "@application/interfaces/useCase/hotel/getHotelByIdUseCase.interface";
@@ -540,5 +558,43 @@ export function registerUsecases() {
   container.registerSingleton<IGetCabPaymentStatusUseCase>(
     "IGetCabPaymentStatusUseCase",
     GetCabPaymentStatusUseCase,
+  );
+
+  // Review System Use Cases
+  container.registerSingleton<ICreateCabReviewUseCase>(
+    "ICreateCabReviewUseCase",
+    CreateCabReviewUseCase,
+  );
+  container.registerSingleton<IGetDriverReviewsUseCase>(
+    "IGetDriverReviewsUseCase",
+    GetDriverReviewsUseCase,
+  );
+  container.registerSingleton<IGetAllCabReviewsUseCase>(
+    "IGetAllCabReviewsUseCase",
+    GetAllCabReviewsUseCase,
+  );
+  container.registerSingleton<ICheckCabReviewEligibilityUseCase>(
+    "ICheckCabReviewEligibilityUseCase",
+    CheckCabReviewEligibilityUseCase,
+  );
+  container.registerSingleton<ICreateHotelReviewUseCase>(
+    "ICreateHotelReviewUseCase",
+    CreateHotelReviewUseCase,
+  );
+  container.registerSingleton<IGetHotelReviewsUseCase>(
+    "IGetHotelReviewsUseCase",
+    GetHotelReviewsUseCase,
+  );
+  container.registerSingleton<IGetOwnerHotelReviewsUseCase>(
+    "IGetOwnerHotelReviewsUseCase",
+    GetOwnerHotelReviewsUseCase,
+  );
+  container.registerSingleton<IGetAllHotelReviewsUseCase>(
+    "IGetAllHotelReviewsUseCase",
+    GetAllHotelReviewsUseCase,
+  );
+  container.registerSingleton<ICheckHotelReviewEligibilityUseCase>(
+    "ICheckHotelReviewEligibilityUseCase",
+    CheckHotelReviewEligibilityUseCase,
   );
 }

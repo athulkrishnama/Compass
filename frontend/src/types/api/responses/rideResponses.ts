@@ -53,6 +53,8 @@ export interface IRideCabDetailsResponseDTO {
         type: string;
         registrationNumber: string;
         images: string[];
+        averageRating: number;
+        totalReviews: number;
     };
 }
 

@@ -129,6 +129,8 @@ export class RideMapper {
         type: cab.vehicleDetails?.type ?? VEHICLE_TYPES[0],
         registrationNumber: cab.vehicleDetails?.registrationNumber ?? "",
         images: cab.vehicleDetails?.images ?? [],
+        averageRating: cab.averageRating ?? 0,
+        totalReviews: cab.totalReviews ?? 0,
       },
     };
   }

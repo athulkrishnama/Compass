@@ -206,10 +206,22 @@ export class HotelRepo
           doc.address.coordinates.coordinates[1],
         ],
       },
+      averageRating: doc.averageRating,
+      totalReviews: doc.totalReviews,
     };
   }
 
   async countHotels(): Promise<number> {
     return await this._model.countDocuments();
+  }
+
+  async updateRating(
+    hotelId: string,
+    averageRating: number,
+    totalReviews: number,
+  ): Promise<void> {
+    await this._model.findByIdAndUpdate(hotelId, {
+      $set: { averageRating, totalReviews },
+    });
   }
 }

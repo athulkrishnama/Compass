@@ -51,7 +51,7 @@ const RideCabDetails = ({ rideId }: RideCabDetailsProps) => {
                         <h3 className="text-lg font-bold text-neutral-900 leading-tight flex flex-wrap items-center gap-2">
                             <span className="truncate">{driver.full_name}</span>
                             <span className="flex shrink-0 items-center text-xs font-medium bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded-full">
-                                4.9{" "}
+                                {cab.averageRating > 0 ? cab.averageRating.toFixed(1) : "New"}{" "}
                                 <Star className="w-3 h-3 ml-1 fill-current" />
                             </span>
                         </h3>

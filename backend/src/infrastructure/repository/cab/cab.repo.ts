@@ -64,6 +64,8 @@ export class CabRepo
         ? doc.active_ride_id.toString()
         : undefined,
       vehicleDetails: doc.vehicleDetails,
+      averageRating: doc.averageRating,
+      totalReviews: doc.totalReviews,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };
@@ -103,5 +105,15 @@ export class CabRepo
     } else {
       await this._model.updateOne({ userId: driverId }, update);
     }
+  }
+
+  async updateRating(
+    cabId: string,
+    averageRating: number,
+    totalReviews: number,
+  ): Promise<void> {
+    await this._model.findByIdAndUpdate(cabId, {
+      $set: { averageRating, totalReviews },
+    });
   }
 }
