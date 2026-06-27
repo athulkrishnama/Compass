@@ -77,51 +77,81 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         const map = mapRef.current;
         if (!map || !isMapLoaded) return;
 
-        markersRef.current.forEach((marker) => marker.remove());
-        popupsRef.current.forEach((popup) => popup.remove());
-        markersRef.current.clear();
-        popupsRef.current.clear();
+        const currentMarkerIds = new Set(markers.map((m) => m.id));
 
+        // Remove markers that are no longer in the list
+        for (const [id, marker] of markersRef.current.entries()) {
+            if (!currentMarkerIds.has(id)) {
+                marker.remove();
+                markersRef.current.delete(id);
+                popupsRef.current.get(id)?.remove();
+                popupsRef.current.delete(id);
+            }
+        }
+
+        // Add or update markers
         markers.forEach((markerData) => {
             const isActive = markerData.id === activeMarkerId;
+            const existingMarker = markersRef.current.get(markerData.id);
 
-            const el = document.createElement("div");
-            el.className = "mapbox-custom-marker";
-            el.style.cssText = `
-                width: ${isActive ? "18px" : "14px"};
-                height: ${isActive ? "18px" : "14px"};
-                border-radius: 50%;
-                background: ${markerData.color ?? "#000000"};
-                border: ${isActive ? "3px solid #ffffff" : "2px solid #ffffff"};
-                box-shadow: ${isActive ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)" : "0 2px 6px rgba(0,0,0,0.25)"};
-                cursor: pointer;
-                transition: all 0.2s ease;
-                transform: ${isActive ? "scale(1.2)" : "scale(1)"};
-            `;
+            if (existingMarker) {
+                existingMarker.setLngLat([markerData.lng, markerData.lat]);
+                const el = existingMarker.getElement();
+                el.style.width = isActive ? "18px" : "14px";
+                el.style.height = isActive ? "18px" : "14px";
+                el.style.border = isActive
+                    ? "3px solid #ffffff"
+                    : "2px solid #ffffff";
+                el.style.boxShadow = isActive
+                    ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)"
+                    : "0 2px 6px rgba(0,0,0,0.25)";
+                // We shouldn't overwrite the entire transform here since mapbox uses it for positioning,
+                // but Mapbox handles the translate. The transition on the element will smooth out the coordinate changes.
 
-            const popup = new mapboxgl.Popup({
-                offset: 20,
-                closeButton: false,
-                className: "mapbox-minimal-popup",
-            }).setHTML(
-                `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label ?? ""}</div>`
-            );
+                const popup = popupsRef.current.get(markerData.id);
+                if (popup && markerData.label) {
+                    popup.setHTML(
+                        `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label}</div>`
+                    );
+                }
+            } else {
+                const el = document.createElement("div");
+                el.className = "mapbox-custom-marker";
+                el.style.cssText = `
+                    width: ${isActive ? "18px" : "14px"};
+                    height: ${isActive ? "18px" : "14px"};
+                    border-radius: 50%;
+                    background: ${markerData.color ?? "#000000"};
+                    border: ${isActive ? "3px solid #ffffff" : "2px solid #ffffff"};
+                    box-shadow: ${isActive ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)" : "0 2px 6px rgba(0,0,0,0.25)"};
+                    cursor: pointer;
+                    transition: all 0.3s ease-out;
+                `;
 
-            const marker = new mapboxgl.Marker({ element: el })
-                .setLngLat([markerData.lng, markerData.lat])
-                .setPopup(popup)
-                .addTo(map);
+                const popup = new mapboxgl.Popup({
+                    offset: 20,
+                    closeButton: false,
+                    className: "mapbox-minimal-popup",
+                }).setHTML(
+                    `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label ?? ""}</div>`
+                );
 
-            el.addEventListener("click", () => {
-                setActiveMarkerId(markerData.id);
-                marker.togglePopup();
-                onMarkerClick?.(markerData);
-            });
+                const marker = new mapboxgl.Marker({ element: el })
+                    .setLngLat([markerData.lng, markerData.lat])
+                    .setPopup(popup)
+                    .addTo(map);
 
-            markersRef.current.set(markerData.id, marker);
-            popupsRef.current.set(markerData.id, popup);
+                el.addEventListener("click", () => {
+                    setActiveMarkerId(markerData.id);
+                    marker.togglePopup();
+                    onMarkerClick?.(markerData);
+                });
 
-            if (isActive) marker.togglePopup();
+                markersRef.current.set(markerData.id, marker);
+                popupsRef.current.set(markerData.id, popup);
+
+                if (isActive) marker.togglePopup();
+            }
         });
 
         const signature = markers.map((m) => m.id).join(",");

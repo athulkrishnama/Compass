@@ -62,6 +62,7 @@ export default function ActiveTripPage() {
             phase: phase ?? RIDE_STATUSES.MATCHED,
             pickupCoordinate: rideDetails?.pickup_point ?? DEFAULT_COORDINATE,
             dropoffCoordinate: rideDetails?.dropoff_point ?? DEFAULT_COORDINATE,
+            rideId: rideDetails?._id,
         });
 
     const isActionDisabled = useMemo(() => {

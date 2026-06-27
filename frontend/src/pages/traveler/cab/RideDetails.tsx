@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLoaderData, useParams } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
@@ -43,6 +43,13 @@ const RideDetails = () => {
     const [isCancelling, setIsCancelling] = useState(false);
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
+    const [driverCoordinate, setDriverCoordinate] = useState<{
+        lat: number;
+        lng: number;
+    } | null>(null);
+    const [isDriverStale, setIsDriverStale] = useState(false);
+    const staleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
     const { data: rideQueryData } = useQuery({
         ...getRideDetailsQueryOptions(id),
         initialData: loaderData,
@@ -73,10 +80,83 @@ const RideDetails = () => {
     useEffect(() => {
         if (!ride) return;
 
-        fetchRouteCoordinates(ride.pickup_point, ride.dropoff_point)
-            .then((coords) => setRouteCoordinates(coords))
-            .catch(() => console.error("Failed to fetch route"));
-    }, [ride]);
+        let cancelled = false;
+        const fetchRoute = async () => {
+            let from = ride.pickup_point;
+            let to = ride.dropoff_point;
+
+            if (ride.status === RIDE_STATUSES.MATCHED) {
+                from = driverCoordinate
+                    ? {
+                          latitude: driverCoordinate.lat,
+                          longitude: driverCoordinate.lng,
+                      }
+                    : ride.pickup_point;
+                to = ride.pickup_point;
+            } else if (ride.status === RIDE_STATUSES.IN_TRANSIT) {
+                from = driverCoordinate
+                    ? {
+                          latitude: driverCoordinate.lat,
+                          longitude: driverCoordinate.lng,
+                      }
+                    : ride.pickup_point;
+                to = ride.dropoff_point;
+            }
+
+            if (
+                from.latitude === to.latitude &&
+                from.longitude === to.longitude
+            ) {
+                if (!cancelled) setRouteCoordinates([]);
+                return;
+            }
+
+            try {
+                const coords = await fetchRouteCoordinates(from, to);
+                if (!cancelled) setRouteCoordinates(coords);
+            } catch {
+                console.error("Failed to fetch route");
+            }
+        };
+
+        fetchRoute();
+        return () => {
+            cancelled = true;
+        };
+    }, [ride, driverCoordinate]);
+
+    useEffect(() => {
+        if (!ride?._id) return;
+        socketService.emit(SocketEvents.JOIN_RIDE_ROOM, { ride_id: ride._id });
+
+        return () => {
+            socketService.emit(SocketEvents.LEAVE_RIDE_ROOM, {
+                ride_id: ride._id,
+            });
+        };
+    }, [ride?._id]);
+
+    useEffect(() => {
+        return () => {
+            if (staleTimeoutRef.current) clearTimeout(staleTimeoutRef.current);
+        };
+    }, []);
+
+    useSocketEvent<{ latitude: number; longitude: number }>(
+        SocketEvents.DRIVER_LOCATION_BROADCAST,
+        (data) => {
+            setDriverCoordinate({ lat: data.latitude, lng: data.longitude });
+            setIsDriverStale(false);
+
+            if (staleTimeoutRef.current) {
+                clearTimeout(staleTimeoutRef.current);
+            }
+            staleTimeoutRef.current = setTimeout(() => {
+                setIsDriverStale(true);
+            }, 15000); // 15 seconds timeout
+        },
+        !!ride
+    );
 
     useSocketEvent<RiderEventPayload>(
         SocketEvents.RIDER_EVENTS,
@@ -136,6 +216,25 @@ const RideDetails = () => {
         },
     ];
 
+    if (
+        driverCoordinate &&
+        (
+            [
+                RIDE_STATUSES.MATCHED,
+                RIDE_STATUSES.ARRIVED,
+                RIDE_STATUSES.IN_TRANSIT,
+            ] as string[]
+        ).includes(ride.status)
+    ) {
+        markers.push({
+            id: "driver",
+            lat: driverCoordinate.lat,
+            lng: driverCoordinate.lng,
+            label: isDriverStale ? "Cab (Updating...)" : "Cab",
+            color: isDriverStale ? "#9ca3af" : "#3b82f6",
+        });
+    }
+
     return (
         <>
             <div className="min-h-[calc(100vh-80px)] bg-neutral-50 text-black flex flex-col lg:flex-row overflow-hidden font-sans">
@@ -181,7 +280,6 @@ const RideDetails = () => {
                             </button>
                         )}
 
-                        {/* Show payment button if ride is completed and payment is pending */}
                         {ride.status === RIDE_STATUSES.COMPLETED &&
                             (!ride.paymentStatus ||
                                 ride.paymentStatus ===

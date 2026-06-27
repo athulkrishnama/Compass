@@ -14,7 +14,10 @@ export const SocketEvents = {
 
     // Location events
     LOCATION_UPDATE: "location:update",
+    DRIVER_LOCATION_UPDATE: "driver:location-update",
     DRIVER_LOCATION_BROADCAST: "driver:location-broadcast",
+    JOIN_RIDE_ROOM: "ride:join-room",
+    LEAVE_RIDE_ROOM: "ride:leave-room",
 
     // Notification events
     NOTIFICATION_NEW: "notification:new",

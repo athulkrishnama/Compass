@@ -199,5 +199,37 @@ export class RideEventHandler {
           });
       }
     });
+    socket.on(SocketEvents.JOIN_RIDE_ROOM, (data) => {
+      if (data?.ride_id) {
+        socket.join(`cabLocation:${data.ride_id}`);
+        console.log(
+          `[RideEventHandler] User ${userId} joined room cabLocation:${data.ride_id}`,
+        );
+      }
+    });
+
+    socket.on(SocketEvents.LEAVE_RIDE_ROOM, (data) => {
+      if (data?.ride_id) {
+        socket.leave(`cabLocation:${data.ride_id}`);
+        console.log(
+          `[RideEventHandler] User ${userId} left room cabLocation:${data.ride_id}`,
+        );
+      }
+    });
+
+    socket.on(SocketEvents.DRIVER_LOCATION_UPDATE, (data) => {
+      if (data?.ride_id && data?.latitude && data?.longitude) {
+        // Broadcast to everyone in the room except the sender
+        socket
+          .to(`cabLocation:${data.ride_id}`)
+          .emit(SocketEvents.DRIVER_LOCATION_BROADCAST, {
+            ride_id: data.ride_id,
+            driver_id: userId,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            heading: data.heading,
+          });
+      }
+    });
   }
 }

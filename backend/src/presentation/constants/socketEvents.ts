@@ -24,6 +24,8 @@ export const SocketEvents = {
 
   NOTIFICATION_NEW: "notification:new",
   NOTIFICATION_READ: "notification:read",
+  JOIN_RIDE_ROOM: "ride:join-room",
+  LEAVE_RIDE_ROOM: "ride:leave-room",
 } as const;
 
 export const SocketConstants = {

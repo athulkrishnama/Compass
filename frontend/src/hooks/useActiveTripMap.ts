@@ -3,11 +3,14 @@ import { fetchRouteCoordinates } from "@/utils/mapbox";
 import { RIDE_STATUSES, type RideStatus } from "@/types/rideStatus";
 import type { Coordinate } from "@/types/coordinate";
 import type { MapboxMarker } from "@/components/shared/MapboxMap";
+import { socketService } from "@/services/socket/socketService";
+import { SocketEvents } from "@/constants/socketEvents";
 
 interface UseActiveTripMapOptions {
     phase: RideStatus;
     pickupCoordinate: Coordinate;
     dropoffCoordinate: Coordinate;
+    rideId?: string;
 }
 
 interface UseActiveTripMapReturn {
@@ -21,6 +24,7 @@ export function useActiveTripMap({
     phase,
     pickupCoordinate,
     dropoffCoordinate,
+    rideId,
 }: UseActiveTripMapOptions): UseActiveTripMapReturn {
     const [driverCoordinate, setDriverCoordinate] = useState<Coordinate | null>(
         null
@@ -38,6 +42,15 @@ export function useActiveTripMap({
                     latitude: pos.coords.latitude,
                     longitude: pos.coords.longitude,
                 });
+
+                if (rideId) {
+                    socketService.emit(SocketEvents.DRIVER_LOCATION_UPDATE, {
+                        ride_id: rideId,
+                        latitude: pos.coords.latitude,
+                        longitude: pos.coords.longitude,
+                        heading: pos.coords.heading,
+                    });
+                }
             },
             (err) => {
                 console.warn("Geolocation error:", err.message);
@@ -46,7 +59,7 @@ export function useActiveTripMap({
         );
 
         return () => navigator.geolocation.clearWatch(watchId);
-    }, []);
+    }, [rideId]);
 
     useEffect(() => {
         let cancelled = false;
