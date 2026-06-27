@@ -69,7 +69,7 @@ const DriverRideDetail = () => {
     const distanceKm = (ride.distance / 1000).toFixed(1);
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row pt-16">
+        <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row">
             {/* Left panel */}
             <div className="w-full lg:w-[420px] xl:w-[460px] flex-shrink-0 overflow-y-auto bg-white border-r border-black/10 shadow-sm">
                 <div className="p-6 md:p-8 space-y-6">

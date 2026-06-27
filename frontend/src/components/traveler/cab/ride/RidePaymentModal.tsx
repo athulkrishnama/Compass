@@ -127,10 +127,8 @@ export const RidePaymentModal: React.FC<RidePaymentModalProps> = ({
                             stiffness: 320,
                             damping: 30,
                         }}
-                        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden"
+                        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-200"
                     >
-                        <div className="h-1.5 w-full bg-gradient-to-r from-violet-500 via-blue-500 to-emerald-500" />
-
                         <AnimatePresence mode="wait">
                             {step === "select" && (
                                 <PaymentMethodSelector

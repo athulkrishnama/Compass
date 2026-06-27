@@ -23,8 +23,8 @@ export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({
             className="p-8 flex flex-col items-center text-center space-y-5"
         >
             <div className="relative">
-                <div className="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-60" />
-                <CheckCircle2 className="w-20 h-20 text-green-500 relative z-10 bg-white rounded-full" />
+                <div className="absolute inset-0 bg-gray-100 rounded-full animate-ping opacity-60" />
+                <CheckCircle2 className="w-20 h-20 text-gray-900 relative z-10 bg-white rounded-full" />
             </div>
             <div>
                 <h2 className="text-2xl font-black text-gray-900">

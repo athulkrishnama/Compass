@@ -67,14 +67,14 @@ export const ActiveTripRecordCashModal: React.FC<
                                 type="number"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
-                                className="w-full text-2xl font-black text-gray-900 p-4 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:outline-none"
+                                className="w-full text-2xl font-black text-gray-900 p-4 border-2 border-gray-200 rounded-xl focus:border-gray-900 focus:outline-none"
                             />
                         </div>
 
                         <button
                             onClick={handleConfirm}
                             disabled={isPending}
-                            className="w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition-all flex justify-center items-center gap-2"
+                            className="w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm text-white bg-gray-900 hover:bg-gray-800 disabled:bg-gray-200 disabled:text-gray-400 active:scale-95 transition-all flex justify-center items-center gap-2"
                         >
                             {isPending ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />

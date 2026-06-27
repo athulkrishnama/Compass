@@ -87,7 +87,7 @@ function StripePayForm({
             <button
                 type="submit"
                 disabled={!stripe || !elements || isLoading}
-                className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 disabled:bg-gray-200 disabled:text-gray-400 text-white font-bold text-sm uppercase tracking-widest transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-2xl bg-gray-900 hover:bg-gray-800 disabled:bg-gray-200 disabled:text-gray-400 text-white font-bold text-sm uppercase tracking-widest transition-all active:scale-[0.98] flex items-center justify-center gap-2"
             >
                 {isLoading ? (
                     <>
@@ -137,7 +137,7 @@ export const StripePaymentView: React.FC<StripePaymentViewProps> = ({
                     appearance: {
                         theme: "flat",
                         variables: {
-                            colorPrimary: "#2563eb",
+                            colorPrimary: "#111827",
                             borderRadius: "12px",
                             fontFamily: "Inter, system-ui, sans-serif",
                         },
