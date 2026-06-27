@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
 import { ActiveTripPhaseBar } from "@/components/cab/activeTrip/ActiveTripPhaseBar";
@@ -49,11 +49,15 @@ export default function ActiveTripPage() {
     const [otpInput, setOtpInput] = useState("");
     const [cancelOpen, setCancelOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const prevRideIdRef = useRef<string | undefined>(undefined);
 
-    // Initialize phase when data is fetched
+    // Initialize or reset phase when data is fetched or ride changes
     useEffect(() => {
-        if (rideDetails && !phase) {
-            setPhase(rideDetails.status);
+        if (rideDetails) {
+            if (!phase || prevRideIdRef.current !== rideDetails._id) {
+                setPhase(rideDetails.status);
+                prevRideIdRef.current = rideDetails._id;
+            }
         }
     }, [rideDetails, phase]);
 

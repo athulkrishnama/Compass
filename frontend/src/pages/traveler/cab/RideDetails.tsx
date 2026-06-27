@@ -74,6 +74,8 @@ const RideDetails = () => {
                 ride.paymentStatus === PaymentStatus.PENDING)
         ) {
             setIsPaymentOpen(true);
+        } else {
+            setIsPaymentOpen(false);
         }
     }, [ride?.status, ride?.paymentStatus]);
 
