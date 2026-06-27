@@ -329,7 +329,7 @@ export default function ActiveTripPage() {
                                     queryClient.invalidateQueries({
                                         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                                     });
-                                    navigate({ to: "/cab" });
+                                    navigate({ to: "/cab/history" });
                                 }}
                             />
                         ) : (
@@ -379,6 +379,7 @@ export default function ActiveTripPage() {
                 tripId={rideDetails._id}
                 expectedAmount={rideDetails.selected_fare?.fare ?? 0}
                 onSuccess={() => {
+                    navigate({ to: "/cab/history" });
                     queryClient.invalidateQueries({
                         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                     });
