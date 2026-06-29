@@ -30,11 +30,56 @@ export class RideRouter {
     );
 
     this._router.get(
+      RIDE_ROUTES.DRIVER_ACTIVE_RIDE,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.CAB]),
+      (req, res, next) => {
+        rideController.handleGetActiveRideDetails(req, res, next);
+      },
+    );
+
+    this._router.get(
+      RIDE_ROUTES.PAST_TRIPS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => {
+        rideController.handleGetRiderPastTrips(req, res, next);
+      },
+    );
+
+    this._router.get(
+      RIDE_ROUTES.DRIVER_PAST_TRIPS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.CAB]),
+      (req, res, next) => {
+        rideController.handleGetDriverPastTrips(req, res, next);
+      },
+    );
+
+    this._router.get(
+      RIDE_ROUTES.RIDER_ACTIVE_RIDE,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req, res, next) => {
+        rideController.getRiderActiveRide(req, res, next);
+      },
+    );
+
+    this._router.get(
       "/:id",
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.TRAVELER, ROLES.CAB]),
       (req, res, next) => {
         rideController.handleGetRideDetails(req, res, next);
+      },
+    );
+
+    this._router.get(
+      RIDE_ROUTES.CAB_DETAILS,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.TRAVELER, ROLES.CAB]),
+      (req, res, next) => {
+        rideController.handleGetRideCabDetails(req, res, next);
       },
     );
   }

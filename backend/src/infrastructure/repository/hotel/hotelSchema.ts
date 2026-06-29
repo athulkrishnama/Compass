@@ -17,6 +17,8 @@ export interface IHotelDocument extends Document {
       coordinates: [number, number];
     };
   };
+  averageRating: number;
+  totalReviews: number;
 }
 
 export const hotelSchema = new Schema<IHotelDocument>({
@@ -70,6 +72,14 @@ export const hotelSchema = new Schema<IHotelDocument>({
         required: true,
       },
     },
+  },
+  averageRating: {
+    type: Number,
+    default: 0,
+  },
+  totalReviews: {
+    type: Number,
+    default: 0,
   },
 });
 

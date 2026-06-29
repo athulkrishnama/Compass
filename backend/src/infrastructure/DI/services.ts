@@ -33,6 +33,9 @@ import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.in
 import { SocketEmitter } from "@presentation/webSocket/socketEmitter";
 import { INotificationService } from "@application/interfaces/service/notificationService.interface";
 import { NotificationService } from "@infrastructure/services/notificationService";
+import { ITransactionManager } from "@application/interfaces/service/ITransactionManager";
+import { TransactionManager } from "@infrastructure/services/transactionManager";
+
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
   container.registerSingleton<IOtpService>("IOtpService", OtpService);
@@ -82,5 +85,9 @@ export function registerServices() {
   container.registerSingleton<INotificationService>(
     "INotificationService",
     NotificationService,
+  );
+  container.registerSingleton<ITransactionManager>(
+    "ITransactionManager",
+    TransactionManager,
   );
 }

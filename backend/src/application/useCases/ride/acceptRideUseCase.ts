@@ -2,6 +2,7 @@ import { IAcceptRideUseCase } from "@application/interfaces/useCase/ride/acceptR
 import { IAcceptRideRequestDTO } from "@domain/dtos/ride/acceptRide.dto";
 import { inject, injectable } from "tsyringe";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
@@ -24,6 +25,7 @@ export class AcceptRideUseCase implements IAcceptRideUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("IQueueService") private _queueService: IQueueService,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
   ) {}
 
   async execute({
@@ -73,6 +75,7 @@ export class AcceptRideUseCase implements IAcceptRideUseCase {
     });
 
     await this._rideRepo.update(ride, ride_id);
+    await this._cabRepo.updateActiveRide(rider_id, ride_id);
 
     console.log(
       `[AcceptRide] Ride ${ride_id} accepted by driver ${rider_id}. Status → ${RIDE_STATUSES.MATCHED}.`,

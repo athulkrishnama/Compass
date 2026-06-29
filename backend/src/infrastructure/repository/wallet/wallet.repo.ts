@@ -4,7 +4,7 @@ import { IWalletDocument } from "./walletSchema";
 import { IWalletRepo } from "@application/interfaces/repository/wallet/wallet.repo.interface";
 import { SERVICE_TYPE } from "@domain/enums/serviceType";
 import { inject, injectable } from "tsyringe";
-import { Model } from "mongoose";
+import { ClientSession, Model } from "mongoose";
 
 @injectable()
 export class WalletRepo
@@ -30,6 +30,7 @@ export class WalletRepo
     ownerId: string,
     ownerType: SERVICE_TYPE,
     amount: number,
+    session?: ClientSession,
   ): Promise<void> {
     await this._model.findOneAndUpdate(
       { ownerId, ownerType },
@@ -38,7 +39,24 @@ export class WalletRepo
         $setOnInsert: { ownerId, ownerType, createdAt: new Date() },
         $set: { updatedAt: new Date() },
       },
-      { upsert: true },
+      { upsert: true, session },
+    );
+  }
+
+  async debitWallet(
+    ownerId: string,
+    ownerType: SERVICE_TYPE,
+    amount: number,
+    session?: ClientSession,
+  ): Promise<void> {
+    await this._model.findOneAndUpdate(
+      { ownerId, ownerType },
+      {
+        $inc: { balance: -amount },
+        $setOnInsert: { ownerId, ownerType, createdAt: new Date() },
+        $set: { updatedAt: new Date() },
+      },
+      { upsert: true, session },
     );
   }
 

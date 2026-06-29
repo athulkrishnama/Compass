@@ -1,14 +1,12 @@
 import { HotelBookingEntity } from "@domain/entities/hotelBooking/hotelBooking.entity";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
 import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IHotelBookingDocument } from "@infrastructure/repository/hotelBooking/hotelBookingSchema";
 import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/travelerBookingListing.dto";
 import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 import { IHotelBookingListingAggregation } from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IHotelBookingRepo
-  extends BaseRepository<HotelBookingEntity, IHotelBookingDocument> {
+export interface IHotelBookingRepo extends IBaseRepository<HotelBookingEntity> {
   getHotelBookings(params: {
     hotelId: string;
     roomVariantId?: string;

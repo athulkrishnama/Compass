@@ -11,12 +11,15 @@ import { PaymentController } from "@presentation/controllers/payment/paymentCont
 import { WebHookController } from "@presentation/controllers/webhook/webhookController";
 import { BookingController } from "@presentation/controllers/hotelBooking/BookingController";
 import { NotificationController } from "@presentation/controllers/notification/notificationController";
+import { WalletController } from "@presentation/controllers/wallet/walletController";
 import { RideController } from "@presentation/controllers/ride/rideController";
 import { LocationEventHandler } from "@presentation/webSocket/eventHandlers/locationEventHandler";
 import { RideEventHandler } from "@presentation/webSocket/eventHandlers/rideEventHandler";
 import { SocketAuth } from "@presentation/middlewares/socketAuth";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { ICacheService } from "@application/interfaces/service/cacheService.interface";
+import { CabReviewController } from "@presentation/controllers/cabReview/cabReviewController";
+import { HotelReviewController } from "@presentation/controllers/hotelReview/hotelReviewController";
 
 registerDI();
 export const authController = container.resolve(AuthController);
@@ -30,6 +33,7 @@ export const paymentController = container.resolve(PaymentController);
 export const webhookController = container.resolve(WebHookController);
 export const bookingController = container.resolve(BookingController);
 export const notificationController = container.resolve(NotificationController);
+export const walletController = container.resolve(WalletController);
 export const rideController = container.resolve(RideController);
 export const locationEventHandler = container.resolve<LocationEventHandler>(
   "LocationEventHandler",
@@ -40,3 +44,5 @@ export const socketAuth = container.resolve(SocketAuth);
 export const socketEmitter =
   container.resolve<ISocketEmitter>("ISocketEmitter");
 export const cacheService = container.resolve<ICacheService>("ICacheService");
+export const cabReviewController = container.resolve(CabReviewController);
+export const hotelReviewController = container.resolve(HotelReviewController);

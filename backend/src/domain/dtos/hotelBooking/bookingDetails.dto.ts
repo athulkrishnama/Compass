@@ -3,13 +3,13 @@ import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 import { BedType } from "@domain/enums/bedType";
 import { RoomAmenity } from "@domain/enums/roomAmenity";
 import { HotelBookingEntity } from "@domain/entities/hotelBooking/hotelBooking.entity";
-import { IHotelDocument } from "@infrastructure/repository/hotel/hotelSchema";
-import { IRoomVariantDocument } from "@infrastructure/repository/roomVariant/roomVariantSchema";
+import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
+import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
 
 export interface IBookingDetailsAggregation {
   booking: HotelBookingEntity & {
-    hotel: IHotelDocument;
-    roomVariant: IRoomVariantDocument;
+    hotel: HotelEntity;
+    roomVariant: RoomVariantEntity;
   };
 }
 

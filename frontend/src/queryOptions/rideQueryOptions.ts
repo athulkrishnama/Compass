@@ -1,11 +1,23 @@
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
 import type { ICreateRideRequestDTO } from "@/types/api/requests/rideRequests";
 import type { HttpResponse } from "@/types/api/responseType";
-import { createRide, getRideDetails } from "@/services/api/rideApiService";
+import {
+    createRide,
+    getRideDetails,
+    getActiveRideDetails,
+    getRideCabDetails,
+    getRiderPastTrips,
+    getRiderActiveRide,
+    getDriverPastTrips,
+} from "@/services/api/rideApiService";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import type {
     ICreateRideResponseDTO,
     IRideDetailsResponseDTO,
+    IActiveRideDetailsResponseDTO,
+    IRideCabDetailsResponseDTO,
+    IRiderPastTripResponseDTO,
+    IDriverPastTripResponseDTO,
 } from "@/types/api/responses/rideResponses";
 
 export const createRideMutationOptions = () => {
@@ -22,5 +34,55 @@ export function getRideDetailsQueryOptions(rideId: string) {
     return queryOptions<HttpResponse<IRideDetailsResponseDTO>, Error>({
         queryKey: [QUERY_KEYS.RIDE_DETAILS, rideId],
         queryFn: () => getRideDetails(rideId),
+    });
+}
+
+export function getActiveRideDetailsQueryOptions() {
+    return queryOptions<HttpResponse<IActiveRideDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+        queryFn: getActiveRideDetails,
+        retry: false,
+    });
+}
+
+export function getRideCabDetailsQueryOptions(rideId: string) {
+    return queryOptions<HttpResponse<IRideCabDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.RIDE_CAB_DETAILS, rideId],
+        queryFn: () => getRideCabDetails(rideId),
+        enabled: !!rideId,
+    });
+}
+
+export function getRiderPastTripsQueryOptions(
+    page: number = 1,
+    limit: number = 10
+) {
+    return queryOptions<
+        HttpResponse<{ trips: IRiderPastTripResponseDTO[]; total: number }>,
+        Error
+    >({
+        queryKey: [QUERY_KEYS.RIDER_PAST_TRIPS, page, limit],
+        queryFn: () => getRiderPastTrips(page, limit),
+    });
+}
+
+export function getRiderActiveRideQueryOptions() {
+    return queryOptions<HttpResponse<IRideDetailsResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.RIDER_ACTIVE_RIDE],
+        queryFn: getRiderActiveRide,
+        retry: false,
+    });
+}
+
+export function getDriverPastTripsQueryOptions(
+    page: number = 1,
+    limit: number = 10
+) {
+    return queryOptions<
+        HttpResponse<{ trips: IDriverPastTripResponseDTO[]; total: number }>,
+        Error
+    >({
+        queryKey: [QUERY_KEYS.DRIVER_PAST_TRIPS, page, limit],
+        queryFn: () => getDriverPastTrips(page, limit),
     });
 }

@@ -1,4 +1,8 @@
-import { adminController, authMiddleware } from "@infrastructure/DI/resolve";
+import {
+  adminController,
+  walletController,
+  authMiddleware,
+} from "@infrastructure/DI/resolve";
 import { ROLES } from "@domain/enums/roles";
 import { AdminRoutes } from "presentation/constants/routes/adminRoutes";
 import { NextFunction, Request, Response, Router } from "express";
@@ -71,7 +75,7 @@ export class AdminRouter {
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.ADMIN]),
       (req: Request, res: Response, next: NextFunction) => {
-        adminController.getTransactions(req, res, next);
+        walletController.getAdminTransactions(req, res, next);
       },
     );
 

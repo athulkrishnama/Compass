@@ -1,9 +1,7 @@
 import { RoomLockEntity } from "@domain/entities/roomLock/roomLock.entity";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IRoomLockDocument } from "@infrastructure/repository/roomLock/roomLockSchema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IRoomLockRepo
-  extends BaseRepository<RoomLockEntity, IRoomLockDocument> {
+export interface IRoomLockRepo extends IBaseRepository<RoomLockEntity> {
   filterRoomLock(filter: {
     roomVariantId?: string;
     travelerId?: string;

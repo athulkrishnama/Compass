@@ -69,6 +69,24 @@ import { CreateHotelUseCase } from "@useCases/hotel/createHotelUseCase";
 import { ICreateHotelUseCase } from "@application/interfaces/useCase/hotel/createHotelUseCase.interface";
 import { IGetHotelsByUserIdUseCase } from "@application/interfaces/useCase/hotel/getHotelsByUserIdUseCase.interface";
 import { GetHotelsByUserIdUseCase } from "@useCases/hotel/getHotelsByUserIdUseCase";
+import { ICreateCabReviewUseCase } from "@application/interfaces/useCase/cabReview/createCabReviewUseCase.interface";
+import { CreateCabReviewUseCase } from "@application/useCases/cabReview/createCabReviewUseCase";
+import { IGetDriverReviewsUseCase } from "@application/interfaces/useCase/cabReview/getDriverReviewsUseCase.interface";
+import { GetDriverReviewsUseCase } from "@application/useCases/cabReview/getDriverReviewsUseCase";
+import { IGetAllCabReviewsUseCase } from "@application/interfaces/useCase/cabReview/getAllCabReviewsUseCase.interface";
+import { GetAllCabReviewsUseCase } from "@application/useCases/cabReview/getAllCabReviewsUseCase";
+import { ICheckCabReviewEligibilityUseCase } from "@application/interfaces/useCase/cabReview/checkCabReviewEligibilityUseCase.interface";
+import { CheckCabReviewEligibilityUseCase } from "@application/useCases/cabReview/checkCabReviewEligibilityUseCase";
+import { ICreateHotelReviewUseCase } from "@application/interfaces/useCase/hotelReview/createHotelReviewUseCase.interface";
+import { CreateHotelReviewUseCase } from "@application/useCases/hotelReview/createHotelReviewUseCase";
+import { IGetHotelReviewsUseCase } from "@application/interfaces/useCase/hotelReview/getHotelReviewsUseCase.interface";
+import { GetHotelReviewsUseCase } from "@application/useCases/hotelReview/getHotelReviewsUseCase";
+import { IGetOwnerHotelReviewsUseCase } from "@application/interfaces/useCase/hotelReview/getOwnerHotelReviewsUseCase.interface";
+import { GetOwnerHotelReviewsUseCase } from "@application/useCases/hotelReview/getOwnerHotelReviewsUseCase";
+import { IGetAllHotelReviewsUseCase } from "@application/interfaces/useCase/hotelReview/getAllHotelReviewsUseCase.interface";
+import { GetAllHotelReviewsUseCase } from "@application/useCases/hotelReview/getAllHotelReviewsUseCase";
+import { ICheckHotelReviewEligibilityUseCase } from "@application/interfaces/useCase/hotelReview/checkHotelReviewEligibilityUseCase.interface";
+import { CheckHotelReviewEligibilityUseCase } from "@application/useCases/hotelReview/checkHotelReviewEligibilityUseCase";
 import { IEditHotelUseCase } from "@application/interfaces/useCase/hotel/editHotelUseCase.interface";
 import { EditHotelUseCase } from "@useCases/hotel/editHotelUseCase";
 import { IGetHotelByIdUseCase } from "@application/interfaces/useCase/hotel/getHotelByIdUseCase.interface";
@@ -119,12 +137,14 @@ import { IGetHotelDashboardUseCase } from "@application/interfaces/useCase/hotel
 import { GetHotelDashboardUseCase } from "@useCases/hotelBooking/GetHotelDashboardUseCase";
 import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingsUseCase";
 import { GetHotelBookingsUseCase } from "@useCases/hotelBooking/GetHotelBookingsUseCase";
-import { IGetWalletUseCase } from "@application/interfaces/useCase/wallet/IGetWalletUseCase";
-import { GetWalletUseCase } from "@useCases/wallet/GetWalletUseCase";
-import { IGetProviderTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetProviderTransactionsUseCase";
-import { GetProviderTransactionsUseCase } from "@useCases/transaction/GetProviderTransactionsUseCase";
-import { IGetAdminTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAdminTransactionsUseCase";
-import { GetAdminTransactionsUseCase } from "@useCases/transaction/GetAdminTransactionsUseCase";
+import { IGetWalletSummaryUseCase } from "@application/interfaces/useCase/wallet/IGetWalletSummaryUseCase";
+import { GetWalletSummaryUseCase } from "@useCases/wallet/GetWalletSummaryUseCase";
+import { IGetWalletTransactionsUseCase } from "@application/interfaces/useCase/wallet/IGetWalletTransactionsUseCase";
+import { GetWalletTransactionsUseCase } from "@useCases/wallet/GetWalletTransactionsUseCase";
+import { ITopUpWalletUseCase } from "@application/interfaces/useCase/wallet/ITopUpWalletUseCase";
+import { TopUpWalletUseCase } from "@useCases/wallet/TopUpWalletUseCase";
+import { IGetAllTransactionsUseCase } from "@application/interfaces/useCase/transaction/IGetAllTransactionsUseCase";
+import { GetAllTransactionsUseCase } from "@useCases/transaction/GetAllTransactionsUseCase";
 import { IGetAdminDashboardStatsUseCase } from "@application/interfaces/useCase/admin/getAdminDashboardStatsUseCase.interface";
 import { GetAdminDashboardStatsUseCase } from "../../application/useCases/admin/GetAdminDashboardStatsUseCase";
 import { ICreateFareUseCase } from "@application/interfaces/useCase/ride/createFareUseCase.interface";
@@ -135,12 +155,22 @@ import { ICreateRideUseCase } from "@application/interfaces/useCase/ride/createR
 import { CreateRideUseCase } from "@useCases/ride/createRideUseCase";
 import { IGetRideDetailsUseCase } from "@application/interfaces/useCase/ride/getRideDetailsUseCase.interface";
 import { GetRideDetailsUseCase } from "@useCases/ride/getRideDetailsUseCase";
+import { IGetRideCabDetailsUseCase } from "@application/interfaces/useCase/ride/getRideCabDetailsUseCase.interface";
+import { GetRideCabDetailsUseCase } from "@useCases/ride/getRideCabDetailsUseCase";
+import { IActiveRideDetailsUseCase } from "@application/interfaces/useCase/ride/activeRideDetailsUseCase.interface";
+import { ActiveRideUseCase } from "@useCases/ride/activeRideUseCase";
 import { IDriverMatchingUseCase } from "@application/interfaces/useCase/ride/driverMatchingUseCase.interface";
 import { DriverMatchingUseCase } from "@useCases/ride/driverMatchUseCase";
 import { IAcceptRideUseCase } from "@application/interfaces/useCase/ride/acceptRideUseCase.interface";
 import { AcceptRideUseCase } from "@useCases/ride/acceptRideUseCase";
 import { ICancelRideUseCase } from "@application/interfaces/useCase/ride/cancelRideUseCase.interface";
 import { CancelRideUseCase } from "@useCases/ride/cancelRideUseCase";
+import { IDriverArrivedUseCase } from "@application/interfaces/useCase/ride/driverArrivedUseCase.interface";
+import { DriverArrivedUseCase } from "@useCases/ride/driverArrivedUseCase";
+import { IStartRideUseCase } from "@application/interfaces/useCase/ride/startRideUseCase.interface";
+import { StartRideUseCase } from "@useCases/ride/startRideUseCase";
+import { IEndRideUseCase } from "@application/interfaces/useCase/ride/endRideUseCase.interface";
+import { EndRideUseCase } from "@useCases/ride/endRideUseCase";
 import { IGetNotificationsUseCase } from "@application/interfaces/useCase/notification/getNotificationsUseCase.interface";
 import { GetNotificationsUseCase } from "@useCases/notification/getNotificationsUseCase";
 import { IGetUnreadCountUseCase } from "@application/interfaces/useCase/notification/getUnreadCountUseCase.interface";
@@ -149,6 +179,25 @@ import { IMarkNotificationReadUseCase } from "@application/interfaces/useCase/no
 import { MarkNotificationReadUseCase } from "@useCases/notification/markNotificationReadUseCase";
 import { IMarkAllNotificationsReadUseCase } from "@application/interfaces/useCase/notification/markAllNotificationsReadUseCase.interface";
 import { MarkAllNotificationsReadUseCase } from "@useCases/notification/markAllNotificationsReadUseCase";
+import { IInitiateCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IInitiateCabPaymentUseCase";
+import { InitiateCabPaymentUseCase } from "@useCases/cabPayment/InitiateCabPaymentUseCase";
+import { IProcessWalletCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IProcessWalletCabPaymentUseCase";
+import { ProcessWalletCabPaymentUseCase } from "@useCases/cabPayment/ProcessWalletCabPaymentUseCase";
+import { IVerifyStripeCabPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IVerifyStripeCabPaymentUseCase";
+import { VerifyStripeCabPaymentUseCase } from "@useCases/cabPayment/VerifyStripeCabPaymentUseCase";
+import { IRecordCashPaymentUseCase } from "@application/interfaces/useCase/cabPayment/IRecordCashPaymentUseCase";
+import { RecordCashPaymentUseCase } from "@useCases/cabPayment/RecordCashPaymentUseCase";
+import { IGetCabPaymentStatusUseCase } from "@application/interfaces/useCase/cabPayment/IGetCabPaymentStatusUseCase";
+import { GetCabPaymentStatusUseCase } from "@useCases/cabPayment/GetCabPaymentStatusUseCase";
+import { WalletPaymentProcessor } from "@useCases/cabPayment/strategies/WalletPaymentProcessor";
+import { StripePaymentProcessor } from "@useCases/cabPayment/strategies/StripePaymentProcessor";
+import { CashPaymentProcessor } from "@useCases/cabPayment/strategies/CashPaymentProcessor";
+import { IGetRiderPastTripsUseCase } from "@application/interfaces/useCase/ride/getRiderPastTripsUseCase.interface";
+import { GetRiderPastTripsUseCase } from "@useCases/ride/getRiderPastTripsUseCase";
+import { IGetRiderActiveRideUseCase } from "@application/interfaces/useCase/ride/getRiderActiveRideUseCase.interface";
+import { GetRiderActiveRideUseCase } from "@useCases/ride/getRiderActiveRideUseCase";
+import { IGetDriverPastTripsUseCase } from "@application/interfaces/useCase/ride/getDriverPastTripsUseCase.interface";
+import { GetDriverPastTripsUseCase } from "@useCases/ride/getDriverPastTripsUseCase";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -387,17 +436,21 @@ export function registerUsecases() {
     "ICheckOutBookingUseCase",
     CheckOutBookingUseCase,
   );
-  container.registerSingleton<IGetWalletUseCase>(
-    "IGetWalletUseCase",
-    GetWalletUseCase,
+  container.registerSingleton<IGetWalletSummaryUseCase>(
+    "IGetWalletSummaryUseCase",
+    GetWalletSummaryUseCase,
   );
-  container.registerSingleton<IGetProviderTransactionsUseCase>(
-    "IGetProviderTransactionsUseCase",
-    GetProviderTransactionsUseCase,
+  container.registerSingleton<ITopUpWalletUseCase>(
+    "ITopUpWalletUseCase",
+    TopUpWalletUseCase,
   );
-  container.registerSingleton<IGetAdminTransactionsUseCase>(
-    "IGetAdminTransactionsUseCase",
-    GetAdminTransactionsUseCase,
+  container.registerSingleton<IGetWalletTransactionsUseCase>(
+    "IGetWalletTransactionsUseCase",
+    GetWalletTransactionsUseCase,
+  );
+  container.registerSingleton<IGetAllTransactionsUseCase>(
+    "IGetAllTransactionsUseCase",
+    GetAllTransactionsUseCase,
   );
   container.registerSingleton<IGetAdminDashboardStatsUseCase>(
     "IGetAdminDashboardStatsUseCase",
@@ -419,6 +472,14 @@ export function registerUsecases() {
     "IGetRideDetailsUseCase",
     GetRideDetailsUseCase,
   );
+  container.registerSingleton<IGetRideCabDetailsUseCase>(
+    "IGetRideCabDetailsUseCase",
+    GetRideCabDetailsUseCase,
+  );
+  container.registerSingleton<IActiveRideDetailsUseCase>(
+    "IActiveRideDetailsUseCase",
+    ActiveRideUseCase,
+  );
   container.registerSingleton<IDriverMatchingUseCase>(
     "IDriverMatchingUseCase",
     DriverMatchingUseCase,
@@ -430,6 +491,30 @@ export function registerUsecases() {
   container.registerSingleton<ICancelRideUseCase>(
     "ICancelRideUseCase",
     CancelRideUseCase,
+  );
+  container.registerSingleton<IDriverArrivedUseCase>(
+    "IDriverArrivedUseCase",
+    DriverArrivedUseCase,
+  );
+  container.registerSingleton<IStartRideUseCase>(
+    "IStartRideUseCase",
+    StartRideUseCase,
+  );
+  container.registerSingleton<IEndRideUseCase>(
+    "IEndRideUseCase",
+    EndRideUseCase,
+  );
+  container.registerSingleton<IGetRiderPastTripsUseCase>(
+    "IGetRiderPastTripsUseCase",
+    GetRiderPastTripsUseCase,
+  );
+  container.registerSingleton<IGetRiderActiveRideUseCase>(
+    "IGetRiderActiveRideUseCase",
+    GetRiderActiveRideUseCase,
+  );
+  container.registerSingleton<IGetDriverPastTripsUseCase>(
+    "IGetDriverPastTripsUseCase",
+    GetDriverPastTripsUseCase,
   );
   container.registerSingleton<IGetNotificationsUseCase>(
     "IGetNotificationsUseCase",
@@ -446,5 +531,70 @@ export function registerUsecases() {
   container.registerSingleton<IMarkAllNotificationsReadUseCase>(
     "IMarkAllNotificationsReadUseCase",
     MarkAllNotificationsReadUseCase,
+  );
+
+  // ─── Cab Payment Strategies (named registrations for injection by key) ────
+  container.registerSingleton("WalletPaymentProcessor", WalletPaymentProcessor);
+  container.registerSingleton("StripePaymentProcessor", StripePaymentProcessor);
+  container.registerSingleton("CashPaymentProcessor", CashPaymentProcessor);
+
+  // ─── Cab Payment Use Cases ────────────────────────────────────────────────
+  container.registerSingleton<IInitiateCabPaymentUseCase>(
+    "IInitiateCabPaymentUseCase",
+    InitiateCabPaymentUseCase,
+  );
+  container.registerSingleton<IProcessWalletCabPaymentUseCase>(
+    "IProcessWalletCabPaymentUseCase",
+    ProcessWalletCabPaymentUseCase,
+  );
+  container.registerSingleton<IVerifyStripeCabPaymentUseCase>(
+    "IVerifyStripeCabPaymentUseCase",
+    VerifyStripeCabPaymentUseCase,
+  );
+  container.registerSingleton<IRecordCashPaymentUseCase>(
+    "IRecordCashPaymentUseCase",
+    RecordCashPaymentUseCase,
+  );
+  container.registerSingleton<IGetCabPaymentStatusUseCase>(
+    "IGetCabPaymentStatusUseCase",
+    GetCabPaymentStatusUseCase,
+  );
+
+  // Review System Use Cases
+  container.registerSingleton<ICreateCabReviewUseCase>(
+    "ICreateCabReviewUseCase",
+    CreateCabReviewUseCase,
+  );
+  container.registerSingleton<IGetDriverReviewsUseCase>(
+    "IGetDriverReviewsUseCase",
+    GetDriverReviewsUseCase,
+  );
+  container.registerSingleton<IGetAllCabReviewsUseCase>(
+    "IGetAllCabReviewsUseCase",
+    GetAllCabReviewsUseCase,
+  );
+  container.registerSingleton<ICheckCabReviewEligibilityUseCase>(
+    "ICheckCabReviewEligibilityUseCase",
+    CheckCabReviewEligibilityUseCase,
+  );
+  container.registerSingleton<ICreateHotelReviewUseCase>(
+    "ICreateHotelReviewUseCase",
+    CreateHotelReviewUseCase,
+  );
+  container.registerSingleton<IGetHotelReviewsUseCase>(
+    "IGetHotelReviewsUseCase",
+    GetHotelReviewsUseCase,
+  );
+  container.registerSingleton<IGetOwnerHotelReviewsUseCase>(
+    "IGetOwnerHotelReviewsUseCase",
+    GetOwnerHotelReviewsUseCase,
+  );
+  container.registerSingleton<IGetAllHotelReviewsUseCase>(
+    "IGetAllHotelReviewsUseCase",
+    GetAllHotelReviewsUseCase,
+  );
+  container.registerSingleton<ICheckHotelReviewEligibilityUseCase>(
+    "ICheckHotelReviewEligibilityUseCase",
+    CheckHotelReviewEligibilityUseCase,
   );
 }

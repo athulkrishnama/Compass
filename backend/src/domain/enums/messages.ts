@@ -52,4 +52,11 @@ export enum Messages {
   ALL_NOTIFICATIONS_MARKED_AS_READ = "allNotificationsMarkedAsRead",
   DRIVER_MATCH_TIMEOUT = "driverMatchTimeout",
   NO_DRIVERS_AVAILABLE = "noDriversAvailable",
+  PAYMENT_INITIATED = "paymentInitiated",
+  PAYMENT_SUCCESSFUL = "paymentSuccessful",
+  CASH_PAYMENT_RECORDED = "cashPaymentRecorded",
+  CAB_PAYMENT_STATUS_FETCHED = "cabPaymentStatusFetched",
+  CAB_PAYMENT_VERIFIED = "cabPaymentVerified",
+  REVIEW_CREATED_SUCCESSFULLY = "reviewCreatedSuccessfully",
+  REVIEW_FETCHED_SUCCESSFULLY = "reviewFetchedSuccessfully",
 }

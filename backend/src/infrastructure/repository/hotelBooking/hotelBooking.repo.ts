@@ -13,6 +13,8 @@ import { IHotelDocument } from "../hotel/hotelSchema";
 import { IRoomVariantDocument } from "../roomVariant/roomVariantSchema";
 import { IUserDocument } from "../users/userSchema";
 import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
+import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
+import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
 
 @injectable()
 export class HotelBookingRepo
@@ -450,8 +452,14 @@ export class HotelBookingRepo
     return {
       booking: {
         ...this.toEntity(booking as IHotelBookingDocument),
-        hotel: booking.hotel,
-        roomVariant: booking.roomVariant,
+        hotel: {
+          ...booking.hotel,
+          _id: booking.hotel._id.toString(),
+        } as unknown as HotelEntity,
+        roomVariant: {
+          ...booking.roomVariant,
+          _id: booking.roomVariant._id.toString(),
+        } as unknown as RoomVariantEntity,
       },
     };
   }

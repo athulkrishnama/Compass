@@ -1,9 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import ActiveTripPage from "@/pages/cab/ActiveTrip";
 
 export const Route = createFileRoute("/cab/activeTrip")({
-    component: RouteComponent,
+    component: ActiveTripPage,
 });
-
-function RouteComponent() {
-    return <div>Hello "/cab/activeTrip"!</div>;
-}

@@ -1,10 +1,10 @@
 import { WalletEntity } from "@domain/entities/wallet/wallet.entity";
 import { SERVICE_TYPE } from "@domain/enums/serviceType";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IWalletDocument } from "@infrastructure/repository/wallet/walletSchema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IWalletRepo
-  extends BaseRepository<WalletEntity, IWalletDocument> {
+import { IDbSession } from "@application/interfaces/repository/base/dbSession.interface";
+
+export interface IWalletRepo extends IBaseRepository<WalletEntity> {
   findByOwner(
     ownerId: string,
     ownerType: SERVICE_TYPE,
@@ -13,5 +13,12 @@ export interface IWalletRepo
     ownerId: string,
     ownerType: SERVICE_TYPE,
     amount: number,
+    session?: IDbSession,
+  ): Promise<void>;
+  debitWallet(
+    ownerId: string,
+    ownerType: SERVICE_TYPE,
+    amount: number,
+    session?: IDbSession,
   ): Promise<void>;
 }

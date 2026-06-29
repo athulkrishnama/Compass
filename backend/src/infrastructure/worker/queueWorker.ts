@@ -1,5 +1,4 @@
 import { env } from "@config/envConfig";
-import { QUEUE_JOB_NAMES } from "@domain/constants/queueJobNames";
 import { QUEUE_NAMES } from "@domain/constants/queueNames";
 import { Job, Worker } from "bullmq";
 import IORedis from "ioredis";
@@ -22,17 +21,10 @@ export class QueueWorker {
 
   private async _setWorker() {
     const driverMatcherWorker = async (job: Job) => {
-      switch (job.name) {
-        case QUEUE_JOB_NAMES.MATCH_DRIVER:
-          await this._driverMatchingUseCase.execute(job.data);
-          break;
-        case QUEUE_JOB_NAMES.DRIVER_MATCH_TIMEOUT:
-          await this._driverMatchingUseCase.execute({
-            ride_id: job.data.ride_id,
-            attempt_id: job.data.attempt_id,
-          });
-          break;
-      }
+      await this._driverMatchingUseCase.execute({
+        ride_id: job.data.ride_id,
+        attempt_id: job.data.attempt_id,
+      });
     };
 
     const worker = new Worker(QUEUE_NAMES.DEFAULT, driverMatcherWorker, {

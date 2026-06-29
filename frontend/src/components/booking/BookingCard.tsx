@@ -7,6 +7,14 @@ import { format } from "date-fns";
 import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Star } from "lucide-react";
+import ReviewFormModal from "@/components/shared/review/ReviewFormModal";
+import {
+    createHotelReview,
+    checkHotelReviewEligibility,
+} from "@/services/api/reviewApiService";
+import { toast } from "sonner";
+import { useState } from "react";
 
 interface BookingCardProps {
     id: string;
@@ -49,9 +57,45 @@ export function BookingCard({
     status,
 }: BookingCardProps) {
     const { t } = useTranslation();
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
 
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), "MMM dd, yyyy");
+    };
+
+    const handleReviewClick = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+            setIsCheckingEligibility(true);
+            const res = await checkHotelReviewEligibility(id);
+            if (res.data?.eligible) {
+                setIsReviewModalOpen(true);
+            } else if (res.data?.alreadyReviewed) {
+                toast.info("You have already reviewed this stay.");
+            } else {
+                toast.error(
+                    res.data?.reason || "Not eligible to review this stay."
+                );
+            }
+        } catch {
+            toast.error("Failed to check review eligibility.");
+        } finally {
+            setIsCheckingEligibility(false);
+        }
+    };
+
+    const handleReviewSubmit = async (data: {
+        rating: number;
+        review: string;
+    }) => {
+        await createHotelReview({
+            bookingId: id,
+            rating: data.rating,
+            review: data.review,
+        });
+        toast.success("Review submitted successfully!");
     };
 
     return (
@@ -120,18 +164,44 @@ export function BookingCard({
                             </p>
                         </div>
 
-                        <Link
-                            to="/traveler/booking/$bookingId"
-                            params={{ bookingId: id }}
-                            className="px-5 py-2 border border-border hover:bg-muted text-xs font-bold rounded-full transition-all active:scale-95"
-                        >
-                            {status === BookingStatus.COMPLETED
-                                ? t(translationKey.bookingHistory.viewReceipt)
-                                : t(translationKey.bookingHistory.viewDetails)}
-                        </Link>
+                        <div className="flex items-center gap-2">
+                            {status === BookingStatus.COMPLETED && (
+                                <button
+                                    disabled={isCheckingEligibility}
+                                    onClick={handleReviewClick}
+                                    className="px-3 py-2 border border-border hover:bg-muted text-xs font-bold rounded-full transition-all active:scale-95 flex items-center gap-1"
+                                >
+                                    <Star className="w-3 h-3" />
+                                    Rate
+                                </button>
+                            )}
+                            <Link
+                                to="/traveler/booking/$bookingId"
+                                params={{ bookingId: id }}
+                                className="px-5 py-2 border border-border hover:bg-muted text-xs font-bold rounded-full transition-all active:scale-95"
+                            >
+                                {status === BookingStatus.COMPLETED
+                                    ? t(
+                                          translationKey.bookingHistory
+                                              .viewReceipt
+                                      )
+                                    : t(
+                                          translationKey.bookingHistory
+                                              .viewDetails
+                                      )}
+                            </Link>
+                        </div>
                     </div>
                 </CardContent>
             </Card>
+
+            <ReviewFormModal
+                isOpen={isReviewModalOpen}
+                onClose={() => setIsReviewModalOpen(false)}
+                onSubmit={handleReviewSubmit}
+                title="Rate Your Stay"
+                subtitle={`How was your stay at ${hotelName}?`}
+            />
         </motion.div>
     );
 }

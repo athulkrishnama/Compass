@@ -1,10 +1,8 @@
 import { IHotelWithAggregatedRoomVariantDTO } from "@domain/dtos/hotel/hotelSearch.dto";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
-import { BaseRepository } from "@infrastructure/repository/base/base.repo";
-import { IHotelDocument } from "@infrastructure/repository/hotel/hotelSchema";
+import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
-export interface IHotelRepo
-  extends BaseRepository<HotelEntity, IHotelDocument> {
+export interface IHotelRepo extends IBaseRepository<HotelEntity> {
   findHotelByName(name: string): Promise<HotelEntity | null>;
   getHotelsByUserId(
     userId: string,
@@ -22,4 +20,9 @@ export interface IHotelRepo
     pageNo: number;
   }): Promise<IHotelWithAggregatedRoomVariantDTO>;
   countHotels(): Promise<number>;
+  updateRating(
+    hotelId: string,
+    averageRating: number,
+    totalReviews: number,
+  ): Promise<void>;
 }

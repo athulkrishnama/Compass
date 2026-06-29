@@ -7,17 +7,17 @@ import { QUEUE_NAMES } from "@domain/constants/queueNames";
 
 @injectable()
 export class QueueService implements IQueueService {
-  private queue: Queue;
+  private _queue: Queue;
 
   constructor() {
     const connection = new IORedis(env.REDIS_URL, {
       maxRetriesPerRequest: null,
     });
-    this.queue = new Queue(QUEUE_NAMES.DEFAULT, { connection });
+    this._queue = new Queue(QUEUE_NAMES.DEFAULT, { connection });
   }
 
   async addJob(name: string, data: object & { job_id: string }): Promise<void> {
-    await this.queue.add(name, data, { jobId: data.job_id });
+    await this._queue.add(name, data, { jobId: data.job_id });
   }
 
   async addDelayedJob(
@@ -25,10 +25,10 @@ export class QueueService implements IQueueService {
     data: object & { job_id: string },
     delay: number,
   ): Promise<void> {
-    await this.queue.add(name, data, { delay, jobId: data.job_id });
+    await this._queue.add(name, data, { delay, jobId: data.job_id });
   }
 
   async removeJob(job_id: string): Promise<void> {
-    await this.queue.remove(job_id);
+    await this._queue.remove(job_id);
   }
 }

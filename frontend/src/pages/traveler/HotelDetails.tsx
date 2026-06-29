@@ -13,6 +13,7 @@ import GeneralInfoSection from "@/components/hotel/HotelDetails/GeneralInfoSecti
 import LocationAddressSection from "@/components/hotel/HotelDetails/LocationAddressSection";
 import PropertyGallerySection from "@/components/hotel/HotelDetails/PropertyGallerySection";
 import TravelerRoomVariantsSection from "@/components/traveler/hotelDetails/TravelerRoomVariantsSection";
+import HotelReviewsSection from "@/components/hotel/HotelDetails/HotelReviewsSection";
 import translationKey from "@/utils/i18n/translationKey";
 
 function HotelDetailsContent() {
@@ -92,6 +93,7 @@ function HotelDetailsContent() {
                 </div>
 
                 <PropertyGallerySection images={hotelData.images} />
+                <HotelReviewsSection hotelId={hotelId} />
             </main>
         </div>
     );

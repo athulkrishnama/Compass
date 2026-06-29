@@ -27,7 +27,10 @@ import { RideRouter } from "@presentation/routes/ride/rideRouter";
 import { NotificationRouter } from "@presentation/routes/notification/notificationRouter";
 import { SocketServer } from "@presentation/webSocket/socketServer";
 import { MonitoringRouter } from "@presentation/routes/monitoring/monitoringRouter";
+import { WalletRouter } from "@presentation/routes/wallet/walletRouter";
 import { promotheusMiddlware } from "@presentation/middlewares/promotheusMiddleware";
+import { CabReviewRouter } from "@presentation/routes/cabReview/cabReviewRouter";
+import { HotelReviewRouter } from "@presentation/routes/hotelReview/hotelReviewRouter";
 
 export class Server {
   private _app: Express;
@@ -51,6 +54,9 @@ export class Server {
     this._setRideRouter();
     this._setNotificationRouter();
     this._setMonitoringRouter();
+    this._setWalletRouter();
+    this._setCabReviewRouter();
+    this._setHotelReviewRouter();
     this._setNotFoundRouter();
     this._setErrorHandlingMiddleware();
   }
@@ -142,6 +148,21 @@ export class Server {
   private _setMonitoringRouter() {
     const monitoringRouter = new MonitoringRouter();
     this._app.use(Routes.MONITORING, monitoringRouter.getRouter());
+  }
+
+  private _setWalletRouter() {
+    const walletRouter = new WalletRouter();
+    this._app.use(Routes.WALLET, walletRouter.getRouter());
+  }
+
+  private _setCabReviewRouter() {
+    const cabReviewRouter = new CabReviewRouter();
+    this._app.use(Routes.CAB_REVIEW, cabReviewRouter.getRouter());
+  }
+
+  private _setHotelReviewRouter() {
+    const hotelReviewRouter = new HotelReviewRouter();
+    this._app.use(Routes.HOTEL_REVIEW, hotelReviewRouter.getRouter());
   }
 
   private _setLoggingMiddleware() {

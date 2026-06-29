@@ -28,15 +28,95 @@ export class RideRepo
   async fetchCabActiveRide(driver_id: string): Promise<RideEntity | null> {
     const doc = await this._model.findOne({
       driver_id: new Types.ObjectId(driver_id),
-      status: {
-        $in: [
-          RIDE_STATUSES.MATCHED,
-          RIDE_STATUSES.IN_TRANSIT,
-          RIDE_STATUSES.ARRIVED,
-        ],
-      },
+      $or: [
+        {
+          status: {
+            $in: [
+              RIDE_STATUSES.MATCHED,
+              RIDE_STATUSES.IN_TRANSIT,
+              RIDE_STATUSES.ARRIVED,
+            ],
+          },
+        },
+        {
+          status: RIDE_STATUSES.COMPLETED,
+          paymentStatus: { $ne: "SUCCESS" },
+        },
+      ],
     });
     return doc ? this.toEntity(doc) : null;
+  }
+  async fetchRiderActiveRide(rider_id: string): Promise<RideEntity | null> {
+    const doc = await this._model
+      .findOne({
+        rider_id: new Types.ObjectId(rider_id),
+        $or: [
+          {
+            status: {
+              $in: [
+                RIDE_STATUSES.SEARCHING,
+                RIDE_STATUSES.MATCHED,
+                RIDE_STATUSES.IN_TRANSIT,
+                RIDE_STATUSES.ARRIVED,
+              ],
+            },
+          },
+          {
+            status: RIDE_STATUSES.COMPLETED,
+            paymentStatus: { $ne: "SUCCESS" },
+          },
+        ],
+      })
+      .sort({ createdAt: -1 }); // Get the most recent one just in case
+    return doc ? this.toEntity(doc) : null;
+  }
+
+  async fetchRiderPastTrips(
+    rider_id: string,
+    page: number,
+    limit: number,
+  ): Promise<{ trips: RideEntity[]; total: number }> {
+    const skip = (page - 1) * limit;
+    const filter = {
+      rider_id: new Types.ObjectId(rider_id),
+      status: {
+        $in: [RIDE_STATUSES.COMPLETED, RIDE_STATUSES.CANCELLED],
+      },
+    };
+
+    const [docs, total] = await Promise.all([
+      this._model.find(filter).sort({ _id: -1 }).skip(skip).limit(limit),
+      this._model.countDocuments(filter),
+    ]);
+
+    return {
+      trips: docs.map((doc) => this.toEntity(doc)),
+      total,
+    };
+  }
+
+  async fetchDriverPastTrips(
+    driver_id: string,
+    page: number,
+    limit: number,
+  ): Promise<{ trips: RideEntity[]; total: number }> {
+    const skip = (page - 1) * limit;
+    const filter = {
+      driver_id: new Types.ObjectId(driver_id),
+      status: {
+        $in: [RIDE_STATUSES.COMPLETED, RIDE_STATUSES.CANCELLED],
+      },
+    };
+
+    const [docs, total] = await Promise.all([
+      this._model.find(filter).sort({ _id: -1 }).skip(skip).limit(limit),
+      this._model.countDocuments(filter),
+    ]);
+
+    return {
+      trips: docs.map((doc) => this.toEntity(doc)),
+      total,
+    };
   }
 
   toMongoDoc(entity: RideEntity): IRideDocument {
@@ -71,6 +151,9 @@ export class RideRepo
       status: entity.status,
       cancelled_by: entity.cancelled_by,
       events: entity.events,
+      paymentStatus: entity.paymentStatus,
+      paymentMethod: entity.paymentMethod,
+      remainingAmount: entity.remainingAmount ?? 0,
     });
   }
 
@@ -106,6 +189,9 @@ export class RideRepo
             timestamp: event.timestamp,
           }))
         : [],
+      paymentStatus: doc.paymentStatus,
+      paymentMethod: doc.paymentMethod,
+      remainingAmount: doc.remainingAmount ?? 0,
     };
   }
 }

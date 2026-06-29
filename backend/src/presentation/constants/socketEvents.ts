@@ -10,16 +10,22 @@ export const SocketEvents = {
   RIDER_CANCEL_RIDE: "rider:cancel-ride",
   DRIVER_RIDE_STARTED: "driver:ride-started",
   DRIVER_RIDE_COMPLETED: "driver:ride-completed",
+  DRIVER_ARRIVED: "driver:arrived",
+  DRIVER_VERIFY_OTP: "driver:verify-otp",
+  DRIVER_CANCEL_RIDE: "driver:cancel-ride",
 
   RIDER_EVENTS: "rider:events",
   DRIVER_EVENTS: "driver:events",
   RIDE_ACCEPTANCE_REJECTED: "ride:acceptance-rejected",
   DRIVER_LOCATION_BROADCAST: "driver:location-broadcast",
-  PAYMENT_COMPLETED: "payment:completed",
-  PAYMENT_FAILED: "payment:failed",
+  PAYMENT_SUCCESS: "payment:success",
+  PAYMENT_RECEIVED: "payment:received",
+  PAYMENT_INITIATED: "payment:initiated",
 
   NOTIFICATION_NEW: "notification:new",
   NOTIFICATION_READ: "notification:read",
+  JOIN_RIDE_ROOM: "ride:join-room",
+  LEAVE_RIDE_ROOM: "ride:leave-room",
 } as const;
 
 export const SocketConstants = {

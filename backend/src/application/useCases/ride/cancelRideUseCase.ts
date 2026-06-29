@@ -2,6 +2,7 @@ import { ICancelRideUseCase } from "@application/interfaces/useCase/ride/cancelR
 import { ICancelRideRequestDTO } from "@domain/dtos/ride/cancelRide.dto";
 import { inject, injectable } from "tsyringe";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
+import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
 import { ISocketEmitter } from "@application/interfaces/service/socketEmitter.interface";
 import { IQueueService } from "@application/interfaces/service/queueService.interface";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
@@ -21,6 +22,8 @@ import {
 const CANCELLABLE_STATUSES = [
   RIDE_STATUSES.SEARCHING,
   RIDE_STATUSES.MATCHED,
+  RIDE_STATUSES.ARRIVED,
+  RIDE_STATUSES.IN_TRANSIT,
 ] as const;
 
 @injectable()
@@ -29,6 +32,7 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("IQueueService") private _queueService: IQueueService,
+    @inject("ICabRepo") private _cabRepo: ICabRepo,
   ) {}
 
   async execute({ ride_id, user_id }: ICancelRideRequestDTO): Promise<void> {
@@ -39,7 +43,12 @@ export class CancelRideUseCase implements ICancelRideUseCase {
       );
     }
 
-    if (ride.rider_id !== user_id) {
+    let cancelledByRole: ROLES;
+    if (ride.rider_id === user_id) {
+      cancelledByRole = ROLES.TRAVELER;
+    } else if (ride.driver_id === user_id) {
+      cancelledByRole = ROLES.CAB;
+    } else {
       throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.UNAUTHORIZED);
     }
     if (
@@ -56,10 +65,10 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     const now = new Date();
 
     ride.status = RIDE_STATUSES.CANCELLED;
-    ride.cancelled_by = ROLES.TRAVELER;
+    ride.cancelled_by = cancelledByRole;
     ride.events.push({
       event_name: RIDE_EVENT_NAMES.CANCELLED,
-      actor: user_id,
+      actor: cancelledByRole,
       timestamp: now,
     });
 
@@ -81,6 +90,7 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     }
 
     if (ride.driver_id) {
+      await this._cabRepo.updateActiveRide(ride.driver_id, null);
       this._socketEmitter.emitToUser(
         ride.driver_id,
         SocketEvents.DRIVER_EVENTS,

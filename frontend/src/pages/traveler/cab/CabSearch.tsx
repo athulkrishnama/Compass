@@ -69,14 +69,7 @@ const CabSearch = () => {
         };
 
         fetchRoute();
-    }, [
-        searchParams.pickupLat,
-        searchParams.pickupLng,
-        searchParams.dropoffLat,
-        searchParams.dropoffLng,
-        searchParams,
-        t,
-    ]);
+    }, [searchParams, t]);
 
     function handleStartSearch() {
         if (selectedCab && fareData) {

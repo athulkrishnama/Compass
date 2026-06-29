@@ -66,6 +66,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 dispatch(
                                     updateRideStatus(RIDE_STATUSES.MATCHED)
                                 );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
                                 toast.success(
                                     t(translationKey.toasts.driverAssigned),
                                     {
@@ -121,6 +127,58 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                     }
                                 );
                                 break;
+                            case RIDER_EVENTS_TYPES.ARRIVED:
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.ARRIVED)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                toast.success(
+                                    t(
+                                        translationKey.activeTrip
+                                            .arrivedAtPickup,
+                                        "Driver arrived at pickup location"
+                                    )
+                                );
+                                break;
+                            case RIDER_EVENTS_TYPES.STARTED:
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.IN_TRANSIT)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                toast.success(
+                                    t(
+                                        translationKey.activeTrip.inTransit,
+                                        "Ride started"
+                                    )
+                                );
+                                break;
+                            case RIDER_EVENTS_TYPES.COMPLETED:
+                                dispatch(
+                                    updateRideStatus(RIDE_STATUSES.COMPLETED)
+                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [
+                                        QUERY_KEYS.RIDE_DETAILS,
+                                        store.getState().activeRide?._id,
+                                    ],
+                                });
+                                toast.success(
+                                    t(
+                                        translationKey.bookingStatus.COMPLETED,
+                                        "Ride completed"
+                                    )
+                                );
+                                break;
                         }
                     }
                 )
@@ -142,7 +200,21 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                 break;
                             }
                             case DRIVER_EVENTS_TYPES.ACCEPTED: {
-                                router.navigate({ to: "/cab/activeTrip" });
+                                const currentPath =
+                                    router.state.location.pathname;
+                                if (currentPath !== "/cab/activeTrip") {
+                                    setTimeout(() => {
+                                        router.navigate({
+                                            to: "/cab/activeTrip",
+                                        });
+                                    }, 500);
+                                } else {
+                                    setTimeout(() => {
+                                        queryClient.invalidateQueries({
+                                            queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                        });
+                                    }, 500);
+                                }
                                 break;
                             }
                             case DRIVER_EVENTS_TYPES.CANCELLED: {

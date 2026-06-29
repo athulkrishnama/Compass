@@ -1,4 +1,5 @@
 import CommonErrorComponent from "@/components/errorBoundries/CommonErrorComponent";
+import { ActiveTripOverlay } from "@/components/traveler/cab/ActiveTripOverlay";
 import NotFoundComponent from "@/components/notFound";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import { ROLES } from "@/constants/roles";
@@ -60,8 +61,9 @@ function RouteComponent() {
             route: "/traveler/bookings",
         },
         { name: t(translationKey.button.history), route: "/traveler/history" },
-        { name: t(translationKey.button.profile), route: "/traveler/profile" },
+        { name: t(translationKey.button.wallet), route: "/traveler/wallet" },
         { name: t(translationKey.button.cabs), route: "/traveler/cab" },
+        { name: t(translationKey.button.profile), route: "/traveler/profile" },
     ];
 
     const noNavbarRoutes = [
@@ -85,6 +87,8 @@ function RouteComponent() {
                     </div>
                 </div>
             )}
+
+            {!hideNavbar && <ActiveTripOverlay />}
         </div>
     );
 }

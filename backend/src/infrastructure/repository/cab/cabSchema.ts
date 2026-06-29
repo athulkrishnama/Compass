@@ -10,6 +10,9 @@ export interface ICabDocument extends Document {
   vehicleDetails?: vehicle;
   isOnline: boolean;
   userId: string;
+  active_ride_id?: Types.ObjectId;
+  averageRating?: number;
+  totalReviews?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -64,6 +67,11 @@ export const cabSchema = new Schema<ICabDocument>({
     required: true,
     ref: "users",
   },
+  active_ride_id: {
+    type: Schema.Types.ObjectId,
+    ref: "rides",
+    default: null,
+  },
   createdAt: {
     type: Date,
     default: new Date(),
@@ -71,6 +79,14 @@ export const cabSchema = new Schema<ICabDocument>({
   updatedAt: {
     type: Date,
     default: new Date(),
+  },
+  averageRating: {
+    type: Number,
+    default: 0,
+  },
+  totalReviews: {
+    type: Number,
+    default: 0,
   },
 });
 

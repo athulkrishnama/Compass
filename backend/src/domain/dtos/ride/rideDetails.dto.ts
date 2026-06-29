@@ -3,6 +3,7 @@ import { FareType } from "@domain/types/fareType";
 import { RideEvent } from "@domain/types/rideEvent";
 import { RideStatus } from "@domain/types/rideStatus";
 import { ROLES } from "@domain/types/roles";
+import { PAYMENT_STATUS } from "@domain/enums/paymentStatus";
 
 export interface RideDetailsRequestDTO {
   rideId: string;
@@ -20,4 +21,6 @@ export interface RideDetailsResponseDTO {
   otp: string | null;
   cancelled_by: ROLES | "timeout" | null;
   events: RideEvent[];
+  paymentStatus?: PAYMENT_STATUS;
+  paymentMethod?: string;
 }

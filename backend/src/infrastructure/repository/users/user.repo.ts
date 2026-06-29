@@ -132,4 +132,10 @@ export class UserRepository
     }
     return await this._model.countDocuments(filter);
   }
+
+  async findByRole(role: ROLES): Promise<UserEntity | null> {
+    const user = await this._model.findOne({ role });
+    if (!user) return null;
+    return UserMapper.toEntityfromMongooseDocument(user);
+  }
 }
