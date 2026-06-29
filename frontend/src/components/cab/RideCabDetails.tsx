@@ -30,7 +30,6 @@ const RideCabDetails = ({ rideId }: RideCabDetailsProps) => {
     return (
         <div className="w-full bg-white rounded-3xl p-5 md:p-6 border border-neutral-200 shrink-0">
             <div className="flex flex-wrap sm:flex-nowrap items-start justify-between gap-4">
-                {/* Driver Info */}
                 <div className="flex items-center gap-4 min-w-0">
                     <div className="relative shrink-0">
                         <img
@@ -51,7 +50,9 @@ const RideCabDetails = ({ rideId }: RideCabDetailsProps) => {
                         <h3 className="text-lg font-bold text-neutral-900 leading-tight flex flex-wrap items-center gap-2">
                             <span className="truncate">{driver.full_name}</span>
                             <span className="flex shrink-0 items-center text-xs font-medium bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded-full">
-                                {cab.averageRating > 0 ? cab.averageRating.toFixed(1) : "New"}{" "}
+                                {cab.averageRating > 0
+                                    ? cab.averageRating.toFixed(1)
+                                    : "New"}{" "}
                                 <Star className="w-3 h-3 ml-1 fill-current" />
                             </span>
                         </h3>
@@ -61,7 +62,6 @@ const RideCabDetails = ({ rideId }: RideCabDetailsProps) => {
                     </div>
                 </div>
 
-                {/* Registration Plate */}
                 <div className="flex flex-row sm:flex-col items-center sm:items-end shrink-0 gap-3">
                     <div className="bg-white text-neutral-900 font-bold px-3 py-1.5 rounded text-sm tracking-wider border border-neutral-300">
                         {cab.registrationNumber}
@@ -77,7 +77,6 @@ const RideCabDetails = ({ rideId }: RideCabDetailsProps) => {
                 </div>
             </div>
 
-            {/* Vehicle Images */}
             {cab.images && cab.images.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-neutral-100">
                     <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">

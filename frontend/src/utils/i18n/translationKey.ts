@@ -1101,6 +1101,13 @@ export default {
         droppedOffPassenger: "activeTrip.droppedOffPassenger",
         clickToViewDetails: "activeTrip.clickToViewDetails",
         kmTrip: "activeTrip.kmTrip",
+        paymentPendingTitle: "activeTrip.paymentPendingTitle",
+        collectCashPrompt: "activeTrip.collectCashPrompt",
+        waitOnlinePaymentPrompt: "activeTrip.waitOnlinePaymentPrompt",
+        tripOverview: "activeTrip.tripOverview",
+        totalFare: "activeTrip.totalFare",
+        commission10: "activeTrip.commission10",
+        yourEarnings: "activeTrip.yourEarnings",
     },
     cabHistory: {
         title: "cabHistory.title",

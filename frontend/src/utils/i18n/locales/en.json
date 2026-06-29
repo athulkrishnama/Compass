@@ -32,7 +32,14 @@
         "tripDetails": "Trip Details",
         "tripOtp": "Trip OTP",
         "verifyOtp": "Verify OTP",
-        "verifying": "Verifying..."
+        "verifying": "Verifying...",
+        "paymentPendingTitle": "Payment Pending",
+        "collectCashPrompt": "Please collect cash from the rider.",
+        "waitOnlinePaymentPrompt": "Waiting for the rider to complete online payment...",
+        "tripOverview": "Trip Overview",
+        "totalFare": "Total Fare",
+        "commission10": "Commission (10%)",
+        "yourEarnings": "Your Earnings"
     },
     "activities": {
         "BIRD_WATCHING": "Bird Watching",

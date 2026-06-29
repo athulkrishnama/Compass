@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { ActiveTripPhaseBar } from "@/components/cab/activeTrip/ActiveTripPhaseBar";
 import { ActiveTripPanel } from "@/components/cab/activeTrip/ActiveTripPanel";
 import { ActiveTripMapOverlay } from "@/components/cab/activeTrip/ActiveTripMapOverlay";
+import { ActiveTripPaymentPending } from "@/components/cab/activeTrip/ActiveTripPaymentPending";
 import { ActiveTripCancelModal } from "@/components/cab/activeTrip/ActiveTripCancelModal";
 import { RIDE_STATUSES, type RideStatus } from "@/types/rideStatus";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -278,7 +279,6 @@ export default function ActiveTripPage() {
 
     return (
         <div className="relative w-full h-[100dvh] bg-gray-50 overflow-hidden">
-            {/* Background Map */}
             <div className="absolute inset-0 z-0">
                 <MapboxMap
                     markers={markers}
@@ -289,9 +289,7 @@ export default function ActiveTripPage() {
                 />
             </div>
 
-            {/* Foreground UI Layer */}
             <div className="relative z-10 w-full h-full flex flex-col pointer-events-none">
-                {/* Desktop top-right overlay */}
                 <div className="w-full flex justify-end p-4 shrink-0">
                     <div className="hidden md:block pointer-events-auto">
                         <ActiveTripMapOverlay
@@ -302,7 +300,6 @@ export default function ActiveTripPage() {
                     </div>
                 </div>
 
-                {/* Desktop left-side panel */}
                 {phase !== RIDE_STATUSES.COMPLETED && (
                     <div className="hidden md:flex absolute top-4 left-4 bottom-4 w-[360px] pointer-events-auto flex-col gap-4">
                         <ActiveTripPhaseBar {...sharedPhaseBarProps} />
@@ -317,7 +314,6 @@ export default function ActiveTripPage() {
                     </div>
                 )}
 
-                {/* Spacer to push content to bottom */}
                 <div className="flex-1 pointer-events-none" />
 
                 {phase === RIDE_STATUSES.COMPLETED ? (
@@ -333,17 +329,13 @@ export default function ActiveTripPage() {
                                 }}
                             />
                         ) : (
-                            <div className="bg-white rounded-t-3xl shadow-2xl p-8 flex flex-col items-center justify-center text-center">
-                                <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4" />
-                                <h2 className="text-xl font-bold text-gray-900">
-                                    Waiting for Payment
-                                </h2>
-                                <p className="text-gray-500 mt-2">
-                                    {rideDetails.paymentMethod === "CASH"
-                                        ? "Please collect cash from the rider."
-                                        : "Waiting for the rider to complete payment..."}
-                                </p>
-                            </div>
+                            <ActiveTripPaymentPending
+                                paymentMethod={rideDetails.paymentMethod}
+                                fare={rideDetails.selected_fare?.fare}
+                                markers={markers}
+                                routeCoordinates={routeCoordinates}
+                                mapCenter={mapCenter}
+                            />
                         )}
                     </div>
                 ) : (
