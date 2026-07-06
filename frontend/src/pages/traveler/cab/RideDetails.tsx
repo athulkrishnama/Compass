@@ -33,6 +33,8 @@ import ReviewFormModal from "@/components/shared/review/ReviewFormModal";
 import { createCabReview } from "@/services/api/reviewApiService";
 import { useNavigate } from "@tanstack/react-router";
 import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
+import { RIDE_EVENT_NAMES } from "@/types/rideEvent";
+import RideTimeoutRetry from "@/components/traveler/cab/ride/RideTimeoutRetry";
 
 const CANCELLABLE_STATUSES: RideStatus[] = [
     RIDE_STATUSES.SEARCHING,
@@ -313,6 +315,12 @@ const RideDetails = () => {
                                 {isCancelling ? "Cancelling…" : "Cancel Ride"}
                             </button>
                         )}
+
+                        {ride.status === RIDE_STATUSES.CANCELLED &&
+                            ride.events?.some(
+                                (e) =>
+                                    e.event_name === RIDE_EVENT_NAMES.TIMED_OUT
+                            ) && <RideTimeoutRetry ride={ride} />}
 
                         {ride.status === RIDE_STATUSES.COMPLETED &&
                             (!ride.paymentStatus ||
