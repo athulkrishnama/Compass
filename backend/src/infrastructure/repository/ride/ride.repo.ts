@@ -3,8 +3,9 @@ import { BaseRepository } from "../base/base.repo";
 import { IRideDocument } from "./ride.schema";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { inject, injectable } from "tsyringe";
-import { Model, Types } from "mongoose";
+import { Model, Types, RootFilterQuery } from "mongoose";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
+import { env } from "@config/envConfig";
 @injectable()
 export class RideRepo
   extends BaseRepository<RideEntity, IRideDocument>
@@ -116,6 +117,255 @@ export class RideRepo
     return {
       trips: docs.map((doc) => this.toEntity(doc)),
       total,
+    };
+  }
+
+  async getDriverDashboardStats(
+    driverId: string,
+    filter: {
+      type: "weekly" | "monthly" | "yearly";
+      year?: number;
+      month?: number;
+    },
+  ): Promise<{
+    todayEarnings: number;
+    todayTrips: number;
+    totalEarnings: number;
+    totalDistance: number;
+    earningsTrends: { name: string; earnings: number; trips: number }[];
+    tripStatusDistribution: { name: string; value: number }[];
+  }> {
+    const driverObjectId = new Types.ObjectId(driverId);
+    const now = new Date();
+
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    const year = filter.year || now.getFullYear();
+
+    // 1. Get summary basic metrics
+    const basicStatsAgg = await this._model.aggregate([
+      { $match: { driver_id: driverObjectId } },
+      {
+        $group: {
+          _id: null,
+          todayEarnings: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $eq: ["$status", RIDE_STATUSES.COMPLETED] },
+                    {
+                      $gte: [
+                        "$_id",
+                        Types.ObjectId.createFromTime(today.getTime() / 1000),
+                      ],
+                    }, // Approx createdAt check using ObjectId
+                  ],
+                },
+                "$selected_fare.fare",
+                0,
+              ],
+            },
+          },
+          todayTrips: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $eq: ["$status", RIDE_STATUSES.COMPLETED] },
+                    {
+                      $gte: [
+                        "$_id",
+                        Types.ObjectId.createFromTime(today.getTime() / 1000),
+                      ],
+                    },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          totalEarnings: {
+            $sum: {
+              $cond: [
+                { $eq: ["$status", RIDE_STATUSES.COMPLETED] },
+                "$selected_fare.fare",
+                0,
+              ],
+            },
+          },
+          totalDistance: {
+            $sum: {
+              $cond: [
+                { $eq: ["$status", RIDE_STATUSES.COMPLETED] },
+                "$distance",
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ]);
+
+    const basicStats = basicStatsAgg[0] || {
+      todayEarnings: 0,
+      todayTrips: 0,
+      totalEarnings: 0,
+      totalDistance: 0,
+    };
+
+    // 2. Trip Status Distribution
+    const statusAgg = await this._model.aggregate([
+      { $match: { driver_id: driverObjectId } },
+      {
+        $group: {
+          _id: {
+            $cond: [
+              { $eq: ["$status", RIDE_STATUSES.COMPLETED] },
+              "Completed",
+              {
+                $cond: [
+                  { $eq: ["$cancelled_by", "RIDER"] },
+                  "Cancelled by Rider",
+                  {
+                    $cond: [
+                      { $eq: ["$cancelled_by", "DRIVER"] },
+                      "Cancelled by Driver",
+                      "Missed / Timeout",
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          value: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const tripStatusDistribution = statusAgg.map((item) => ({
+      name: item._id,
+      value: item.value,
+    }));
+
+    // 3. Earnings Trends
+    const trendsMatch: RootFilterQuery<IRideDocument> = {
+      driver_id: driverObjectId,
+      status: RIDE_STATUSES.COMPLETED,
+    };
+
+    let groupBy: Record<string, unknown> = {};
+    if (filter.type === "weekly") {
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - 6);
+      trendsMatch._id = {
+        $gte: Types.ObjectId.createFromTime(startOfWeek.getTime() / 1000),
+      };
+      // Extract date string from objectId
+      groupBy = {
+        $dateToString: { format: "%Y-%m-%d", date: { $toDate: "$_id" } },
+      };
+    } else if (filter.type === "monthly") {
+      let { year } = filter;
+      const { month } = filter;
+      if (!year) year = today.getFullYear();
+      const targetMonth = month ? month - 1 : today.getMonth();
+
+      const startOfMonth = new Date(year, targetMonth, 1);
+      const startOfNextMonth = new Date(year, targetMonth + 1, 1);
+
+      trendsMatch._id = {
+        $gte: Types.ObjectId.createFromTime(startOfMonth.getTime() / 1000),
+        $lt: Types.ObjectId.createFromTime(startOfNextMonth.getTime() / 1000),
+      };
+      groupBy = { $dayOfMonth: { $toDate: "$_id" } };
+    } else {
+      const startYear = year - 4;
+      const startDate = new Date(startYear, 0, 1);
+      trendsMatch._id = {
+        $gte: Types.ObjectId.createFromTime(startDate.getTime() / 1000),
+      };
+      groupBy = { $year: { $toDate: "$_id" } };
+    }
+
+    const trendsAgg = await this._model.aggregate([
+      { $match: trendsMatch },
+      {
+        $group: {
+          _id: groupBy,
+          earnings: { $sum: "$selected_fare.fare" },
+          trips: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    let earningsTrends: { name: string; earnings: number; trips: number }[] =
+      [];
+
+    if (filter.type === "weekly") {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const last7Days = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(today);
+        d.setDate(d.getDate() - (6 - i));
+        return {
+          dateStr: d.toISOString().split("T")[0],
+          name: days[d.getDay()],
+        };
+      });
+
+      earningsTrends = last7Days.map((d) => {
+        const found = trendsAgg.find((t) => t._id === d.dateStr);
+        return {
+          name: d.name,
+          earnings: found ? found.earnings : 0,
+          trips: found ? found.trips : 0,
+        };
+      });
+    } else if (filter.type === "monthly") {
+      let { year } = filter;
+      const { month } = filter;
+      if (!year) year = today.getFullYear();
+      const targetMonth = month ? month - 1 : today.getMonth();
+      const daysInMonth = new Date(year, targetMonth + 1, 0).getDate();
+      const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+      earningsTrends = days.map((day) => {
+        const found = trendsAgg.find((t) => t._id === day);
+        return {
+          name: day.toString(),
+          earnings: found ? found.earnings : 0,
+          trips: found ? found.trips : 0,
+        };
+      });
+    } else {
+      const currentYear = new Date().getFullYear();
+      const years = Array.from({ length: 5 }, (_, i) => currentYear - 4 + i);
+      earningsTrends = years.map((yr) => {
+        const found = trendsAgg.find((t) => t._id === yr);
+        return {
+          name: yr.toString(),
+          earnings: found ? found.earnings : 0,
+          trips: found ? found.trips : 0,
+        };
+      });
+    }
+
+    const commissionMultiplier = (100 - env.COMMISSION_PERCENTAGE) / 100;
+
+    return {
+      todayEarnings: basicStats.todayEarnings * commissionMultiplier,
+      todayTrips: basicStats.todayTrips,
+      totalEarnings: basicStats.totalEarnings * commissionMultiplier,
+      totalDistance: basicStats.totalDistance,
+      earningsTrends: earningsTrends.map((t) => ({
+        ...t,
+        earnings: t.earnings * commissionMultiplier,
+      })),
+      tripStatusDistribution,
     };
   }
 

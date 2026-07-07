@@ -39,3 +39,20 @@ export async function deleteVehicleImage(index: number) {
         throw new Error("something went wrong");
     }
 }
+
+export async function getCabDashboardStats(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+}) {
+    try {
+        const response = await axiosInstance.get(CAB_ROUTES.DASHBOARD, {
+            params: filter,
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}

@@ -9,9 +9,16 @@ import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { MulterFiles } from "@presentation/types/multerFilesType";
 import { mutlterFileToFileconverter } from "@presentation/utils/Fileconverter";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
-import { updateVehicleValidationSchema } from "@presentation/validationSchemas/cabValidation";
+import {
+  updateVehicleValidationSchema,
+  nearbyDriversValidationSchema,
+  dashboardStatsValidationSchema,
+} from "@presentation/validationSchemas/cabValidation";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
+import { IGetNearbyDriversUseCase } from "@application/interfaces/useCase/cab/getNearbyDriversUseCase.interface";
+
+import { IGetCabDashboardStatsUseCase } from "@application/interfaces/useCase/cab/getCabDashboardStatsUseCase.interface";
 
 @injectable()
 export class CabController {
@@ -22,6 +29,10 @@ export class CabController {
     private _getCabDetailsUseCase: IGetCabDetailsUseCase,
     @inject("IDeleteCabImageUseCase")
     private _deleteCabImageUseCase: IDeleteCabImageUseCase,
+    @inject("IGetCabDashboardStatsUseCase")
+    private _getCabDashboardStatsUseCase: IGetCabDashboardStatsUseCase,
+    @inject("IGetNearbyDriversUseCase")
+    private _getNearbyDriversUseCase: IGetNearbyDriversUseCase,
   ) {}
 
   async handleGetCabDetails(
@@ -102,6 +113,72 @@ export class CabController {
         res,
         HTTP_STATUS_CODE.OK,
         Messages.VEHICLE_UPDATED_SUCCESSFULLY,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetDashboardStats(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const userId = req.user.id;
+      if (!userId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.ID_MISSING);
+      }
+
+      const query = dashboardStatsValidationSchema.safeParse(req.query);
+      if (!query.success) {
+        throw new InvalideDataException(query.error.issues[0].message);
+      }
+
+      const { type, year, month } = query.data;
+
+      const data = await this._getCabDashboardStatsUseCase.execute(userId, {
+        type,
+        year,
+        month,
+      });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async handleGetNearbyDrivers(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const query = nearbyDriversValidationSchema.safeParse(req.query);
+      if (!query.success) {
+        throw new InvalideDataException(query.error.issues[0].message);
+      }
+
+      const drivers = await this._getNearbyDriversUseCase.execute({
+        coordinates: {
+          latitude: query.data.latitude,
+          longitude: query.data.longitude,
+        },
+      });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        drivers,
       );
     } catch (error) {
       next(error);

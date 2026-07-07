@@ -60,7 +60,7 @@ function RouteComponent() {
             ) ? (
                 <Outlet />
             ) : (
-                <div className="h-full w-full flex flex-col">
+                <div className="h-full w-full flex flex-col overflow-scroll no-scroll-bar">
                     <Navbar routes={routes} logoutRoute="/cab/login" />
                     <Outlet />
                 </div>

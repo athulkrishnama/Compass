@@ -49,4 +49,29 @@ export const locationUpdateValidationSchema = z.object({
   vehicle_type: z.enum(VEHICLE_TYPES, {
     error: INTERNAL_ERROR_MESSAGES.INVALID_CAB_TYPE,
   }),
+  heading: z.coerce.number().optional(),
+});
+
+export const nearbyDriversValidationSchema = z.object({
+  latitude: z.coerce.number({
+    error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING_OR_INVALID,
+  }),
+  longitude: z.coerce.number({
+    error: INTERNAL_ERROR_MESSAGES.COORDINATES_MISSING_OR_INVALID,
+  }),
+});
+
+export const dashboardStatsValidationSchema = z.object({
+  type: z
+    .enum(["weekly", "monthly", "yearly"], {
+      error: INTERNAL_ERROR_MESSAGES.INVALID_DASHBOARD_FILTER_TYPE,
+    })
+    .optional()
+    .default("weekly"),
+  year: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.INVALID_YEAR })
+    .optional(),
+  month: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.INVALID_MONTH })
+    .optional(),
 });

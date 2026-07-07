@@ -78,4 +78,36 @@ export class CabReviewRepo
     ]);
     return { reviews: docs.map((d) => this.toEntity(d)), total };
   }
+
+  async getRatingDistribution(
+    driverId: string,
+  ): Promise<{ name: string; value: number }[]> {
+    const agg = await this._model.aggregate([
+      { $match: { driverId: driverId } },
+      {
+        $group: {
+          _id: "$rating",
+          value: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Initialize all ratings to 0
+    const ratingsMap = new Map<number, number>([
+      [5, 0],
+      [4, 0],
+      [3, 0],
+      [2, 0],
+      [1, 0],
+    ]);
+
+    agg.forEach((item) => {
+      ratingsMap.set(item._id, item.value);
+    });
+
+    return Array.from(ratingsMap.entries()).map(([rating, value]) => ({
+      name: `${rating} Star${rating > 1 ? "s" : ""}`,
+      value,
+    }));
+  }
 }

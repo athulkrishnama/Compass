@@ -47,6 +47,9 @@ import { IUpdateVehicleUseCase } from "@application/interfaces/useCase/cab/updat
 import { UpdateVehicleUseCase } from "@useCases/cab/updateVehicleUseCase";
 import { IGetCabDetailsUseCase } from "@application/interfaces/useCase/cab/getCabDetailsUseCase.interface";
 import { GetCabDetailsUseCase } from "@useCases/cab/getCabDetailsUseCase";
+import { GetCabDashboardStatsUseCase } from "@useCases/cab/GetCabDashboardStatsUseCase";
+import { IGetNearbyDriversUseCase } from "@application/interfaces/useCase/cab/getNearbyDriversUseCase.interface";
+import { GetNearbyDriversUseCase } from "@useCases/cab/getNearbyDriversUseCase";
 import { IDeleteCabImageUseCase } from "@application/interfaces/useCase/cab/deleteCabImageUseCase.interface";
 import { DeleteCabImageUseCase } from "@useCases/cab/deleteCabImageUseCase";
 import { IChangeEmailNewEmailUseCase } from "@application/interfaces/useCase/auth/changeEmailNewEmailUseCase.interface";
@@ -198,6 +201,7 @@ import { IGetRiderActiveRideUseCase } from "@application/interfaces/useCase/ride
 import { GetRiderActiveRideUseCase } from "@useCases/ride/getRiderActiveRideUseCase";
 import { IGetDriverPastTripsUseCase } from "@application/interfaces/useCase/ride/getDriverPastTripsUseCase.interface";
 import { GetDriverPastTripsUseCase } from "@useCases/ride/getDriverPastTripsUseCase";
+import { IGetCabDashboardStatsUseCase } from "@application/interfaces/useCase/cab/getCabDashboardStatsUseCase.interface";
 
 export function registerUsecases() {
   container.registerSingleton<ISignupUseCase>("ISignupUseCase", SignupUseCase);
@@ -277,6 +281,14 @@ export function registerUsecases() {
   container.registerSingleton<IGetCabDetailsUseCase>(
     "IGetCabDetailsUseCase",
     GetCabDetailsUseCase,
+  );
+  container.registerSingleton<IGetCabDashboardStatsUseCase>(
+    "IGetCabDashboardStatsUseCase",
+    GetCabDashboardStatsUseCase,
+  );
+  container.registerSingleton<IGetNearbyDriversUseCase>(
+    "IGetNearbyDriversUseCase",
+    GetNearbyDriversUseCase,
   );
   container.registerSingleton<IDeleteCabImageUseCase>(
     "IDeleteCabImageUseCase",
