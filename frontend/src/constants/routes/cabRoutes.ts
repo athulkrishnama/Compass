@@ -3,4 +3,5 @@ export enum CAB_ROUTES {
     VEHICLE = "/cab/vehicle",
     IMAGE = "/cab/vehicle/image",
     DASHBOARD = "/cab/dashboard/stats",
+    NEARBY = "/cab/nearby",
 }

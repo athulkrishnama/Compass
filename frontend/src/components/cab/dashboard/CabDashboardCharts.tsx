@@ -48,9 +48,7 @@ const CabDashboardCharts: React.FC<CabDashboardChartsProps> = ({
     const [filterType, setFilterType] = useState<
         "weekly" | "monthly" | "yearly"
     >("weekly");
-    const [selectedYear, setSelectedYear] = useState<number>(
-        new Date().getFullYear()
-    );
+    const [selectedYear] = useState<number>(new Date().getFullYear());
     const [selectedMonthStr, setSelectedMonthStr] = useState<string>(
         `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}`
     );
@@ -70,12 +68,6 @@ const CabDashboardCharts: React.FC<CabDashboardChartsProps> = ({
         }
     };
 
-    const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const year = parseInt(e.target.value);
-        setSelectedYear(year);
-        onFilterChange(filterType, year);
-    };
-
     const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value; // format YYYY-MM
         if (val) {
@@ -84,9 +76,6 @@ const CabDashboardCharts: React.FC<CabDashboardChartsProps> = ({
             onFilterChange(filterType, parseInt(y), parseInt(m));
         }
     };
-
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">

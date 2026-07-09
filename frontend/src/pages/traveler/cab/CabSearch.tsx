@@ -12,6 +12,11 @@ import CabOptionList from "@/components/traveler/cab/CabOptionList";
 import BookingAction from "@/components/traveler/cab/BookingAction";
 import { calculateDistance } from "@/utils/distance";
 import type { VehicleType } from "@/types/vehicleType";
+import { getNearbyDrivers } from "@/services/api/cabApiService";
+import type { INearbyDriver } from "@/types/api/responses/cabResponses";
+import type { MapboxMarker } from "@/components/shared/MapboxMap";
+
+const NEARBY_POLL_INTERVAL_MS = 3000;
 
 const CabSearch = () => {
     const { t } = useTranslation();
@@ -26,7 +31,9 @@ const CabSearch = () => {
     const [routeCoordinates, setRouteCoordinates] = useState<
         [number, number][]
     >([]);
+    const [nearbyDrivers, setNearbyDrivers] = useState<INearbyDriver[]>([]);
 
+    // Fetch route coordinates when search params change
     useEffect(() => {
         const fetchRoute = async () => {
             const { pickupLat, pickupLng, dropoffLat, dropoffLng } =
@@ -71,6 +78,27 @@ const CabSearch = () => {
         fetchRoute();
     }, [searchParams, t]);
 
+    // Poll nearby drivers every 3 seconds centered on the pickup point
+    useEffect(() => {
+        const { pickupLat, pickupLng } = searchParams;
+        if (!pickupLat || !pickupLng) return;
+
+        const fetchNearby = async () => {
+            try {
+                const response = await getNearbyDrivers(pickupLat, pickupLng);
+                if (response?.data) {
+                    setNearbyDrivers(response.data);
+                }
+            } catch {
+                // Non-critical — silently ignore errors so UX isn't disrupted
+            }
+        };
+
+        fetchNearby(); // Immediate first fetch
+        const interval = setInterval(fetchNearby, NEARBY_POLL_INTERVAL_MS);
+        return () => clearInterval(interval);
+    }, [searchParams.pickupLat, searchParams.pickupLng]);
+
     function handleStartSearch() {
         if (selectedCab && fareData) {
             createRide(
@@ -93,7 +121,8 @@ const CabSearch = () => {
         }
     }
 
-    const markers = [
+    // Static pickup/dropoff markers
+    const baseMarkers: MapboxMarker[] = [
         {
             id: "pickup",
             lat: searchParams.pickupLat,
@@ -109,6 +138,19 @@ const CabSearch = () => {
             color: "#111111",
         },
     ];
+
+    // Nearby cab markers — skipBounds ensures the map camera never repositions on poll updates
+    const cabMarkers: MapboxMarker[] = nearbyDrivers.map((driver) => ({
+        id: `cab-${driver.driverId}`,
+        lat: driver.coordinates.latitude,
+        lng: driver.coordinates.longitude,
+        vehicleType: driver.vehicleType,
+        rotation: driver.heading ?? 0,
+        label: driver.vehicleType,
+        skipBounds: true,
+    }));
+
+    const markers: MapboxMarker[] = [...baseMarkers, ...cabMarkers];
 
     return (
         <div className="min-h-[calc(100vh-80px)] md:h-[calc(100vh-80px)] bg-gray-50 text-black flex flex-col md:flex-row overflow-hidden font-sans">

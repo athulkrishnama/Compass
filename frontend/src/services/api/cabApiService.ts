@@ -1,6 +1,8 @@
 import { axiosInstance } from "@/axios/instance";
 import { CAB_ROUTES } from "@/constants/routes/cabRoutes";
 import { AxiosError } from "axios";
+import type { HttpResponse } from "@/types/api/responseType";
+import type { INearbyDriver } from "@/types/api/responses/cabResponses";
 
 export async function getCabDetails() {
     try {
@@ -47,6 +49,23 @@ export async function getCabDashboardStats(filter: {
     try {
         const response = await axiosInstance.get(CAB_ROUTES.DASHBOARD, {
             params: filter,
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("something went wrong");
+    }
+}
+
+export async function getNearbyDrivers(
+    latitude: number,
+    longitude: number
+): Promise<HttpResponse<INearbyDriver[]>> {
+    try {
+        const response = await axiosInstance.get(CAB_ROUTES.NEARBY, {
+            params: { latitude, longitude },
         });
         return response.data;
     } catch (error) {

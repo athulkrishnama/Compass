@@ -2,6 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { env } from "@/config/env";
+import suvImg from "@/assets/images/vehicles/suv.png";
+import sedanImg from "@/assets/images/vehicles/sedan.png";
+import rickshawImg from "@/assets/images/vehicles/rikshaw.png";
 
 export interface MapboxMarker {
     id: string;
@@ -9,6 +12,12 @@ export interface MapboxMarker {
     lng: number;
     label?: string;
     color?: string;
+    /** Degrees clockwise from north (0–360). Used for cab heading. */
+    rotation?: number;
+    /** When set, renders a vehicle icon SVG instead of a plain dot. */
+    vehicleType?: string;
+    /** Exclude this marker from fitBounds/flyTo calculations. */
+    skipBounds?: boolean;
 }
 
 interface MapboxMapProps {
@@ -25,6 +34,51 @@ interface MapboxMapProps {
 
 const DEFAULT_CENTER: [number, number] = [77.5946, 12.9716];
 const DEFAULT_ZOOM = 11;
+
+/**
+ * Creates a rotatable cab marker element.
+ * The outer wrapper is positioned by Mapbox; the inner `cab-icon-rotate` div
+ * carries the CSS rotation so we can update heading without disturbing Mapbox layout.
+ */
+function createCabMarkerElement(
+    vehicleType: string,
+    rotation: number = 0
+): HTMLElement {
+    let imgSrc = sedanImg;
+    let width = 26;
+    let height = 48;
+
+    if (vehicleType === "SUV") {
+        imgSrc = suvImg;
+        width = 30;
+        height = 54;
+    } else if (vehicleType === "RICKSHAW") {
+        imgSrc = rickshawImg;
+        width = 24;
+        height = 42;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "cab-marker-wrapper";
+    wrapper.style.cssText = `width:${width}px;height:${height}px;cursor:pointer;`;
+
+    const rotator = document.createElement("div");
+    rotator.className = "cab-icon-rotate";
+    rotator.style.cssText = `
+        width:100%;
+        height:100%;
+        transform:rotate(${rotation}deg);
+        transition:transform 0.5s ease-out;
+        filter:drop-shadow(0 2px 5px rgba(0,0,0,0.45));
+    `;
+
+    rotator.innerHTML = `
+        <img src="${imgSrc}" style="width:100%; height:100%; object-fit:contain;" alt="${vehicleType}" />
+    `;
+
+    wrapper.appendChild(rotator);
+    return wrapper;
+}
 
 const MapboxMap: React.FC<MapboxMapProps> = ({
     markers = [],
@@ -95,72 +149,123 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             const existingMarker = markersRef.current.get(markerData.id);
 
             if (existingMarker) {
+                // Always update position
                 existingMarker.setLngLat([markerData.lng, markerData.lat]);
-                const el = existingMarker.getElement();
-                el.style.width = isActive ? "18px" : "14px";
-                el.style.height = isActive ? "18px" : "14px";
-                el.style.border = isActive
-                    ? "3px solid #ffffff"
-                    : "2px solid #ffffff";
-                el.style.boxShadow = isActive
-                    ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)"
-                    : "0 2px 6px rgba(0,0,0,0.25)";
-                // We shouldn't overwrite the entire transform here since mapbox uses it for positioning,
-                // but Mapbox handles the translate. The transition on the element will smooth out the coordinate changes.
 
-                const popup = popupsRef.current.get(markerData.id);
-                if (popup && markerData.label) {
-                    popup.setHTML(
-                        `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label}</div>`
-                    );
+                if (markerData.vehicleType) {
+                    // Update rotation only — no size/colour changes needed for cab icons
+                    const rotator = existingMarker
+                        .getElement()
+                        .querySelector(
+                            ".cab-icon-rotate"
+                        ) as HTMLElement | null;
+                    if (rotator && markerData.rotation !== undefined) {
+                        rotator.style.transform = `rotate(${markerData.rotation}deg)`;
+                    }
+                } else {
+                    // Update regular dot marker styling
+                    const el = existingMarker.getElement();
+                    el.style.width = isActive ? "18px" : "14px";
+                    el.style.height = isActive ? "18px" : "14px";
+                    el.style.border = isActive
+                        ? "3px solid #ffffff"
+                        : "2px solid #ffffff";
+                    el.style.boxShadow = isActive
+                        ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)"
+                        : "0 2px 6px rgba(0,0,0,0.25)";
+
+                    const popup = popupsRef.current.get(markerData.id);
+                    if (popup && markerData.label) {
+                        popup.setHTML(
+                            `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label}</div>`
+                        );
+                    }
                 }
             } else {
-                const el = document.createElement("div");
-                el.className = "mapbox-custom-marker";
-                el.style.cssText = `
-                    width: ${isActive ? "18px" : "14px"};
-                    height: ${isActive ? "18px" : "14px"};
-                    border-radius: 50%;
-                    background: ${markerData.color ?? "#000000"};
-                    border: ${isActive ? "3px solid #ffffff" : "2px solid #ffffff"};
-                    box-shadow: ${isActive ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)" : "0 2px 6px rgba(0,0,0,0.25)"};
-                    cursor: pointer;
-                    transition: all 0.3s ease-out;
-                `;
+                // --- Create new marker ---
+                if (markerData.vehicleType) {
+                    // Cab icon marker
+                    const el = createCabMarkerElement(
+                        markerData.vehicleType,
+                        markerData.rotation ?? 0
+                    );
 
-                const popup = new mapboxgl.Popup({
-                    offset: 20,
-                    closeButton: false,
-                    className: "mapbox-minimal-popup",
-                }).setHTML(
-                    `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label ?? ""}</div>`
-                );
+                    const popup = new mapboxgl.Popup({
+                        offset: 28,
+                        closeButton: false,
+                        className: "mapbox-minimal-popup",
+                    }).setHTML(
+                        `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.vehicleType}</div>`
+                    );
 
-                const marker = new mapboxgl.Marker({ element: el })
-                    .setLngLat([markerData.lng, markerData.lat])
-                    .setPopup(popup)
-                    .addTo(map);
+                    const marker = new mapboxgl.Marker({
+                        element: el,
+                        anchor: "center",
+                    })
+                        .setLngLat([markerData.lng, markerData.lat])
+                        .setPopup(popup)
+                        .addTo(map);
 
-                el.addEventListener("click", () => {
-                    setActiveMarkerId(markerData.id);
-                    marker.togglePopup();
-                    onMarkerClick?.(markerData);
-                });
+                    el.addEventListener("click", () => {
+                        setActiveMarkerId(markerData.id);
+                        marker.togglePopup();
+                        onMarkerClick?.(markerData);
+                    });
 
-                markersRef.current.set(markerData.id, marker);
-                popupsRef.current.set(markerData.id, popup);
+                    markersRef.current.set(markerData.id, marker);
+                    popupsRef.current.set(markerData.id, popup);
+                } else {
+                    // Regular dot marker
+                    const el = document.createElement("div");
+                    el.className = "mapbox-custom-marker";
+                    el.style.cssText = `
+                        width: ${isActive ? "18px" : "14px"};
+                        height: ${isActive ? "18px" : "14px"};
+                        border-radius: 50%;
+                        background: ${markerData.color ?? "#000000"};
+                        border: ${isActive ? "3px solid #ffffff" : "2px solid #ffffff"};
+                        box-shadow: ${isActive ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)" : "0 2px 6px rgba(0,0,0,0.25)"};
+                        cursor: pointer;
+                        transition: all 0.3s ease-out;
+                    `;
 
-                if (isActive) marker.togglePopup();
+                    const popup = new mapboxgl.Popup({
+                        offset: 20,
+                        closeButton: false,
+                        className: "mapbox-minimal-popup",
+                    }).setHTML(
+                        `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label ?? ""}</div>`
+                    );
+
+                    const marker = new mapboxgl.Marker({ element: el })
+                        .setLngLat([markerData.lng, markerData.lat])
+                        .setPopup(popup)
+                        .addTo(map);
+
+                    el.addEventListener("click", () => {
+                        setActiveMarkerId(markerData.id);
+                        marker.togglePopup();
+                        onMarkerClick?.(markerData);
+                    });
+
+                    markersRef.current.set(markerData.id, marker);
+                    popupsRef.current.set(markerData.id, popup);
+
+                    if (isActive) marker.togglePopup();
+                }
             }
         });
 
-        const signature = markers.map((m) => m.id).join(",");
+        // Camera adjustments only for non-skipBounds markers
+        const boundaryMarkers = markers.filter((m) => !m.skipBounds);
+        const signature = boundaryMarkers.map((m) => m.id).join(",");
+
         if (
-            markers.length === 1 &&
+            boundaryMarkers.length === 1 &&
             lastFittedSignatureRef.current !== signature
         ) {
             map.flyTo({
-                center: [markers[0].lng, markers[0].lat],
+                center: [boundaryMarkers[0].lng, boundaryMarkers[0].lat],
                 zoom: 13,
                 duration: 800,
             });
@@ -211,7 +316,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     });
                 }
 
-                const current = markersDataRef.current;
+                // Only fitBounds to non-skipBounds markers
+                const current = markersDataRef.current.filter(
+                    (m) => !m.skipBounds
+                );
                 const signature = current.map((m) => m.id).join(",");
                 if (
                     current.length > 1 &&
