@@ -78,9 +78,10 @@ const CabSearch = () => {
         fetchRoute();
     }, [searchParams, t]);
 
+    const { pickupLat, pickupLng } = searchParams;
+
     // Poll nearby drivers every 3 seconds centered on the pickup point
     useEffect(() => {
-        const { pickupLat, pickupLng } = searchParams;
         if (!pickupLat || !pickupLng) return;
 
         const fetchNearby = async () => {
@@ -97,7 +98,7 @@ const CabSearch = () => {
         fetchNearby(); // Immediate first fetch
         const interval = setInterval(fetchNearby, NEARBY_POLL_INTERVAL_MS);
         return () => clearInterval(interval);
-    }, [searchParams.pickupLat, searchParams.pickupLng]);
+    }, [pickupLat, pickupLng]);
 
     function handleStartSearch() {
         if (selectedCab && fareData) {

@@ -12,12 +12,14 @@ export interface MapboxMarker {
     lng: number;
     label?: string;
     color?: string;
-    /** Degrees clockwise from north (0–360). Used for cab heading. */
     rotation?: number;
-    /** When set, renders a vehicle icon SVG instead of a plain dot. */
     vehicleType?: string;
-    /** Exclude this marker from fitBounds/flyTo calculations. */
     skipBounds?: boolean;
+    popupHTML?: string;
+    alwaysShowLabel?: boolean;
+    sizeScale?: number;
+
+    customElementHTML?: string;
 }
 
 interface MapboxMapProps {
@@ -35,11 +37,6 @@ interface MapboxMapProps {
 const DEFAULT_CENTER: [number, number] = [77.5946, 12.9716];
 const DEFAULT_ZOOM = 11;
 
-/**
- * Creates a rotatable cab marker element.
- * The outer wrapper is positioned by Mapbox; the inner `cab-icon-rotate` div
- * carries the CSS rotation so we can update heading without disturbing Mapbox layout.
- */
 function createCabMarkerElement(
     vehicleType: string,
     rotation: number = 0
@@ -120,7 +117,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             mapRef.current = null;
             setIsMapLoaded(false);
         };
-    }, []);
+    }, [initialCenter, initialZoom]);
 
     const markersDataRef = useRef<MapboxMarker[]>(markers);
     useEffect(() => {
@@ -162,23 +159,41 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     if (rotator && markerData.rotation !== undefined) {
                         rotator.style.transform = `rotate(${markerData.rotation}deg)`;
                     }
+                } else if (markerData.customElementHTML) {
+                    // Custom HTML element markers are static — position-only update
+                    // (no style mutations needed since the HTML is baked in)
                 } else {
                     // Update regular dot marker styling
-                    const el = existingMarker.getElement();
-                    el.style.width = isActive ? "18px" : "14px";
-                    el.style.height = isActive ? "18px" : "14px";
-                    el.style.border = isActive
-                        ? "3px solid #ffffff"
-                        : "2px solid #ffffff";
-                    el.style.boxShadow = isActive
-                        ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)"
-                        : "0 2px 6px rgba(0,0,0,0.25)";
+                    // The wrapper is the Mapbox element; the dot is the inner child
+                    const wrapper = existingMarker.getElement();
+                    const dot = wrapper.querySelector(
+                        ".mapbox-custom-marker"
+                    ) as HTMLElement | null;
+                    if (dot) {
+                        const scale = markerData.sizeScale ?? 1;
+                        const size = Math.round((isActive ? 18 : 14) * scale);
+                        dot.style.width = `${size}px`;
+                        dot.style.height = `${size}px`;
+                        dot.style.border = isActive
+                            ? "3px solid #ffffff"
+                            : "2px solid #ffffff";
+                        dot.style.boxShadow = isActive
+                            ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)"
+                            : "0 2px 6px rgba(0,0,0,0.25)";
+                    }
 
                     const popup = popupsRef.current.get(markerData.id);
-                    if (popup && markerData.label) {
-                        popup.setHTML(
-                            `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label}</div>`
-                        );
+                    if (popup) {
+                        if (markerData.popupHTML) {
+                            popup.setHTML(markerData.popupHTML);
+                        } else if (
+                            markerData.label &&
+                            !markerData.alwaysShowLabel
+                        ) {
+                            popup.setHTML(
+                                `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label}</div>`
+                            );
+                        }
                     }
                 }
             } else {
@@ -214,44 +229,138 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
                     markersRef.current.set(markerData.id, marker);
                     popupsRef.current.set(markerData.id, popup);
+                } else if (markerData.customElementHTML) {
+                    // ── Custom HTML element marker (Google Maps style, etc.) ──────
+                    // Create a temp container, grab the first child as the element
+                    const tmp = document.createElement("div");
+                    tmp.innerHTML = markerData.customElementHTML.trim();
+                    const el = (tmp.firstElementChild as HTMLElement) ?? tmp;
+
+                    const markerInst = new mapboxgl.Marker({
+                        element: el,
+                        anchor: "bottom",
+                    }).setLngLat([markerData.lng, markerData.lat]);
+
+                    // Only attach a popup when rich popup HTML is provided
+                    if (markerData.popupHTML) {
+                        const popup = new mapboxgl.Popup({
+                            offset: [0, -8],
+                            closeButton: true,
+                            closeOnClick: true,
+                            className: "mapbox-rich-popup",
+                            maxWidth: "240px",
+                        }).setHTML(markerData.popupHTML);
+
+                        markerInst.setPopup(popup);
+                        popupsRef.current.set(markerData.id, popup);
+
+                        el.addEventListener("click", () => {
+                            setActiveMarkerId(markerData.id);
+                            markerInst.togglePopup();
+                            onMarkerClick?.(markerData);
+                        });
+                    } else {
+                        el.addEventListener("click", () => {
+                            setActiveMarkerId(markerData.id);
+                            onMarkerClick?.(markerData);
+                        });
+                    }
+
+                    markerInst.addTo(map);
+                    markersRef.current.set(markerData.id, markerInst);
                 } else {
-                    // Regular dot marker
+                    // ── Regular dot marker ───────────────────────────────────────
+                    const scale = markerData.sizeScale ?? 1;
+                    const baseSize = isActive ? 18 : 14;
+                    const size = Math.round(baseSize * scale);
+
+                    // Wrapper holds both the always-visible label and the dot
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "mapbox-custom-marker-wrapper";
+                    wrapper.style.cssText = `
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        cursor: pointer;
+                        position: relative;
+                    `;
+
+                    // Always-visible label pill
+                    if (markerData.alwaysShowLabel && markerData.label) {
+                        const labelEl = document.createElement("div");
+                        labelEl.className = "mapbox-marker-label-pill";
+                        labelEl.style.cssText = `
+                            background: rgba(255,255,255,0.95);
+                            backdrop-filter: blur(6px);
+                            border-radius: 20px;
+                            padding: 2px 8px;
+                            font-size: 11px;
+                            font-weight: 600;
+                            color: #111;
+                            white-space: nowrap;
+                            box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+                            margin-bottom: 4px;
+                            max-width: 120px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            pointer-events: none;
+                        `;
+                        labelEl.textContent = markerData.label;
+                        wrapper.appendChild(labelEl);
+                    }
+
                     const el = document.createElement("div");
                     el.className = "mapbox-custom-marker";
                     el.style.cssText = `
-                        width: ${isActive ? "18px" : "14px"};
-                        height: ${isActive ? "18px" : "14px"};
+                        width: ${size}px;
+                        height: ${size}px;
                         border-radius: 50%;
                         background: ${markerData.color ?? "#000000"};
                         border: ${isActive ? "3px solid #ffffff" : "2px solid #ffffff"};
                         box-shadow: ${isActive ? "0 0 0 2px #000, 0 4px 12px rgba(0,0,0,0.35)" : "0 2px 6px rgba(0,0,0,0.25)"};
-                        cursor: pointer;
                         transition: all 0.3s ease-out;
+                        flex-shrink: 0;
                     `;
+                    wrapper.appendChild(el);
 
-                    const popup = new mapboxgl.Popup({
-                        offset: 20,
-                        closeButton: false,
-                        className: "mapbox-minimal-popup",
-                    }).setHTML(
-                        `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label ?? ""}</div>`
-                    );
+                    const needsPopup =
+                        !!markerData.popupHTML ||
+                        (!markerData.alwaysShowLabel && !!markerData.label);
 
-                    const marker = new mapboxgl.Marker({ element: el })
-                        .setLngLat([markerData.lng, markerData.lat])
-                        .setPopup(popup)
-                        .addTo(map);
+                    const marker = new mapboxgl.Marker({
+                        element: wrapper,
+                        anchor: "bottom",
+                    }).setLngLat([markerData.lng, markerData.lat]);
 
-                    el.addEventListener("click", () => {
+                    if (needsPopup) {
+                        const popupContent = markerData.popupHTML
+                            ? markerData.popupHTML
+                            : `<div style="font-size:12px;font-weight:600;color:#111;padding:4px 8px;white-space:nowrap;">${markerData.label ?? ""}</div>`;
+
+                        const popup = new mapboxgl.Popup({
+                            offset: 20,
+                            closeButton: false,
+                            className: markerData.popupHTML
+                                ? "mapbox-rich-popup"
+                                : "mapbox-minimal-popup",
+                            maxWidth: markerData.popupHTML ? "240px" : "none",
+                        }).setHTML(popupContent);
+
+                        marker.setPopup(popup);
+                        popupsRef.current.set(markerData.id, popup);
+                    }
+
+                    marker.addTo(map);
+
+                    wrapper.addEventListener("click", () => {
                         setActiveMarkerId(markerData.id);
-                        marker.togglePopup();
+                        if (needsPopup) marker.togglePopup();
                         onMarkerClick?.(markerData);
                     });
 
                     markersRef.current.set(markerData.id, marker);
-                    popupsRef.current.set(markerData.id, popup);
 
-                    if (isActive) marker.togglePopup();
+                    if (isActive && needsPopup) marker.togglePopup();
                 }
             }
         });
@@ -350,7 +459,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         } else {
             map.once("style.load", applyRoute);
         }
-    }, [routeCoordinates, isMapLoaded]);
+    }, [routeCoordinates, isMapLoaded, fitBoundsPadding]);
 
     return (
         <div
