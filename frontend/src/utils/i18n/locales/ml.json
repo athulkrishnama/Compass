@@ -1156,5 +1156,16 @@
     "tripStatusDesc": "പൂർത്തിയാക്കിയതും റദ്ദാക്കിയതുമായ ട്രിപ്പുകൾ",
     "ratingDistribution": "റേറ്റിംഗ് വിവരണം",
     "ratingDistributionDesc": "യാത്രക്കാരുടെ റേറ്റിംഗുകളുടെ വിവരണം"
+  },
+  "hotelOwnerReviews": {
+    "title": "Hotel Reviews",
+    "noHotelsYet": "No Hotels Yet",
+    "addHotelFirst": "You need to add a hotel before you can receive reviews.",
+    "subtitle": "See what guests are saying about your properties",
+    "selectHotel": "Select Hotel",
+    "failedToLoad": "Failed to load reviews",
+    "noReviewsYet": "No reviews yet",
+    "noReviewsYetDescription": "Your guests haven't left any reviews for this hotel yet.",
+    "pageOf": "പേജ് {{page}} / {{totalPages}}"
   }
 }

@@ -1152,5 +1152,16 @@
     "tripStatusDesc": "पूरी और रद्द की गई ट्रिप्स का वितरण",
     "ratingDistribution": "रेटिंग वितरण",
     "ratingDistributionDesc": "यात्री रेटिंग का विवरण"
+  },
+  "hotelOwnerReviews": {
+    "title": "Hotel Reviews",
+    "noHotelsYet": "No Hotels Yet",
+    "addHotelFirst": "You need to add a hotel before you can receive reviews.",
+    "subtitle": "See what guests are saying about your properties",
+    "selectHotel": "Select Hotel",
+    "failedToLoad": "Failed to load reviews",
+    "noReviewsYet": "No reviews yet",
+    "noReviewsYetDescription": "Your guests haven't left any reviews for this hotel yet.",
+    "pageOf": "पृष्ठ {{page}} / {{totalPages}}"
   }
 }

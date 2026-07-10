@@ -1162,4 +1162,15 @@ export default {
         ratingDistribution: "cabDashboard.ratingDistribution",
         ratingDistributionDesc: "cabDashboard.ratingDistributionDesc",
     },
+    hotelOwnerReviews: {
+        title: "hotelOwnerReviews.title",
+        noHotelsYet: "hotelOwnerReviews.noHotelsYet",
+        addHotelFirst: "hotelOwnerReviews.addHotelFirst",
+        subtitle: "hotelOwnerReviews.subtitle",
+        selectHotel: "hotelOwnerReviews.selectHotel",
+        failedToLoad: "hotelOwnerReviews.failedToLoad",
+        noReviewsYet: "hotelOwnerReviews.noReviewsYet",
+        noReviewsYetDescription: "hotelOwnerReviews.noReviewsYetDescription",
+        pageOf: "hotelOwnerReviews.pageOf",
+    },
 };

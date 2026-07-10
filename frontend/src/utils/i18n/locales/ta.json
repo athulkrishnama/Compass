@@ -1152,5 +1152,16 @@
     "tripStatusDesc": "முடிக்கப்பட்ட மற்றும் ரத்துசெய்யப்பட்ட பயணங்களின் விநியோகம்",
     "ratingDistribution": "மதிப்பீட்டு விநியோகம்",
     "ratingDistributionDesc": "பயணிகளின் மதிப்பீடுகளின் சுருக்கம்"
+  },
+  "hotelOwnerReviews": {
+    "title": "Hotel Reviews",
+    "noHotelsYet": "No Hotels Yet",
+    "addHotelFirst": "You need to add a hotel before you can receive reviews.",
+    "subtitle": "See what guests are saying about your properties",
+    "selectHotel": "Select Hotel",
+    "failedToLoad": "Failed to load reviews",
+    "noReviewsYet": "No reviews yet",
+    "noReviewsYetDescription": "Your guests haven't left any reviews for this hotel yet.",
+    "pageOf": "பக்கம் {{page}} / {{totalPages}}"
   }
 }
