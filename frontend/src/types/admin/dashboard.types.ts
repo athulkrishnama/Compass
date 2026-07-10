@@ -26,6 +26,9 @@ export interface DashboardCharts {
     bookingTrends: BookingTrend[];
     topHotels: TopHotel[];
     bookingStatusDistribution: BookingStatusDistribution[];
+    cabRideTrends: { name: string; trips: number; earnings: number }[];
+    cabTypeDistribution: { name: string; value: number }[];
+    cabRideStatusDistribution: { name: string; value: number }[];
 }
 
 export interface DashboardStats {

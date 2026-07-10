@@ -30,4 +30,14 @@ export interface IRideRepo extends IBaseRepository<RideEntity> {
     earningsTrends: { name: string; earnings: number; trips: number }[];
     tripStatusDistribution: { name: string; value: number }[];
   }>;
+
+  getAdminRideTrends(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+    month?: number;
+  }): Promise<{ name: string; earnings: number; trips: number }[]>;
+
+  getCabTypeDistribution(): Promise<{ name: string; value: number }[]>;
+
+  getRideStatusDistribution(): Promise<{ name: string; value: number }[]>;
 }

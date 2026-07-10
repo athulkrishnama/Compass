@@ -34,117 +34,122 @@ export interface IRideDocument extends Document {
   paymentStatus?: PAYMENT_STATUS;
   paymentMethod?: PAYMENT_METHOD;
   remainingAmount?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export const rideSchema = new Schema<IRideDocument>({
-  rider_id: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  driver_id: {
-    type: Schema.Types.ObjectId,
-    ref: "Driver",
-    default: null,
-  },
-  fare_id: {
-    type: Schema.Types.ObjectId,
-    ref: "fare",
-    required: true,
-  },
-  selected_fare: {
-    cab_type: {
-      type: String,
-      enum: VEHICLE_TYPES,
+export const rideSchema = new Schema<IRideDocument>(
+  {
+    rider_id: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
-    fare: {
+    driver_id: {
+      type: Schema.Types.ObjectId,
+      ref: "Driver",
+      default: null,
+    },
+    fare_id: {
+      type: Schema.Types.ObjectId,
+      ref: "fare",
+      required: true,
+    },
+    selected_fare: {
+      cab_type: {
+        type: String,
+        enum: VEHICLE_TYPES,
+        required: true,
+      },
+      fare: {
+        type: Number,
+        required: true,
+      },
+    },
+    distance: {
       type: Number,
       required: true,
     },
-  },
-  distance: {
-    type: Number,
-    required: true,
-  },
-  time: {
-    type: Number,
-    required: true,
-  },
-  pickup_point: {
-    type: {
-      type: String,
-      enum: ["Point"],
+    time: {
+      type: Number,
       required: true,
     },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
-  },
-  dropoff_point: {
-    type: {
-      type: String,
-      enum: ["Point"],
-      required: true,
-    },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
-  },
-  attempted_drivers: {
-    type: [Schema.Types.ObjectId],
-    ref: "Driver",
-    default: [],
-  },
-  attempt_id: {
-    type: String,
-  },
-  otp: {
-    type: String,
-    required: true,
-  },
-  otp_attempts: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  status: {
-    type: String,
-    enum: Object.values(RIDE_STATUSES),
-    required: true,
-  },
-  cancelled_by: {
-    type: String,
-    enum: [...Object.values(RoleValues), null],
-    default: null,
-  },
-  events: {
-    type: [
-      {
-        event_name: {
-          type: String,
-          enum: Object.values(RIDE_EVENT_NAMES),
-          required: true,
-        },
-        actor: { type: String, required: true },
-        timestamp: { type: Date, required: true },
+    pickup_point: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
       },
-    ],
-    default: [],
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
+    dropoff_point: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
+    attempted_drivers: {
+      type: [Schema.Types.ObjectId],
+      ref: "Driver",
+      default: [],
+    },
+    attempt_id: {
+      type: String,
+    },
+    otp: {
+      type: String,
+      required: true,
+    },
+    otp_attempts: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    status: {
+      type: String,
+      enum: Object.values(RIDE_STATUSES),
+      required: true,
+    },
+    cancelled_by: {
+      type: String,
+      enum: [...Object.values(RoleValues), null],
+      default: null,
+    },
+    events: {
+      type: [
+        {
+          event_name: {
+            type: String,
+            enum: Object.values(RIDE_EVENT_NAMES),
+            required: true,
+          },
+          actor: { type: String, required: true },
+          timestamp: { type: Date, required: true },
+        },
+      ],
+      default: [],
+    },
+    paymentStatus: {
+      type: String,
+      enum: Object.values(PAYMENT_STATUS),
+      default: PAYMENT_STATUS.PENDING,
+    },
+    paymentMethod: {
+      type: String,
+      enum: Object.values(PAYMENT_METHOD),
+    },
+    remainingAmount: {
+      type: Number,
+      default: 0,
+    },
   },
-  paymentStatus: {
-    type: String,
-    enum: Object.values(PAYMENT_STATUS),
-    default: PAYMENT_STATUS.PENDING,
-  },
-  paymentMethod: {
-    type: String,
-    enum: Object.values(PAYMENT_METHOD),
-  },
-  remainingAmount: {
-    type: Number,
-    default: 0,
-  },
-});
+  { timestamps: true },
+);

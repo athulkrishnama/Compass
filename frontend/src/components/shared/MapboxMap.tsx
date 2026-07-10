@@ -123,9 +123,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             mapRef.current = null;
             setIsMapLoaded(false);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // ← intentionally empty: map is created once, never re-created
-
 
     const markersDataRef = useRef<MapboxMarker[]>(markers);
     useEffect(() => {

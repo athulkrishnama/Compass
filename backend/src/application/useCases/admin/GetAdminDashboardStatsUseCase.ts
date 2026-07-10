@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
 import { ICabRepo } from "@application/interfaces/repository/cab/cab.repo.interface";
+import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { ROLES } from "@domain/enums/roles";
 import { IGetAdminDashboardStatsUseCase } from "@application/interfaces/useCase/admin/getAdminDashboardStatsUseCase.interface";
@@ -16,6 +17,7 @@ export class GetAdminDashboardStatsUseCase
     @inject("IUserRepo") private userRepo: IUserRepo,
     @inject("IHotelRepo") private hotelRepo: IHotelRepo,
     @inject("ICabRepo") private cabRepo: ICabRepo,
+    @inject("IRideRepo") private rideRepo: IRideRepo,
     @inject("IHotelBookingRepo") private bookingRepo: IHotelBookingRepo,
   ) {}
 
@@ -32,6 +34,9 @@ export class GetAdminDashboardStatsUseCase
       bookingTrends,
       topHotels,
       bookingStatusDistribution,
+      cabRideTrends,
+      cabTypeDistribution,
+      cabRideStatusDistribution,
     ] = await Promise.all([
       this.userRepo.countUsers(ROLES.TRAVELER),
       this.hotelRepo.countHotels(),
@@ -41,6 +46,9 @@ export class GetAdminDashboardStatsUseCase
       this.bookingRepo.getBookingTrends(filter),
       this.bookingRepo.getTopBookedHotels(5),
       this.bookingRepo.getBookingStatusDistribution(),
+      this.rideRepo.getAdminRideTrends(filter),
+      this.rideRepo.getCabTypeDistribution(),
+      this.rideRepo.getRideStatusDistribution(),
     ]);
 
     const rawData = {
@@ -55,6 +63,9 @@ export class GetAdminDashboardStatsUseCase
         bookingTrends,
         topHotels,
         bookingStatusDistribution,
+        cabRideTrends,
+        cabTypeDistribution,
+        cabRideStatusDistribution,
       },
     };
 

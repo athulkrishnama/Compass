@@ -372,6 +372,145 @@ export class RideRepo
     };
   }
 
+  async getAdminRideTrends(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+    month?: number;
+  }): Promise<{ name: string; earnings: number; trips: number }[]> {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const year = filter.year || now.getFullYear();
+
+    const trendsMatch: RootFilterQuery<RideEntity> = {
+      status: { $ne: RIDE_STATUSES.CANCELLED },
+    };
+
+    let groupBy: Record<string, unknown> = {};
+    if (filter.type === "weekly") {
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - 6);
+      trendsMatch.createdAt = { $gte: startOfWeek };
+      groupBy = {
+        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+      };
+    } else if (filter.type === "monthly") {
+      const targetMonth = filter.month ? filter.month - 1 : today.getMonth();
+      const startOfMonth = new Date(year, targetMonth, 1);
+      const startOfNextMonth = new Date(year, targetMonth + 1, 1);
+      trendsMatch.createdAt = {
+        $gte: startOfMonth,
+        $lt: startOfNextMonth,
+      };
+      groupBy = { $dayOfMonth: "$createdAt" };
+    } else {
+      const startYear = year - 4;
+      const startDate = new Date(startYear, 0, 1);
+      trendsMatch.createdAt = { $gte: startDate };
+      groupBy = { $year: "$createdAt" };
+    }
+
+    const trendsAgg = await this._model.aggregate([
+      { $match: trendsMatch },
+      {
+        $group: {
+          _id: groupBy,
+          earnings: { $sum: "$selected_fare.fare" },
+          trips: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    let earningsTrends: { name: string; earnings: number; trips: number }[] =
+      [];
+
+    if (filter.type === "weekly") {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const last7Days = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(today);
+        d.setDate(d.getDate() - (6 - i));
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return {
+          dateStr: `${y}-${m}-${day}`,
+          name: days[d.getDay()],
+        };
+      });
+
+      earningsTrends = last7Days.map((d) => {
+        const found = trendsAgg.find((t) => t._id === d.dateStr);
+        return {
+          name: d.name,
+          earnings: found ? found.earnings : 0,
+          trips: found ? found.trips : 0,
+        };
+      });
+    } else if (filter.type === "monthly") {
+      const targetMonth = filter.month ? filter.month - 1 : today.getMonth();
+      const daysInMonth = new Date(year, targetMonth + 1, 0).getDate();
+      const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+      earningsTrends = days.map((day) => {
+        const found = trendsAgg.find((t) => t._id === day);
+        return {
+          name: day.toString(),
+          earnings: found ? found.earnings : 0,
+          trips: found ? found.trips : 0,
+        };
+      });
+    } else {
+      const currentYear = new Date().getFullYear();
+      const years = Array.from({ length: 5 }, (_, i) => currentYear - 4 + i);
+      earningsTrends = years.map((yr) => {
+        const found = trendsAgg.find((t) => t._id === yr);
+        return {
+          name: yr.toString(),
+          earnings: found ? found.earnings : 0,
+          trips: found ? found.trips : 0,
+        };
+      });
+    }
+
+    return earningsTrends;
+  }
+
+  async getCabTypeDistribution(): Promise<{ name: string; value: number }[]> {
+    const agg = await this._model.aggregate([
+      {
+        $group: {
+          _id: "$selected_fare.cab_type",
+          value: { $sum: 1 },
+        },
+      },
+      { $sort: { value: -1 } },
+    ]);
+
+    return agg.map((item) => ({
+      name: item._id || "Unknown",
+      value: item.value,
+    }));
+  }
+
+  async getRideStatusDistribution(): Promise<
+    { name: string; value: number }[]
+  > {
+    const statusAgg = await this._model.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          value: { $sum: 1 },
+        },
+      },
+      { $sort: { value: -1 } },
+    ]);
+
+    return statusAgg.map((item) => ({
+      name: item._id || "Unknown",
+      value: item.value,
+    }));
+  }
+
   toMongoDoc(entity: RideEntity): IRideDocument {
     return new this._model({
       _id: entity._id ? new Types.ObjectId(entity._id) : new Types.ObjectId(),
