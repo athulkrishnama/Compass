@@ -17,7 +17,14 @@ export class GetOverallDashboardUseCase implements IGetOverallDashboardUseCase {
     @inject("IStorageService") private _storageService: IStorageService,
   ) {}
 
-  async execute(userId: string): Promise<IOverallDashboardResponseDTO> {
+  async execute(
+    userId: string,
+    filter: {
+      type: "weekly" | "monthly" | "yearly";
+      year?: number;
+      month?: number;
+    },
+  ): Promise<IOverallDashboardResponseDTO> {
     const { hotels } = await this._hotelRepo.getHotelsByUserId(userId);
 
     if (hotels.length === 0) {
@@ -31,14 +38,20 @@ export class GetOverallDashboardUseCase implements IGetOverallDashboardUseCase {
         occupancyRate: 0,
         totalRevenue: 0,
         hotels: [],
+        charts: {
+          revenueTrends: [],
+          bookingStatusDistribution: [],
+          topHotelsByBookings: [],
+        },
       };
     }
 
     const hotelIds = hotels.map((h) => h._id!);
 
-    const [dashboardStats, roomStats] = await Promise.all([
+    const [dashboardStats, roomStats, charts] = await Promise.all([
       this._bookingRepo.getDashboardStats(hotelIds),
       this._roomVariantRepo.getTotalRoomsByHotelIds(hotelIds),
+      this._bookingRepo.getOverallDashboardCharts(hotelIds, filter),
     ]);
 
     const statsMap = new Map(dashboardStats.map((s) => [s.hotelId, s]));
@@ -95,6 +108,7 @@ export class GetOverallDashboardUseCase implements IGetOverallDashboardUseCase {
         totalRevenue,
       },
       hotelSummaries,
+      charts,
     );
   }
 }

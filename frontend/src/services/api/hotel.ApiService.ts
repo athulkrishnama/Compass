@@ -106,10 +106,15 @@ export async function searchHotels<T extends object>(data: T) {
     }
 }
 
-export async function getOverallDashboard() {
+export async function getOverallDashboard(filter?: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+    month?: number;
+}) {
     try {
         const response = await axiosInstance.get(
-            HOTEL_ROUTES.OVERALL_DASHBOARD
+            HOTEL_ROUTES.OVERALL_DASHBOARD,
+            { params: filter }
         );
         return response.data;
     } catch (error) {

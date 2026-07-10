@@ -1,3 +1,4 @@
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 import { createOverallDashboardQueryOptions } from "@/queryOptions/dashboardQueryOptions";
 import PropertyTable from "@/components/hotel/dashboard/PropertyTable";
+import HotelDashboardCharts from "@/components/hotel/dashboard/HotelDashboardCharts";
 import translationKey from "@/utils/i18n/translationKey";
 
 const t_keys = translationKey.dashboard;
@@ -56,9 +58,25 @@ function StatCard({
 
 export default function OverallDashboard() {
     const { t } = useTranslation();
-    const { data, isLoading } = useQuery(createOverallDashboardQueryOptions());
+    const [filter, setFilter] = React.useState<{
+        type: "weekly" | "monthly" | "yearly";
+        year?: number;
+        month?: number;
+    }>({ type: "weekly", year: new Date().getFullYear() });
+
+    const { data, isLoading } = useQuery(
+        createOverallDashboardQueryOptions(filter)
+    );
 
     const dashboard = data?.data;
+
+    const handleFilterChange = (
+        type: "weekly" | "monthly" | "yearly",
+        year?: number,
+        month?: number
+    ) => {
+        setFilter({ type, year, month });
+    };
 
     if (isLoading) {
         return (
@@ -154,6 +172,13 @@ export default function OverallDashboard() {
                     <PropertyTable hotels={dashboard.hotels} />
                 )}
             </motion.div>
+
+            {dashboard.charts && (
+                <HotelDashboardCharts
+                    chartsData={dashboard.charts}
+                    onFilterChange={handleFilterChange}
+                />
+            )}
         </div>
     );
 }
