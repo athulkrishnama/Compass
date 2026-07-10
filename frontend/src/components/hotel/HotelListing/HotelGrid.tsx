@@ -30,7 +30,7 @@ export function HotelGrid({ hotels }: HotelGridProps) {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
             {hotels.map((hotel) => (
-                <motion.div key={hotel.id} variants={item}>
+                <motion.div key={hotel.id} variants={item} className="h-full">
                     <HotelCard hotel={hotel} />
                 </motion.div>
             ))}

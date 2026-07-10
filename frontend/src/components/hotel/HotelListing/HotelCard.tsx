@@ -18,11 +18,12 @@ export function HotelCard({ hotel }: HotelCardProps) {
         <motion.div
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="h-full"
         >
             <Link
                 to="/hotel/hotels/$hotelId"
                 params={{ hotelId: hotel.id }}
-                className="block"
+                className="block h-full"
             >
                 <Card className="overflow-hidden p-0 border-none shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col rounded-[1rem] cursor-pointer">
                     <div className="relative aspect-[4/3] overflow-hidden bg-muted rounded-t-[1rem]">
