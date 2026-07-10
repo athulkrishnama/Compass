@@ -16,6 +16,8 @@ import { TRANSACTION_TYPE } from "@domain/enums/transactionType";
 import { SERVICE_TYPE } from "@domain/enums/serviceType";
 import { PAYMENT_METHOD } from "@domain/enums/paymentMethod";
 import { ROLES } from "@domain/enums/roles";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class CancelBookingUseCase implements ICancelBookingUseCase {
@@ -28,6 +30,8 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
     private _transactionRepo: ITransactionRepo,
     @inject("IUserRepo")
     private _userRepo: IUserRepo,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute(
@@ -115,6 +119,26 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
       },
       bookingId,
     );
+
+    const refundMessage =
+      refundAmount > 0
+        ? `A refund of ₹${refundAmount.toFixed(2)} (${refundPercentage}%) has been initiated to your original payment method.`
+        : "No refund is applicable based on the cancellation policy.";
+
+    try {
+      await this._notificationService.notify(
+        travelerId,
+        NOTIFICATION_TYPES.BOOKING_CANCELLED,
+        "Booking Cancelled",
+        `Your booking has been cancelled. ${refundMessage}`,
+        { bookingId, refundAmount, refundPercentage },
+      );
+    } catch (notifyErr) {
+      console.error(
+        "[CancelBookingUseCase] Failed to send cancellation notification:",
+        notifyErr,
+      );
+    }
 
     return { refundAmount, refundPercentage };
   }

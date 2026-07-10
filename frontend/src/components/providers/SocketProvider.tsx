@@ -44,11 +44,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                 socketService.onPersistent(
                     SocketEvents.NOTIFICATION_NEW,
                     (data: Notification) => {
-                        console.log(
-                            "[SocketProvider] Global Notification:",
-                            data
-                        );
+                        // Add to Redux immediately (shows in panel without waiting for refetch)
                         dispatch(addNotification(data));
+                        // Invalidate the notifications list cache so panel has fresh data on next open
+                        queryClient.invalidateQueries({
+                            queryKey: [QUERY_KEYS.NOTIFICATIONS],
+                        });
                         toast.info(data.title, {
                             description: data.message,
                         });
@@ -72,15 +73,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         store.getState().activeRide?._id,
                                     ],
                                 });
-                                toast.success(
-                                    t(translationKey.toasts.driverAssigned),
-                                    {
-                                        description: t(
-                                            translationKey.toasts
-                                                .driverAssignedDesc
-                                        ),
-                                    }
-                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                });
                                 break;
                             case RIDER_EVENTS_TYPES.CANCELLED:
                                 dispatch(
@@ -92,21 +87,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         store.getState().activeRide?._id,
                                     ],
                                 });
-                                toast.error(
-                                    t(translationKey.toasts.rideCancelled),
-                                    {
-                                        description:
-                                            (
-                                                data.payload as {
-                                                    message?: string;
-                                                }
-                                            ).message ||
-                                            t(
-                                                translationKey.toasts
-                                                    .rideCancelledDesc
-                                            ),
-                                    }
-                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                });
                                 break;
                             case RIDER_EVENTS_TYPES.NO_DRIVERS:
                                 dispatch(
@@ -117,6 +100,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         QUERY_KEYS.RIDE_DETAILS,
                                         store.getState().activeRide?._id,
                                     ],
+                                });
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                                 });
                                 toast.error(
                                     t(translationKey.toasts.noDrivers),
@@ -137,13 +123,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         store.getState().activeRide?._id,
                                     ],
                                 });
-                                toast.success(
-                                    t(
-                                        translationKey.activeTrip
-                                            .arrivedAtPickup,
-                                        "Driver arrived at pickup location"
-                                    )
-                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                });
                                 break;
                             case RIDER_EVENTS_TYPES.STARTED:
                                 dispatch(
@@ -155,12 +137,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         store.getState().activeRide?._id,
                                     ],
                                 });
-                                toast.success(
-                                    t(
-                                        translationKey.activeTrip.inTransit,
-                                        "Ride started"
-                                    )
-                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                });
                                 break;
                             case RIDER_EVENTS_TYPES.COMPLETED:
                                 dispatch(
@@ -172,12 +151,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
                                         store.getState().activeRide?._id,
                                     ],
                                 });
-                                toast.success(
-                                    t(
-                                        translationKey.bookingStatus.COMPLETED,
-                                        "Ride completed"
-                                    )
-                                );
+                                queryClient.invalidateQueries({
+                                    queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                                });
                                 break;
                         }
                     }

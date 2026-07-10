@@ -61,7 +61,7 @@ export function ActiveTripOverlay() {
                         {ride.status !== RIDE_STATUSES.COMPLETED && (
                             <div className="flex items-center gap-1 text-sm bg-gray-100 text-gray-800 px-3 py-1 rounded-full font-medium">
                                 <Clock className="w-4 h-4" />
-                                <span>{ride.time} min</span>
+                                <span>{Math.ceil(ride.time / 60)} min</span>
                             </div>
                         )}
                     </div>

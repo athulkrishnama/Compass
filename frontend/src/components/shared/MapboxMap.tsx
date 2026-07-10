@@ -94,6 +94,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
 
+    // Capture initialCenter/Zoom once on mount — stored in a ref so changes
+    // to the prop (e.g. a new array reference from driverCoordinate) never
+    // trigger a map teardown/rebuild.
+    const initialCenterRef = useRef<[number, number]>(initialCenter);
+    const initialZoomRef = useRef<number>(initialZoom);
+
     useEffect(() => {
         if (!mapContainer.current || mapRef.current) return;
 
@@ -102,8 +108,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v12",
-            center: initialCenter,
-            zoom: initialZoom,
+            center: initialCenterRef.current,
+            zoom: initialZoomRef.current,
         });
 
         map.once("idle", () => {
@@ -117,7 +123,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             mapRef.current = null;
             setIsMapLoaded(false);
         };
-    }, [initialCenter, initialZoom]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // ← intentionally empty: map is created once, never re-created
+
 
     const markersDataRef = useRef<MapboxMarker[]>(markers);
     useEffect(() => {

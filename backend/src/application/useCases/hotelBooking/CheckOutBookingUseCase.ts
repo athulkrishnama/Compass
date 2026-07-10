@@ -8,6 +8,8 @@ import {
 } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class CheckOutBookingUseCase implements ICheckOutBookingUseCase {
@@ -16,6 +18,8 @@ export class CheckOutBookingUseCase implements ICheckOutBookingUseCase {
     private _hotelBookingRepo: IHotelBookingRepo,
     @inject("IHotelRepo")
     private _hotelRepo: IHotelRepo,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute(bookingId: string, hotelId: string): Promise<void> {
@@ -49,6 +53,21 @@ export class CheckOutBookingUseCase implements ICheckOutBookingUseCase {
     if (!hotel) {
       throw new ResourceNotFoundException(
         INTERNAL_ERROR_MESSAGES.HOTEL_NOT_FOUND,
+      );
+    }
+
+    try {
+      await this._notificationService.notify(
+        booking.travelerId,
+        NOTIFICATION_TYPES.BOOKING_CHECKED_OUT,
+        "Check-Out Complete ",
+        `Thank you for staying at ${hotel.name}! We hope you had a wonderful experience. See you again soon!`,
+        { bookingId, hotelId, hotelName: hotel.name },
+      );
+    } catch (notifyErr) {
+      console.error(
+        "[CheckOutBookingUseCase] Failed to send check-out notification:",
+        notifyErr,
       );
     }
   }

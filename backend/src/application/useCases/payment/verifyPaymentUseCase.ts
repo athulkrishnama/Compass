@@ -21,6 +21,8 @@ import { IWalletRepo } from "@application/interfaces/repository/wallet/wallet.re
 import { IUserRepo } from "@application/interfaces/repository/users/user.repo.interface";
 import { ROLES } from "@domain/enums/roles";
 import { env } from "@config/envConfig";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
@@ -43,6 +45,8 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     private _walletRepo: IWalletRepo,
     @inject("IUserRepo")
     private _userRepo: IUserRepo,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute(data: {
@@ -218,6 +222,37 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     });
 
     await this._roomLockRepo.deleteById(lock._id!);
+
+    const checkinFormatted = new Date(lock.checkinDate).toLocaleDateString(
+      "en-IN",
+      { day: "2-digit", month: "short", year: "numeric" },
+    );
+    const checkoutFormatted = new Date(lock.checkoutDate).toLocaleDateString(
+      "en-IN",
+      { day: "2-digit", month: "short", year: "numeric" },
+    );
+
+    try {
+      await this._notificationService.notify(
+        traverlerId,
+        NOTIFICATION_TYPES.BOOKING_CONFIRMED,
+        "Booking Confirmed!",
+        `Your booking at ${hotel.name} is confirmed. Check-in: ${checkinFormatted} → Check-out: ${checkoutFormatted}.`,
+        {
+          bookingId: newBookingId,
+          hotelId: roomVariant.hotelId,
+          hotelName: hotel.name,
+          checkinDate: lock.checkinDate,
+          checkoutDate: lock.checkoutDate,
+          totalAmount,
+        },
+      );
+    } catch (notifyErr) {
+      console.error(
+        "[VerifyPaymentUseCase] Failed to send booking confirmation notification:",
+        notifyErr,
+      );
+    }
 
     return Messages.PAYMENT_VERIFIED_SUCCESSFULLY;
   }

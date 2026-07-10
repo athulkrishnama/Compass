@@ -18,6 +18,8 @@ import {
   InvalideDataException,
   ResourceNotFoundException,
 } from "@application/constants/Exceptions";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class AcceptRideUseCase implements IAcceptRideUseCase {
@@ -26,6 +28,8 @@ export class AcceptRideUseCase implements IAcceptRideUseCase {
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("IQueueService") private _queueService: IQueueService,
     @inject("ICabRepo") private _cabRepo: ICabRepo,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute({
@@ -106,5 +110,29 @@ export class AcceptRideUseCase implements IAcceptRideUseCase {
         rider_id: ride.rider_id,
       },
     });
+
+    try {
+      await this._notificationService.notify(
+        ride.rider_id,
+        NOTIFICATION_TYPES.RIDE_ACCEPTED,
+        "Driver Found!",
+        `Your driver is on the way. Share OTP ${ride.otp} to start the ride.`,
+        { ride_id, driver_id: rider_id, otp: ride.otp },
+      );
+    } catch (err) {
+      console.error("[AcceptRideUseCase] Rider notification failed:", err);
+    }
+
+    try {
+      await this._notificationService.notify(
+        rider_id,
+        NOTIFICATION_TYPES.RIDE_ACCEPTED,
+        "Ride Accepted",
+        "You accepted a new ride. Head to the pickup location now.",
+        { ride_id, rider_id: ride.rider_id },
+      );
+    } catch (err) {
+      console.error("[AcceptRideUseCase] Driver notification failed:", err);
+    }
   }
 }

@@ -25,8 +25,8 @@ import {
     type DriverEventPayload,
 } from "@/types/socketPayloads";
 import { calculateDistance } from "@/utils/distance";
-function calcEta(minutesFromNow: number): string {
-    const d = new Date(Date.now() + minutesFromNow * 60 * 1000);
+function calcEta(secondsFromNow: number): string {
+    const d = new Date(Date.now() + secondsFromNow * 1000);
     return d.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",

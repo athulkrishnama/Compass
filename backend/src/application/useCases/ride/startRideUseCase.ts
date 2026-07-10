@@ -16,12 +16,16 @@ import {
   InvalideDataException,
   ResourceNotFoundException,
 } from "@application/constants/Exceptions";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class StartRideUseCase implements IStartRideUseCase {
   constructor(
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute({
@@ -74,5 +78,29 @@ export class StartRideUseCase implements IStartRideUseCase {
         ride_id,
       },
     });
+
+    try {
+      await this._notificationService.notify(
+        ride.rider_id,
+        NOTIFICATION_TYPES.RIDE_STARTED,
+        "Ride Started",
+        "Your ride has started. Sit back and enjoy the journey!",
+        { ride_id, driver_id },
+      );
+    } catch (err) {
+      console.error("[StartRideUseCase] Rider notification failed:", err);
+    }
+
+    try {
+      await this._notificationService.notify(
+        driver_id,
+        NOTIFICATION_TYPES.RIDE_STARTED,
+        "Ride Started",
+        "The ride is now in progress. Have a safe trip!",
+        { ride_id, rider_id: ride.rider_id },
+      );
+    } catch (err) {
+      console.error("[StartRideUseCase] Driver notification failed:", err);
+    }
   }
 }

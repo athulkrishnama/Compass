@@ -206,9 +206,6 @@ const RideDetails = () => {
         (data) => {
             if (data.type === RIDER_EVENTS_TYPES.COMPLETED) {
                 dispatch(updateRideStatus(RIDE_STATUSES.COMPLETED));
-                toast.success("Ride completed!", {
-                    description: "Please proceed to payment.",
-                });
                 setIsPaymentOpen(true);
             } else if (data.type === RIDER_EVENTS_TYPES.PAYMENT_SUCCESS) {
                 setIsPaymentOpen(false);
