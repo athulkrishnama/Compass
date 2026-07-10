@@ -36,7 +36,7 @@ function ShowProfile({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="rounded-lg bg-white text-black w-full h-full p-8"
+            className="rounded-lg bg-white text-black w-full h-full p-4 sm:p-8"
         >
             <div className="flex flex-col items-center mb-8">
                 <motion.div
@@ -87,19 +87,25 @@ function ShowProfile({
                         delay: 0.4,
                     }}
                 >
-                    <div className="flex items-center gap-3">
-                        <div className="bg-white p-2 rounded-lg shadow-sm">
-                            <Mail size={20} className="text-gray-700" />
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className="bg-white p-2 rounded-lg shadow-sm flex-shrink-0">
+                                <Mail size={20} className="text-gray-700" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                                    {t(translationKey.form.email)}
+                                </p>
+                                <p className="text-sm font-medium text-gray-900 break-all">
+                                    {email}
+                                </p>
+                            </div>
                         </div>
-                        <div className="flex-1">
-                            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
-                                {t(translationKey.form.email)}
-                            </p>
-                            <p className="text-sm font-medium text-gray-900">
-                                {email}
-                            </p>
-                        </div>
-                        {!is_google_login && <ChangeEmailButtonWithModal />}
+                        {!is_google_login && (
+                            <div className="w-full sm:w-auto mt-2 sm:mt-0">
+                                <ChangeEmailButtonWithModal />
+                            </div>
+                        )}
                     </div>
                 </motion.div>
 
@@ -169,7 +175,7 @@ function ShowProfile({
             </div>
 
             <motion.div
-                className="flex gap-3"
+                className="flex flex-col sm:flex-row gap-3"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
