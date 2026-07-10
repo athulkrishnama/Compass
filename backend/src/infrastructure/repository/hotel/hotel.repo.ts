@@ -88,7 +88,7 @@ export class HotelRepo
     }
 
     const roomVariantMatch: RootFilterQuery<IRoomVariantDocument> = {
-      maxOccupancy: null,
+      isActive: true,
     };
     if (filter.guests) {
       roomVariantMatch.maxOccupancy = { $gte: filter.guests };
