@@ -60,7 +60,6 @@ function RouteComponent() {
             name: t(translationKey.button.bookings),
             route: "/traveler/bookings",
         },
-        { name: t(translationKey.button.history), route: "/traveler/history" },
         { name: t(translationKey.button.wallet), route: "/traveler/wallet" },
         { name: t(translationKey.button.cabs), route: "/traveler/cab" },
         { name: t(translationKey.button.profile), route: "/traveler/profile" },
