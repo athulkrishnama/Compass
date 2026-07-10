@@ -90,10 +90,10 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
             transition={{ duration: 0.4 }}
             className="  rounded-lg bg-white text-black  w-full h-full p-2"
         >
-            <div className="p-2">
-                <div className="flex  gap-6 ">
+            <div className="p-2 sm:p-6">
+                <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
                     <motion.div
-                        className="flex w-1/3"
+                        className="flex w-full sm:w-1/3 justify-center sm:justify-start"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{
@@ -116,7 +116,7 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                         </div>
                     </motion.div>
                     <motion.div
-                        className="flex-1 space-y-4 w-2/3"
+                        className="flex-1 space-y-4 w-full sm:w-2/3"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{
@@ -151,10 +151,12 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                                 <Mail size={16} />{" "}
                                 {t(translationKey.form.email)}
                             </div>
-                            <div className="flex items-center gap-2 justify-between">
-                                <p className="text-black">{email}</p>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between">
+                                <p className="text-black break-all">{email}</p>
                                 {!is_google_login && (
-                                    <ChangeEmailButtonWithModal />
+                                    <div className="w-full sm:w-auto mt-2 sm:mt-0">
+                                        <ChangeEmailButtonWithModal />
+                                    </div>
                                 )}
                             </div>
                         </motion.div>
@@ -294,7 +296,7 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
 
             <Separator />
             <motion.div
-                className="p-6 flex justify-evenly gap-3"
+                className="p-4 sm:p-6 flex flex-col sm:flex-row justify-evenly gap-3"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -302,14 +304,16 @@ function ShowProfile({ profileData, setEditing, role }: ShowProfileProps) {
                     delay: 0.7,
                 }}
             >
-                <div className="w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95">
+                <div className="w-full sm:w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95">
                     <Button className="w-full" onClick={setEditing}>
                         <Edit className="mr-2 h-4 w-4" />
                         {t(translationKey.button.updateProfile)}
                     </Button>
                 </div>
                 {!is_google_login && (
-                    <ChangePasswordModalWithButton className="w-1/2 transition-transform duration-200 hover:scale-105 active:scale-95" />
+                    <div className="w-full sm:w-1/2">
+                        <ChangePasswordModalWithButton className="w-full transition-transform duration-200 hover:scale-105 active:scale-95" />
+                    </div>
                 )}
             </motion.div>
         </motion.div>
