@@ -23,7 +23,7 @@ export default function ProfileSidebar({ tabs }: ProfileSidebarProps) {
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="w-64 border-r border-gray-200 flex-shrink-0"
+            className="w-full md:w-64 border-b md:border-b-0 md:border-r border-gray-200 flex-shrink-0"
         >
             <nav className="flex flex-col p-4 space-y-2">
                 {tabs.map((tab) => {
