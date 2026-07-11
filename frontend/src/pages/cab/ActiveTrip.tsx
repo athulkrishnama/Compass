@@ -125,6 +125,8 @@ export default function ActiveTripPage() {
                         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                     });
                     toast.success("Payment Received!");
+                    setPhase(null);
+                    navigate({ to: "/cab/history" });
                     break;
                 case DRIVER_EVENTS_TYPES.CANCELLED:
                     setPhase(RIDE_STATUSES.CANCELLED);
