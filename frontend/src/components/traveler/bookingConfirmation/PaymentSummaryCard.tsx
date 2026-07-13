@@ -18,6 +18,7 @@ import { useNavigate } from "@tanstack/react-router";
 interface PaymentSummaryCardProps {
     amount: number;
     nights: number;
+    numberOfRooms: number;
     paymentIntentId: string;
     clientSecret: string;
 }
@@ -37,11 +38,16 @@ const itemVariants = {
 export function PaymentSummaryCard({
     amount,
     nights,
+    numberOfRooms,
     paymentIntentId,
 }: PaymentSummaryCardProps) {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const basePrice = nights > 0 ? Math.round(amount / nights) : 0;
+    const pricePerRoom =
+        nights > 0 && numberOfRooms > 0
+            ? Math.round(amount / numberOfRooms)
+            : amount;
+    const basePrice = nights > 0 ? Math.round(pricePerRoom / nights) : 0;
 
     const strip = useStripe();
     const elements = useElements();
@@ -105,6 +111,15 @@ export function PaymentSummaryCard({
                             {t(translationKey.bookingConfirmation.nights)}
                         </span>
                     </div>
+                    {numberOfRooms > 1 && (
+                        <div className="flex justify-between text-sm">
+                            <span className="text-gray-500">Rooms</span>
+                            <span className="text-gray-900 font-medium">
+                                {numberOfRooms} rooms × ₹
+                                {pricePerRoom.toLocaleString("en-IN")}
+                            </span>
+                        </div>
+                    )}
                     <div className="flex justify-between text-sm pt-3 sm:pt-4 border-t border-gray-100">
                         <span className="text-gray-500">
                             {t(translationKey.bookingConfirmation.subtotal)}

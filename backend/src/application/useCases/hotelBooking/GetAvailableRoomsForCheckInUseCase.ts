@@ -82,15 +82,19 @@ export class GetAvailableRoomsForCheckInUseCase
       bookingStatus: BOOKING_STATUS.CHECKED_IN,
     });
 
-    const occupiedRoomNumbers = new Set(
-      checkedInBookings
-        .filter((b) => b.roomNumber)
-        .map((b) => Number(b.roomNumber)),
-    );
+    const occupiedRoomNumbers = new Set<number>();
+    for (const b of checkedInBookings) {
+      if (b.roomNumbers && b.roomNumbers.length > 0) {
+        b.roomNumbers.forEach((rn) => occupiedRoomNumbers.add(rn));
+      }
+    }
 
-    const roomStatuses = await this._roomStatusRepo.findByRoomVariantId(
-      booking.roomVariantId,
-    );
+    const roomStatuses =
+      await this._roomStatusRepo.findByRoomVariantIdAndDateRange(
+        booking.roomVariantId,
+        booking.checkinDate,
+        booking.checkoutDate,
+      );
 
     const unavailableRooms: { roomNumber: number; reason: string }[] = [];
     const unavailableRoomNumbers = new Set<number>();

@@ -7,6 +7,7 @@ const bookingConfirmationSearchSchema = z.object({
     checkInDate: z.string(),
     checkOutDate: z.string(),
     guests: z.number(),
+    numberOfRooms: z.number(),
     paymentIntentId: z.string(),
     clientSecret: z.string(),
     amount: z.number(),

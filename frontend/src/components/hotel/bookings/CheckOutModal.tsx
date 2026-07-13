@@ -143,7 +143,12 @@ export default function CheckOutModal({
                                         {t(
                                             translationKeys.checkIn
                                                 .roomWithNumber,
-                                            { roomNumber: booking.roomNumber }
+                                            {
+                                                roomNumber:
+                                                    booking.roomNumbers.join(
+                                                        ", "
+                                                    ),
+                                            }
                                         )}
                                     </p>
                                 </div>
@@ -192,7 +197,7 @@ export default function CheckOutModal({
                             {t(
                                 translationKeys.checkIn
                                     .checkOutConfirmationMessage,
-                                { roomNumber: booking.roomNumber }
+                                { roomNumber: booking.roomNumbers.join(", ") }
                             )}
                         </p>
                     </div>

@@ -7,4 +7,9 @@ export interface IRoomStatusRepo extends IBaseRepository<RoomStatusEntity> {
     roomVariantId: string,
     roomNumber: number,
   ): Promise<RoomStatusEntity | null>;
+  findByRoomVariantIdAndDateRange(
+    roomVariantId: string,
+    checkinDate: Date,
+    checkoutDate: Date,
+  ): Promise<RoomStatusEntity[]>;
 }

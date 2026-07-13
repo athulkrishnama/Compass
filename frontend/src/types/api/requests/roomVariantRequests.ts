@@ -11,10 +11,14 @@ export interface IMarkRoomAsUnavailableRequestDTO {
     roomNumber: number;
     reason: string;
     status: RoomStatus;
+    startDate: string;
+    endDate: string;
 }
 
 export interface IUpdateRoomUnavailabilityRequestDTO {
     id: string;
     status: RoomStatus;
     reason: string;
+    startDate: string;
+    endDate: string;
 }

@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import { BedDouble } from "lucide-react";
 
 interface StayDetailsCardProps {
     checkInDate: Date;
     checkOutDate: Date;
     nights: number;
+    numberOfRooms: number;
 }
 
 const itemVariants = {
@@ -24,6 +26,7 @@ export default function StayDetailsCard({
     checkInDate,
     checkOutDate,
     nights,
+    numberOfRooms,
 }: StayDetailsCardProps) {
     const { t } = useTranslation();
     const formatDate = (date: Date) => {
@@ -64,6 +67,13 @@ export default function StayDetailsCard({
                         <span className="font-semibold text-gray-900">
                             {nights}{" "}
                             {t(translationKey.bookingConfirmation.nights)}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <BedDouble className="w-3.5 h-3.5 text-gray-500" />
+                        <span className="text-gray-500">Rooms:</span>
+                        <span className="font-semibold text-gray-900">
+                            {numberOfRooms}
                         </span>
                     </div>
                 </div>

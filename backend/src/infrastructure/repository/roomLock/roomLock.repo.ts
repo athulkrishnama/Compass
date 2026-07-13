@@ -114,8 +114,12 @@ export class RoomLockRepo
     if (filter.paymentIntentId) {
       filterQuery.paymentIntentId = filter.paymentIntentId;
     }
-    const result = await this._model.countDocuments(filterQuery).exec();
-    return result;
+
+    const result = await this._model.aggregate([
+      { $match: filterQuery },
+      { $group: { _id: null, total: { $sum: "$numberOfRooms" } } },
+    ]);
+    return result[0]?.total ?? 0;
   }
 
   toEntity(doc: IRoomLockDocument): RoomLockEntity {
@@ -123,6 +127,7 @@ export class RoomLockRepo
       _id: doc._id.toString(),
       roomVariantId: doc.roomVariantId,
       travelerId: doc.travelerId,
+      numberOfRooms: doc.numberOfRooms ?? 1,
       checkinDate: doc.checkinDate,
       checkoutDate: doc.checkoutDate,
       paymentIntentId: doc.paymentIntentId,

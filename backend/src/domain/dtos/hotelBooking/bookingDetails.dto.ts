@@ -49,6 +49,7 @@ export interface IBookingDetailsResponseDTO {
   refundAmount?: number;
   refundStatus?: string;
   cancelledAt?: string;
-  roomNumber?: string;
+  roomNumbers?: number[];
+  numberOfRooms?: number;
   isWalkIn: boolean;
 }

@@ -7,6 +7,8 @@ export interface IRoomStatusDocument {
   roomNumber: number;
   status: RoomVariantStatus;
   reason: string;
+  startDate: Date;
+  endDate: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +18,8 @@ export const roomStatusSchema = new Schema<IRoomStatusDocument>({
   roomNumber: { type: Number, required: true },
   status: { type: String, required: true },
   reason: { type: String, required: true },
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true, expires: 0 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

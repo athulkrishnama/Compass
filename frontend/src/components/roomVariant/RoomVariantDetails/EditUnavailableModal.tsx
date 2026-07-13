@@ -27,6 +27,8 @@ interface EditUnavailableModalProps {
         id: string;
         status: RoomStatus;
         reason: string;
+        startDate: string;
+        endDate: string;
     }) => void;
 }
 
@@ -40,19 +42,33 @@ export default function EditUnavailableModal({
     const { t } = useTranslation();
     const [status, setStatus] = useState<RoomStatus>(RoomStatus.MAINTENANCE);
     const [reason, setReason] = useState("");
+    const [startDate, setStartDate] = useState<string>("");
+    const [endDate, setEndDate] = useState<string>("");
 
     useEffect(() => {
         if (room) {
             setStatus(room.status);
             setReason(room.reason);
+            setStartDate(
+                room.startDate
+                    ? new Date(room.startDate).toLocaleDateString("en-CA")
+                    : ""
+            );
+            setEndDate(
+                room.endDate
+                    ? new Date(room.endDate).toLocaleDateString("en-CA")
+                    : ""
+            );
         }
     }, [room]);
 
     const handleSubmit = () => {
         if (!room) return;
-        onSubmit({ id: room.id, status, reason });
+        onSubmit({ id: room.id, status, reason, startDate, endDate });
         setStatus(RoomStatus.MAINTENANCE);
         setReason("");
+        setStartDate("");
+        setEndDate("");
     };
 
     if (!room) return null;
@@ -78,6 +94,34 @@ export default function EditUnavailableModal({
                     <p className="text-xs text-gray-500 mt-1">
                         {t(translationKey.text.roomNumberCannotBeChanged)}
                     </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <Label htmlFor="editStartDate">Start Date</Label>
+                        <Input
+                            id="editStartDate"
+                            type="date"
+                            value={startDate}
+                            min={new Date().toLocaleDateString("en-CA")}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="mt-1.5"
+                        />
+                    </div>
+                    <div>
+                        <Label htmlFor="editEndDate">End Date</Label>
+                        <Input
+                            id="editEndDate"
+                            type="date"
+                            value={endDate}
+                            min={
+                                startDate ||
+                                new Date().toLocaleDateString("en-CA")
+                            }
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="mt-1.5"
+                        />
+                    </div>
                 </div>
 
                 <div>

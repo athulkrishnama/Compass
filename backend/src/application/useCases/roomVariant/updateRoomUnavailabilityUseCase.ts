@@ -28,6 +28,8 @@ export class UpdateRoomUnavailabilityUseCase
         ...roomStatus,
         status: data.status,
         reason: data.reason,
+        startDate: data.startDate,
+        endDate: data.endDate,
       },
       data.id,
     );

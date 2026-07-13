@@ -4,4 +4,6 @@ export interface IUpdateRoomUnavailabilityRequestDTO {
   id: string;
   status: RoomVariantStatus;
   reason: string;
+  startDate: Date;
+  endDate: Date;
 }

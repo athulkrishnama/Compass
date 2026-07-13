@@ -70,7 +70,8 @@ export class HotelBookingMapper {
       refundAmount: b.refundAmount,
       refundStatus: b.refundStatus,
       cancelledAt: b.cancelledAt?.toISOString(),
-      roomNumber: b.roomNumber,
+      roomNumbers: b.roomNumbers,
+      numberOfRooms: b.numberOfRooms,
       isWalkIn: b.isWalkIn,
     };
   }
@@ -89,7 +90,8 @@ export class HotelBookingMapper {
         travelerProfileImage: b.traveler?.profile_image || "",
         guestName: b.traveler?.full_name || "Guest",
         roomVariantName: b.roomVariant?.name || "Unknown",
-        roomNumber: b.roomNumber || "-",
+        roomNumbers: b.roomNumbers ?? [],
+        numberOfRooms: b.numberOfRooms ?? 1,
         checkInDate: b.checkinDate.toISOString(),
         checkOutDate: b.checkoutDate.toISOString(),
         totalAmount: b.totalAmount,

@@ -264,6 +264,8 @@ export const markRoomAsUnavailableValidation = z.object({
   status: z.enum(RoomVariantStatus, {
     error: INTERNAL_ERROR_MESSAGES.STATUS_MISSING_OR_INVALID,
   }),
+  startDate: z.coerce.date(),
+  endDate: z.coerce.date(),
 });
 
 export const updateRoomUnavailabilityValidation = z.object({
@@ -276,6 +278,8 @@ export const updateRoomUnavailabilityValidation = z.object({
   reason: z.string({
     error: INTERNAL_ERROR_MESSAGES.REASON_MISSING_OR_INVALID,
   }),
+  startDate: z.coerce.date(),
+  endDate: z.coerce.date(),
 });
 
 export const restoreRoomValidation = z.object({

@@ -28,6 +28,7 @@ export default function BookingConfirmation() {
         checkInDate,
         checkOutDate,
         guests,
+        numberOfRooms,
         paymentIntentId,
         clientSecret,
         amount,
@@ -110,6 +111,7 @@ export default function BookingConfirmation() {
                             checkInDate={checkIn}
                             checkOutDate={checkOut}
                             nights={nights}
+                            numberOfRooms={numberOfRooms}
                         />
                     </div>
 
@@ -117,6 +119,7 @@ export default function BookingConfirmation() {
                         <PaymentSummaryCard
                             amount={amount}
                             nights={nights}
+                            numberOfRooms={numberOfRooms}
                             paymentIntentId={paymentIntentId}
                             clientSecret={clientSecret}
                         />

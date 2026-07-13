@@ -31,7 +31,6 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomNumber?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -53,9 +52,6 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
-    }
-    if (filter.roomNumber) {
-      filterQuery.roomNumber = filter.roomNumber;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -103,7 +99,6 @@ export class HotelBookingRepo
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomNumber?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
     afterCheckInDate?: Date;
@@ -125,9 +120,6 @@ export class HotelBookingRepo
     }
     if (filter.roomVariantId) {
       filterQuery.roomVariantId = filter.roomVariantId;
-    }
-    if (filter.roomNumber) {
-      filterQuery.roomNumber = filter.roomNumber;
     }
     if (filter.checkinDate) {
       filterQuery.checkinDate = filter.checkinDate;
@@ -167,8 +159,12 @@ export class HotelBookingRepo
     if (filter.paymentIntendId) {
       filterQuery.paymentIntendId = filter.paymentIntendId;
     }
-    const result = await this._model.countDocuments(filterQuery).exec();
-    return result;
+    // Sum numberOfRooms across matching documents to get total rooms booked
+    const result = await this._model.aggregate([
+      { $match: filterQuery },
+      { $group: { _id: null, total: { $sum: "$numberOfRooms" } } },
+    ]);
+    return result[0]?.total ?? 0;
   }
 
   async countMonthWise(filter: {
@@ -193,7 +189,8 @@ export class HotelBookingRepo
       hotelId: doc.hotelId,
       travelerId: doc.travelerId,
       roomVariantId: doc.roomVariantId,
-      roomNumber: doc.roomNumber,
+      numberOfRooms: doc.numberOfRooms ?? 1,
+      roomNumbers: doc.roomNumbers,
       checkinDate: doc.checkinDate,
       checkoutDate: doc.checkoutDate,
       totalAmount: doc.totalAmount,

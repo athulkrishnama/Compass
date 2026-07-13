@@ -23,6 +23,8 @@ export class RoomStatusRepo
       roomNumber: document.roomNumber,
       status: document.status,
       reason: document.reason,
+      startDate: document.startDate,
+      endDate: document.endDate,
       createdAt: document.createdAt,
       updatedAt: document.updatedAt,
     };
@@ -46,5 +48,26 @@ export class RoomStatusRepo
       roomNumber,
     });
     return document ? this.toEntity(document) : null;
+  }
+
+  async findByRoomVariantIdAndDateRange(
+    roomVariantId: string,
+    checkinDate: Date,
+    checkoutDate: Date,
+  ): Promise<RoomStatusEntity[]> {
+    const documents = await this.model.find({
+      roomVariantId,
+      $or: [
+        { startDate: { $exists: false } },
+        { endDate: { $exists: false } },
+        {
+          startDate: { $lt: checkoutDate },
+          endDate: { $gt: checkinDate },
+        },
+      ],
+    });
+    return documents.map((document: IRoomStatusDocument) =>
+      this.toEntity(document),
+    );
   }
 }

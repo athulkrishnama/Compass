@@ -183,4 +183,5 @@ export enum INTERNAL_ERROR_MESSAGES {
   INVALID_DASHBOARD_FILTER_TYPE = "invalidDashboardFilterType",
   INVALID_YEAR = "invalidYear",
   INVALID_MONTH = "invalidMonth",
+  INVALID_DATE_RANGE = "invalidDateRange",
 }

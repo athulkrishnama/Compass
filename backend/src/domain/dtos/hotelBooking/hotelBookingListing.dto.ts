@@ -7,7 +7,8 @@ export interface HotelBookingListingItem {
   travelerEmail: string;
   guestName: string;
   roomVariantName: string;
-  roomNumber: string;
+  roomNumbers: number[];
+  numberOfRooms: number;
   checkInDate: string;
   checkOutDate: string;
   totalAmount: number;
@@ -27,7 +28,8 @@ export interface IHotelBookingListingAggregationBooking {
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
-  roomNumber?: string;
+  roomNumbers?: number[];
+  numberOfRooms: number;
   checkinDate: Date;
   checkoutDate: Date;
   totalAmount: number;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
     IndianRupee,
@@ -8,6 +8,7 @@ import {
     Plus,
     Minus,
     DoorOpen,
+    BedDouble,
     Loader2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -41,6 +42,7 @@ export default function BookingWidget({
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [guestCount, setGuestCount] = useState(1);
+    const [roomCount, setRoomCount] = useState(1);
     const [date, setDate] = useState<DateRange | undefined>({
         from: new Date(),
         to: new Date(new Date().setDate(new Date().getDate() + 2)),
@@ -63,8 +65,20 @@ export default function BookingWidget({
 
     const availableRooms = availabilityData?.data?.available ?? 0;
     const dynamicPrice = availabilityData?.data?.dynamicPrice || 0;
-    const total =
+    const pricePerRoom =
         dynamicPrice > 0 ? dynamicPrice : basePrice * Math.max(nights, 1);
+    const total = pricePerRoom * roomCount;
+
+    useEffect(() => {
+        if (maxOccupancy > 0) {
+            const suggested = Math.ceil(guestCount / maxOccupancy);
+            const clamped = Math.max(
+                1,
+                Math.min(suggested, availableRooms || 1)
+            );
+            setRoomCount(clamped);
+        }
+    }, [guestCount, maxOccupancy, availableRooms]);
 
     const { mutate: createPaymentIntent, isPending: isCreatingPaymentIntent } =
         useMutation({
@@ -79,6 +93,7 @@ export default function BookingWidget({
                         checkInDate: date.from.toDateString(),
                         checkOutDate: date.to.toDateString(),
                         guests: guestCount,
+                        numberOfRooms: roomCount,
                         paymentIntentId: data.data.paymentIntentId,
                         clientSecret: data.data.clientSecret,
                         amount: data.data.amount,
@@ -88,7 +103,7 @@ export default function BookingWidget({
         });
 
     const handleIncrementGuests = () => {
-        if (guestCount < maxOccupancy) {
+        if (guestCount < maxOccupancy * (availableRooms || 1)) {
             setGuestCount(guestCount + 1);
         }
     };
@@ -96,6 +111,19 @@ export default function BookingWidget({
     const handleDecrementGuests = () => {
         if (guestCount > 1) {
             setGuestCount(guestCount - 1);
+        }
+    };
+
+    const handleIncrementRooms = () => {
+        if (roomCount < availableRooms) {
+            setRoomCount(roomCount + 1);
+        }
+    };
+
+    const handleDecrementRooms = () => {
+        if (roomCount > 1) {
+            if ((roomCount - 1) * maxOccupancy < guestCount) return;
+            setRoomCount(roomCount - 1);
         }
     };
 
@@ -107,6 +135,7 @@ export default function BookingWidget({
             checkInDate: date.from,
             checkOutDate: date.to,
             guests: guestCount,
+            numberOfRooms: roomCount,
         });
     };
 
@@ -189,7 +218,8 @@ export default function BookingWidget({
                     </Popover>
                 </div>
 
-                <div className="p-3 border border-gray-200 rounded-xl mb-6">
+                {/* Guests counter */}
+                <div className="p-3 border border-gray-200 rounded-xl mb-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 text-gray-700">
                             <Users className="w-4 h-4" />
@@ -210,7 +240,10 @@ export default function BookingWidget({
                             </span>
                             <button
                                 onClick={handleIncrementGuests}
-                                disabled={guestCount >= maxOccupancy}
+                                disabled={
+                                    guestCount >=
+                                    maxOccupancy * (availableRooms || 1)
+                                }
                                 className="p-1.5 rounded-full border border-gray-300 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                             >
                                 <Plus className="w-4 h-4 text-gray-600" />
@@ -224,6 +257,40 @@ export default function BookingWidget({
                     </p>
                 </div>
 
+                {/* Rooms counter */}
+                <div className="p-3 border border-gray-200 rounded-xl mb-3">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <BedDouble className="w-4 h-4" />
+                            <span className="text-sm font-medium">Rooms</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={handleDecrementRooms}
+                                disabled={roomCount <= 1}
+                                className="p-1.5 rounded-full border border-gray-300 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                            >
+                                <Minus className="w-4 h-4 text-gray-600" />
+                            </button>
+                            <span className="text-lg font-semibold text-gray-900 w-6 text-center">
+                                {roomCount}
+                            </span>
+                            <button
+                                onClick={handleIncrementRooms}
+                                disabled={roomCount >= availableRooms}
+                                className="p-1.5 rounded-full border border-gray-300 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                            >
+                                <Plus className="w-4 h-4 text-gray-600" />
+                            </button>
+                        </div>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                        Auto-suggested from guest count · max {maxOccupancy}{" "}
+                        guests/room
+                    </p>
+                </div>
+
+                {/* Availability badge */}
                 <div className="p-3 border border-gray-200 rounded-xl mb-6">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 text-gray-700">
@@ -264,6 +331,7 @@ export default function BookingWidget({
                     className="w-full h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-medium rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={
                         availableRooms <= 0 ||
+                        roomCount > availableRooms ||
                         isLoadingAvailability ||
                         isCreatingPaymentIntent
                     }
@@ -296,9 +364,20 @@ export default function BookingWidget({
                         </span>
                         <span className="flex items-center text-gray-900">
                             <IndianRupee className="w-3 h-3" />
-                            {total.toLocaleString("en-IN")}
+                            {pricePerRoom.toLocaleString("en-IN")}
                         </span>
                     </div>
+                    {roomCount > 1 && (
+                        <div className="flex justify-between text-sm">
+                            <span className="text-gray-600">
+                                × {roomCount} rooms
+                            </span>
+                            <span className="flex items-center font-semibold text-gray-900">
+                                <IndianRupee className="w-3 h-3" />
+                                {total.toLocaleString("en-IN")}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
         </motion.div>

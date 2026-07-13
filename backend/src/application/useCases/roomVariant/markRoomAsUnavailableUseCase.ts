@@ -39,25 +39,42 @@ export class MarkRoomAsUnavailableUseCase
       );
     }
 
-    const existingRoomStatus =
-      await this._roomStatusRepo.findByRoomVariantIdAndRoomNumber(
-        data.roomVariantId,
-        data.roomNumber,
+    if (data.startDate >= data.endDate) {
+      throw new InvalideDataException(
+        INTERNAL_ERROR_MESSAGES.INVALID_DATE_RANGE,
       );
+    }
 
-    if (existingRoomStatus) {
+    const overlappingStatuses =
+      await this._roomStatusRepo.findByRoomVariantIdAndDateRange(
+        data.roomVariantId,
+        data.startDate,
+        data.endDate,
+      );
+    const conflictingStatus = overlappingStatuses.find(
+      (s) => s.roomNumber === data.roomNumber,
+    );
+    if (conflictingStatus) {
       throw new ConflictException(
         INTERNAL_ERROR_MESSAGES.ROOM_NUMBER_ALREADY_EXISTS,
       );
     }
 
-    const activeBookings = await this._hotelBookingRepo.filterBooking({
+    const checkedInBookings = await this._hotelBookingRepo.filterBooking({
       roomVariantId: data.roomVariantId,
-      roomNumber: data.roomNumber.toString(),
       bookingStatus: BOOKING_STATUS.CHECKED_IN,
     });
 
-    if (activeBookings.length > 0) {
+    const hasActiveBooking = checkedInBookings.some((b) => {
+      const roomMatches = b.roomNumbers?.includes(data.roomNumber);
+      if (!roomMatches) return false;
+      return (
+        new Date(b.checkinDate) < data.endDate &&
+        new Date(b.checkoutDate) > data.startDate
+      );
+    });
+
+    if (hasActiveBooking) {
       throw new ConflictException(
         INTERNAL_ERROR_MESSAGES.ROOM_HAS_ACTIVE_BOOKING,
       );
@@ -68,6 +85,8 @@ export class MarkRoomAsUnavailableUseCase
       roomNumber: data.roomNumber,
       status: data.status,
       reason: data.reason,
+      startDate: data.startDate,
+      endDate: data.endDate,
     });
 
     return id;

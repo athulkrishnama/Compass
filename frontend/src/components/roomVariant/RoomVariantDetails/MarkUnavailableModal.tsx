@@ -24,6 +24,8 @@ interface MarkUnavailableModalProps {
         roomNumber: string;
         status: RoomStatus;
         reason: string;
+        startDate: string;
+        endDate: string;
     }) => void;
 }
 
@@ -38,13 +40,23 @@ export default function MarkUnavailableModal({
     const [roomNumber, setRoomNumber] = useState("");
     const [status, setStatus] = useState<RoomStatus>(RoomStatus.MAINTENANCE);
     const [reason, setReason] = useState("");
+    const [startDate, setStartDate] = useState<string>("");
+    const [endDate, setEndDate] = useState<string>("");
     const isRoomExceeded = Number(roomNumber) > totalRoom;
 
     const handleSubmit = () => {
-        onSubmit({ roomNumber, status, reason });
+        onSubmit({
+            roomNumber,
+            status,
+            reason,
+            startDate,
+            endDate,
+        });
         setRoomNumber("");
         setStatus(RoomStatus.MAINTENANCE);
         setReason("");
+        setStartDate("");
+        setEndDate("");
     };
 
     return (
@@ -99,6 +111,34 @@ export default function MarkUnavailableModal({
                     </Select>
                 </div>
 
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <Label htmlFor="startDate">Start Date</Label>
+                        <Input
+                            id="startDate"
+                            type="date"
+                            value={startDate}
+                            min={new Date().toLocaleDateString("en-CA")}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="mt-1.5"
+                        />
+                    </div>
+                    <div>
+                        <Label htmlFor="endDate">End Date</Label>
+                        <Input
+                            id="endDate"
+                            type="date"
+                            value={endDate}
+                            min={
+                                startDate ||
+                                new Date().toLocaleDateString("en-CA")
+                            }
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="mt-1.5"
+                        />
+                    </div>
+                </div>
+
                 <div>
                     <Label htmlFor="reason">
                         {t(translationKey.text.reasonLabel)}
@@ -122,7 +162,13 @@ export default function MarkUnavailableModal({
                 </Button>
                 <Button
                     onClick={handleSubmit}
-                    disabled={!roomNumber || !reason || isRoomExceeded}
+                    disabled={
+                        !roomNumber ||
+                        !reason ||
+                        !startDate ||
+                        !endDate ||
+                        isRoomExceeded
+                    }
                 >
                     {t(translationKey.text.markUnavailable)}
                 </Button>

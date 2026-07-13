@@ -3,4 +3,5 @@ export interface ICreatePaymentIntentRequestDTO {
     checkInDate: Date;
     checkOutDate: Date;
     guests: number;
+    numberOfRooms: number;
 }

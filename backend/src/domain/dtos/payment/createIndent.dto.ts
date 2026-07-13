@@ -3,6 +3,7 @@ export interface ICreateIndentRequestDTO {
   checkInDate: Date;
   checkOutDate: Date;
   guests: number;
+  numberOfRooms: number;
   traverlerId: string;
 }
 

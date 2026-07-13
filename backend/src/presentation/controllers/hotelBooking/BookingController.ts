@@ -351,9 +351,13 @@ export class BookingController {
       }
 
       const { bookingId, hotelId } = paramsValidation.data;
-      const { roomNumber } = bodyValidation.data;
+      const { roomNumbers } = bodyValidation.data;
 
-      await this._checkInBookingUseCase.execute(bookingId, hotelId, roomNumber);
+      await this._checkInBookingUseCase.execute(
+        bookingId,
+        hotelId,
+        roomNumbers,
+      );
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,

@@ -10,14 +10,16 @@ interface BookingHeaderProps {
     bookingStatus: BookingStatus;
     createdAt: string;
     id: string;
-    roomNumber?: string;
+    roomNumbers?: number[];
+    numberOfRooms?: number;
     isWalkIn?: boolean;
 }
 
 export function BookingHeader({
     bookingStatus,
     createdAt,
-    roomNumber,
+    roomNumbers,
+    numberOfRooms,
     isWalkIn,
 }: BookingHeaderProps) {
     const { t } = useTranslation();
@@ -63,7 +65,8 @@ export function BookingHeader({
                         {getStatusBadge()}
 
                         {bookingStatus === BookingStatus.CHECKED_IN &&
-                            roomNumber && (
+                            roomNumbers &&
+                            roomNumbers.length > 0 && (
                                 <Badge
                                     variant="outline"
                                     className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 border-zinc-200 text-zinc-600 font-mono"
@@ -71,7 +74,20 @@ export function BookingHeader({
                                     {t(
                                         translationKey.bookingDetails.roomNumber
                                     )}
-                                    : {roomNumber}
+                                    : {roomNumbers.join(", ")}
+                                </Badge>
+                            )}
+
+                        {bookingStatus !== BookingStatus.CHECKED_IN &&
+                            bookingStatus !== BookingStatus.COMPLETED &&
+                            numberOfRooms && (
+                                <Badge
+                                    variant="outline"
+                                    className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 border-zinc-200 text-zinc-600 font-mono"
+                                >
+                                    {numberOfRooms}{" "}
+                                    {numberOfRooms > 1 ? "Rooms" : "Room"}{" "}
+                                    (Unassigned)
                                 </Badge>
                             )}
 

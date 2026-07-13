@@ -6,6 +6,8 @@ export interface RoomStatusEntity {
   roomNumber: number;
   status: RoomVariantStatus;
   reason: string;
+  startDate: Date;
+  endDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }

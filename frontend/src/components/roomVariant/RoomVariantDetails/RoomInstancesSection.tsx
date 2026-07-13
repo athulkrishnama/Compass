@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Plus, Wrench, Ban, Pencil } from "lucide-react";
+import { Plus } from "lucide-react";
 import translationKey from "@/utils/i18n/translationKey";
 import type {
     IUnAvailableRoom,
@@ -9,6 +9,7 @@ import type {
 } from "@/types/api/responses/roomVariantDetailResponse";
 import MarkUnavailableModal from "./MarkUnavailableModal";
 import EditUnavailableModal from "./EditUnavailableModal";
+import UnavailableRoomCard from "./UnavailableRoomCard";
 import { useMutation } from "@tanstack/react-query";
 import {
     createGetRoomVariantByIdQueryOptions,
@@ -24,24 +25,6 @@ interface RoomInstancesSectionProps {
     roomVariantId: string;
     roomVariant: IRoomVariantDetailResponse;
 }
-
-const STATUS_CONFIGS: Record<
-    string,
-    { icon: typeof Wrench; color: string; bgColor: string; label: string }
-> = {
-    MAINTENANCE: {
-        icon: Wrench,
-        color: "text-yellow-700",
-        bgColor: "bg-yellow-50 border-yellow-200",
-        label: "MAINTENANCE",
-    },
-    BLOCKED: {
-        icon: Ban,
-        color: "text-red-700",
-        bgColor: "bg-red-50 border-red-200",
-        label: "BLOCKED",
-    },
-};
 
 export default function RoomInstancesSection({
     roomVariant,
@@ -69,6 +52,8 @@ export default function RoomInstancesSection({
         roomNumber: string;
         status: RoomStatus;
         reason: string;
+        startDate: string;
+        endDate: string;
     }) => {
         markRoomAsUnavailableMutation(
             {
@@ -76,6 +61,8 @@ export default function RoomInstancesSection({
                 roomNumber: Number(data.roomNumber),
                 status: data.status,
                 reason: data.reason,
+                startDate: data.startDate,
+                endDate: data.endDate,
             },
             {
                 onSuccess: (res) => {
@@ -89,6 +76,8 @@ export default function RoomInstancesSection({
                                 roomNumber: Number(data.roomNumber),
                                 status: data.status,
                                 reason: data.reason,
+                                startDate: data.startDate,
+                                endDate: data.endDate,
                             });
                             return duplicate;
                         }
@@ -138,6 +127,8 @@ export default function RoomInstancesSection({
         id: string;
         status: RoomStatus;
         reason: string;
+        startDate: string;
+        endDate: string;
     }) => {
         updateRoomUnavailabilityMutation(data, {
             onSuccess: (res) => {
@@ -158,6 +149,8 @@ export default function RoomInstancesSection({
                                 ...duplicate.data.unAvailableRooms[roomIndex],
                                 status: data.status,
                                 reason: data.reason,
+                                startDate: data.startDate,
+                                endDate: data.endDate,
                             };
                         }
                         return duplicate;
@@ -239,51 +232,15 @@ export default function RoomInstancesSection({
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 hide-scroll-bar">
-                    {roomVariant.unAvailableRooms.map((room) => {
-                        const config =
-                            STATUS_CONFIGS[room.status] ||
-                            STATUS_CONFIGS.MAINTENANCE;
-                        return (
-                            <div
-                                key={room.roomNumber}
-                                className="bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-shadow"
-                            >
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-lg font-bold text-gray-900">
-                                            • #{roomVariant.roomPrefix}
-                                            {room.roomNumber}
-                                        </span>
-                                    </div>
-                                    <span className="px-3 py-1 rounded-md bg-gray-100 text-xs font-medium text-gray-700 uppercase">
-                                        {config.label}
-                                    </span>
-                                </div>
-
-                                <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                                    <p className="text-sm text-gray-600 leading-relaxed">
-                                        {room.reason}
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center justify-end gap-2">
-                                    <button
-                                        onClick={() => handleEdit(room)}
-                                        className="p-2 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
-                                        title="Edit"
-                                    >
-                                        <Pencil className="w-4 h-4" />
-                                    </button>
-                                    <button
-                                        onClick={() => handleRestore(room)}
-                                        className="px-6 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors"
-                                    >
-                                        {t(translationKey.text.restore)}
-                                    </button>
-                                </div>
-                            </div>
-                        );
-                    })}
+                    {roomVariant.unAvailableRooms.map((room) => (
+                        <UnavailableRoomCard
+                            key={room.roomNumber}
+                            room={room}
+                            roomPrefix={roomVariant.roomPrefix}
+                            onEdit={handleEdit}
+                            onRestore={handleRestore}
+                        />
+                    ))}
 
                     <button
                         onClick={() => setIsMarkUnavailableOpen(true)}

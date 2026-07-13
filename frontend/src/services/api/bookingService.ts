@@ -67,14 +67,14 @@ export async function getAvailableRooms(
 export async function checkInBooking(
     bookingId: string,
     hotelId: string,
-    roomNumber?: number
+    roomNumbers?: number[]
 ) {
     try {
         const url = BookingRoutes.CHECK_IN.replace(":hotelId", hotelId).replace(
             ":bookingId",
             bookingId
         );
-        const response = await axiosInstance.patch(url, { roomNumber });
+        const response = await axiosInstance.patch(url, { roomNumbers });
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {

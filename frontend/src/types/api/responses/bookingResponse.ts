@@ -53,7 +53,8 @@ export interface IBookingDetailsResponseDTO {
     refundAmount?: number;
     refundStatus?: string;
     cancelledAt?: string;
-    roomNumber?: string;
+    roomNumbers?: number[];
+    numberOfRooms?: number;
     isWalkIn: boolean;
 }
 
@@ -61,7 +62,8 @@ export interface IHotelBookingListingItem {
     id: string;
     guestName: string;
     roomVariantName: string;
-    roomNumber: string;
+    roomNumbers: number[];
+    numberOfRooms: number;
     checkInDate: string;
     checkOutDate: string;
     totalAmount: number;

@@ -17,13 +17,6 @@ import {
 } from "@/queryOptions/bookingQueryOptions";
 import Modal from "@/components/shared/modal/Modal";
 import { Button } from "@/components/ui/button";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import translationKeys from "@/utils/i18n/translationKey";
@@ -47,9 +40,7 @@ export default function CheckInModal({
 }: CheckInModalProps) {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
-    const [selectedRoom, setSelectedRoom] = useState<string | undefined>(
-        undefined
-    );
+    const [selectedRooms, setSelectedRooms] = useState<number[]>([]);
 
     const {
         data: roomsData,
@@ -75,11 +66,12 @@ export default function CheckInModal({
     });
 
     const handleCheckIn = () => {
-        const roomNumber = selectedRoom ? parseInt(selectedRoom) : undefined;
+        const roomNumbers =
+            selectedRooms.length > 0 ? selectedRooms : undefined;
         checkIn({
             hotelId,
             bookingId: booking.id,
-            roomNumber,
+            roomNumbers,
         });
     };
 
@@ -259,34 +251,48 @@ export default function CheckInModal({
                         </Alert>
                     ) : (
                         <div className="space-y-2">
-                            <Select
-                                value={selectedRoom}
-                                onValueChange={setSelectedRoom}
-                            >
-                                <SelectTrigger className="w-full text-left font-medium h-12">
-                                    <SelectValue
-                                        placeholder={t(
-                                            translationKeys.checkIn.selectRoom
-                                        )}
-                                    />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {availableRooms.map((room: number) => (
-                                        <SelectItem
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-sm font-medium">
+                                    {t(translationKeys.checkIn.selectRoom)} (
+                                    {selectedRooms.length}/
+                                    {booking.numberOfRooms || 1})
+                                </span>
+                            </div>
+                            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                                {availableRooms.map((room: number) => {
+                                    const isSelected =
+                                        selectedRooms.includes(room);
+                                    return (
+                                        <button
                                             key={room}
-                                            value={room.toString()}
-                                        >
-                                            {t(
-                                                translationKeys.checkIn
-                                                    .roomLabel,
-                                                {
-                                                    room,
+                                            onClick={() => {
+                                                if (isSelected) {
+                                                    setSelectedRooms(
+                                                        selectedRooms.filter(
+                                                            (r) => r !== room
+                                                        )
+                                                    );
+                                                } else if (
+                                                    selectedRooms.length <
+                                                    (booking.numberOfRooms || 1)
+                                                ) {
+                                                    setSelectedRooms([
+                                                        ...selectedRooms,
+                                                        room,
+                                                    ]);
                                                 }
-                                            )}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                                            }}
+                                            className={`h-10 rounded-md border text-sm font-medium transition-colors flex items-center justify-center ${
+                                                isSelected
+                                                    ? "bg-primary text-primary-foreground border-primary"
+                                                    : "bg-background hover:bg-accent hover:text-accent-foreground"
+                                            }`}
+                                        >
+                                            {room}
+                                        </button>
+                                    );
+                                })}
+                            </div>
                             <div className="flex gap-4 text-xs">
                                 <span className="text-green-600 font-medium">
                                     ● {availableRooms.length}{" "}
@@ -325,7 +331,12 @@ export default function CheckInModal({
                     </Button>
                     <Button
                         onClick={handleCheckIn}
-                        disabled={isCheckingIn || (!selectedRoom && !isWalkIn)}
+                        disabled={
+                            isCheckingIn ||
+                            (selectedRooms.length !==
+                                (booking.numberOfRooms || 1) &&
+                                !isWalkIn)
+                        }
                         className="min-w-[140px]"
                     >
                         {isCheckingIn ? (

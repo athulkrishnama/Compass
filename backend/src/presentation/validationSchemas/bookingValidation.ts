@@ -41,7 +41,7 @@ export const checkInParamsValidationSchema = z.object({
 });
 
 export const checkInBodyValidationSchema = z.object({
-  roomNumber: z.coerce.number().int().positive().optional(),
+  roomNumbers: z.array(z.number().int().positive()).optional(),
 });
 
 export const checkOutParamsValidationSchema = z.object({

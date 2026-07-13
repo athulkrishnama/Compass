@@ -153,6 +153,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       paymentIntendId: paymentIntentId,
       travelerId: traverlerId,
       roomVariantId: lock.roomVariantId,
+      numberOfRooms: lock.numberOfRooms ?? 1,
       totalAmount,
       paymentStatus: PAYMENT_STATUS.SUCCESS,
       isWalkIn: false,

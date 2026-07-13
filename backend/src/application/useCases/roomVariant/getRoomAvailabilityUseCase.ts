@@ -2,6 +2,7 @@ import { ResourceNotFoundException } from "@application/constants/Exceptions";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { IRoomLockRepo } from "@application/interfaces/repository/roomLock/roomLock.repo.interface";
 import { IRoomVariantRepo } from "@application/interfaces/repository/roomVariant/roomVariant.repo.interface";
+import { IRoomStatusRepo } from "@application/interfaces/repository/roomStatus/roomStatus.repo.interface";
 import { IGetRoomAvailabilityUseCase } from "@application/interfaces/useCase/roomVariant/getRoomAvailabilityUseCase.interface";
 import { IHotelPricingService } from "@application/interfaces/service/hotelPricingService";
 import {
@@ -20,6 +21,8 @@ export class GetRoomAvailabilityUseCase implements IGetRoomAvailabilityUseCase {
     private readonly _roomLockRepository: IRoomLockRepo,
     @inject("IHotelBookingRepo")
     private readonly _hotelBookingRepository: IHotelBookingRepo,
+    @inject("IRoomStatusRepo")
+    private readonly _roomStatusRepository: IRoomStatusRepo,
     @inject("IHotelPricingService")
     private readonly _pricingService: IHotelPricingService,
   ) {}
@@ -50,20 +53,38 @@ export class GetRoomAvailabilityUseCase implements IGetRoomAvailabilityUseCase {
       afterCheckOutDate: data.checkinDate,
     });
 
+    const roomStatusPromise =
+      this._roomStatusRepository.findByRoomVariantIdAndDateRange(
+        data.roomVariantId,
+        data.checkinDate,
+        data.checkoutDate,
+      );
+
     const pricingPromise = this._pricingService.calculateDynamicPrice({
       roomVariantId: data.roomVariantId,
       checkInDate: data.checkinDate,
       checkOutDate: data.checkoutDate,
     });
 
-    const [roomLockCount, hotelBookingCount, pricingDetails] =
-      await Promise.all([roomLockPromise, hotelBookingPromise, pricingPromise]);
+    const [roomLockCount, hotelBookingCount, roomStatuses, pricingDetails] =
+      await Promise.all([
+        roomLockPromise,
+        hotelBookingPromise,
+        roomStatusPromise,
+        pricingPromise,
+      ]);
+
+    const unavailableRoomCount = new Set(roomStatuses.map((s) => s.roomNumber))
+      .size;
 
     const availableRoomCount =
-      roomVariant.totalRooms - roomLockCount - hotelBookingCount;
+      roomVariant.totalRooms -
+      roomLockCount -
+      hotelBookingCount -
+      unavailableRoomCount;
 
     return {
-      available: availableRoomCount,
+      available: Math.max(availableRoomCount, 0),
       dynamicPrice: pricingDetails.totalPrice,
     };
   }

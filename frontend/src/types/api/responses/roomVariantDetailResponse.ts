@@ -9,6 +9,8 @@ export interface IUnAvailableRoom {
     roomNumber: number;
     status: RoomStatus;
     reason: string;
+    startDate: string;
+    endDate: string;
 }
 
 export interface IRoomVariantDetailResponse {

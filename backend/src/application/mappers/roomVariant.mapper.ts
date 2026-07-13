@@ -85,6 +85,8 @@ export class RoomVariantMapper {
           roomNumber: roomStatus.roomNumber,
           status: roomStatus.status,
           reason: roomStatus.reason,
+          startDate: roomStatus.startDate.toISOString(),
+          endDate: roomStatus.endDate.toISOString(),
         };
       }),
     };

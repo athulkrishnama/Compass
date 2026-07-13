@@ -116,8 +116,8 @@ export function createCheckInMutationOptions() {
         mutationFn: (data: {
             bookingId: string;
             hotelId: string;
-            roomNumber?: number;
-        }) => checkInBooking(data.bookingId, data.hotelId, data.roomNumber),
+            roomNumbers?: number[];
+        }) => checkInBooking(data.bookingId, data.hotelId, data.roomNumbers),
     };
 }
 

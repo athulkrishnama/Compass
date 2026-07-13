@@ -16,6 +16,7 @@ export const createIndentSchema = z.object({
     error: INTERNAL_ERROR_MESSAGES.INVALID_CHECKOUT_DATE,
   }),
   guests: z.coerce.number({ error: INTERNAL_ERROR_MESSAGES.INVALID_GUESTS }),
+  numberOfRooms: z.coerce.number().int().positive().default(1),
 });
 
 export const initiateCabPaymentSchema = z.object({

@@ -19,7 +19,6 @@ export interface IHotelBookingRepo extends IBaseRepository<HotelBookingEntity> {
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomNumber?: string;
     roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;
@@ -37,7 +36,6 @@ export interface IHotelBookingRepo extends IBaseRepository<HotelBookingEntity> {
     travelerId?: string;
     hotelId?: string;
     roomVariantId?: string;
-    roomNumber?: string;
     roomId?: string;
     checkinDate?: Date;
     checkoutDate?: Date;

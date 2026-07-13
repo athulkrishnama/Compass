@@ -354,7 +354,9 @@ export default function HotelBookingDetails() {
                                                             }
                                                         </td>
                                                         <td className="px-5 py-4 text-foreground font-medium text-center">
-                                                            {booking.roomNumber}
+                                                            {booking.roomNumbers?.join(
+                                                                ", "
+                                                            ) || "-"}
                                                         </td>
                                                         <td className="px-5 py-4 text-muted-foreground whitespace-nowrap">
                                                             {formatDate(

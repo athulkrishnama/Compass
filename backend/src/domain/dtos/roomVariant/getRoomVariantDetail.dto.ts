@@ -7,6 +7,8 @@ interface IUnAvailableRoom {
   roomNumber: number;
   status: RoomVariantStatus;
   reason: string;
+  startDate: string;
+  endDate: string;
 }
 
 export interface IRoomVariantDetailResponseDTO {

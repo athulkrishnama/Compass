@@ -6,4 +6,6 @@ export interface IMarkRoomAsUnavailableRequestDTO {
   roomNumber: number;
   reason: string;
   status: RoomVariantStatus;
+  startDate: Date;
+  endDate: Date;
 }

@@ -28,7 +28,7 @@ export class CheckInBookingUseCase implements ICheckInBookingUseCase {
   async execute(
     bookingId: string,
     hotelId: string,
-    roomNumber?: number,
+    roomNumbers?: number[],
   ): Promise<void> {
     const booking = await this._hotelBookingRepo.findById(bookingId);
 
@@ -69,31 +69,53 @@ export class CheckInBookingUseCase implements ICheckInBookingUseCase {
       );
     }
 
-    if (roomNumber !== undefined) {
-      const roomVariant = await this._roomVariantRepo.findById(
-        booking.roomVariantId,
-      );
+    if (roomNumbers !== undefined && roomNumbers.length > 0) {
+      const expectedCount = booking.numberOfRooms ?? 1;
 
-      if (
-        !roomVariant ||
-        roomNumber > roomVariant.totalRooms ||
-        roomNumber < 1
-      ) {
+      if (roomNumbers.length !== expectedCount) {
         throw new InvalidOperationException(
           INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
         );
       }
 
-      const roomStatus =
-        await this._roomStatusRepo.findByRoomVariantIdAndRoomNumber(
-          booking.roomVariantId,
-          roomNumber,
-        );
+      const roomVariant = await this._roomVariantRepo.findById(
+        booking.roomVariantId,
+      );
 
-      if (roomStatus) {
+      if (!roomVariant) {
         throw new InvalidOperationException(
           INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
         );
+      }
+
+      for (const roomNum of roomNumbers) {
+        if (roomNum > roomVariant.totalRooms || roomNum < 1) {
+          throw new InvalidOperationException(
+            INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
+          );
+        }
+      }
+
+      if (new Set(roomNumbers).size !== roomNumbers.length) {
+        throw new InvalidOperationException(
+          INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
+        );
+      }
+
+      const roomStatuses =
+        await this._roomStatusRepo.findByRoomVariantIdAndDateRange(
+          booking.roomVariantId,
+          booking.checkinDate,
+          booking.checkoutDate,
+        );
+      const statusRoomNumbers = new Set(roomStatuses.map((s) => s.roomNumber));
+
+      for (const roomNum of roomNumbers) {
+        if (statusRoomNumbers.has(roomNum)) {
+          throw new InvalidOperationException(
+            INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
+          );
+        }
       }
 
       const checkedInBookings = await this._hotelBookingRepo.filterBooking({
@@ -101,21 +123,26 @@ export class CheckInBookingUseCase implements ICheckInBookingUseCase {
         bookingStatus: BOOKING_STATUS.CHECKED_IN,
       });
 
-      const isOccupied = checkedInBookings.some(
-        (b) => Number(b.roomNumber) === roomNumber,
-      );
+      const occupiedRoomNumbers = new Set<number>();
+      for (const b of checkedInBookings) {
+        if (b.roomNumbers) {
+          b.roomNumbers.forEach((rn) => occupiedRoomNumbers.add(rn));
+        }
+      }
 
-      if (isOccupied) {
-        throw new InvalidOperationException(
-          INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
-        );
+      for (const roomNum of roomNumbers) {
+        if (occupiedRoomNumbers.has(roomNum)) {
+          throw new InvalidOperationException(
+            INTERNAL_ERROR_MESSAGES.ROOM_NOT_AVAILABLE_FOR_CHECKIN,
+          );
+        }
       }
 
       await this._hotelBookingRepo.update(
         {
           ...booking,
           bookingStatus: BOOKING_STATUS.CHECKED_IN,
-          roomNumber: String(roomNumber),
+          roomNumbers,
         },
         bookingId,
       );
@@ -131,22 +158,21 @@ export class CheckInBookingUseCase implements ICheckInBookingUseCase {
     }
 
     try {
-      if (roomNumber !== undefined) {
+      if (roomNumbers !== undefined && roomNumbers.length > 0) {
         await this._notificationService.notify(
           booking.travelerId,
           NOTIFICATION_TYPES.BOOKING_CHECKED_IN,
           "Check-In Successful",
-          `You have successfully checked in. Enjoy your stay! Room number: ${roomNumber}.`,
-          { bookingId, roomNumber: roomNumber, hotelId: booking.hotelId },
+          `You have successfully checked in. Enjoy your stay! Room number(s): ${roomNumbers.join(", ")}.`,
+          { bookingId, roomNumbers, hotelId: booking.hotelId },
         );
       } else {
-        // Walk-in notification
         await this._notificationService.notify(
           booking.travelerId,
           NOTIFICATION_TYPES.BOOKING_CHECKED_IN,
           "Walk-In Check-In Successful",
           "You have successfully checked in as a walk-in guest. The receptionist will give you details about your stay. Enjoy your stay!",
-          { bookingId, roomNumber: null, hotelId: booking.hotelId },
+          { bookingId, roomNumbers: null, hotelId: booking.hotelId },
         );
       }
     } catch (notifyErr) {

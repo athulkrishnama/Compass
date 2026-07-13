@@ -8,7 +8,8 @@ export interface IHotelBookingDocument extends Document {
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
-  roomNumber?: string;
+  numberOfRooms: number;
+  roomNumbers?: number[];
   checkinDate: Date;
   checkoutDate: Date;
   totalAmount: number;
@@ -27,7 +28,8 @@ export const hotelBookingSchema = new Schema<IHotelBookingDocument>({
   hotelId: { type: String, required: true },
   travelerId: { type: String, required: true },
   roomVariantId: { type: String, required: true },
-  roomNumber: { type: String },
+  numberOfRooms: { type: Number, required: true, default: 1 },
+  roomNumbers: { type: [Number] },
   checkinDate: { type: Date, required: true },
   checkoutDate: { type: Date, required: true },
   totalAmount: { type: Number, required: true },
