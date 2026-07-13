@@ -21,27 +21,31 @@ export class NotificationService implements INotificationService {
     message: string,
     data: Record<string, unknown>,
   ): Promise<void> {
-    const notification: NotificationEntity = {
-      _id: "",
+    const created_at = new Date();
+
+    const payload: Omit<NotificationEntity, "_id"> = {
       user_id: userId,
       type,
       title,
       message,
       data,
       is_read: false,
-      created_at: new Date(),
+      created_at,
     };
 
-    const notificationId = await this._notificationRepo.create(notification);
+    const notificationId = await this._notificationRepo.create(
+      payload as NotificationEntity,
+    );
 
     this._socketEmitter.emitToUser(userId, SocketEvents.NOTIFICATION_NEW, {
       _id: notificationId,
+      user_id: userId,
       type,
       title,
       message,
       data,
       is_read: false,
-      created_at: notification.created_at,
+      created_at,
     });
   }
 }

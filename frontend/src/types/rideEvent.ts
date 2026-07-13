@@ -7,6 +7,7 @@ export const RIDE_EVENT_NAMES = {
     STARTED: "STARTED",
     COMPLETED: "COMPLETED",
     CANCELLED: "CANCELLED",
+    TIMED_OUT: "TIMED_OUT",
 } as const;
 
 export type RideEventName =

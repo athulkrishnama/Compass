@@ -158,3 +158,28 @@ input[type=number] {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* ─── Mapbox popup overrides ─────────────────────────────────────────────── */
+
+.mapbox-minimal-popup .mapboxgl-popup-content {
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.mapbox-minimal-popup .mapboxgl-popup-tip {
+  display: none;
+}
+
+.mapbox-rich-popup .mapboxgl-popup-content {
+  padding: 0;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  background: transparent;
+}
+
+.mapbox-rich-popup .mapboxgl-popup-tip {
+  border-top-color: #fff !important;
+}

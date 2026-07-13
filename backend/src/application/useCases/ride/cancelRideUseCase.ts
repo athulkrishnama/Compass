@@ -18,6 +18,8 @@ import {
   InvalideDataException,
   ResourceNotFoundException,
 } from "@application/constants/Exceptions";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 const CANCELLABLE_STATUSES = [
   RIDE_STATUSES.SEARCHING,
@@ -33,6 +35,8 @@ export class CancelRideUseCase implements ICancelRideUseCase {
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
     @inject("IQueueService") private _queueService: IQueueService,
     @inject("ICabRepo") private _cabRepo: ICabRepo,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute({ ride_id, user_id }: ICancelRideRequestDTO): Promise<void> {
@@ -111,5 +115,68 @@ export class CancelRideUseCase implements ICancelRideUseCase {
         message: RIDER_EVENTS_TYPES.CANCELLED,
       },
     });
+
+    // Persist context-aware notifications
+    if (cancelledByRole === ROLES.TRAVELER) {
+      // Rider cancelled — notify rider confirmation + notify driver if assigned
+      try {
+        await this._notificationService.notify(
+          ride.rider_id,
+          NOTIFICATION_TYPES.RIDE_CANCELLED,
+          "Ride Cancelled",
+          "Your ride has been cancelled successfully.",
+          { ride_id },
+        );
+      } catch (err) {
+        console.error("[CancelRideUseCase] Rider notification failed:", err);
+      }
+
+      if (ride.driver_id) {
+        try {
+          await this._notificationService.notify(
+            ride.driver_id,
+            NOTIFICATION_TYPES.RIDE_CANCELLED,
+            "Ride Cancelled by Rider",
+            "The rider has cancelled the ride. You are now available for new rides.",
+            { ride_id },
+          );
+        } catch (err) {
+          console.error(
+            "[CancelRideUseCase] Driver notification (rider cancelled) failed:",
+            err,
+          );
+        }
+      }
+    } else {
+      // Driver cancelled — notify driver confirmation + notify rider
+      try {
+        await this._notificationService.notify(
+          ride.rider_id,
+          NOTIFICATION_TYPES.RIDE_CANCELLED,
+          "Ride Cancelled by Driver",
+          "Your driver has cancelled the ride. We are searching for another driver for you.",
+          { ride_id },
+        );
+      } catch (err) {
+        console.error("[CancelRideUseCase] Rider notification failed:", err);
+      }
+
+      if (ride.driver_id) {
+        try {
+          await this._notificationService.notify(
+            ride.driver_id,
+            NOTIFICATION_TYPES.RIDE_CANCELLED,
+            "Ride Cancelled",
+            "You have cancelled the ride.",
+            { ride_id },
+          );
+        } catch (err) {
+          console.error(
+            "[CancelRideUseCase] Driver notification (driver cancelled) failed:",
+            err,
+          );
+        }
+      }
+    }
   }
 }

@@ -180,4 +180,7 @@ export enum INTERNAL_ERROR_MESSAGES {
   BOOKING_MUST_BE_COMPLETED = "bookingMustBeCompleted",
   ALREADY_REVIEWED_BOOKING = "alreadyReviewedBooking",
   RIDE_ID_REQUIRED = "rideIdRequired",
+  INVALID_DASHBOARD_FILTER_TYPE = "invalidDashboardFilterType",
+  INVALID_YEAR = "invalidYear",
+  INVALID_MONTH = "invalidMonth",
 }

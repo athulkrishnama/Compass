@@ -21,6 +21,8 @@ export default defineConfig([
           endOfLine: "auto",
         },
       ],
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-empty-interface": "off",
     },
   },
 ]);

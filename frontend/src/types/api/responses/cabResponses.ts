@@ -15,3 +15,10 @@ interface Vehicle {
     registrationNumber: string;
     images: string[];
 }
+
+export interface INearbyDriver {
+    driverId: string;
+    vehicleType: VehicleType;
+    coordinates: { longitude: number; latitude: number };
+    heading?: number;
+}

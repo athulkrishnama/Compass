@@ -9,6 +9,7 @@ import { Coordinate } from "@domain/types/coordinate";
 import { VEHICLE_TYPES, VehicleType } from "@domain/types/vehicleType";
 import { RedisKeys } from "@domain/enums/cacheKeys";
 import { VALUES } from "@presentation/constants/values";
+import { INearbyDriverResponseDTO } from "@domain/dtos/cab/nearbyDrivers.dto";
 
 @injectable()
 export class CacheService implements ICacheService, IGeoService {
@@ -53,6 +54,7 @@ export class CacheService implements ICacheService, IGeoService {
     driverId: string,
     coordinates: Coordinate,
     vehicleType: VehicleType,
+    heading?: number,
   ): Promise<void> {
     const pipeline = this._redisClient.pipeline();
     pipeline.geoadd(
@@ -66,6 +68,13 @@ export class CacheService implements ICacheService, IGeoService {
       VALUES.DRIVER_LOCATION_EXPIRY,
       "true",
     );
+    if (heading !== undefined) {
+      pipeline.setex(
+        RedisKeys.DRIVER_HEADING(driverId),
+        VALUES.DRIVER_LOCATION_EXPIRY,
+        heading.toString(),
+      );
+    }
     await pipeline.exec();
   }
 
@@ -155,5 +164,80 @@ export class CacheService implements ICacheService, IGeoService {
         }
       } while (cursor !== 0);
     }
+  }
+
+  async getAllNearbyDrivers(
+    coordinates: Coordinate,
+    radius: number,
+    vehicleType?: VehicleType,
+  ): Promise<INearbyDriverResponseDTO[]> {
+    const typesToSearch = vehicleType
+      ? [vehicleType]
+      : Object.values(VEHICLE_TYPES);
+
+    const allDrivers: INearbyDriverResponseDTO[] = [];
+
+    for (const vType of typesToSearch) {
+      // Fetch drivers and their coordinates
+      const results = await this._redisClient.call(
+        "GEOSEARCH",
+        RedisKeys.DRIVER_LOCATION(vType),
+        "FROMLONLAT",
+        coordinates.longitude.toString(),
+        coordinates.latitude.toString(),
+        "BYRADIUS",
+        radius.toString(),
+        "km",
+        "ASC",
+        "WITHCOORD",
+      );
+
+      const candidates = (results as [string, [string, string]][]) || [];
+      if (candidates.length === 0) continue;
+
+      const pipeline = this._redisClient.pipeline();
+      for (const candidate of candidates) {
+        const driverId = candidate[0];
+        pipeline.exists(RedisKeys.DRIVER_AVAILABLE(driverId));
+        pipeline.get(RedisKeys.DRIVER_HEADING(driverId));
+      }
+
+      const pipelineResults = await pipeline.exec();
+      if (!pipelineResults) continue;
+
+      for (let i = 0; i < candidates.length; i++) {
+        const candidate = candidates[i];
+        const driverId = candidate[0];
+        const lon = parseFloat(candidate[1][0]);
+        const lat = parseFloat(candidate[1][1]);
+
+        // Each candidate has 2 pipeline results: exists (available) and get (heading)
+        const availableResult = pipelineResults[i * 2] as [
+          Error | null,
+          number,
+        ];
+        const headingResult = pipelineResults[i * 2 + 1] as [
+          Error | null,
+          string | null,
+        ];
+
+        const isAvailable = !availableResult[0] && availableResult[1] === 1;
+        const headingValue =
+          !headingResult[0] && headingResult[1]
+            ? parseFloat(headingResult[1])
+            : undefined;
+
+        if (isAvailable) {
+          allDrivers.push({
+            driverId,
+            vehicleType: vType,
+            coordinates: { longitude: lon, latitude: lat },
+            heading: headingValue,
+          });
+        }
+      }
+    }
+
+    return allDrivers;
   }
 }

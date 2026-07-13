@@ -92,7 +92,10 @@ function DestinationDetail() {
                     images={destination.images}
                     name={destination.name}
                 />
-                <DestinationMapSection coordinates={destination.coordinates} />
+                <DestinationMapSection
+                    coordinates={destination.coordinates}
+                    name={destination.name}
+                />
             </main>
         </div>
     );

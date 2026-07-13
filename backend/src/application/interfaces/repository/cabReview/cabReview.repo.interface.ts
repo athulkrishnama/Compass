@@ -22,4 +22,7 @@ export interface ICabReviewRepo extends IBaseRepository<CabReviewEntity> {
     page: number,
     limit: number,
   ): Promise<{ reviews: CabReviewEntity[]; total: number }>;
+  getRatingDistribution(
+    driverId: string,
+  ): Promise<{ name: string; value: number }[]>;
 }

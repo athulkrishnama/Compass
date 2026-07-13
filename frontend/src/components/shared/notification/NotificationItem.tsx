@@ -19,20 +19,20 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
             }
             className={cn(
                 "p-4 border-b border-gray-100 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors",
-                !notification.is_read && "bg-blue-50/50"
+                !notification.is_read && "bg-gray-100/50"
             )}
         >
             <div className="flex justify-between items-start mb-1">
                 <h4
                     className={cn(
                         "text-sm font-semibold",
-                        notification.is_read ? "text-gray-700" : "text-gray-900"
+                        notification.is_read ? "text-gray-600" : "text-black"
                     )}
                 >
                     {notification.title}
                 </h4>
                 {!notification.is_read && (
-                    <span className="w-2 h-2 bg-blue-600 rounded-full" />
+                    <span className="w-2 h-2 bg-black rounded-full" />
                 )}
             </div>
             <p className="text-xs text-gray-600 mb-2 leading-relaxed">

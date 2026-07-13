@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { recordCashPayment } from "@/services/api/paymentService";
-import { Loader2 } from "lucide-react";
+import { getWalletSummary } from "@/services/api/walletService";
+import { Loader2, Wallet } from "lucide-react";
 
 interface ActiveTripRecordCashModalProps {
     isOpen: boolean;
@@ -16,6 +17,18 @@ export const ActiveTripRecordCashModal: React.FC<
     ActiveTripRecordCashModalProps
 > = ({ isOpen, tripId, expectedAmount, onSuccess }) => {
     const [amount, setAmount] = useState<string>(expectedAmount.toString());
+
+    const { data: walletSummary, isLoading: isWalletLoading } = useQuery({
+        queryKey: ["walletSummary"],
+        queryFn: getWalletSummary,
+        enabled: isOpen,
+    });
+
+    useEffect(() => {
+        if (isOpen) {
+            setAmount(expectedAmount.toString());
+        }
+    }, [isOpen, expectedAmount]);
 
     const { mutate, isPending } = useMutation({
         mutationFn: () => recordCashPayment(tripId, Number(amount)),
@@ -38,6 +51,23 @@ export const ActiveTripRecordCashModal: React.FC<
             });
             return;
         }
+
+        const excessAmount = numAmount - expectedAmount;
+        if (excessAmount > 0) {
+            if (!walletSummary) {
+                toast.error("Wallet Data Missing", {
+                    description: "Please wait for wallet balance to load.",
+                });
+                return;
+            }
+            if (excessAmount > walletSummary.balance) {
+                toast.error("Insufficient Wallet Balance", {
+                    description: `You only have ₹${walletSummary.balance} in your wallet to cover the excess cash.`,
+                });
+                return;
+            }
+        }
+
         mutate();
     };
 
@@ -59,6 +89,24 @@ export const ActiveTripRecordCashModal: React.FC<
                             fare and enter the amount received.
                         </p>
 
+                        <div className="flex items-center gap-2 mb-6 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                            <div className="p-2 bg-white rounded-lg shadow-sm">
+                                <Wallet className="w-5 h-5 text-gray-900" />
+                            </div>
+                            <div>
+                                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                    Your Wallet Balance
+                                </p>
+                                <p className="text-lg font-black text-gray-900">
+                                    {isWalletLoading ? (
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                        `₹${walletSummary?.balance ?? 0}`
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+
                         <div className="mb-6">
                             <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
                                 Amount Received (Expected: ₹{expectedAmount})
@@ -73,10 +121,10 @@ export const ActiveTripRecordCashModal: React.FC<
 
                         <button
                             onClick={handleConfirm}
-                            disabled={isPending}
+                            disabled={isPending || isWalletLoading}
                             className="w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm text-white bg-gray-900 hover:bg-gray-800 disabled:bg-gray-200 disabled:text-gray-400 active:scale-95 transition-all flex justify-center items-center gap-2"
                         >
-                            {isPending ? (
+                            {isPending || isWalletLoading ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />
                             ) : (
                                 "Confirm Payment"

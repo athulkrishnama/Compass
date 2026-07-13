@@ -45,14 +45,14 @@ export const NotificationBell: React.FC = () => {
                         className={cn(
                             "w-6 h-6 transition-colors",
                             unreadCount > 0
-                                ? "text-blue-600 fill-blue-50"
-                                : "text-gray-600 group-hover:text-gray-900"
+                                ? "text-black fill-gray-100"
+                                : "text-gray-600 group-hover:text-black"
                         )}
                     />
                     {unreadCount > 0 && (
                         <span className="absolute top-1.5 right-1.5 flex h-4 w-4">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-4 w-4 bg-blue-600 text-[10px] text-white font-bold items-center justify-center">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-4 w-4 bg-black text-[10px] text-white font-bold items-center justify-center">
                                 {unreadCount > 9 ? "9+" : unreadCount}
                             </span>
                         </span>

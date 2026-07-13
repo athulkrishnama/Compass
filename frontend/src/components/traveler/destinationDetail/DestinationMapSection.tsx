@@ -1,37 +1,70 @@
+import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { MapPin, ExternalLink } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { Button } from "@/components/ui/button";
-import { env } from "@/config/env";
-import translationKey from "@/utils/i18n/translationKey";
+import { useQuery } from "@tanstack/react-query";
+import MapboxMap, { type MapboxMarker } from "@/components/shared/MapboxMap";
+import { createSearchNearbyHotelsQueryOptions } from "@/queryOptions/hotelQueryOptions";
+import type { IHotelWithRoomVariantDetails } from "@/types/api/responses/hotelSearchResponse";
+import MapSectionHeader from "./MapSectionHeader";
+import MapOverlay from "./MapOverlay";
+import HotelChipList from "./HotelChipList";
+import {
+    HOTEL_SPREAD_RADIUS,
+    buildDestinationMarkerHTML,
+    buildHotelMarkerHTML,
+    buildHotelPopupHTML,
+} from "./mapMarkerBuilders";
 
 interface DestinationMapSectionProps {
-    coordinates: [number, number];
+    coordinates: [number, number]; // [lat, lng]
+    name: string;
 }
 
-function DestinationMapSection({ coordinates }: DestinationMapSectionProps) {
-    const { t } = useTranslation();
+function DestinationMapSection({
+    coordinates,
+    name,
+}: DestinationMapSectionProps) {
     const [lat, lng] = coordinates;
 
-    const formatCoordinate = (value: number, isLatitude: boolean) => {
-        const direction = isLatitude
-            ? value >= 0
-                ? "N"
-                : "S"
-            : value >= 0
-              ? "E"
-              : "W";
-        return `${Math.abs(value).toFixed(4)}° ${direction}`;
-    };
+    const { data: hotelsData } = useQuery(
+        createSearchNearbyHotelsQueryOptions([lng, lat], 15)
+    );
+    const hotels: IHotelWithRoomVariantDetails[] = useMemo(
+        () => hotelsData?.data?.hotels ?? [],
+        [hotelsData]
+    );
 
-    const openInMaps = () => {
-        window.open(
-            `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
-            "_blank"
-        );
-    };
+    const destinationMarker: MapboxMarker = useMemo(
+        () => ({
+            id: "destination",
+            lat,
+            lng,
+            label: name,
+            customElementHTML: buildDestinationMarkerHTML(name),
+        }),
+        [lat, lng, name]
+    );
 
-    const mapboxStaticUrl = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/static/pin-l+000(${lng},${lat})/${lng},${lat},12,0/800x400@2x?access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`;
+    const hotelMarkers: MapboxMarker[] = useMemo(() => {
+        const count = hotels.length;
+        return hotels.map((hotel, index) => {
+            const angle =
+                count === 1 ? Math.PI / 2 : (index * 2 * Math.PI) / count;
+            return {
+                id: `hotel-${hotel.id}`,
+                lat: lat + HOTEL_SPREAD_RADIUS * Math.sin(angle),
+                lng: lng + HOTEL_SPREAD_RADIUS * Math.cos(angle),
+                label: hotel.name,
+                skipBounds: true,
+                customElementHTML: buildHotelMarkerHTML(hotel),
+                popupHTML: buildHotelPopupHTML(hotel),
+            };
+        });
+    }, [hotels, lat, lng]);
+
+    const allMarkers: MapboxMarker[] = useMemo(
+        () => [destinationMarker, ...hotelMarkers],
+        [destinationMarker, hotelMarkers]
+    );
 
     return (
         <motion.section
@@ -40,33 +73,25 @@ function DestinationMapSection({ coordinates }: DestinationMapSectionProps) {
             transition={{ delay: 0.9 }}
             className="mt-12"
         >
-            <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
-                <img
-                    src={mapboxStaticUrl}
-                    alt="Destination location map"
-                    className="w-full h-full object-cover"
+            <MapSectionHeader hotelCount={hotels.length} />
+
+            <div className="relative h-[340px] md:h-[440px] rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200">
+                <MapboxMap
+                    markers={allMarkers}
+                    initialCenter={[lng, lat]}
+                    initialZoom={13}
+                    className="h-full"
+                    fitBoundsPadding={{
+                        top: 100,
+                        bottom: 80,
+                        left: 80,
+                        right: 80,
+                    }}
                 />
-
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                    <div className="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2.5 shadow-lg">
-                        <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-gray-700" />
-                            <span className="font-mono text-sm text-gray-700">
-                                {formatCoordinate(lat, true)},{" "}
-                                {formatCoordinate(lng, false)}
-                            </span>
-                        </div>
-                    </div>
-
-                    <Button
-                        onClick={openInMaps}
-                        className="bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-lg"
-                    >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        {t(translationKey.destinationDetail.openInMaps)}
-                    </Button>
-                </div>
+                <MapOverlay lat={lat} lng={lng} />
             </div>
+
+            <HotelChipList hotels={hotels} />
         </motion.section>
     );
 }

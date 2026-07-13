@@ -14,4 +14,30 @@ export interface IRideRepo extends IBaseRepository<RideEntity> {
     limit: number,
   ): Promise<{ trips: RideEntity[]; total: number }>;
   fetchRiderActiveRide(rider_id: string): Promise<RideEntity | null>;
+
+  getDriverDashboardStats(
+    driverId: string,
+    filter: {
+      type: "weekly" | "monthly" | "yearly";
+      year?: number;
+      month?: number;
+    },
+  ): Promise<{
+    todayEarnings: number;
+    todayTrips: number;
+    totalEarnings: number;
+    totalDistance: number;
+    earningsTrends: { name: string; earnings: number; trips: number }[];
+    tripStatusDistribution: { name: string; value: number }[];
+  }>;
+
+  getAdminRideTrends(filter: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+    month?: number;
+  }): Promise<{ name: string; earnings: number; trips: number }[]>;
+
+  getCabTypeDistribution(): Promise<{ name: string; value: number }[]>;
+
+  getRideStatusDistribution(): Promise<{ name: string; value: number }[]>;
 }

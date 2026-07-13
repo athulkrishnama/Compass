@@ -11,6 +11,7 @@ export class UpdateLocationUseCase implements IUpdateLocationUseCase {
       dto.user_id,
       dto.coordinates,
       dto.vehicle_type,
+      dto.heading,
     );
   }
 }

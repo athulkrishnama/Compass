@@ -108,4 +108,16 @@ export interface IHotelBookingRepo extends IBaseRepository<HotelBookingEntity> {
     limit: number,
   ): Promise<{ name: string; bookings: number }[]>;
   getBookingStatusDistribution(): Promise<{ name: string; value: number }[]>;
+  getOverallDashboardCharts(
+    hotelIds: string[],
+    filter: {
+      type: "weekly" | "monthly" | "yearly";
+      year?: number;
+      month?: number;
+    },
+  ): Promise<{
+    revenueTrends: { name: string; revenue: number; bookings: number }[];
+    bookingStatusDistribution: { name: string; value: number }[];
+    topHotelsByBookings: { name: string; bookings: number }[];
+  }>;
 }

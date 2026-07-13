@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { BookingStatus } from "@/enums/bookingStatus";
 import { isPast, parseISO } from "date-fns";
-import { Trash2, Copy, IndianRupee } from "lucide-react";
+import { Trash2, Copy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { useState } from "react";
@@ -178,10 +178,10 @@ export function PaymentFooter({
                                 {t(translationKey.bookingDetails.cancelBooking)}
                             </button>
                         )}
-                        <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-black/90 shadow-md hover:shadow-lg transition-all duration-300 active:scale-95">
+                        {/* <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-black/90 shadow-md hover:shadow-lg transition-all duration-300 active:scale-95">
                             <IndianRupee className="w-4 h-4" />
                             {t(translationKey.bookingDetails.printReceipt)}
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </motion.div>

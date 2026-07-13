@@ -1,19 +1,23 @@
 import { axiosInstance } from "@/axios/instance";
 import { NOTIFICATION_API_ROUTES } from "../../constants/routes/notificationRoutes";
+import { type Notification } from "../../store/slices/notificationSlice";
 
 export const notificationApiService = {
-    getNotifications: async (page: number = 1, limit: number = 20) => {
+    getNotifications: async (
+        page: number = 1,
+        limit: number = 20
+    ): Promise<Notification[]> => {
         const response = await axiosInstance.get(
             `${NOTIFICATION_API_ROUTES.BASE}?page=${page}&limit=${limit}`
         );
-        return response.data;
+        return response.data.data ?? [];
     },
 
-    getUnreadCount: async () => {
+    getUnreadCount: async (): Promise<{ count: number }> => {
         const response = await axiosInstance.get(
             NOTIFICATION_API_ROUTES.UNREAD_COUNT
         );
-        return response.data;
+        return response.data.data ?? { count: 0 };
     },
 
     markAsRead: async (notificationId: string) => {

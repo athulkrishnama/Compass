@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLoaderData, useParams } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
-import MapboxMap from "@/components/shared/MapboxMap";
+import MapboxMap, { type MapboxMarker } from "@/components/shared/MapboxMap";
 import RideHeader from "@/components/traveler/cab/ride/RideHeader";
 import RideLocations from "@/components/traveler/cab/ride/RideLocations";
 import TripStats from "@/components/traveler/cab/ride/TripStats";
@@ -33,6 +33,10 @@ import ReviewFormModal from "@/components/shared/review/ReviewFormModal";
 import { createCabReview } from "@/services/api/reviewApiService";
 import { useNavigate } from "@tanstack/react-router";
 import type { IRideDetailsResponseDTO } from "@/types/api/responses/rideResponses";
+import { RIDE_EVENT_NAMES } from "@/types/rideEvent";
+import RideTimeoutRetry from "@/components/traveler/cab/ride/RideTimeoutRetry";
+import { getNearbyDrivers } from "@/services/api/cabApiService";
+import type { INearbyDriver } from "@/types/api/responses/cabResponses";
 
 const CANCELLABLE_STATUSES: RideStatus[] = [
     RIDE_STATUSES.SEARCHING,
@@ -55,6 +59,7 @@ const RideDetails = () => {
     } | null>(null);
     const [isDriverStale, setIsDriverStale] = useState(false);
     const staleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [nearbyDrivers, setNearbyDrivers] = useState<INearbyDriver[]>([]);
 
     const { data: rideQueryData } = useQuery({
         ...getRideDetailsQueryOptions(id),
@@ -150,6 +155,36 @@ const RideDetails = () => {
         };
     }, []);
 
+    // Poll nearby drivers if we are currently searching for a cab
+    useEffect(() => {
+        if (ride?.status !== RIDE_STATUSES.SEARCHING) {
+            setNearbyDrivers([]);
+            return;
+        }
+
+        const fetchNearby = async () => {
+            try {
+                const response = await getNearbyDrivers(
+                    ride.pickup_point.latitude,
+                    ride.pickup_point.longitude
+                );
+                if (response?.data) {
+                    setNearbyDrivers(response.data);
+                }
+            } catch {
+                // Ignore silent errors for polling
+            }
+        };
+
+        fetchNearby();
+        const interval = setInterval(fetchNearby, 3000);
+        return () => clearInterval(interval);
+    }, [
+        ride?.status,
+        ride?.pickup_point.latitude,
+        ride?.pickup_point.longitude,
+    ]);
+
     useSocketEvent<{ latitude: number; longitude: number }>(
         SocketEvents.DRIVER_LOCATION_BROADCAST,
         (data) => {
@@ -171,9 +206,6 @@ const RideDetails = () => {
         (data) => {
             if (data.type === RIDER_EVENTS_TYPES.COMPLETED) {
                 dispatch(updateRideStatus(RIDE_STATUSES.COMPLETED));
-                toast.success("Ride completed!", {
-                    description: "Please proceed to payment.",
-                });
                 setIsPaymentOpen(true);
             } else if (data.type === RIDER_EVENTS_TYPES.PAYMENT_SUCCESS) {
                 setIsPaymentOpen(false);
@@ -233,7 +265,7 @@ const RideDetails = () => {
         );
     }
 
-    const markers = [
+    const markers: MapboxMarker[] = [
         {
             id: "pickup",
             lat: ride.pickup_point.latitude,
@@ -266,6 +298,19 @@ const RideDetails = () => {
             lng: driverCoordinate.lng,
             label: isDriverStale ? "Cab (Updating...)" : "Cab",
             color: isDriverStale ? "#9ca3af" : "#3b82f6",
+        });
+    } else if (ride.status === RIDE_STATUSES.SEARCHING) {
+        // Show all nearby drivers while waiting to be matched
+        nearbyDrivers.forEach((driver) => {
+            markers.push({
+                id: `cab-${driver.driverId}`,
+                lat: driver.coordinates.latitude,
+                lng: driver.coordinates.longitude,
+                vehicleType: driver.vehicleType,
+                rotation: driver.heading ?? 0,
+                label: driver.vehicleType,
+                skipBounds: true,
+            });
         });
     }
 
@@ -313,6 +358,12 @@ const RideDetails = () => {
                                 {isCancelling ? "Cancelling…" : "Cancel Ride"}
                             </button>
                         )}
+
+                        {ride.status === RIDE_STATUSES.CANCELLED &&
+                            ride.events?.some(
+                                (e) =>
+                                    e.event_name === RIDE_EVENT_NAMES.TIMED_OUT
+                            ) && <RideTimeoutRetry ride={ride} />}
 
                         {ride.status === RIDE_STATUSES.COMPLETED &&
                             (!ride.paymentStatus ||

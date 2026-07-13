@@ -763,79 +763,104 @@ export class HotelBookingRepo
   async getBookingTrends(filter: {
     type: "weekly" | "monthly" | "yearly";
     year?: number;
+    month?: number;
   }): Promise<{ name: string; bookings: number; revenue: number }[]> {
     const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const year = filter.year || now.getFullYear();
-    let groupBy: Record<string, unknown>;
-    const match: RootFilterQuery<IHotelBookingDocument> = {
+
+    const trendsMatch: RootFilterQuery<IHotelBookingDocument> = {
       bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
     };
 
+    let groupBy: Record<string, unknown> = {};
     if (filter.type === "weekly") {
-      const startOfWeek = new Date();
-      startOfWeek.setDate(now.getDate() - 6);
-      startOfWeek.setHours(0, 0, 0, 0);
-      match.createdAt = { $gte: startOfWeek };
-      groupBy = { $dayOfWeek: "$createdAt" };
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - 6);
+      trendsMatch.createdAt = { $gte: startOfWeek };
+      groupBy = {
+        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+      };
     } else if (filter.type === "monthly") {
-      const startOfYear = new Date(year, 0, 1);
-      const endOfYear = new Date(year, 11, 31);
-      match.createdAt = { $gte: startOfYear, $lte: endOfYear };
-      groupBy = { $month: "$createdAt" };
+      const targetMonth = filter.month ? filter.month - 1 : today.getMonth();
+      const startOfMonth = new Date(year, targetMonth, 1);
+      const startOfNextMonth = new Date(year, targetMonth + 1, 1);
+      trendsMatch.createdAt = {
+        $gte: startOfMonth,
+        $lt: startOfNextMonth,
+      };
+      groupBy = { $dayOfMonth: "$createdAt" };
     } else {
       const startYear = year - 4;
       const startDate = new Date(startYear, 0, 1);
-      match.createdAt = { $gte: startDate };
+      trendsMatch.createdAt = { $gte: startDate };
       groupBy = { $year: "$createdAt" };
     }
 
-    const result = await this._model.aggregate<{
-      _id: number;
-      bookings: number;
-      revenue: number;
-    }>([
-      { $match: match },
+    const trendsAgg = await this._model.aggregate([
+      { $match: trendsMatch },
       {
         $group: {
           _id: groupBy,
-          bookings: { $sum: 1 },
           revenue: { $sum: "$totalAmount" },
+          bookings: { $sum: 1 },
         },
       },
       { $sort: { _id: 1 } },
     ]);
 
-    return result.map((item) => {
-      let name = "";
-      if (filter.type === "weekly") {
-        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        name = days[item._id - 1];
-      } else if (filter.type === "monthly") {
-        const months = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ];
-        name = months[item._id - 1];
-      } else {
-        name = item._id.toString();
-      }
+    let bookingTrends: { name: string; revenue: number; bookings: number }[] =
+      [];
 
-      return {
-        name,
-        bookings: item.bookings,
-        revenue: item.revenue,
-      };
-    });
+    if (filter.type === "weekly") {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const last7Days = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(today);
+        d.setDate(d.getDate() - (6 - i));
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return {
+          dateStr: `${y}-${m}-${day}`,
+          name: days[d.getDay()],
+        };
+      });
+
+      bookingTrends = last7Days.map((d) => {
+        const found = trendsAgg.find((t) => t._id === d.dateStr);
+        return {
+          name: d.name,
+          revenue: found ? found.revenue : 0,
+          bookings: found ? found.bookings : 0,
+        };
+      });
+    } else if (filter.type === "monthly") {
+      const targetMonth = filter.month ? filter.month - 1 : today.getMonth();
+      const daysInMonth = new Date(year, targetMonth + 1, 0).getDate();
+      const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+      bookingTrends = days.map((day) => {
+        const found = trendsAgg.find((t) => t._id === day);
+        return {
+          name: day.toString(),
+          revenue: found ? found.revenue : 0,
+          bookings: found ? found.bookings : 0,
+        };
+      });
+    } else {
+      const currentYear = new Date().getFullYear();
+      const years = Array.from({ length: 5 }, (_, i) => currentYear - 4 + i);
+      bookingTrends = years.map((yr) => {
+        const found = trendsAgg.find((t) => t._id === yr);
+        return {
+          name: yr.toString(),
+          revenue: found ? found.revenue : 0,
+          bookings: found ? found.bookings : 0,
+        };
+      });
+    }
+
+    return bookingTrends;
   }
 
   async getTopBookedHotels(
@@ -897,5 +922,172 @@ export class HotelBookingRepo
       },
     ]);
     return result;
+  }
+  async getOverallDashboardCharts(
+    hotelIds: string[],
+    filter: {
+      type: "weekly" | "monthly" | "yearly";
+      year?: number;
+      month?: number;
+    },
+  ): Promise<{
+    revenueTrends: { name: string; revenue: number; bookings: number }[];
+    bookingStatusDistribution: { name: string; value: number }[];
+    topHotelsByBookings: { name: string; bookings: number }[];
+  }> {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const year = filter.year || now.getFullYear();
+
+    const trendsMatch: RootFilterQuery<HotelBookingEntity> = {
+      hotelId: { $in: hotelIds },
+      bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
+    };
+
+    let groupBy: Record<string, unknown> = {};
+    if (filter.type === "weekly") {
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - 6);
+      trendsMatch.createdAt = { $gte: startOfWeek };
+      groupBy = {
+        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+      };
+    } else if (filter.type === "monthly") {
+      const targetMonth = filter.month ? filter.month - 1 : today.getMonth();
+      const startOfMonth = new Date(year, targetMonth, 1);
+      const startOfNextMonth = new Date(year, targetMonth + 1, 1);
+      trendsMatch.createdAt = {
+        $gte: startOfMonth,
+        $lt: startOfNextMonth,
+      };
+      groupBy = { $dayOfMonth: "$createdAt" };
+    } else {
+      const startYear = year - 4;
+      const startDate = new Date(startYear, 0, 1);
+      trendsMatch.createdAt = { $gte: startDate };
+      groupBy = { $year: "$createdAt" };
+    }
+
+    const trendsAgg = await this._model.aggregate([
+      { $match: trendsMatch },
+      {
+        $group: {
+          _id: groupBy,
+          revenue: { $sum: "$totalAmount" },
+          bookings: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    let revenueTrends: { name: string; revenue: number; bookings: number }[] =
+      [];
+
+    if (filter.type === "weekly") {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const last7Days = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(today);
+        d.setDate(d.getDate() - (6 - i));
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return {
+          dateStr: `${year}-${month}-${day}`,
+          name: days[d.getDay()],
+        };
+      });
+
+      revenueTrends = last7Days.map((d) => {
+        const found = trendsAgg.find((t) => t._id === d.dateStr);
+        return {
+          name: d.name,
+          revenue: found ? found.revenue : 0,
+          bookings: found ? found.bookings : 0,
+        };
+      });
+    } else if (filter.type === "monthly") {
+      const targetMonth = filter.month ? filter.month - 1 : today.getMonth();
+      const daysInMonth = new Date(year, targetMonth + 1, 0).getDate();
+      const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+      revenueTrends = days.map((day) => {
+        const found = trendsAgg.find((t) => t._id === day);
+        return {
+          name: day.toString(),
+          revenue: found ? found.revenue : 0,
+          bookings: found ? found.bookings : 0,
+        };
+      });
+    } else {
+      const currentYear = new Date().getFullYear();
+      const years = Array.from({ length: 5 }, (_, i) => currentYear - 4 + i);
+      revenueTrends = years.map((yr) => {
+        const found = trendsAgg.find((t) => t._id === yr);
+        return {
+          name: yr.toString(),
+          revenue: found ? found.revenue : 0,
+          bookings: found ? found.bookings : 0,
+        };
+      });
+    }
+
+    const statusAgg = await this._model.aggregate([
+      { $match: { hotelId: { $in: hotelIds } } },
+      {
+        $group: {
+          _id: "$bookingStatus",
+          value: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const bookingStatusDistribution = statusAgg.map((item) => ({
+      name: item._id,
+      value: item.value,
+    }));
+
+    const topHotelsAgg = await this._model.aggregate([
+      {
+        $match: {
+          hotelId: { $in: hotelIds },
+          bookingStatus: { $ne: BOOKING_STATUS.CANCELLED },
+        },
+      },
+      {
+        $group: {
+          _id: "$hotelId",
+          bookings: { $sum: 1 },
+        },
+      },
+      { $sort: { bookings: -1 } },
+      { $limit: 5 },
+      {
+        $addFields: {
+          hotelObjectId: { $toObjectId: "$_id" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      { $unwind: "$hotel" },
+      {
+        $project: {
+          name: "$hotel.name",
+          bookings: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    return {
+      revenueTrends,
+      bookingStatusDistribution,
+      topHotelsByBookings: topHotelsAgg,
+    };
   }
 }

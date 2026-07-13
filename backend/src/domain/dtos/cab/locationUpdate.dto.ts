@@ -5,4 +5,5 @@ export interface ILocationUpdateRequestDTO {
   user_id: string;
   coordinates: Coordinate;
   vehicle_type: VehicleType;
+  heading?: number;
 }

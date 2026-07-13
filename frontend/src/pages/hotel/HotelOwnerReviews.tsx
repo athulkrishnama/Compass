@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { getHotelReviewsQueryOptions } from "@/queryOptions/reviewQueryOptions";
 import { createGetHotelsByUserIdQueryOptions } from "@/queryOptions/hotelQueryOptions";
 import ReviewCard from "@/components/shared/review/ReviewCard";
 import { Loader2 } from "lucide-react";
+import translationKey from "@/utils/i18n/translationKey";
 
 const HotelOwnerReviews = () => {
+    const { t } = useTranslation();
     const [page, setPage] = useState(1);
     const [selectedHotelId, setSelectedHotelId] = useState<string>("");
     const limit = 10;
@@ -14,7 +17,7 @@ const HotelOwnerReviews = () => {
         createGetHotelsByUserIdQueryOptions()
     );
 
-    const hotels = hotelsData?.data?.hotels || [];
+    const hotels = useMemo(() => hotelsData?.data?.hotels || [], [hotelsData]);
 
     useEffect(() => {
         if (hotels.length > 0 && !selectedHotelId) {
@@ -40,15 +43,15 @@ const HotelOwnerReviews = () => {
             <div className="p-8 max-w-5xl mx-auto w-full">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        Hotel Reviews
+                        {t(translationKey.hotelOwnerReviews.title)}
                     </h1>
                 </div>
                 <div className="text-center py-20 bg-gray-50 rounded-2xl border border-gray-100">
                     <h3 className="text-lg font-medium text-gray-900 mb-1">
-                        No Hotels Yet
+                        {t(translationKey.hotelOwnerReviews.noHotelsYet)}
                     </h3>
                     <p className="text-gray-500">
-                        You need to add a hotel before you can receive reviews.
+                        {t(translationKey.hotelOwnerReviews.addHotelFirst)}
                     </p>
                 </div>
             </div>
@@ -64,17 +67,17 @@ const HotelOwnerReviews = () => {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        Hotel Reviews
+                        {t(translationKey.hotelOwnerReviews.title)}
                     </h1>
                     <p className="text-gray-500">
-                        See what guests are saying about your properties
+                        {t(translationKey.hotelOwnerReviews.subtitle)}
                     </p>
                 </div>
 
                 {hotels.length > 1 && (
                     <div className="flex flex-col gap-1.5 min-w-[200px]">
                         <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            Select Hotel
+                            {t(translationKey.hotelOwnerReviews.selectHotel)}
                         </label>
                         <select
                             className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-black outline-none"
@@ -100,15 +103,18 @@ const HotelOwnerReviews = () => {
                 </div>
             ) : error ? (
                 <div className="w-full py-20 flex justify-center items-center text-red-500">
-                    Failed to load reviews
+                    {t(translationKey.hotelOwnerReviews.failedToLoad)}
                 </div>
             ) : reviews.length === 0 ? (
                 <div className="text-center py-20 bg-gray-50 rounded-2xl border border-gray-100">
                     <h3 className="text-lg font-medium text-gray-900 mb-1">
-                        No reviews yet
+                        {t(translationKey.hotelOwnerReviews.noReviewsYet)}
                     </h3>
                     <p className="text-gray-500">
-                        Your guests haven't left any reviews for this hotel yet.
+                        {t(
+                            translationKey.hotelOwnerReviews
+                                .noReviewsYetDescription
+                        )}
                     </p>
                 </div>
             ) : (
@@ -130,17 +136,20 @@ const HotelOwnerReviews = () => {
                         onClick={() => setPage((p) => p - 1)}
                         className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50"
                     >
-                        Previous
+                        {t(translationKey.button.previous)}
                     </button>
                     <span className="text-sm font-medium text-gray-600">
-                        Page {page} of {totalPages}
+                        {t(translationKey.hotelOwnerReviews.pageOf, {
+                            page,
+                            totalPages,
+                        })}
                     </span>
                     <button
                         disabled={page === totalPages}
                         onClick={() => setPage((p) => p + 1)}
                         className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50"
                     >
-                        Next
+                        {t(translationKey.button.next)}
                     </button>
                 </div>
             )}

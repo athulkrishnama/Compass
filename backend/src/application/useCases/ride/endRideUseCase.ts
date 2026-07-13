@@ -16,12 +16,16 @@ import {
   InvalideDataException,
   ResourceNotFoundException,
 } from "@application/constants/Exceptions";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class EndRideUseCase implements IEndRideUseCase {
   constructor(
     @inject("IRideRepo") private _rideRepo: IRideRepo,
     @inject("ISocketEmitter") private _socketEmitter: ISocketEmitter,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute({ ride_id, driver_id }: IEndRideRequestDTO): Promise<void> {
@@ -66,5 +70,29 @@ export class EndRideUseCase implements IEndRideUseCase {
         ride_id,
       },
     });
+
+    try {
+      await this._notificationService.notify(
+        ride.rider_id,
+        NOTIFICATION_TYPES.RIDE_COMPLETED,
+        "Ride Completed",
+        "You have arrived at your destination. Thank you for riding with us!",
+        { ride_id, driver_id },
+      );
+    } catch (err) {
+      console.error("[EndRideUseCase] Rider notification failed:", err);
+    }
+
+    try {
+      await this._notificationService.notify(
+        driver_id,
+        NOTIFICATION_TYPES.RIDE_COMPLETED,
+        "Ride Completed",
+        "Great job! The ride has been completed successfully.",
+        { ride_id, rider_id: ride.rider_id },
+      );
+    } catch (err) {
+      console.error("[EndRideUseCase] Driver notification failed:", err);
+    }
   }
 }

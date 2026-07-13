@@ -25,8 +25,8 @@ import {
     type DriverEventPayload,
 } from "@/types/socketPayloads";
 import { calculateDistance } from "@/utils/distance";
-function calcEta(minutesFromNow: number): string {
-    const d = new Date(Date.now() + minutesFromNow * 60 * 1000);
+function calcEta(secondsFromNow: number): string {
+    const d = new Date(Date.now() + secondsFromNow * 1000);
     return d.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -125,6 +125,8 @@ export default function ActiveTripPage() {
                         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                     });
                     toast.success("Payment Received!");
+                    setPhase(null);
+                    navigate({ to: "/cab/history" });
                     break;
                 case DRIVER_EVENTS_TYPES.CANCELLED:
                     setPhase(RIDE_STATUSES.CANCELLED);

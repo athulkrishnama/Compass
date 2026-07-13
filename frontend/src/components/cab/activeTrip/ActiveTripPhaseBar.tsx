@@ -72,7 +72,7 @@ export function ActiveTripPhaseBar({
                     </span>
                     <span className="text-sm text-gray-500 font-medium">
                         {t(translationKey.activeTrip.minToArrival, {
-                            min: minToArrival,
+                            min: Math.ceil(minToArrival / 60),
                         })}
                     </span>
                 </div>

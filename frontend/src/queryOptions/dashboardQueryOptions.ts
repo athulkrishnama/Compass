@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { queryOptions, keepPreviousData } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
 import {
     getOverallDashboard,
@@ -10,10 +10,15 @@ import type {
     IHotelDashboardResponse,
 } from "@/types/api/responses/dashboardResponse";
 
-export function createOverallDashboardQueryOptions() {
+export function createOverallDashboardQueryOptions(filter?: {
+    type: "weekly" | "monthly" | "yearly";
+    year?: number;
+    month?: number;
+}) {
     return queryOptions<HttpResponse<IOverallDashboardResponse>>({
-        queryKey: [QUERY_KEYS.OVERALL_DASHBOARD],
-        queryFn: getOverallDashboard,
+        queryKey: [QUERY_KEYS.OVERALL_DASHBOARD, filter],
+        queryFn: () => getOverallDashboard(filter),
+        placeholderData: keepPreviousData,
     });
 }
 

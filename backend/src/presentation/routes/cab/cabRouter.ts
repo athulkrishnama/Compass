@@ -41,6 +41,26 @@ export class CabRouter {
         cabController.handleCabImageDelete(req, res, next);
       },
     );
+
+    this._router.get(
+      CAB_ROUTES.DASHBOARD,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      authMiddleware.authorizeRole([ROLES.CAB]),
+      (req: Request, res: Response, next: NextFunction) => {
+        cabController.handleGetDashboardStats(req, res, next);
+      },
+    );
+
+    this._router.get(
+      CAB_ROUTES.NEARBY,
+      authMiddleware.check,
+      authMiddleware.checkBlocked(),
+      authMiddleware.authorizeRole([ROLES.TRAVELER]),
+      (req: Request, res: Response, next: NextFunction) => {
+        cabController.handleGetNearbyDrivers(req, res, next);
+      },
+    );
   }
 
   public getRouter() {

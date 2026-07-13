@@ -21,4 +21,9 @@ export interface IOverallDashboardResponseDTO {
   occupancyRate: number;
   totalRevenue: number;
   hotels: IHotelDashboardSummary[];
+  charts: {
+    revenueTrends: { name: string; revenue: number; bookings: number }[];
+    bookingStatusDistribution: { name: string; value: number }[];
+    topHotelsByBookings: { name: string; bookings: number }[];
+  };
 }

@@ -66,6 +66,21 @@ export function createSearchHotelQueryOptions(filter: IHotelSearchRequestDTO) {
         queryFn: () => searchHotels(filter),
     });
 }
+export function createSearchNearbyHotelsQueryOptions(
+    city: [number, number],
+    proximityRadius: number
+) {
+    return queryOptions<HttpResponse<IHotelSearchResponseDTO>, Error>({
+        queryKey: [QUERY_KEYS.HOTEL_SEARCH, "nearby", city, proximityRadius],
+        queryFn: () =>
+            searchHotels({
+                city,
+                proximityRadius,
+                pageNo: 1,
+                guests: 1,
+            } as IHotelSearchRequestDTO),
+    });
+}
 
 export function createSearchHotelInfiniteQueryOptions(
     filter: Omit<IHotelSearchRequestDTO, "pageNo">

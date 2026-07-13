@@ -9,6 +9,8 @@ import {
 } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
+import { INotificationService } from "@application/interfaces/service/notificationService.interface";
+import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
 
 @injectable()
 export class CheckInBookingUseCase implements ICheckInBookingUseCase {
@@ -19,6 +21,8 @@ export class CheckInBookingUseCase implements ICheckInBookingUseCase {
     private _roomVariantRepo: IRoomVariantRepo,
     @inject("IRoomStatusRepo")
     private _roomStatusRepo: IRoomStatusRepo,
+    @inject("INotificationService")
+    private _notificationService: INotificationService,
   ) {}
 
   async execute(
@@ -123,6 +127,32 @@ export class CheckInBookingUseCase implements ICheckInBookingUseCase {
           isWalkIn: true,
         },
         bookingId,
+      );
+    }
+
+    try {
+      if (roomNumber !== undefined) {
+        await this._notificationService.notify(
+          booking.travelerId,
+          NOTIFICATION_TYPES.BOOKING_CHECKED_IN,
+          "Check-In Successful",
+          `You have successfully checked in. Enjoy your stay! Room number: ${roomNumber}.`,
+          { bookingId, roomNumber: roomNumber, hotelId: booking.hotelId },
+        );
+      } else {
+        // Walk-in notification
+        await this._notificationService.notify(
+          booking.travelerId,
+          NOTIFICATION_TYPES.BOOKING_CHECKED_IN,
+          "Walk-In Check-In Successful",
+          "You have successfully checked in as a walk-in guest. The receptionist will give you details about your stay. Enjoy your stay!",
+          { bookingId, roomNumber: null, hotelId: booking.hotelId },
+        );
+      }
+    } catch (notifyErr) {
+      console.error(
+        "[CheckInBookingUseCase] Failed to send check-in notification:",
+        notifyErr,
       );
     }
   }

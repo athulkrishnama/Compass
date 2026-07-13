@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { env } from "@/config/env";
 import translationKey from "@/utils/i18n/translationKey";
+import MapboxMap from "@/components/shared/MapboxMap";
 
 interface LocationAddressSectionProps {
     country: string;
@@ -74,30 +74,35 @@ function LocationAddressSection({
                     </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-50 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="md:col-span-2">
-                        <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">
-                            {t(translationKey.text.fullAddress)}
-                        </p>
-                        <p className="text-sm text-gray-600 leading-relaxed">
-                            {fullAddress}
-                        </p>
-                    </div>
-                    <div className="md:col-span-1">
-                        <div className="aspect-video rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
-                            {latitude && longitude ? (
-                                <img
-                                    src={`https://api.mapbox.com/styles/v1/mapbox/light-v11/static/pin-s+000(${longitude},${latitude})/${longitude},${latitude},14,0/300x300@2x?access_token=${env.VITE_MAPBOX_ACCESS_TOKEN}`}
-                                    alt="Map location"
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                    <MapPin className="w-8 h-8" />
-                                </div>
-                            )}
+                <div className="pt-4 border-t border-gray-50">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">
+                        {t(translationKey.text.fullAddress)}
+                    </p>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                        {fullAddress}
+                    </p>
+                </div>
+
+                <div className="w-full h-[300px] rounded-xl overflow-hidden bg-gray-100 border border-gray-200 mt-2">
+                    {latitude && longitude ? (
+                        <MapboxMap
+                            initialCenter={[longitude, latitude]}
+                            initialZoom={14}
+                            markers={[
+                                {
+                                    id: "hotel-location",
+                                    lat: latitude,
+                                    lng: longitude,
+                                    color: "#111111",
+                                },
+                            ]}
+                            className="w-full h-full"
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            <MapPin className="w-8 h-8" />
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </motion.div>

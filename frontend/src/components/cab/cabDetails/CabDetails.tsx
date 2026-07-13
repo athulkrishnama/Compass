@@ -16,15 +16,15 @@ function CabDetails() {
     }
 
     return (
-        <div className="w-full bg-gray-50/50 p-4 flex justify-center items-start">
-            <div className="w-full max-w-5xl bg-white rounded-[2.5rem] flex flex-col gap-8 p-6 md:p-10">
+        <div className="w-full bg-gray-50/50 p-0 sm:p-4 flex justify-center items-start">
+            <div className="w-full max-w-5xl bg-white rounded-[2.5rem] flex flex-col gap-8 p-4 sm:p-6 md:p-10">
                 {!vehicleDetails?.model ? (
                     <NoVehicleDetails />
                 ) : (
                     <>
                         <div className="flex flex-col gap-6">
-                            <div className="flex items-center justify-between">
-                                <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                                     {vehicleDetails.model}
                                 </h1>
                                 <AddVehicleComponentWithButton

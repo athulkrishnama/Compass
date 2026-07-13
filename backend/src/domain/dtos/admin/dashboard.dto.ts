@@ -15,5 +15,8 @@ export interface IGetAdminDashboardStatsResponseDTO {
     bookingTrends: { name: string; bookings: number; revenue: number }[];
     topHotels: { name: string; bookings: number }[];
     bookingStatusDistribution: { name: string; value: number }[];
+    cabRideTrends: { name: string; trips: number; earnings: number }[];
+    cabTypeDistribution: { name: string; value: number }[];
+    cabRideStatusDistribution: { name: string; value: number }[];
   };
 }

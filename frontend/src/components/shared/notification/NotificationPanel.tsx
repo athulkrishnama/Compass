@@ -15,17 +15,19 @@ import { Loader2, CheckCheck } from "lucide-react";
 export const NotificationPanel: React.FC = () => {
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
+    const [limit, setLimit] = React.useState(20);
+    const [isExpanded, setIsExpanded] = React.useState(false);
     const { notifications } = useSelector(
         (state: RootState) => state.notification
     );
 
     const { isLoading, data } = useQuery({
-        ...notificationQueryOptions.notifications(1, 20),
+        ...notificationQueryOptions.notifications(1, limit),
         staleTime: 0,
     });
 
     React.useEffect(() => {
-        if (data) {
+        if (Array.isArray(data)) {
             dispatch(setNotifications(data));
         }
     }, [data, dispatch]);
@@ -46,13 +48,22 @@ export const NotificationPanel: React.FC = () => {
         },
     });
 
+    const showSpinner = isLoading && notifications.length === 0;
+
+    const handleViewAll = () => {
+        setIsExpanded(true);
+        setLimit(50);
+    };
+
     return (
-        <div className="w-80 max-h-[450px] flex flex-col bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div
+            className={`w-80 flex flex-col bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden transition-all duration-300 ${isExpanded ? "max-h-[75vh]" : "max-h-[450px]"}`}
+        >
             <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-                <h3 className="font-bold text-gray-800">Notifications</h3>
+                <h3 className="font-bold text-black">Notifications</h3>
                 <button
                     onClick={() => markAllReadMutation.mutate()}
-                    className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium transition-colors"
+                    className="text-xs text-gray-700 hover:text-black flex items-center gap-1 font-medium transition-colors"
                 >
                     <CheckCheck size={14} />
                     Mark all as read
@@ -60,7 +71,7 @@ export const NotificationPanel: React.FC = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto min-h-[100px]">
-                {isLoading ? (
+                {showSpinner ? (
                     <div className="flex justify-center items-center h-32">
                         <Loader2 className="animate-spin text-gray-400" />
                     </div>
@@ -79,11 +90,16 @@ export const NotificationPanel: React.FC = () => {
                 )}
             </div>
 
-            <div className="p-3 border-t border-gray-100 text-center bg-gray-50/30">
-                <button className="text-xs text-gray-500 hover:text-gray-700 font-medium">
-                    View all notifications
-                </button>
-            </div>
+            {!isExpanded && notifications.length >= 20 && (
+                <div className="p-3 border-t border-gray-100 text-center bg-gray-50/30">
+                    <button
+                        onClick={handleViewAll}
+                        className="text-xs text-gray-500 hover:text-gray-700 font-medium"
+                    >
+                        View all notifications
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

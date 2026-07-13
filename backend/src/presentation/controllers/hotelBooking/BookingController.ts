@@ -216,7 +216,24 @@ export class BookingController {
   async getOverallDashboard(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user.id;
-      const data = await this._getOverallDashboardUseCase.execute(userId);
+      const type = (req.query.type as string) || "weekly";
+      const year = req.query.year
+        ? parseInt(req.query.year as string)
+        : undefined;
+      const month = req.query.month
+        ? parseInt(req.query.month as string)
+        : undefined;
+
+      const filter = {
+        type: type as "weekly" | "monthly" | "yearly",
+        year,
+        month,
+      };
+
+      const data = await this._getOverallDashboardUseCase.execute(
+        userId,
+        filter,
+      );
 
       HTTPResponseBuilder.buildSuccessResponse(
         req,

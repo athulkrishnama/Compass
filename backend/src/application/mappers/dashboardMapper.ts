@@ -70,6 +70,11 @@ export class DashboardMapper {
       totalRevenue: number;
     },
     hotels: IHotelDashboardSummary[],
+    charts: {
+      revenueTrends: { name: string; revenue: number; bookings: number }[];
+      bookingStatusDistribution: { name: string; value: number }[];
+      topHotelsByBookings: { name: string; bookings: number }[];
+    },
   ): IOverallDashboardResponseDTO {
     return {
       ...totals,
@@ -78,6 +83,7 @@ export class DashboardMapper {
           ? Math.round((totals.occupiedRooms / totals.totalRooms) * 100)
           : 0,
       hotels,
+      charts,
     };
   }
 

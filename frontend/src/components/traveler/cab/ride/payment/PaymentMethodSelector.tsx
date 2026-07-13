@@ -1,4 +1,6 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getWalletSummary } from "@/services/api/walletService";
 import { motion } from "framer-motion";
 import {
     Wallet,
@@ -60,6 +62,11 @@ export const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
     handlePay,
     handleClose,
 }) => {
+    const { data: walletSummary } = useQuery({
+        queryKey: ["walletSummary"],
+        queryFn: getWalletSummary,
+    });
+
     return (
         <motion.div
             key="select"
@@ -138,7 +145,10 @@ export const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
                                         {label}
                                     </p>
                                     <p className="text-xs text-gray-400 mt-0.5">
-                                        {description}
+                                        {id === CabPaymentMethod.WALLET &&
+                                        walletSummary
+                                            ? `${description} (Balance: ${new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(walletSummary.balance)})`
+                                            : description}
                                     </p>
                                 </div>
                                 {isSelected && (
