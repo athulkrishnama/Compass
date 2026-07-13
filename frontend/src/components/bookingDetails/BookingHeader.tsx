@@ -13,6 +13,7 @@ interface BookingHeaderProps {
     roomNumbers?: number[];
     numberOfRooms?: number;
     isWalkIn?: boolean;
+    bookingId?: string;
 }
 
 export function BookingHeader({
@@ -21,6 +22,7 @@ export function BookingHeader({
     roomNumbers,
     numberOfRooms,
     isWalkIn,
+    bookingId,
 }: BookingHeaderProps) {
     const { t } = useTranslation();
 
@@ -101,9 +103,16 @@ export function BookingHeader({
                             {format(new Date(createdAt), "MMMM dd, yyyy")}
                         </span>
                     </div>
-                    <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
-                        {t(translationKey.bookingDetails.title)}
-                    </h1>
+                    <div className="flex flex-col">
+                        <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
+                            {t(translationKey.bookingDetails.title)}
+                        </h1>
+                        {bookingId && (
+                            <p className="text-sm font-mono text-muted-foreground mt-2">
+                                Booking ID: {bookingId}
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </motion.div>

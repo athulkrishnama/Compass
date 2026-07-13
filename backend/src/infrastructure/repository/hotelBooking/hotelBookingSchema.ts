@@ -5,6 +5,7 @@ import { Schema, Types } from "mongoose";
 
 export interface IHotelBookingDocument extends Document {
   _id: Types.ObjectId;
+  bookingId: string;
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
@@ -25,6 +26,7 @@ export interface IHotelBookingDocument extends Document {
 }
 
 export const hotelBookingSchema = new Schema<IHotelBookingDocument>({
+  bookingId: { type: String, required: true, unique: true },
   hotelId: { type: String, required: true },
   travelerId: { type: String, required: true },
   roomVariantId: { type: String, required: true },

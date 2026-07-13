@@ -15,6 +15,7 @@ export interface IBookingDetailsAggregation {
 
 export interface IBookingDetailsResponseDTO {
   id: string;
+  bookingId: string;
   bookingStatus: BOOKING_STATUS;
   paymentStatus: PAYMENT_STATUS;
   createdAt: string;

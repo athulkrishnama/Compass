@@ -3,6 +3,7 @@ import { HotelBookingEntity } from "@domain/entities/hotelBooking/hotelBooking.e
 
 interface Bookings {
   id: string;
+  bookingId: string;
   hotelName: string;
   coverImage: string;
   city: string;
