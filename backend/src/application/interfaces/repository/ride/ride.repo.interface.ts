@@ -1,5 +1,9 @@
 import { RideEntity } from "@domain/entities/ride/ride.entity";
 import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
+import {
+  DriverRideReportItem,
+  IAdminCabReportItem,
+} from "@domain/dtos/ride/driverRideReport.dto";
 
 export interface IRideRepo extends IBaseRepository<RideEntity> {
   fetchCabActiveRide(driver_id: string): Promise<RideEntity | null>;
@@ -40,4 +44,38 @@ export interface IRideRepo extends IBaseRepository<RideEntity> {
   getCabTypeDistribution(): Promise<{ name: string; value: number }[]>;
 
   getRideStatusDistribution(): Promise<{ name: string; value: number }[]>;
+
+  getDriverRideReport(params: {
+    driverId: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+    limit: number;
+  }): Promise<{ items: DriverRideReportItem[]; total: number }>;
+
+  getAllDriverRidesForReport(params: {
+    driverId: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<DriverRideReportItem[]>;
+
+  getAdminCabReport(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+    limit: number;
+  }): Promise<{ items: IAdminCabReportItem[]; total: number }>;
+
+  getAllAdminCabRidesForReport(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<IAdminCabReportItem[]>;
 }

@@ -97,6 +97,20 @@ export class BookingRouter {
       (req, res, next) =>
         bookingController.getBookingByPaymentId(req, res, next),
     );
+
+    this._router.get(
+      BookingRoutes.HOTEL_REPORT,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.getHotelReport(req, res, next),
+    );
+
+    this._router.get(
+      BookingRoutes.HOTEL_REPORT_PDF,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.HOTEL]),
+      (req, res, next) => bookingController.getHotelReportPdf(req, res, next),
+    );
   }
 
   getRouter(): Router {

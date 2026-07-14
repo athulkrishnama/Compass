@@ -51,6 +51,7 @@ function RouteComponent() {
         { name: t(translationKey.button.history), route: "/cab/history" },
         { name: t(translationKey.button.reviews), route: "/cab/reviews" },
         { name: t(translationKey.button.wallet), route: "/cab/wallet" },
+        { name: t(translationKey.reports.title), route: "/cab/reports" },
         { name: t(translationKey.button.profile), route: "/cab/profile" },
     ];
     return (

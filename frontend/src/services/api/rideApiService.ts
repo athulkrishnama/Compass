@@ -123,3 +123,65 @@ export async function getDriverPastTrips(
         throw new Error("Something went wrong");
     }
 }
+
+export async function getDriverReport(params: {
+    pageNo?: number;
+    limit?: number;
+    status?: string;
+    search?: string;
+    dateFrom?: string;
+    dateTo?: string;
+}) {
+    try {
+        const response = await axiosInstance.get(RIDE_ROUTES.DRIVER_REPORT, {
+            params,
+        });
+        return response.data.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
+export async function downloadDriverReportPdf(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: string;
+    dateTo?: string;
+}) {
+    try {
+        const response = await axiosInstance.get(
+            RIDE_ROUTES.DRIVER_REPORT_PDF,
+            {
+                params,
+                responseType: "blob",
+            }
+        );
+
+        // Create blob link to download
+        const url2 = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url2;
+        link.setAttribute(
+            "download",
+            `driver_report_${new Date().toISOString()}.pdf`
+        );
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        link.parentNode?.removeChild(link);
+        window.URL.revokeObjectURL(url2);
+
+        return true;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(
+                error.response?.data?.message || "Failed to download PDF"
+            );
+        }
+        throw new Error("Something went wrong");
+    }
+}

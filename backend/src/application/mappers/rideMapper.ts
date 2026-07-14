@@ -9,6 +9,12 @@ import { VEHICLE_TYPES } from "@domain/types/vehicleType";
 import { RiderPastTripResponseDTO } from "@domain/dtos/ride/riderPastTrip.dto";
 import { DriverPastTripResponseDTO } from "@domain/dtos/ride/driverPastTrip.dto";
 import { RIDE_EVENT_NAMES } from "@domain/types/rideEvent";
+import {
+  DriverRideReportItem,
+  IDriverRideReportResponseDTO,
+  IAdminCabReportItem,
+  IAdminCabReportResponseDTO,
+} from "@domain/dtos/ride/driverRideReport.dto";
 
 export class RideMapper {
   static toRiderPastTripResponseDTO(
@@ -132,6 +138,34 @@ export class RideMapper {
         averageRating: cab.averageRating ?? 0,
         totalReviews: cab.totalReviews ?? 0,
       },
+    };
+  }
+
+  static toDriverRideReportResponseDTO(
+    items: DriverRideReportItem[],
+    total: number,
+    limit: number,
+    pageNo: number,
+  ): IDriverRideReportResponseDTO {
+    return {
+      items,
+      totalPages: Math.ceil(total / limit),
+      currentPage: pageNo,
+      totalCount: total,
+    };
+  }
+
+  static toAdminCabReportResponseDTO(
+    items: IAdminCabReportItem[],
+    total: number,
+    limit: number,
+    pageNo: number,
+  ): IAdminCabReportResponseDTO {
+    return {
+      items,
+      totalPages: Math.ceil(total / limit),
+      currentPage: pageNo,
+      totalCount: total,
     };
   }
 }

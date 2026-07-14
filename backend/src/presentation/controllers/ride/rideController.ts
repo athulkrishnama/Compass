@@ -10,12 +10,18 @@ import { IGetRideCabDetailsUseCase } from "@application/interfaces/useCase/ride/
 import { IGetRiderPastTripsUseCase } from "@application/interfaces/useCase/ride/getRiderPastTripsUseCase.interface";
 import { IGetRiderActiveRideUseCase } from "@application/interfaces/useCase/ride/getRiderActiveRideUseCase.interface";
 import { IGetDriverPastTripsUseCase } from "@application/interfaces/useCase/ride/getDriverPastTripsUseCase.interface";
+import { ICancelRideUseCase } from "@application/interfaces/useCase/ride/cancelRideUseCase.interface";
+import { IGetDriverRideReportUseCase } from "@application/interfaces/useCase/ride/IGetDriverRideReportUseCase";
+import { IGetDriverRideReportPdfUseCase } from "@application/interfaces/useCase/ride/IGetDriverRideReportPdfUseCase";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
 import { calculateFareValidationSchema } from "@presentation/validationSchemas/fareValidation";
-import { createRideValidationSchema } from "@presentation/validationSchemas/rideValidation";
+import {
+  createRideValidationSchema,
+  rideReportQuerySchema,
+} from "@presentation/validationSchemas/rideValidation";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 
@@ -38,6 +44,12 @@ export class RideController {
     private _getRiderActiveRideUseCase: IGetRiderActiveRideUseCase,
     @inject("IGetDriverPastTripsUseCase")
     private _getDriverPastTripsUseCase: IGetDriverPastTripsUseCase,
+    @inject("ICancelRideUseCase")
+    private _cancelRideUseCase: ICancelRideUseCase,
+    @inject("IGetDriverRideReportUseCase")
+    private _getDriverRideReportUseCase: IGetDriverRideReportUseCase,
+    @inject("IGetDriverRideReportPdfUseCase")
+    private _getDriverRideReportPdfUseCase: IGetDriverRideReportPdfUseCase,
   ) {}
 
   async handleCreateFare(req: Request, res: Response, next: NextFunction) {
@@ -56,7 +68,7 @@ export class RideController {
       HTTPResponseBuilder.buildSuccessResponse(
         req,
         res,
-        HTTP_STATUS_CODE.OK,
+        HTTP_STATUS_CODE.CREATED,
         Messages.FARE_CREATED_SUCCESSFULLY,
         fare,
       );
@@ -65,12 +77,9 @@ export class RideController {
     }
   }
 
-  async handleCreateRide(req: Request, res: Response, next: NextFunction) {
+  async handleSearchCab(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = createRideValidationSchema.safeParse({
-        ...req.body,
-        userId: req.user.id,
-      });
+      const data = createRideValidationSchema.safeParse(req.body);
 
       if (!data.success) {
         throw new InvalideDataException(data.error.issues[0].message);
@@ -258,6 +267,70 @@ export class RideController {
         Messages.RIDE_DETAILS_FETCHED_SUCCESSFULLY,
         ride || undefined, // it can be null if no active ride
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getDriverReport(req: Request, res: Response, next: NextFunction) {
+    try {
+      const driverId = req.user.id;
+      const queryValidation = rideReportQuerySchema.safeParse(req.query);
+      if (!queryValidation.success) {
+        throw new InvalideDataException(
+          queryValidation.error.issues[0].message,
+        );
+      }
+      const { status, search, dateFrom, dateTo, pageNo, limit } =
+        queryValidation.data;
+
+      const report = await this._getDriverRideReportUseCase.execute({
+        driverId,
+        status: status as string,
+        search: search as string,
+        dateFrom: dateFrom ? new Date(dateFrom as string) : undefined,
+        dateTo: dateTo ? new Date(dateTo as string) : undefined,
+        pageNo: pageNo ? parseInt(pageNo as string, 10) : 1,
+        limit: limit ? parseInt(limit as string, 10) : 10,
+      });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        Messages.DATA_FETCHED_SUCCESSFULLY,
+        report,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getDriverReportPdf(req: Request, res: Response, next: NextFunction) {
+    try {
+      const driverId = req.user.id;
+      const queryValidation = rideReportQuerySchema.safeParse(req.query);
+      if (!queryValidation.success) {
+        throw new InvalideDataException(
+          queryValidation.error.issues[0].message,
+        );
+      }
+      const { status, search, dateFrom, dateTo } = queryValidation.data;
+
+      const pdfBuffer = await this._getDriverRideReportPdfUseCase.execute({
+        driverId,
+        status: status as string,
+        search: search as string,
+        dateFrom: dateFrom ? new Date(dateFrom as string) : undefined,
+        dateTo: dateTo ? new Date(dateTo as string) : undefined,
+      });
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=driver_report.pdf",
+      );
+      res.status(HTTP_STATUS_CODE.OK).send(pdfBuffer);
     } catch (error) {
       next(error);
     }

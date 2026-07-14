@@ -13,9 +13,9 @@ import {
     Hotel,
     LogOut,
     Map,
-    Settings,
     User,
     Wallet,
+    FileText,
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { removeToken } from "@/store/slices/tokenSlice";
@@ -40,8 +40,8 @@ export default function SideBar() {
         },
         {
             to: "/admin/reports",
-            label: t(translationKey.button.reports),
-            icon: <Settings className="w-5 h-5" />,
+            label: t(translationKey.reports.title),
+            icon: <FileText className="w-5 h-5" />,
         },
         {
             to: "/admin/hotelVerification",

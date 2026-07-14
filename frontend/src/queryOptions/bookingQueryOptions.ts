@@ -10,6 +10,7 @@ import {
     getAvailableRooms,
     checkInBooking,
     checkOutBooking,
+    getHotelReport,
 } from "@/services/api/bookingService";
 import type { IAvailableRoomsResponseDTO } from "@/types/booking";
 import type { ITravelerBookingListingResponseDTO } from "@/types/api/responses/bookingResponse";
@@ -126,4 +127,14 @@ export function createCheckOutMutationOptions() {
         mutationFn: (data: { bookingId: string; hotelId: string }) =>
             checkOutBooking(data.bookingId, data.hotelId),
     };
+}
+
+export function createGetHotelReportQueryOptions(
+    hotelId: string,
+    params: Parameters<typeof getHotelReport>[1]
+) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.HOTEL_REPORT, hotelId, params],
+        queryFn: () => getHotelReport(hotelId, params),
+    });
 }

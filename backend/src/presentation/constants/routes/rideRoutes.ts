@@ -7,4 +7,6 @@ export enum RIDE_ROUTES {
   PAST_TRIPS = "/past-trips",
   RIDER_ACTIVE_RIDE = "/rider/active-ride",
   DRIVER_PAST_TRIPS = "/driver-past-trips",
+  DRIVER_REPORT = "/driver-report",
+  DRIVER_REPORT_PDF = "/driver-report/pdf",
 }

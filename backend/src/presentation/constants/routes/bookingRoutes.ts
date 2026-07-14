@@ -13,4 +13,6 @@ export enum BookingRoutes {
   CHECK_OUT = "/hotel/:hotelId/bookings/:bookingId/check-out",
   HOTEL_WALLET = "/wallet",
   HOTEL_TRANSACTIONS = "/transactions",
+  HOTEL_REPORT = "/hotel/:hotelId/report",
+  HOTEL_REPORT_PDF = "/hotel/:hotelId/report/pdf",
 }

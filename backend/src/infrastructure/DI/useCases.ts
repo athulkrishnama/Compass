@@ -58,6 +58,14 @@ import { IChangeEmailRequestOtpUseCase } from "@application/interfaces/useCase/a
 import { ChangeEmailRequestOtpUseCase } from "@useCases/auth/changeEmailRequestOtpUseCase";
 import { IChangeEmailVerifyOtpUseCase } from "@application/interfaces/useCase/auth/changeEmailVerifyOtpUseCase.interface";
 import { ChangeEmailVerifyOtpUseCase } from "@useCases/auth/changeEmailVerifyOtpUseCase";
+import { GetHotelBookingReportUseCase } from "@application/useCases/hotelBooking/GetHotelBookingReportUseCase";
+import { GetHotelBookingReportPdfUseCase } from "@application/useCases/hotelBooking/GetHotelBookingReportPdfUseCase";
+import { GetDriverRideReportUseCase } from "@application/useCases/ride/GetDriverRideReportUseCase";
+import { GetDriverRideReportPdfUseCase } from "@application/useCases/ride/GetDriverRideReportPdfUseCase";
+import { GetAdminHotelReportUseCase } from "@application/useCases/admin/GetAdminHotelReportUseCase";
+import { GetAdminHotelReportPdfUseCase } from "@application/useCases/admin/GetAdminHotelReportPdfUseCase";
+import { GetAdminCabReportUseCase } from "@application/useCases/admin/GetAdminCabReportUseCase";
+import { GetAdminCabReportPdfUseCase } from "@application/useCases/admin/GetAdminCabReportPdfUseCase";
 import { ICreateDestinationUseCase } from "@application/interfaces/useCase/admin/createDestinationUseCase.interface";
 import { CreateDestinationUseCase } from "@useCases/admin/createDestinationUseCase";
 import { IListDestinationsUseCase } from "@application/interfaces/useCase/admin/ListDestinationsUseCase.interface";
@@ -608,5 +616,37 @@ export function registerUsecases() {
   container.registerSingleton<ICheckHotelReviewEligibilityUseCase>(
     "ICheckHotelReviewEligibilityUseCase",
     CheckHotelReviewEligibilityUseCase,
+  );
+  container.registerSingleton<GetHotelBookingReportUseCase>(
+    "IGetHotelBookingReportUseCase",
+    GetHotelBookingReportUseCase,
+  );
+  container.registerSingleton<GetHotelBookingReportPdfUseCase>(
+    "IGetHotelBookingReportPdfUseCase",
+    GetHotelBookingReportPdfUseCase,
+  );
+  container.registerSingleton<GetDriverRideReportUseCase>(
+    "IGetDriverRideReportUseCase",
+    GetDriverRideReportUseCase,
+  );
+  container.registerSingleton<GetDriverRideReportPdfUseCase>(
+    "IGetDriverRideReportPdfUseCase",
+    GetDriverRideReportPdfUseCase,
+  );
+  container.registerSingleton<GetAdminHotelReportUseCase>(
+    "IGetAdminHotelReportUseCase",
+    GetAdminHotelReportUseCase,
+  );
+  container.registerSingleton<GetAdminHotelReportPdfUseCase>(
+    "IGetAdminHotelReportPdfUseCase",
+    GetAdminHotelReportPdfUseCase,
+  );
+  container.registerSingleton<GetAdminCabReportUseCase>(
+    "IGetAdminCabReportUseCase",
+    GetAdminCabReportUseCase,
+  );
+  container.registerSingleton<GetAdminCabReportPdfUseCase>(
+    "IGetAdminCabReportPdfUseCase",
+    GetAdminCabReportPdfUseCase,
   );
 }
