@@ -317,9 +317,10 @@ export default function HotelBookingDetails() {
                                                         className="border-b border-border/50 hover:bg-muted/50 transition-colors"
                                                     >
                                                         <td className="px-5 py-4 text-muted-foreground text-xs font-mono">
-                                                            {formatBookingId(
-                                                                booking.id
-                                                            )}
+                                                            {booking.bookingId ||
+                                                                formatBookingId(
+                                                                    booking.id
+                                                                )}
                                                         </td>
                                                         <td className="px-5 py-4 overflow-hidden">
                                                             <div className="flex items-center gap-3 min-w-0">

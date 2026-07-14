@@ -18,6 +18,7 @@ export class HotelBookingMapper {
     return {
       bookings: data.bookings.map((b) => ({
         id: b._id!,
+        bookingId: b.bookingId || "N/A",
         hotelName: b.hotel.name,
         coverImage: b.hotel.coverImage,
         city: b.hotel.address.city,
@@ -36,6 +37,7 @@ export class HotelBookingMapper {
     const b = data.booking;
     return {
       id: b._id!,
+      bookingId: b.bookingId || "N/A",
       bookingStatus: b.bookingStatus,
       paymentStatus: b.paymentStatus,
       createdAt: b.createdAt!.toISOString(),
@@ -85,6 +87,7 @@ export class HotelBookingMapper {
     return {
       bookings: data.bookings.map((b) => ({
         id: b._id.toString(),
+        bookingId: b.bookingId || "N/A",
         travelerId: b.travelerId,
         travelerEmail: b.traveler?.email || "",
         travelerProfileImage: b.traveler?.profile_image || "",

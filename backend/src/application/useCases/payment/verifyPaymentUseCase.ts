@@ -23,6 +23,7 @@ import { ROLES } from "@domain/enums/roles";
 import { env } from "@config/envConfig";
 import { INotificationService } from "@application/interfaces/service/notificationService.interface";
 import { NOTIFICATION_TYPES } from "@domain/types/notificationType";
+import { generateBookingId } from "@utils/generateBookingId";
 
 @injectable()
 export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
@@ -145,7 +146,10 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     const hotelAmount = totalAmount - commissionAmount;
     const hotelProviderId = hotel.userId.toString();
 
+    const bookingId = generateBookingId(hotel.name, roomVariant.name);
+
     const booking: HotelBookingEntity = {
+      bookingId,
       hotelId: roomVariant.hotelId,
       bookingStatus: BOOKING_STATUS.CONFIRMED,
       checkinDate: lock.checkinDate,
@@ -159,7 +163,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       isWalkIn: false,
     };
 
-    const newBookingId = await this._hotelBookingRepo.create(booking);
+    await this._hotelBookingRepo.create(booking);
 
     await this._walletRepo.creditWallet(
       adminId,
@@ -179,7 +183,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     );
 
     await this._transactionRepo.create({
-      bookingId: newBookingId,
+      bookingId: bookingId,
       ownerType: SERVICE_TYPE.USER,
       ownerId: traverlerId,
       amount: totalAmount,
@@ -189,7 +193,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     });
 
     await this._transactionRepo.create({
-      bookingId: newBookingId,
+      bookingId: bookingId,
       ownerType: SERVICE_TYPE.ADMIN,
       ownerId: adminId,
       amount: totalAmount,
@@ -201,7 +205,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     });
 
     await this._transactionRepo.create({
-      bookingId: newBookingId,
+      bookingId: bookingId,
       ownerType: SERVICE_TYPE.ADMIN,
       ownerId: adminId,
       amount: hotelAmount,
@@ -211,7 +215,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
     });
 
     await this._transactionRepo.create({
-      bookingId: newBookingId,
+      bookingId: bookingId,
       ownerType: SERVICE_TYPE.HOTEL,
       ownerId: hotelProviderId,
       amount: hotelAmount,
@@ -240,7 +244,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
         "Booking Confirmed!",
         `Your booking at ${hotel.name} is confirmed. Check-in: ${checkinFormatted} → Check-out: ${checkoutFormatted}.`,
         {
-          bookingId: newBookingId,
+          bookingId: bookingId,
           hotelId: roomVariant.hotelId,
           hotelName: hotel.name,
           checkinDate: lock.checkinDate,

@@ -3,6 +3,7 @@ import { PaymentStatus } from "@/enums/paymentStatus";
 
 interface IBooking {
     id: string;
+    bookingId: string;
     hotelName: string;
     coverImage: string;
     city: string;
@@ -19,6 +20,7 @@ export interface ITravelerBookingListingResponseDTO {
 
 export interface IBookingDetailsResponseDTO {
     id: string;
+    bookingId: string;
     bookingStatus: BookingStatus;
     paymentStatus: PaymentStatus;
     createdAt: string;
@@ -60,6 +62,7 @@ export interface IBookingDetailsResponseDTO {
 
 export interface IHotelBookingListingItem {
     id: string;
+    bookingId: string;
     guestName: string;
     roomVariantName: string;
     roomNumbers: number[];

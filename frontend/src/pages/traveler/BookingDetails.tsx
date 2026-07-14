@@ -43,6 +43,7 @@ export default function BookingDetails() {
                     bookingStatus={booking.bookingStatus}
                     createdAt={booking.createdAt}
                     id={booking.id}
+                    bookingId={booking.bookingId}
                     roomNumbers={booking.roomNumbers}
                     numberOfRooms={booking.numberOfRooms}
                     isWalkIn={booking.isWalkIn}

@@ -189,6 +189,7 @@ export class HotelBookingRepo
       hotelId: doc.hotelId,
       travelerId: doc.travelerId,
       roomVariantId: doc.roomVariantId,
+      bookingId: doc.bookingId,
       numberOfRooms: doc.numberOfRooms ?? 1,
       roomNumbers: doc.roomNumbers,
       checkinDate: doc.checkinDate,

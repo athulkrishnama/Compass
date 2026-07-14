@@ -4,6 +4,7 @@ import { REFUND_STATUS } from "@domain/enums/refundStatus";
 
 export interface HotelBookingEntity {
   _id?: string;
+  bookingId: string;
   hotelId: string;
   travelerId: string;
   roomVariantId: string;
