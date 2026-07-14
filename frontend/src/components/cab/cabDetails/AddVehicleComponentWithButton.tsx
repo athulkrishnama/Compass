@@ -205,10 +205,12 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                 )}
             </Button>
             <Modal isOpen={open} handleClose={() => setOpen(false)}>
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-6 overflow-y-auto max-h-[70vh] hide-scroll-bar px-1">
                     <div className="text-center">
                         <h2 className="text-2xl font-bold text-gray-900">
-                            {t(translationKey.button.addVehicle)}
+                            {vehicleDetails
+                                ? t(translationKey.button.editVehicle)
+                                : t(translationKey.button.addVehicle)}
                         </h2>
                         <p className="text-gray-500 text-sm mt-1">
                             {t(translationKey.text.submitDetails)}
@@ -378,10 +380,10 @@ function AddVehicleComponentWithButton({ vehicleDetails }: AddVehicleProps) {
                             disabled={isSubmitting}
                         >
                             {isSubmitting
-                                ? vehicleDetails
-                                    ? t(translationKey.button.submiting)
-                                    : t(translationKey.button.editVehicle)
-                                : t(translationKey.button.addVehicle)}
+                                ? t(translationKey.button.submiting)
+                                : vehicleDetails
+                                  ? t(translationKey.button.editVehicle)
+                                  : t(translationKey.button.addVehicle)}
                         </Button>
                     </form>
                 </div>
