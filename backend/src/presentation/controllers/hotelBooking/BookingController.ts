@@ -15,12 +15,16 @@ import { IGetHotelBookingsUseCase } from "@application/interfaces/useCase/hotelB
 import { IGetAvailableRoomsForCheckInUseCase } from "@application/interfaces/useCase/hotelBooking/IGetAvailableRoomsForCheckInUseCase";
 import { ICheckInBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckInBookingUseCase";
 import { ICheckOutBookingUseCase } from "@application/interfaces/useCase/hotelBooking/ICheckOutBookingUseCase";
+import { IGetHotelBookingReportUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingReportUseCase";
+import { IGetHotelBookingReportPdfUseCase } from "@application/interfaces/useCase/hotelBooking/IGetHotelBookingReportPdfUseCase";
 import {
   bookingListingQueryValidationSchema,
   hotelBookingQueryValidationSchema,
   checkInParamsValidationSchema,
   checkInBodyValidationSchema,
   checkOutParamsValidationSchema,
+  hotelBookingReportQuerySchema,
+  hotelBookingReportPdfQuerySchema,
 } from "@presentation/validationSchemas/bookingValidation";
 import { InvalideDataException } from "@application/constants/Exceptions";
 import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
@@ -52,6 +56,10 @@ export class BookingController {
     private _checkInBookingUseCase: ICheckInBookingUseCase,
     @inject("ICheckOutBookingUseCase")
     private _checkOutBookingUseCase: ICheckOutBookingUseCase,
+    @inject("IGetHotelBookingReportUseCase")
+    private _getHotelBookingReportUseCase: IGetHotelBookingReportUseCase,
+    @inject("IGetHotelBookingReportPdfUseCase")
+    private _getHotelBookingReportPdfUseCase: IGetHotelBookingReportPdfUseCase,
   ) {}
 
   async getBookingByPaymentId(req: Request, res: Response, next: NextFunction) {
@@ -388,6 +396,103 @@ export class BookingController {
         HTTP_STATUS_CODE.OK,
         Messages.CHECKED_OUT_SUCCESSFULLY,
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getHotelReport(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user.id;
+      const hotelId = req.params.hotelId;
+      if (!hotelId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+      }
+
+      const queryValidation = hotelBookingReportQuerySchema.safeParse(
+        req.query,
+      );
+      if (!queryValidation.success) {
+        throw new InvalideDataException(
+          queryValidation.error.issues[0].message,
+        );
+      }
+
+      const {
+        status,
+        search,
+        dateFrom: dateFromStr,
+        dateTo: dateToStr,
+        pageNo,
+      } = queryValidation.data;
+
+      const dateFrom = dateFromStr ? new Date(dateFromStr) : undefined;
+      const dateTo = dateToStr ? new Date(dateToStr) : undefined;
+
+      const data = await this._getHotelBookingReportUseCase.execute({
+        userId,
+        hotelId,
+        status,
+        search,
+        dateFrom,
+        dateTo,
+        pageNo,
+      });
+
+      HTTPResponseBuilder.buildSuccessResponse(
+        req,
+        res,
+        HTTP_STATUS_CODE.OK,
+        "Report fetched successfully",
+        data,
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getHotelReportPdf(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user.id;
+      const hotelId = req.params.hotelId;
+      if (!hotelId) {
+        throw new InvalideDataException(INTERNAL_ERROR_MESSAGES.INVALID_DATA);
+      }
+
+      const queryValidation = hotelBookingReportPdfQuerySchema.safeParse(
+        req.query,
+      );
+      if (!queryValidation.success) {
+        throw new InvalideDataException(
+          queryValidation.error.issues[0].message,
+        );
+      }
+
+      const {
+        status,
+        search,
+        dateFrom: dateFromStr,
+        dateTo: dateToStr,
+      } = queryValidation.data;
+
+      const dateFrom = dateFromStr ? new Date(dateFromStr) : undefined;
+      const dateTo = dateToStr ? new Date(dateToStr) : undefined;
+
+      const pdfBuffer = await this._getHotelBookingReportPdfUseCase.execute({
+        userId,
+        hotelId,
+        status,
+        search,
+        dateFrom,
+        dateTo,
+      });
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=hotel_report_${hotelId}_${new Date().toISOString()}.pdf`,
+      );
+      res.status(200).send(pdfBuffer);
     } catch (error) {
       next(error);
     }

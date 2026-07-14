@@ -35,6 +35,8 @@ import { INotificationService } from "@application/interfaces/service/notificati
 import { NotificationService } from "@infrastructure/services/notificationService";
 import { ITransactionManager } from "@application/interfaces/service/ITransactionManager";
 import { TransactionManager } from "@infrastructure/services/transactionManager";
+import { IPdfGeneratorService } from "@application/interfaces/service/pdfGenerator.service.interface";
+import { PdfGeneratorService } from "@infrastructure/services/pdfGeneratorService";
 
 export function registerServices() {
   container.registerSingleton<IHashService>("IHashService", HashService);
@@ -89,5 +91,9 @@ export function registerServices() {
   container.registerSingleton<ITransactionManager>(
     "ITransactionManager",
     TransactionManager,
+  );
+  container.registerSingleton<IPdfGeneratorService>(
+    "IPdfGeneratorService",
+    PdfGeneratorService,
   );
 }

@@ -9,6 +9,11 @@ import LocationAddressSection from "@/components/hotel/HotelDetails/LocationAddr
 import PropertyGallerySection from "@/components/hotel/HotelDetails/PropertyGallerySection";
 import { createGetRoomVariantByHotelIdQueryOptions } from "@/queryOptions/roomVariantQueryOptions";
 import RoomVariantsSection from "@/components/hotel/HotelDetails/RoomVariantsSection";
+import { Link } from "@tanstack/react-router";
+import { FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
+import translationKey from "@/utils/i18n/translationKey";
 
 const routeApi = getRouteApi("/hotel/hotels/$hotelId");
 
@@ -19,6 +24,7 @@ function HotelDetailsContent() {
         createGetRoomVariantByHotelIdQueryOptions(hotelId)
     );
     const hotelData = data?.data;
+    const { t } = useTranslation();
 
     if (!hotelData) {
         return (
@@ -31,9 +37,20 @@ function HotelDetailsContent() {
     return (
         <div className="min-h-screen overflow-scroll  bg-gray-50">
             <div className="max-w-6xl mx-auto px-6 py-8 pb-16 space-y-8">
-                <h1 className="text-3xl font-bold text-gray-900">
-                    {hotelData.name}
-                </h1>
+                <div className="flex justify-between items-center">
+                    <h1 className="text-3xl font-bold text-gray-900">
+                        {hotelData.name}
+                    </h1>
+                    <Link
+                        to="/hotel/hotels/$hotelId/report"
+                        params={{ hotelId }}
+                    >
+                        <Button className="bg-black hover:bg-gray-900 text-white flex items-center gap-2">
+                            <FileText className="w-4 h-4" />
+                            {t(translationKey.reports.title)}
+                        </Button>
+                    </Link>
+                </div>
 
                 <HotelCoverImage
                     coverImage={hotelData.coverImage}

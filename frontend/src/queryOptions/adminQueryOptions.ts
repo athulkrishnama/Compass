@@ -8,6 +8,8 @@ import {
     getUnverifiedUsers,
     getUsers,
     rejectUserVerificationRequest,
+    getAdminHotelReport,
+    getAdminCabReport,
 } from "@/services/api/adminApiService";
 import type {
     IRejectUserRegistrationRequest,
@@ -77,5 +79,23 @@ export function createRejectUserVerificationRequestMutationOption(id: string) {
 export function createApproveUserVerificationRequestMutationOption(id: string) {
     return mutationOptions<HttpResponse<object>, Error>({
         mutationFn: () => approveUserVerificationRequest(id),
+    });
+}
+
+export function createGetAdminHotelReportQueryOptions(
+    params: Parameters<typeof getAdminHotelReport>[0]
+) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.ADMIN_HOTEL_REPORT, params],
+        queryFn: () => getAdminHotelReport(params),
+    });
+}
+
+export function createGetAdminCabReportQueryOptions(
+    params: Parameters<typeof getAdminCabReport>[0]
+) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.ADMIN_CAB_REPORT, params],
+        queryFn: () => getAdminCabReport(params),
     });
 }

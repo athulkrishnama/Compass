@@ -15,6 +15,10 @@ import { IUserDocument } from "../users/userSchema";
 import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 import { HotelEntity } from "@domain/entities/hotel/hotel.entity";
 import { RoomVariantEntity } from "@domain/entities/roomVariant/roomVariant.entity";
+import {
+  HotelBookingReportItem,
+  IAdminHotelReportItem,
+} from "@domain/dtos/hotelBooking/hotelBookingReport.dto";
 
 @injectable()
 export class HotelBookingRepo
@@ -1087,5 +1091,209 @@ export class HotelBookingRepo
       bookingStatusDistribution,
       topHotelsByBookings: topHotelsAgg,
     };
+  }
+
+  private _buildReportPipeline(params: {
+    hotelId?: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Record<string, unknown>[] {
+    const match: Record<string, unknown> = {};
+    if (params.hotelId) match.hotelId = params.hotelId;
+    if (params.status) match.bookingStatus = params.status;
+    if (params.dateFrom || params.dateTo) {
+      const dateFilter: Record<string, Date> = {};
+      if (params.dateFrom) dateFilter.$gte = params.dateFrom;
+      if (params.dateTo) dateFilter.$lte = params.dateTo;
+      match.checkinDate = dateFilter;
+    }
+    const pipeline: Record<string, unknown>[] = [
+      { $match: match },
+      { $addFields: { travelerObjectId: { $toObjectId: "$travelerId" } } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "travelerObjectId",
+          foreignField: "_id",
+          as: "traveler",
+        },
+      },
+      { $unwind: { path: "$traveler", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: { roomVariantObjectId: { $toObjectId: "$roomVariantId" } },
+      },
+      {
+        $lookup: {
+          from: "roomvariants",
+          localField: "roomVariantObjectId",
+          foreignField: "_id",
+          as: "roomVariant",
+        },
+      },
+      { $unwind: { path: "$roomVariant", preserveNullAndEmptyArrays: true } },
+      { $addFields: { hotelObjectId: { $toObjectId: "$hotelId" } } },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      { $unwind: { path: "$hotel", preserveNullAndEmptyArrays: true } },
+    ];
+    if (params.search) {
+      pipeline.push({
+        $match: {
+          "traveler.full_name": { $regex: params.search, $options: "i" },
+        },
+      });
+    }
+    pipeline.push({ $sort: { createdAt: -1 } });
+    return pipeline;
+  }
+
+  async getHotelBookingReport(params: {
+    hotelId: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+  }): Promise<{ items: HotelBookingReportItem[]; total: number }> {
+    const pipeline = this._buildReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $facet: {
+          items: [
+            { $skip: (params.pageNo - 1) * VALUES.BOOKINGS_LIMIT },
+            { $limit: VALUES.BOOKINGS_LIMIT },
+            {
+              $project: {
+                bookingId: 1,
+                hotelName: { $ifNull: ["$hotel.name", "Unknown"] },
+                roomVariantName: { $ifNull: ["$roomVariant.name", "Unknown"] },
+                guestName: { $ifNull: ["$traveler.full_name", "Guest"] },
+                amount: "$totalAmount",
+                bookingStatus: 1,
+                checkInDate: "$checkinDate",
+                checkOutDate: "$checkoutDate",
+              },
+            },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    const facet = result[0];
+    const items = (facet?.items || []).map(
+      (item: Record<string, unknown>, idx: number) => ({
+        ...item,
+        index: (params.pageNo - 1) * VALUES.BOOKINGS_LIMIT + idx + 1,
+      }),
+    ) as HotelBookingReportItem[];
+    return { items, total: facet?.total?.[0]?.count || 0 };
+  }
+
+  async getAllHotelBookingsForReport(params: {
+    hotelId: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<HotelBookingReportItem[]> {
+    const pipeline = this._buildReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $project: {
+          bookingId: 1,
+          hotelName: { $ifNull: ["$hotel.name", "Unknown"] },
+          roomVariantName: { $ifNull: ["$roomVariant.name", "Unknown"] },
+          guestName: { $ifNull: ["$traveler.full_name", "Guest"] },
+          amount: "$totalAmount",
+          bookingStatus: 1,
+          checkInDate: "$checkinDate",
+          checkOutDate: "$checkoutDate",
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    return result.map((item: Record<string, unknown>, idx: number) => ({
+      ...item,
+      index: idx + 1,
+    })) as HotelBookingReportItem[];
+  }
+
+  async getAdminHotelReport(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+  }): Promise<{ items: IAdminHotelReportItem[]; total: number }> {
+    const pipeline = this._buildReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $facet: {
+          items: [
+            { $skip: (params.pageNo - 1) * VALUES.BOOKINGS_LIMIT },
+            { $limit: VALUES.BOOKINGS_LIMIT },
+            {
+              $project: {
+                bookingId: 1,
+                hotelName: { $ifNull: ["$hotel.name", "Unknown"] },
+                roomVariantName: { $ifNull: ["$roomVariant.name", "Unknown"] },
+                guestName: { $ifNull: ["$traveler.full_name", "Guest"] },
+                amount: "$totalAmount",
+                bookingStatus: 1,
+                checkInDate: "$checkinDate",
+                checkOutDate: "$checkoutDate",
+              },
+            },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    const facet = result[0];
+    const items = (facet?.items || []).map(
+      (item: Record<string, unknown>, idx: number) => ({
+        ...item,
+        index: (params.pageNo - 1) * VALUES.BOOKINGS_LIMIT + idx + 1,
+      }),
+    ) as IAdminHotelReportItem[];
+    return { items, total: facet?.total?.[0]?.count || 0 };
+  }
+
+  async getAllAdminHotelBookingsForReport(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<IAdminHotelReportItem[]> {
+    const pipeline = this._buildReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $project: {
+          bookingId: 1,
+          hotelName: { $ifNull: ["$hotel.name", "Unknown"] },
+          roomVariantName: { $ifNull: ["$roomVariant.name", "Unknown"] },
+          guestName: { $ifNull: ["$traveler.full_name", "Guest"] },
+          amount: "$totalAmount",
+          bookingStatus: 1,
+          checkInDate: "$checkinDate",
+          checkOutDate: "$checkoutDate",
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    return result.map((item: Record<string, unknown>, idx: number) => ({
+      ...item,
+      index: idx + 1,
+    })) as IAdminHotelReportItem[];
   }
 }

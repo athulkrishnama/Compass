@@ -99,3 +99,65 @@ export async function checkOutBooking(bookingId: string, hotelId: string) {
         throw new Error("Something went wrong");
     }
 }
+
+export async function getHotelReport(
+    hotelId: string,
+    params: {
+        pageNo?: number;
+        status?: string;
+        search?: string;
+        dateFrom?: string;
+        dateTo?: string;
+    }
+) {
+    try {
+        const url = BookingRoutes.HOTEL_REPORT.replace(":hotelId", hotelId);
+        const response = await axiosInstance.get(url, { params });
+        return response.data.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(error.response?.data.message);
+        }
+        throw new Error("Something went wrong");
+    }
+}
+
+export async function downloadHotelReportPdf(
+    hotelId: string,
+    params: {
+        status?: string;
+        search?: string;
+        dateFrom?: string;
+        dateTo?: string;
+    }
+) {
+    try {
+        const url = BookingRoutes.HOTEL_REPORT_PDF.replace(":hotelId", hotelId);
+        const response = await axiosInstance.get(url, {
+            params,
+            responseType: "blob",
+        });
+
+        const url2 = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url2;
+        link.setAttribute(
+            "download",
+            `hotel_report_${hotelId}_${new Date().toISOString()}.pdf`
+        );
+        document.body.appendChild(link);
+        link.click();
+
+        link.parentNode?.removeChild(link);
+        window.URL.revokeObjectURL(url2);
+
+        return true;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new Error(
+                error.response?.data?.message || "Failed to download PDF"
+            );
+        }
+        throw new Error("Something went wrong");
+    }
+}

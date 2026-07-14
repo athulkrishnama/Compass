@@ -10,6 +10,8 @@ import {
   IHotelBookingListingAggregation,
   IHotelBookingListingResponseDTO,
 } from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
+import { IAdminHotelReportItem } from "@domain/dtos/hotelBooking/hotelBookingReport.dto";
+import { IAdminHotelReportResponseDTO } from "@domain/dtos/ride/driverRideReport.dto";
 
 export class HotelBookingMapper {
   static toTravelerBookingListingResponseDTO(
@@ -104,6 +106,20 @@ export class HotelBookingMapper {
       totalPages,
       currentPage,
       totalCount,
+    };
+  }
+
+  static toAdminHotelReportResponseDTO(
+    items: IAdminHotelReportItem[],
+    total: number,
+    limit: number,
+    pageNo: number,
+  ): IAdminHotelReportResponseDTO {
+    return {
+      items,
+      totalPages: Math.ceil(total / limit),
+      currentPage: pageNo,
+      totalCount: total,
     };
   }
 }

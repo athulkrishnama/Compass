@@ -56,3 +56,20 @@ export const checkOutParamsValidationSchema = z.object({
       message: INTERNAL_ERROR_MESSAGES.INVALID_ID,
     }),
 });
+
+export const hotelBookingReportQuerySchema = z.object({
+  pageNo: z.coerce
+    .number({ error: INTERNAL_ERROR_MESSAGES.INVALID_PAGE_NO })
+    .int()
+    .positive()
+    .default(1),
+  status: z.enum(BOOKING_STATUS).optional(),
+  search: z.string().optional(),
+  dateFrom: z.string().optional(),
+  dateTo: z.string().optional(),
+});
+
+export const hotelBookingReportPdfQuerySchema =
+  hotelBookingReportQuerySchema.omit({
+    pageNo: true,
+  });

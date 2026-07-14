@@ -5,6 +5,10 @@ import { IBookingWithHotelAggregation } from "@domain/dtos/hotelBooking/traveler
 import { IBookingDetailsAggregation } from "@domain/dtos/hotelBooking/bookingDetails.dto";
 import { IHotelBookingListingAggregation } from "@domain/dtos/hotelBooking/hotelBookingListing.dto";
 import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
+import {
+  HotelBookingReportItem,
+  IAdminHotelReportItem,
+} from "@domain/dtos/hotelBooking/hotelBookingReport.dto";
 
 export interface IHotelBookingRepo extends IBaseRepository<HotelBookingEntity> {
   getHotelBookings(params: {
@@ -118,4 +122,36 @@ export interface IHotelBookingRepo extends IBaseRepository<HotelBookingEntity> {
     bookingStatusDistribution: { name: string; value: number }[];
     topHotelsByBookings: { name: string; bookings: number }[];
   }>;
+
+  getHotelBookingReport(params: {
+    hotelId: string;
+    status?: BOOKING_STATUS;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+  }): Promise<{ items: HotelBookingReportItem[]; total: number }>;
+
+  getAllHotelBookingsForReport(params: {
+    hotelId: string;
+    status?: BOOKING_STATUS;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<HotelBookingReportItem[]>;
+
+  getAdminHotelReport(params: {
+    status?: BOOKING_STATUS;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+  }): Promise<{ items: IAdminHotelReportItem[]; total: number }>;
+
+  getAllAdminHotelBookingsForReport(params: {
+    status?: BOOKING_STATUS;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<IAdminHotelReportItem[]>;
 }

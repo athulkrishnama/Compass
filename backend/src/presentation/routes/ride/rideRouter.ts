@@ -25,7 +25,7 @@ export class RideRouter {
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.TRAVELER]),
       (req, res, next) => {
-        rideController.handleCreateRide(req, res, next);
+        rideController.handleSearchCab(req, res, next);
       },
     );
 
@@ -62,6 +62,24 @@ export class RideRouter {
       authMiddleware.authorizeRole([ROLES.TRAVELER]),
       (req, res, next) => {
         rideController.getRiderActiveRide(req, res, next);
+      },
+    );
+
+    this._router.get(
+      RIDE_ROUTES.DRIVER_REPORT,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.CAB]),
+      (req, res, next) => {
+        rideController.getDriverReport(req, res, next);
+      },
+    );
+
+    this._router.get(
+      RIDE_ROUTES.DRIVER_REPORT_PDF,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.CAB]),
+      (req, res, next) => {
+        rideController.getDriverReportPdf(req, res, next);
       },
     );
 

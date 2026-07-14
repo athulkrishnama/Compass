@@ -3,9 +3,13 @@ import { BaseRepository } from "../base/base.repo";
 import { IRideDocument } from "./ride.schema";
 import { IRideRepo } from "@application/interfaces/repository/ride/ride.repo.interface";
 import { inject, injectable } from "tsyringe";
-import { Model, Types, RootFilterQuery } from "mongoose";
+import { Model, Types, RootFilterQuery, PipelineStage } from "mongoose";
 import { RIDE_STATUSES } from "@domain/types/rideStatus";
 import { env } from "@config/envConfig";
+import {
+  DriverRideReportItem,
+  IAdminCabReportItem,
+} from "@domain/dtos/ride/driverRideReport.dto";
 @injectable()
 export class RideRepo
   extends BaseRepository<RideEntity, IRideDocument>
@@ -585,5 +589,203 @@ export class RideRepo
       paymentMethod: doc.paymentMethod,
       remainingAmount: doc.remainingAmount ?? 0,
     };
+  }
+
+  private _buildRideReportPipeline(params: {
+    driverId?: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Record<string, unknown>[] {
+    const match: Record<string, unknown> = {};
+    if (params.driverId) {
+      match.driver_id = new Types.ObjectId(params.driverId);
+    }
+    if (params.status) match.status = params.status;
+    if (params.dateFrom || params.dateTo) {
+      const dateFilter: Record<string, Date> = {};
+      if (params.dateFrom) dateFilter.$gte = params.dateFrom;
+      if (params.dateTo) dateFilter.$lte = params.dateTo;
+      match.createdAt = dateFilter;
+    }
+    const pipeline: Record<string, unknown>[] = [
+      { $match: match },
+      { $addFields: { riderObjectId: { $toObjectId: "$rider_id" } } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "riderObjectId",
+          foreignField: "_id",
+          as: "rider",
+        },
+      },
+      { $unwind: { path: "$rider", preserveNullAndEmptyArrays: true } },
+      { $addFields: { driverObjectId: { $toObjectId: "$driver_id" } } },
+      {
+        $lookup: {
+          from: "cabs",
+          localField: "driverObjectId",
+          foreignField: "_id",
+          as: "cab",
+        },
+      },
+      { $unwind: { path: "$cab", preserveNullAndEmptyArrays: true } },
+      { $addFields: { cabUserObjectId: { $toObjectId: "$cab.userId" } } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "cabUserObjectId",
+          foreignField: "_id",
+          as: "driver",
+        },
+      },
+      { $unwind: { path: "$driver", preserveNullAndEmptyArrays: true } },
+    ];
+    if (params.search) {
+      pipeline.push({
+        $match: { "rider.full_name": { $regex: params.search, $options: "i" } },
+      });
+    }
+    pipeline.push({ $sort: { createdAt: -1 } });
+    return pipeline;
+  }
+
+  async getDriverRideReport(params: {
+    driverId: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+    limit: number;
+  }): Promise<{ items: DriverRideReportItem[]; total: number }> {
+    const pipeline = this._buildRideReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $facet: {
+          items: [
+            { $skip: (params.pageNo - 1) * params.limit },
+            { $limit: params.limit },
+            {
+              $project: {
+                bookingId: { $toString: "$_id" },
+                username: { $ifNull: ["$rider.full_name", "Unknown"] },
+                amount: "$selected_fare.fare",
+                status: 1,
+                date: {
+                  $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                },
+              },
+            },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    const facet = result[0];
+    const items = (facet?.items || []).map(
+      (item: Record<string, unknown>, idx: number) => ({
+        ...item,
+        index: (params.pageNo - 1) * params.limit + idx + 1,
+      }),
+    ) as DriverRideReportItem[];
+    return { items, total: facet?.total?.[0]?.count || 0 };
+  }
+
+  async getAllDriverRidesForReport(params: {
+    driverId: string;
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<DriverRideReportItem[]> {
+    const pipeline = this._buildRideReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $project: {
+          bookingId: { $toString: "$_id" },
+          username: { $ifNull: ["$rider.full_name", "Unknown"] },
+          amount: "$selected_fare.fare",
+          status: 1,
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    return result.map((item: Record<string, unknown>, idx: number) => ({
+      ...item,
+      index: idx + 1,
+    })) as DriverRideReportItem[];
+  }
+
+  async getAdminCabReport(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    pageNo: number;
+    limit: number;
+  }): Promise<{ items: IAdminCabReportItem[]; total: number }> {
+    const pipeline = this._buildRideReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $facet: {
+          items: [
+            { $skip: (params.pageNo - 1) * params.limit },
+            { $limit: params.limit },
+            {
+              $project: {
+                bookingId: { $toString: "$_id" },
+                driverName: { $ifNull: ["$driver.full_name", "Unknown"] },
+                username: { $ifNull: ["$rider.full_name", "Unknown"] },
+                amount: "$selected_fare.fare",
+                status: 1,
+                date: {
+                  $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                },
+              },
+            },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    const facet = result[0];
+    const items = (facet?.items || []).map(
+      (item: Record<string, unknown>, idx: number) => ({
+        ...item,
+        index: (params.pageNo - 1) * params.limit + idx + 1,
+      }),
+    ) as IAdminCabReportItem[];
+    return { items, total: facet?.total?.[0]?.count || 0 };
+  }
+
+  async getAllAdminCabRidesForReport(params: {
+    status?: string;
+    search?: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+  }): Promise<IAdminCabReportItem[]> {
+    const pipeline = this._buildRideReportPipeline(params);
+    const result = await this._model.aggregate([
+      ...pipeline,
+      {
+        $project: {
+          bookingId: { $toString: "$_id" },
+          driverName: { $ifNull: ["$driver.full_name", "Unknown"] },
+          username: { $ifNull: ["$rider.full_name", "Unknown"] },
+          amount: "$selected_fare.fare",
+          status: 1,
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+        },
+      },
+    ] as unknown as PipelineStage[]);
+    return result.map((item: Record<string, unknown>, idx: number) => ({
+      ...item,
+      index: idx + 1,
+    })) as IAdminCabReportItem[];
   }
 }

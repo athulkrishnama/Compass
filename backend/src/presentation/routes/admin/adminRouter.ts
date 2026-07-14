@@ -80,11 +80,47 @@ export class AdminRouter {
     );
 
     this._router.get(
-      "/dashboard-stats",
+      AdminRoutes.DASHBOARD_STATS,
       authMiddleware.check,
       authMiddleware.authorizeRole([ROLES.ADMIN]),
       (req: Request, res: Response, next: NextFunction) => {
         adminController.handleGetDashboardStats(req, res, next);
+      },
+    );
+
+    this._router.get(
+      AdminRoutes.HOTEL_REPORT,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.getHotelReport(req, res, next);
+      },
+    );
+
+    this._router.get(
+      AdminRoutes.HOTEL_REPORT_PDF,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.getHotelReportPdf(req, res, next);
+      },
+    );
+
+    this._router.get(
+      AdminRoutes.CAB_REPORT,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.getCabReport(req, res, next);
+      },
+    );
+
+    this._router.get(
+      AdminRoutes.CAB_REPORT_PDF,
+      authMiddleware.check,
+      authMiddleware.authorizeRole([ROLES.ADMIN]),
+      (req: Request, res: Response, next: NextFunction) => {
+        adminController.getCabReportPdf(req, res, next);
       },
     );
   }
