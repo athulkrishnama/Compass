@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StatsCards from "@/components/admin/dashboard/StatsCards";
 import DashboardCharts from "@/components/admin/dashboard/DashboardCharts";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "@/components/shared/loading/Loading";
 import type { DashboardFilter } from "@/types/admin/dashboard.types"; // Updated import path context
 import { createGetAdminDashboardStatsQueryOption } from "@/queryOptions/adminDashboardQueryOptions";
 
@@ -31,7 +32,7 @@ const AdminDashboard: React.FC = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center p-12">
-                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <Loading />
             </div>
         );
     }
