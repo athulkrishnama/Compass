@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import Loading from "@/components/shared/loading/Loading";
 import Table from "@/components/shared/Table/Table";
 import Pagination from "@/components/shared/Pagination/Pagination";
 import translationKey from "@/utils/i18n/translationKey";
@@ -55,7 +56,7 @@ export function ReportTable<T>({
             <div className="overflow-x-auto min-h-[300px]">
                 {isLoading ? (
                     <div className="flex justify-center items-center h-64">
-                        <div className="w-8 h-8 border-4 border-zinc-900 dark:border-white border-t-transparent rounded-full animate-spin"></div>
+                        <Loading />
                     </div>
                 ) : (
                     <Table

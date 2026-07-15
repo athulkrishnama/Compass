@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Wallet as WalletIcon, Loader2, Plus } from "lucide-react";
+import { Wallet as WalletIcon, Plus } from "lucide-react";
 import {
     getWalletSummary,
     getWalletTransactions,
@@ -10,6 +10,7 @@ import translationKey from "@/utils/i18n/translationKey";
 import { Button } from "@/components/ui/button";
 
 import { WalletSummary } from "./WalletSummary";
+import Loading from "@/components/shared/loading/Loading";
 import { WalletTransactions } from "./WalletTransactions";
 import { WalletTopUpModal } from "./WalletTopUpModal";
 
@@ -51,7 +52,7 @@ export function WalletComponent({
     if (isLoadingSummary || isLoadingTransactions) {
         return (
             <div className="flex justify-center items-center h-[50vh]">
-                <Loader2 className="w-8 h-8 animate-spin text-neutral-900" />
+                <Loading />
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getRideCabDetailsQueryOptions } from "@/queryOptions/rideQueryOptions";
 import { Star, Phone, ShieldCheck } from "lucide-react";
+import Loading from "@/components/shared/loading/Loading";
 
 interface RideCabDetailsProps {
     rideId: string;
@@ -13,12 +14,8 @@ const RideCabDetails = ({ rideId }: RideCabDetailsProps) => {
 
     if (isLoading) {
         return (
-            <div className="w-full bg-white rounded-3xl p-6 border border-neutral-200 flex items-center justify-center min-h-[200px] animate-pulse shrink-0">
-                <div className="flex flex-col items-center gap-4">
-                    <div className="w-16 h-16 bg-neutral-200 rounded-full"></div>
-                    <div className="w-32 h-4 bg-neutral-200 rounded"></div>
-                    <div className="w-48 h-3 bg-neutral-200 rounded mt-2"></div>
-                </div>
+            <div className="w-full min-h-[200px] bg-white rounded-3xl overflow-hidden border border-neutral-200">
+                <Loading />
             </div>
         );
     }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getDriverReviewsQueryOptions } from "@/queryOptions/reviewQueryOptions";
 import ReviewCard from "@/components/shared/review/ReviewCard";
-import { Loader2 } from "lucide-react";
+import Loading from "@/components/shared/loading/Loading";
 import StarRatingDisplay from "@/components/shared/review/StarRatingDisplay";
 
 const DriverReviews = () => {
@@ -16,7 +16,7 @@ const DriverReviews = () => {
     if (isLoading) {
         return (
             <div className="w-full h-full flex justify-center items-center">
-                <Loader2 className="w-8 h-8 animate-spin text-black" />
+                <Loading />
             </div>
         );
     }

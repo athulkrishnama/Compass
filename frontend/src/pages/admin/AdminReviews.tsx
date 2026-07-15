@@ -5,7 +5,7 @@ import {
     getAdminHotelReviewsQueryOptions,
 } from "@/queryOptions/reviewQueryOptions";
 import ReviewCard from "@/components/shared/review/ReviewCard";
-import { Loader2 } from "lucide-react";
+import Loading from "@/components/shared/loading/Loading";
 import type { IReviewAdminFilters } from "@/types/api/requests/reviewRequests";
 
 const AdminReviews = () => {
@@ -109,7 +109,7 @@ const AdminReviews = () => {
 
             {isLoading ? (
                 <div className="w-full py-20 flex justify-center items-center">
-                    <Loader2 className="w-8 h-8 animate-spin text-black" />
+                    <Loading />
                 </div>
             ) : reviews.length === 0 ? (
                 <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">

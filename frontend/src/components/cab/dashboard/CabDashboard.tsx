@@ -6,6 +6,7 @@ import CabStatsCards from "./CabStatsCards";
 import CabDashboardCharts from "./CabDashboardCharts";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import Loading from "@/components/shared/loading/Loading";
 
 export const CabDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -36,7 +37,7 @@ export const CabDashboard: React.FC = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center p-12 h-screen bg-gray-50 dark:bg-gray-900">
-                <div className="w-8 h-8 border-4 border-gray-800 dark:border-gray-200 border-t-transparent rounded-full animate-spin"></div>
+                <Loading />
             </div>
         );
     }

@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getHotelReviewsQueryOptions } from "@/queryOptions/reviewQueryOptions";
 import ReviewCard from "@/components/shared/review/ReviewCard";
 import StarRatingDisplay from "@/components/shared/review/StarRatingDisplay";
-import { Loader2, MessageSquare } from "lucide-react";
+import Loading from "@/components/shared/loading/Loading";
+import { MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HotelReviewsSectionProps {
@@ -21,7 +22,7 @@ const HotelReviewsSection = ({ hotelId }: HotelReviewsSectionProps) => {
     if (isLoading) {
         return (
             <div className="py-12 flex justify-center items-center">
-                <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+                <Loading />
             </div>
         );
     }
