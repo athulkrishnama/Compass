@@ -29,11 +29,11 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            if [ ! -d "/app/.git" ]; then
-              git clone https://github.com/${{ github.repository }}.git /app
-              cd /app/backend
+            if [ ! -d "./app/.git" ]; then
+              git clone https://github.com/${{ github.repository }}.git app
+              cd app/backend
             else
-              cd /app/backend
+              cd app/backend
               git pull origin release
             fi
             docker compose pull
