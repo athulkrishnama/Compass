@@ -35,6 +35,7 @@ jobs:
             else
               cd app/backend
               git pull origin release
+              docker compose down
             fi
             docker compose pull
             docker compose up -d
