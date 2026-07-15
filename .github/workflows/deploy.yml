@@ -21,3 +21,20 @@ jobs:
           context: ./backend
           push: true
           tags: athulkrishnama/compass:latest
+      
+      - name: EC2 Setup
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            if [ ! -d "/app/.git" ]; then
+              git clone https://github.com{{ github.repository }}.git /app
+              cd /app/backend
+            else
+              cd /app/backend
+              git pull origin release
+            fi
+            docker compose pull
+            docker compose up -d
