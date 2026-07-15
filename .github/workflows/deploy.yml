@@ -30,7 +30,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             if [ ! -d "/app/.git" ]; then
-              git clone https://github.com{{ github.repository }}.git /app
+              git clone https://github.com/${{ github.repository }}.git /app
               cd /app/backend
             else
               cd /app/backend
