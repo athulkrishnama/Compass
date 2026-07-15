@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Wallet as WalletIcon, Loader2, Plus } from "lucide-react";
+import { Wallet as WalletIcon, Plus } from "lucide-react";
 import {
     getWalletSummary,
     getWalletTransactions,

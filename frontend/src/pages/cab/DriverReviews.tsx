@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getDriverReviewsQueryOptions } from "@/queryOptions/reviewQueryOptions";
 import ReviewCard from "@/components/shared/review/ReviewCard";
 import Loading from "@/components/shared/loading/Loading";
-import { Loader2 } from "lucide-react";
 import StarRatingDisplay from "@/components/shared/review/StarRatingDisplay";
 
 const DriverReviews = () => {

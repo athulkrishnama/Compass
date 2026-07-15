@@ -6,7 +6,6 @@ import {
 } from "@/queryOptions/reviewQueryOptions";
 import ReviewCard from "@/components/shared/review/ReviewCard";
 import Loading from "@/components/shared/loading/Loading";
-import { Loader2 } from "lucide-react";
 import type { IReviewAdminFilters } from "@/types/api/requests/reviewRequests";
 
 const AdminReviews = () => {
