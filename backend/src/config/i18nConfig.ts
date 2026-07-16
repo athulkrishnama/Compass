@@ -15,3 +15,5 @@ i18next
     },
     fallbackLng: "en",
   });
+
+export default i18next;

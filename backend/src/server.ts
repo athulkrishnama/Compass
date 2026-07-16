@@ -13,7 +13,7 @@ import { AdminRouter } from "presentation/routes/admin/adminRouter";
 import cookieParser from "cookie-parser";
 import "@config/i18nConfig";
 import middleware from "i18next-http-middleware";
-import i18next from "i18next";
+import i18next from "@config/i18nConfig";
 import { CabRouter } from "@presentation/routes/cab/cabRouter";
 import { HotelRouter } from "@presentation/routes/hotel/hotelRouter";
 import { RoomVariantRouter } from "@presentation/routes/roomVariant/roomVariantRouter";
