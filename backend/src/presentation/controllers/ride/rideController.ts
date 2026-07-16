@@ -79,7 +79,10 @@ export class RideController {
 
   async handleSearchCab(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = createRideValidationSchema.safeParse(req.body);
+      const data = createRideValidationSchema.safeParse({
+        ...req.body,
+        userId: req.user.id,
+      });
 
       if (!data.success) {
         throw new InvalideDataException(data.error.issues[0].message);
