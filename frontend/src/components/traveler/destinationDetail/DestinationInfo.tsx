@@ -1,13 +1,6 @@
 import { motion } from "framer-motion";
-import {
-    Clock,
-    MapPin,
-    Calendar,
-    Accessibility,
-    ArrowRight,
-} from "lucide-react";
+import { Clock, MapPin, Calendar, Accessibility } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import translationKey from "@/utils/i18n/translationKey";
@@ -166,11 +159,6 @@ function DestinationInfo({
                         </div>
                     )}
                 </div>
-
-                <Button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-6 rounded-xl font-semibold text-sm group">
-                    {t(translationKey.destinationDetail.bookExperience)}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
             </Card>
         </motion.div>
     );
