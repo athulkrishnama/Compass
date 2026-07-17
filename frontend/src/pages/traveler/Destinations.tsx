@@ -70,7 +70,7 @@ function Destinations() {
                     fetchNextPage();
                 }
             },
-            { threshold: 0.3 }
+            { rootMargin: "200px 0px", threshold: 0 }
         );
 
         if (loadMoreRef.current) {
