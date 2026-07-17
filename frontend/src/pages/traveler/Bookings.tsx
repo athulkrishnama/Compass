@@ -54,7 +54,7 @@ function Bookings() {
                     activeQuery.fetchNextPage();
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.3 }
         );
 
         const currentTarget = observerTarget.current;

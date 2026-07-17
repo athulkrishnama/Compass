@@ -70,7 +70,7 @@ function Destinations() {
                     fetchNextPage();
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.3 }
         );
 
         if (loadMoreRef.current) {
