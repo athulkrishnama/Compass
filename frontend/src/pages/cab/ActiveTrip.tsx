@@ -131,6 +131,16 @@ export default function ActiveTripPage() {
                     break;
                 case DRIVER_EVENTS_TYPES.CANCELLED:
                     setPhase(RIDE_STATUSES.CANCELLED);
+                    toast.error("Ride Cancelled", {
+                        description: data.payload.message,
+                    });
+                    queryClient.invalidateQueries({
+                        queryKey: [QUERY_KEYS.ACTIVE_RIDE],
+                    });
+                    navigate({
+                        to: "/cab/ride/$id",
+                        params: { id: rideDetails._id },
+                    });
                     break;
             }
         },
@@ -369,11 +379,9 @@ export default function ActiveTripPage() {
             <ActiveTripRecordCashModal
                 isOpen={
                     isManualCashOpen ||
-                    (
-                        phase === RIDE_STATUSES.COMPLETED &&
+                    (phase === RIDE_STATUSES.COMPLETED &&
                         rideDetails.paymentMethod === "CASH" &&
-                        rideDetails.paymentStatus !== "SUCCESS"
-                    )
+                        rideDetails.paymentStatus !== "SUCCESS")
                 }
                 tripId={rideDetails._id}
                 expectedAmount={rideDetails.selected_fare?.fare ?? 0}
