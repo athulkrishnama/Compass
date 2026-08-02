@@ -59,11 +59,51 @@ export function ReportTable<T>({
                         <Loading />
                     </div>
                 ) : (
-                    <Table
-                        headers={tableHeaders}
-                        data={dataWithIndex}
-                        containerClassName="border-0 shadow-none"
-                    />
+                    <>
+                        {/* Desktop View */}
+                        <div className="hidden md:block">
+                            <Table
+                                headers={tableHeaders}
+                                data={dataWithIndex}
+                                containerClassName="border-0 shadow-none"
+                            />
+                        </div>
+
+                        {/* Mobile View */}
+                        <div className="md:hidden grid grid-cols-1 gap-4 p-4 bg-zinc-50 dark:bg-zinc-900/50">
+                            {dataWithIndex.length === 0 ? (
+                                <div className="text-center py-8 text-sm text-zinc-500">
+                                    {t(translationKey.reports.noDataFound)}
+                                </div>
+                            ) : (
+                                dataWithIndex.map((row, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="bg-white dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col gap-3 overflow-hidden"
+                                    >
+                                        {tableHeaders.map((col, cIdx) => (
+                                            <div
+                                                key={cIdx}
+                                                className={`flex justify-between items-start text-sm ${
+                                                    cIdx !==
+                                                    tableHeaders.length - 1
+                                                        ? "border-b border-zinc-100 dark:border-zinc-800 pb-3"
+                                                        : ""
+                                                }`}
+                                            >
+                                                <span className="text-zinc-500 font-medium whitespace-nowrap mr-4">
+                                                    {col.label}
+                                                </span>
+                                                <div className="text-right flex-1 break-words overflow-hidden text-zinc-900 dark:text-zinc-100 flex justify-end">
+                                                    {col.render(row)}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </>
                 )}
             </div>
 
