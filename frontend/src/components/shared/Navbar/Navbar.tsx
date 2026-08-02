@@ -150,7 +150,8 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                         )}
                     </div>
 
-                    <div className="flex lg:hidden">
+                    <div className="flex lg:hidden items-center gap-2">
+                        {isLoggedin() && <NotificationBell />}
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-black hover:bg-gray-100 focus:outline-none"
@@ -202,63 +203,25 @@ function Navbar({ routes, logoutRoute }: propTypes) {
                             <div className="pt-4 border-t border-gray-100 space-y-4">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm font-medium text-gray-500">
-                                        {isLoggedin()
-                                            ? t(
-                                                  translationKey.common
-                                                      .notifications
-                                              )
-                                            : t(translationKey.common.language)}
+                                        {t(translationKey.common.language)}
                                     </span>
-                                    {isLoggedin() ? (
-                                        <NotificationBell />
-                                    ) : (
-                                        <Select
-                                            value={lang}
-                                            onValueChange={handleLanguageChange}
-                                        >
-                                            <SelectTrigger className="w-[140px]">
-                                                <LanguagesIcon className="mr-2 h-4 w-4" />
-                                                <SelectValue />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {Languages.map((l, i) => (
-                                                    <SelectItem
-                                                        key={i}
-                                                        value={l}
-                                                    >
-                                                        {l}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    )}
+                                    <Select
+                                        value={lang}
+                                        onValueChange={handleLanguageChange}
+                                    >
+                                        <SelectTrigger className="w-[140px]">
+                                            <LanguagesIcon className="mr-2 h-4 w-4" />
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {Languages.map((l, i) => (
+                                                <SelectItem key={i} value={l}>
+                                                    {l}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 </div>
-                                {isLoggedin() && (
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm font-medium text-gray-500">
-                                            {t(translationKey.common.language)}
-                                        </span>
-                                        <Select
-                                            value={lang}
-                                            onValueChange={handleLanguageChange}
-                                        >
-                                            <SelectTrigger className="w-[140px]">
-                                                <LanguagesIcon className="mr-2 h-4 w-4" />
-                                                <SelectValue />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {Languages.map((l, i) => (
-                                                    <SelectItem
-                                                        key={i}
-                                                        value={l}
-                                                    >
-                                                        {l}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                )}
 
                                 {isLoggedin() ? (
                                     <Button
