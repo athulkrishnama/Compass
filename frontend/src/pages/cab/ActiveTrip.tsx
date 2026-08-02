@@ -50,6 +50,7 @@ export default function ActiveTripPage() {
     const [otpInput, setOtpInput] = useState("");
     const [cancelOpen, setCancelOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isManualCashOpen, setIsManualCashOpen] = useState(false);
     const prevRideIdRef = useRef<string | undefined>(undefined);
 
     // Initialize or reset phase when data is fetched or ride changes
@@ -337,6 +338,7 @@ export default function ActiveTripPage() {
                                 markers={markers}
                                 routeCoordinates={routeCoordinates}
                                 mapCenter={mapCenter}
+                                onRecordCash={() => setIsManualCashOpen(true)}
                             />
                         )}
                     </div>
@@ -366,18 +368,29 @@ export default function ActiveTripPage() {
 
             <ActiveTripRecordCashModal
                 isOpen={
-                    phase === RIDE_STATUSES.COMPLETED &&
-                    rideDetails.paymentMethod === "CASH" &&
-                    rideDetails.paymentStatus !== "SUCCESS"
+                    isManualCashOpen ||
+                    (
+                        phase === RIDE_STATUSES.COMPLETED &&
+                        rideDetails.paymentMethod === "CASH" &&
+                        rideDetails.paymentStatus !== "SUCCESS"
+                    )
                 }
                 tripId={rideDetails._id}
                 expectedAmount={rideDetails.selected_fare?.fare ?? 0}
                 onSuccess={() => {
+                    setIsManualCashOpen(false);
                     navigate({ to: "/cab/history" });
                     queryClient.invalidateQueries({
                         queryKey: [QUERY_KEYS.ACTIVE_RIDE],
                     });
                 }}
+                onClose={
+                    // Only allow closing the modal if it was manually opened.
+                    // When auto-opened for a CASH payment, the driver must complete it.
+                    isManualCashOpen
+                        ? () => setIsManualCashOpen(false)
+                        : undefined
+                }
             />
         </div>
     );

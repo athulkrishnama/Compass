@@ -4,18 +4,19 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { recordCashPayment } from "@/services/api/paymentService";
 import { getWalletSummary } from "@/services/api/walletService";
-import { Loader2, Wallet } from "lucide-react";
+import { Loader2, Wallet, X } from "lucide-react";
 
 interface ActiveTripRecordCashModalProps {
     isOpen: boolean;
     tripId: string;
     expectedAmount: number;
     onSuccess: () => void;
+    onClose?: () => void;
 }
 
 export const ActiveTripRecordCashModal: React.FC<
     ActiveTripRecordCashModalProps
-> = ({ isOpen, tripId, expectedAmount, onSuccess }) => {
+> = ({ isOpen, tripId, expectedAmount, onSuccess, onClose }) => {
     const [amount, setAmount] = useState<string>(expectedAmount.toString());
 
     const { data: walletSummary, isLoading: isWalletLoading } = useQuery({
@@ -81,9 +82,20 @@ export const ActiveTripRecordCashModal: React.FC<
                         exit={{ opacity: 0, y: 20 }}
                         className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-sm"
                     >
-                        <h2 className="text-xl font-bold text-gray-900 mb-2">
-                            Collect Cash
-                        </h2>
+                        <div className="flex items-start justify-between mb-2">
+                            <h2 className="text-xl font-bold text-gray-900">
+                                Collect Cash
+                            </h2>
+                            {onClose && (
+                                <button
+                                    onClick={onClose}
+                                    className="p-1.5 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors -mt-1 -mr-1"
+                                    aria-label="Close"
+                                >
+                                    <X className="w-4 h-4" />
+                                </button>
+                            )}
+                        </div>
                         <p className="text-sm text-gray-500 mb-6">
                             The rider chose to pay with cash. Please collect the
                             fare and enter the amount received.

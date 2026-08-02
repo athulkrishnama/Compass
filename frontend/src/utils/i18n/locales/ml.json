@@ -39,7 +39,8 @@
     "tripOverview": "യാത്രാ വിവരണം",
     "totalFare": "ആകെ വാടക",
     "commission10": "കമ്മീഷൻ (10%)",
-    "yourEarnings": "നിങ്ങളുടെ വരുമാനം"
+    "yourEarnings": "നിങ്ങളുടെ വരുമാനം",
+    "markAsPaidInCash": "പണമായി അടച്ചതായി അടയാളപ്പെടുത്തുക"
   },
   "activities": {
     "BIRD_WATCHING": "പക്ഷി നിരീക്ഷണം",

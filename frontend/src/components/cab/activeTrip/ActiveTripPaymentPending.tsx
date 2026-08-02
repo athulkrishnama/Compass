@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import MapboxMap, { type MapboxMarker } from "@/components/shared/MapboxMap";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import { Banknote } from "lucide-react";
 
 interface ActiveTripPaymentPendingProps {
     paymentMethod?: string;
@@ -11,6 +12,7 @@ interface ActiveTripPaymentPendingProps {
     markers: MapboxMarker[];
     routeCoordinates: [number, number][];
     mapCenter?: [number, number];
+    onRecordCash?: () => void;
 }
 
 export function ActiveTripPaymentPending({
@@ -19,6 +21,7 @@ export function ActiveTripPaymentPending({
     markers,
     routeCoordinates,
     mapCenter,
+    onRecordCash,
 }: ActiveTripPaymentPendingProps) {
     const { t } = useTranslation();
     const commission = fare * 0.1;
@@ -33,6 +36,16 @@ export function ActiveTripPaymentPending({
             className="bg-white rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] p-6 md:p-8 flex flex-col items-center max-w-lg mx-auto w-full border border-gray-200"
         >
             <div className="w-12 h-1.5 bg-gray-200 rounded-full mb-6" />
+
+            {onRecordCash && (
+                <button
+                    onClick={onRecordCash}
+                    className="w-full mb-6 py-3 px-4 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 text-sm font-semibold hover:bg-emerald-100 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                >
+                    <Banknote className="w-5 h-5" />
+                    {t(translationKey.activeTrip.markAsPaidInCash)}
+                </button>
+            )}
 
             <div className="flex flex-col items-center text-center w-full mb-6">
                 <div className="relative mb-6">

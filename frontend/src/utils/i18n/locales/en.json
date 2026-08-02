@@ -39,7 +39,8 @@
     "tripOverview": "Trip Overview",
     "totalFare": "Total Fare",
     "commission10": "Commission (10%)",
-    "yourEarnings": "Your Earnings"
+    "yourEarnings": "Your Earnings",
+    "markAsPaidInCash": "Mark as Paid in Cash"
   },
   "activities": {
     "BIRD_WATCHING": "Bird Watching",

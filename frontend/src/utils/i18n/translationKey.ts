@@ -1115,6 +1115,7 @@ export default {
         totalFare: "activeTrip.totalFare",
         commission10: "activeTrip.commission10",
         yourEarnings: "activeTrip.yourEarnings",
+        markAsPaidInCash: "activeTrip.markAsPaidInCash",
     },
     cabHistory: {
         title: "cabHistory.title",
