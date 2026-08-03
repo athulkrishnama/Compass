@@ -169,25 +169,26 @@ const DriverRideDetail = () => {
                     </div>
 
                     {/* Payment Status */}
-                    {ride.paymentStatus && (
-                        <>
-                            <div className="h-px bg-black/10" />
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm text-gray-500">
-                                    Payment
-                                </span>
-                                <span
-                                    className={`text-sm font-semibold ${
-                                        ride.paymentStatus === "SUCCESS"
-                                            ? "text-green-600"
-                                            : "text-amber-600"
-                                    }`}
-                                >
-                                    {ride.paymentStatus}
-                                </span>
-                            </div>
-                        </>
-                    )}
+                    {ride.paymentStatus &&
+                        ride.status !== RIDE_STATUSES.CANCELLED && (
+                            <>
+                                <div className="h-px bg-black/10" />
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm text-gray-500">
+                                        Payment
+                                    </span>
+                                    <span
+                                        className={`text-sm font-semibold ${
+                                            ride.paymentStatus === "SUCCESS"
+                                                ? "text-green-600"
+                                                : "text-amber-600"
+                                        }`}
+                                    >
+                                        {ride.paymentStatus}
+                                    </span>
+                                </div>
+                            </>
+                        )}
 
                     {/* Timeline */}
                     {ride.events && ride.events.length > 0 && (

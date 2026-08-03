@@ -5,11 +5,31 @@ export interface IHotelReviewDocument extends Document {
   bookingId: string;
   hotelId: string;
   reviewerId: string;
-  rating: number;
-  review: string;
+  ratings: {
+    hospitality?: number;
+    staffFriendliness?: number;
+    cleanliness?: number;
+    comfort?: number;
+    roomQuality?: number;
+    safety?: number;
+  };
+  comment?: string;
+  overallRating?: number;
   createdAt: Date;
   updatedAt: Date;
 }
+
+const aspectRatingsSchema = new Schema(
+  {
+    hospitality: { type: Number, min: 1, max: 5 },
+    staffFriendliness: { type: Number, min: 1, max: 5 },
+    cleanliness: { type: Number, min: 1, max: 5 },
+    comfort: { type: Number, min: 1, max: 5 },
+    roomQuality: { type: Number, min: 1, max: 5 },
+    safety: { type: Number, min: 1, max: 5 },
+  },
+  { _id: false },
+);
 
 export const hotelReviewSchema = new Schema<IHotelReviewDocument>(
   {
@@ -29,16 +49,17 @@ export const hotelReviewSchema = new Schema<IHotelReviewDocument>(
       required: true,
       index: true,
     },
-    rating: {
-      type: Number,
+    ratings: {
+      type: aspectRatingsSchema,
       required: true,
-      min: 1,
-      max: 5,
-      index: true,
     },
-    review: {
+    comment: {
       type: String,
-      required: true,
+      maxlength: 500,
+    },
+    overallRating: {
+      type: Number,
+      index: true,
     },
   },
   { timestamps: true },

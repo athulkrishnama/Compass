@@ -31,7 +31,7 @@ export default function RoomSelectionCard({
         <motion.div variants={itemVariants}>
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                 <div className="flex gap-3 sm:gap-4">
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                         <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1">
                             {name}
                         </h3>

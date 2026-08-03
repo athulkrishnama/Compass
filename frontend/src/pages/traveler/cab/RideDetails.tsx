@@ -10,6 +10,7 @@ import RideStatusSection from "@/components/traveler/cab/ride/RideStatusSection"
 import { ActiveTripOtpDisplay } from "@/components/cab/activeTrip/ActiveTripOtpDisplay";
 import RideCabDetails from "@/components/cab/RideCabDetails";
 import { RidePaymentModal } from "@/components/traveler/cab/ride/RidePaymentModal";
+import Modal from "@/components/shared/modal/Modal";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
     setActiveRide,
@@ -50,6 +51,7 @@ const RideDetails = () => {
     const { id } = useParams({ from: "/traveler/cab/ride/$id" });
     const loaderData = useLoaderData({ from: "/traveler/cab/ride/$id" });
     const [isCancelling, setIsCancelling] = useState(false);
+    const [isCancelConfirmOpen, setIsCancelConfirmOpen] = useState(false);
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
     const [isReviewOpen, setIsReviewOpen] = useState(false);
 
@@ -246,6 +248,7 @@ const RideDetails = () => {
     const handleCancelRide = () => {
         if (!ride || isCancelling) return;
         setIsCancelling(true);
+        setIsCancelConfirmOpen(false);
         socketService.emit(SocketEvents.RIDER_CANCEL_RIDE, {
             ride_id: ride._id,
         });
@@ -351,11 +354,16 @@ const RideDetails = () => {
 
                         {CANCELLABLE_STATUSES.includes(ride.status) && (
                             <button
-                                onClick={handleCancelRide}
+                                onClick={() => setIsCancelConfirmOpen(true)}
                                 disabled={isCancelling}
                                 className="w-full mt-2 py-3 px-4 rounded-xl border border-red-200 bg-red-50 text-red-600 text-sm font-medium hover:bg-red-100 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {isCancelling ? "Cancelling…" : "Cancel Ride"}
+                                {isCancelling
+                                    ? t(
+                                          translationKey.bookingDetails
+                                              .cancelling
+                                      )
+                                    : t(translationKey.activeTrip.cancelRide)}
                             </button>
                         )}
 
@@ -412,6 +420,33 @@ const RideDetails = () => {
                 title="Rate Your Ride"
                 subtitle="How was your trip with your driver?"
             />
+            <Modal
+                isOpen={isCancelConfirmOpen}
+                handleClose={() => setIsCancelConfirmOpen(false)}
+            >
+                <div className="flex flex-col items-center justify-center text-center space-y-4">
+                    <h2 className="text-xl font-bold text-gray-900">
+                        {t(translationKey.activeTrip.cancelRideTitle)}
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                        {t(translationKey.activeTrip.cancelRideDescription)}
+                    </p>
+                    <div className="flex gap-4 w-full mt-4">
+                        <button
+                            onClick={() => setIsCancelConfirmOpen(false)}
+                            className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                        >
+                            {t(translationKey.button.cancel)}
+                        </button>
+                        <button
+                            onClick={handleCancelRide}
+                            className="flex-1 py-3 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition-colors"
+                        >
+                            {t(translationKey.activeTrip.confirmCancel)}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </>
     );
 };

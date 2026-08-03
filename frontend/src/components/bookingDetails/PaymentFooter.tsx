@@ -1,26 +1,36 @@
 import { motion } from "framer-motion";
 import { BookingStatus } from "@/enums/bookingStatus";
 import { isPast, parseISO } from "date-fns";
-import { Trash2, Copy } from "lucide-react";
+import { Trash2, Copy, Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createCancelBookingMutationOptions } from "@/queryOptions/bookingQueryOptions";
 import { CancellationModal } from "./CancellationModal";
 import { toast } from "sonner";
 import type { HttpResponse } from "@/types/api/responseType";
 import type { IBookingDetailsResponseDTO } from "@/types/api/responses/bookingResponse";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
+import { HotelReviewModal } from "./HotelReviewModal/HotelReviewModal";
+import {
+    getHotelReviewEligibilityQueryOptions,
+    hotelReviewKeys,
+} from "@/queryOptions/reviewQueryOptions";
 
 interface PaymentFooterProps {
     totalAmount: number;
     paymentIntendId: string;
     bookingStatus: BookingStatus;
     checkInDate: string;
+    checkOutDate: string;
     bookingId: string;
     refundAmount?: number;
     refundStatus?: string;
+    // Hotel info for review modal
+    hotelName: string;
+    hotelCity: string;
+    hotelCoverImage?: string;
 }
 
 export function PaymentFooter({
@@ -28,20 +38,36 @@ export function PaymentFooter({
     paymentIntendId,
     bookingStatus,
     checkInDate,
+    checkOutDate,
     bookingId,
     refundAmount,
     refundStatus,
+    hotelName,
+    hotelCity,
+    hotelCoverImage,
 }: PaymentFooterProps) {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
     const [showCancelModal, setShowCancelModal] = useState(false);
+    const [showReviewModal, setShowReviewModal] = useState(false);
 
     const isCheckInPast = isPast(parseISO(checkInDate));
     const isCancelled = bookingStatus === BookingStatus.CANCELLED;
+    const isCompleted = bookingStatus === BookingStatus.COMPLETED;
     const canCancel =
         bookingStatus !== BookingStatus.COMPLETED &&
         !isCancelled &&
         !isCheckInPast;
+
+    const { data: eligibilityData } = useQuery({
+        ...getHotelReviewEligibilityQueryOptions(bookingId),
+        enabled: isCompleted,
+    });
+
+    const canReview =
+        isCompleted &&
+        eligibilityData?.data?.eligible === true &&
+        !eligibilityData?.data?.alreadyReviewed;
 
     const cancelMutation = useMutation({
         ...createCancelBookingMutationOptions(bookingId),
@@ -79,6 +105,12 @@ export function PaymentFooter({
             : refundStatus === "PARTIAL"
               ? t(translationKey.bookingDetails.halfRefund)
               : t(translationKey.bookingDetails.noRefund);
+
+    function handleReviewSubmitted() {
+        queryClient.invalidateQueries({
+            queryKey: hotelReviewKeys.eligibility(bookingId),
+        });
+    }
 
     return (
         <>
@@ -169,6 +201,17 @@ export function PaymentFooter({
                     </div>
 
                     <div className="flex items-center gap-3">
+                        {canReview && (
+                            <motion.button
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                onClick={() => setShowReviewModal(true)}
+                                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-black/90 shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
+                            >
+                                <Star className="w-4 h-4" />
+                                Write a Review
+                            </motion.button>
+                        )}
                         {canCancel && (
                             <button
                                 onClick={() => setShowCancelModal(true)}
@@ -193,6 +236,18 @@ export function PaymentFooter({
                 isPending={cancelMutation.isPending}
                 checkInDate={checkInDate}
                 totalAmount={totalAmount}
+            />
+
+            <HotelReviewModal
+                isOpen={showReviewModal}
+                onClose={() => setShowReviewModal(false)}
+                bookingId={bookingId}
+                hotelName={hotelName}
+                hotelCity={hotelCity}
+                checkInDate={checkInDate}
+                checkOutDate={checkOutDate}
+                coverImage={hotelCoverImage}
+                onReviewSubmitted={handleReviewSubmitted}
             />
         </>
     );

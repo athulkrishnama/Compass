@@ -8,11 +8,8 @@ import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
-import ReviewFormModal from "@/components/shared/review/ReviewFormModal";
-import {
-    createHotelReview,
-    checkHotelReviewEligibility,
-} from "@/services/api/reviewApiService";
+import { HotelReviewModal } from "@/components/bookingDetails/HotelReviewModal/HotelReviewModal";
+import { checkHotelReviewEligibility } from "@/services/api/reviewApiService";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -84,18 +81,6 @@ export function BookingCard({
         } finally {
             setIsCheckingEligibility(false);
         }
-    };
-
-    const handleReviewSubmit = async (data: {
-        rating: number;
-        review: string;
-    }) => {
-        await createHotelReview({
-            bookingId: id,
-            rating: data.rating,
-            review: data.review,
-        });
-        toast.success("Review submitted successfully!");
     };
 
     return (
@@ -195,12 +180,15 @@ export function BookingCard({
                 </CardContent>
             </Card>
 
-            <ReviewFormModal
+            <HotelReviewModal
                 isOpen={isReviewModalOpen}
                 onClose={() => setIsReviewModalOpen(false)}
-                onSubmit={handleReviewSubmit}
-                title="Rate Your Stay"
-                subtitle={`How was your stay at ${hotelName}?`}
+                bookingId={id}
+                hotelName={hotelName}
+                hotelCity={city}
+                checkInDate={checkInDate}
+                checkOutDate={checkOutDate}
+                coverImage={coverImage}
             />
         </motion.div>
     );

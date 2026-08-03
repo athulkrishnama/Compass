@@ -39,7 +39,8 @@
     "tripOverview": "यात्रा का विवरण",
     "totalFare": "कुल किराया",
     "commission10": "कमीशन (10%)",
-    "yourEarnings": "आपकी कमाई"
+    "yourEarnings": "आपकी कमाई",
+    "markAsPaidInCash": "नकद भुगतान के रूप में चिह्नित करें"
   },
   "activities": {
     "BIRD_WATCHING": "पक्षी दर्शन",

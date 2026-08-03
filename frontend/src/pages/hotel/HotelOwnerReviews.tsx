@@ -6,6 +6,58 @@ import { createGetHotelsByUserIdQueryOptions } from "@/queryOptions/hotelQueryOp
 import ReviewCard from "@/components/shared/review/ReviewCard";
 import { Loader2 } from "lucide-react";
 import translationKey from "@/utils/i18n/translationKey";
+import { Angry, Frown, Meh, Smile, Laugh } from "lucide-react";
+import type { IAspectAverages } from "@/types/api/responses/reviewResponses";
+
+const ASPECTS: { key: keyof IAspectAverages; label: string }[] = [
+    { key: "hospitality", label: "Hospitality" },
+    { key: "staffFriendliness", label: "Staff Friendliness" },
+    { key: "cleanliness", label: "Cleanliness" },
+    { key: "comfort", label: "Comfort" },
+    { key: "roomQuality", label: "Room Quality" },
+    { key: "safety", label: "Safety" },
+];
+
+const MOODS = [
+    { Icon: Angry, color: "#EF4444" },
+    { Icon: Frown, color: "#F97316" },
+    { Icon: Meh, color: "#EAB308" },
+    { Icon: Smile, color: "#22C55E" },
+    { Icon: Laugh, color: "#06B6D4" },
+];
+
+function AspectBar({ label, avg }: { label: string; avg: number }) {
+    const pct = ((avg - 1) / 4) * 100;
+    const moodIndex = Math.min(4, Math.max(0, Math.round(avg) - 1));
+    const mood = MOODS[moodIndex];
+    const Icon = mood.Icon;
+
+    return (
+        <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-600 w-36 flex-shrink-0">
+                {label}
+            </span>
+            <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{ width: `${pct}%`, backgroundColor: mood.color }}
+                />
+            </div>
+            <div className="flex items-center gap-1 w-16 flex-shrink-0">
+                <Icon
+                    className="w-4 h-4 flex-shrink-0"
+                    style={{ color: mood.color }}
+                />
+                <span
+                    className="text-xs font-bold"
+                    style={{ color: mood.color }}
+                >
+                    {avg.toFixed(1)}
+                </span>
+            </div>
+        </div>
+    );
+}
 
 const HotelOwnerReviews = () => {
     const { t } = useTranslation();
@@ -60,7 +112,12 @@ const HotelOwnerReviews = () => {
 
     const reviews = data?.data?.reviews || [];
     const total = data?.data?.total || 0;
+    const aspectAverages = data?.data?.aspectAverages || {};
     const totalPages = Math.ceil(total / limit);
+
+    const ratedAspects = ASPECTS.filter(
+        (a) => (aspectAverages[a.key] ?? 0) > 0
+    );
 
     return (
         <div className="p-8 max-w-5xl mx-auto w-full">
@@ -97,6 +154,7 @@ const HotelOwnerReviews = () => {
                 )}
             </div>
 
+            {/* Content area */}
             {isLoading ? (
                 <div className="w-full py-20 flex justify-center items-center">
                     <Loader2 className="w-8 h-8 animate-spin text-black" />
@@ -118,14 +176,35 @@ const HotelOwnerReviews = () => {
                     </p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {reviews.map((review) => (
-                        <ReviewCard
-                            key={review._id}
-                            review={review}
-                            showReferenceId
-                        />
-                    ))}
+                <div className="flex flex-col gap-8">
+                    {/* Rating Breakdown block */}
+                    {ratedAspects.length > 0 && (
+                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                            <h3 className="text-lg font-bold text-gray-900 mb-6">
+                                Overall Rating Breakdown
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                                {ratedAspects.map((a) => (
+                                    <AspectBar
+                                        key={a.key}
+                                        label={a.label}
+                                        avg={aspectAverages[a.key]!}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Review cards grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {reviews.map((review) => (
+                            <ReviewCard
+                                key={review._id}
+                                review={review}
+                                showReferenceId
+                            />
+                        ))}
+                    </div>
                 </div>
             )}
 

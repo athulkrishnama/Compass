@@ -4,19 +4,43 @@ export interface IEligibilityResponse {
     alreadyReviewed?: boolean;
 }
 
+export interface IReviewAspectRatings {
+    hospitality?: number;
+    staffFriendliness?: number;
+    cleanliness?: number;
+    comfort?: number;
+    roomQuality?: number;
+    safety?: number;
+}
+
+export interface IAspectAverages {
+    hospitality?: number;
+    staffFriendliness?: number;
+    cleanliness?: number;
+    comfort?: number;
+    roomQuality?: number;
+    safety?: number;
+}
+
 export interface IReviewResponse {
     _id: string;
-    rating: number;
-    review: string;
+    ratings: IReviewAspectRatings;
+    comment?: string;
+    overallRating?: number;
     createdAt: string;
     updatedAt: string;
 }
 
-export interface ICabReviewResponse extends IReviewResponse {
+export interface ICabReviewResponse {
+    _id: string;
     rideId: string;
     riderId: string;
     driverId: string;
     cabId: string;
+    rating: number;
+    review: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface IHotelReviewResponse extends IReviewResponse {
@@ -36,4 +60,5 @@ export interface IHotelReviewsListResponse {
     reviews: IHotelReviewResponse[];
     total: number;
     averageRating?: number;
+    aspectAverages?: IAspectAverages;
 }

@@ -219,18 +219,18 @@ export const ReportFilters: React.FC<ReportFiltersProps> = ({
                 </div>
             )}
 
-            <div className="flex justify-between items-center pt-2">
-                <div className="flex gap-2">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-2 gap-4 md:gap-2">
+                <div className="flex gap-2 w-full md:w-auto">
                     <Button
                         onClick={handleApply}
-                        className="h-9 px-4 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 rounded-lg text-sm font-medium transition-colors"
+                        className="flex-1 md:flex-none h-9 px-4 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 rounded-lg text-sm font-medium transition-colors"
                     >
                         {t(translationKey.reports.applyFilters)}
                     </Button>
                     <Button
                         onClick={handleClear}
                         variant="outline"
-                        className="h-9 px-4 rounded-lg text-sm font-medium"
+                        className="flex-1 md:flex-none h-9 px-4 rounded-lg text-sm font-medium"
                     >
                         {t(translationKey.reports.clearFilters)}
                     </Button>
@@ -239,7 +239,7 @@ export const ReportFilters: React.FC<ReportFiltersProps> = ({
                 <Button
                     onClick={onGeneratePdf}
                     disabled={isGeneratingPdf}
-                    className="h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-500/20 rounded-lg flex items-center gap-2 transition-all hover:-translate-y-0.5"
+                    className="h-9 px-4 w-full md:w-auto bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 text-white shadow-sm rounded-lg flex items-center justify-center md:justify-start gap-2 transition-all hover:-translate-y-0.5"
                 >
                     <Download className="w-4 h-4" />
                     {isGeneratingPdf

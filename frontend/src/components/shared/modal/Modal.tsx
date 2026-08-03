@@ -47,7 +47,7 @@ function Modal({ isOpen, children, handleClose }: propType) {
                     >
                         <div
                             onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-lg min-w-[25%] max-h-[80vh] rounded-2xl overflow-visible hide-scroll-bar shadow-2xl bg-white"
+                            className="relative w-full max-w-lg min-w-[25%] max-h-[80vh] rounded-2xl overflow-y-auto hide-scroll-bar shadow-2xl bg-white"
                         >
                             <div className="absolute inset-0 z-0">
                                 <div className="w-full h-full bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl" />

@@ -2,7 +2,8 @@ import { HotelReviewEntity } from "@domain/entities/hotelReview/hotelReview.enti
 import { IBaseRepository } from "@application/interfaces/repository/base/base.repo.interface";
 
 export interface IHotelReviewFilters {
-  rating?: number;
+  minRating?: number;
+  maxRating?: number;
   hotelId?: string;
   reviewerId?: string;
   fromDate?: Date;

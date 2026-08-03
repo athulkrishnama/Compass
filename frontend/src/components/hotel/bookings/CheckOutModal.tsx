@@ -14,7 +14,7 @@ import { createCheckOutMutationOptions } from "@/queryOptions/bookingQueryOption
 import Modal from "@/components/shared/modal/Modal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"; // Verify imports
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import translationKeys from "@/utils/i18n/translationKey";
 import type { IHotelBookingListingItem } from "@/types/api/responses/bookingResponse";
 import { QUERY_KEYS } from "@/constants/queryKeys/queryKeys";
@@ -59,10 +59,14 @@ export default function CheckOutModal({
 
     return (
         <Modal isOpen={isOpen} handleClose={onClose}>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5 p-4">
+                {/* Header */}
                 <div>
-                    <div className="flex items-center justify-between mb-2">
-                        <Badge variant="outline" className="font-mono text-xs">
+                    <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
+                        <Badge
+                            variant="outline"
+                            className="font-mono text-xs shrink-0"
+                        >
                             #BK-{booking.id.slice(-3).toUpperCase()}
                         </Badge>
                         <span className="text-sm text-muted-foreground">
@@ -73,21 +77,22 @@ export default function CheckOutModal({
                             })}
                         </span>
                     </div>
-                    <h2 className="text-2xl font-bold tracking-tight">
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
                         {t(translationKeys.checkIn.checkOutManagement)}
                     </h2>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                {/* Guest Details + Booking Summary */}
+                <div className="grid gap-4 sm:grid-cols-2">
                     {/* Guest Details */}
-                    <div className="space-y-4">
-                        <h3 className="font-semibold flex items-center gap-2 text-primary">
-                            <User className="w-4 h-4" />
+                    <div className="space-y-3">
+                        <h3 className="font-semibold flex items-center gap-2 text-primary text-sm">
+                            <User className="w-4 h-4 shrink-0" />
                             {t(translationKeys.checkIn.guestDetails)}
                         </h3>
-                        <div className="p-4 rounded-xl bg-card border shadow-sm">
+                        <div className="p-3 rounded-xl bg-card border shadow-sm">
                             <div className="flex items-start gap-3">
-                                <Avatar className="w-10 h-10 border shadow-sm">
+                                <Avatar className="w-10 h-10 border shadow-sm shrink-0">
                                     <AvatarImage
                                         src={booking.travelerProfileImage}
                                         alt={booking.guestName}
@@ -99,13 +104,13 @@ export default function CheckOutModal({
                                             .toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
-                                <div>
-                                    <p className="font-medium">
+                                <div className="min-w-0">
+                                    <p className="font-medium truncate">
                                         {booking.guestName}
                                     </p>
-                                    <div className="flex items-center gap-1.5 mt-1 text-sm text-muted-foreground">
-                                        <Mail className="w-3.5 h-3.5" />
-                                        <span>
+                                    <div className="flex items-center gap-1.5 mt-1 text-sm text-muted-foreground min-w-0">
+                                        <Mail className="w-3.5 h-3.5 shrink-0" />
+                                        <span className="truncate">
                                             {booking.travelerEmail ||
                                                 "No email provided"}
                                         </span>
@@ -128,15 +133,15 @@ export default function CheckOutModal({
                     </div>
 
                     {/* Booking Summary */}
-                    <div className="space-y-4">
-                        <h3 className="font-semibold flex items-center gap-2 text-primary">
-                            <Calendar className="w-4 h-4" />
+                    <div className="space-y-3">
+                        <h3 className="font-semibold flex items-center gap-2 text-primary text-sm">
+                            <Calendar className="w-4 h-4 shrink-0" />
                             {t(translationKeys.checkIn.bookingSummary)}
                         </h3>
-                        <div className="p-4 rounded-xl bg-card border shadow-sm space-y-3">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <p className="text-sm font-medium">
+                        <div className="p-3 rounded-xl bg-card border shadow-sm space-y-3">
+                            <div className="flex justify-between items-start gap-2">
+                                <div className="min-w-0">
+                                    <p className="text-sm font-medium truncate">
                                         {booking.roomVariantName}
                                     </p>
                                     <p className="text-xs text-muted-foreground mt-0.5">
@@ -152,7 +157,7 @@ export default function CheckOutModal({
                                         )}
                                     </p>
                                 </div>
-                                <BedDouble className="w-5 h-5 text-muted-foreground" />
+                                <BedDouble className="w-5 h-5 text-muted-foreground shrink-0" />
                             </div>
 
                             <div className="pt-3 border-t grid grid-cols-2 gap-2 text-sm">
@@ -187,22 +192,26 @@ export default function CheckOutModal({
                     </div>
                 </div>
 
-                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-start gap-3">
-                    <LogOut className="w-5 h-5 text-blue-600 mt-0.5" />
-                    <div>
+                {/* Confirmation banner */}
+                <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 flex items-start gap-3">
+                    <LogOut className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+                    <div className="min-w-0">
                         <h4 className="text-sm font-medium text-blue-900">
                             {t(translationKeys.checkIn.readyToCheckOut)}
                         </h4>
-                        <p className="text-sm text-blue-700 mt-1">
+                        <p className="text-sm text-blue-700 mt-1 break-words">
                             {t(
                                 translationKeys.checkIn
                                     .checkOutConfirmationMessage,
-                                { roomNumber: booking.roomNumbers.join(", ") }
+                                {
+                                    roomNumber: booking.roomNumbers.join(", "),
+                                }
                             )}
                         </p>
                     </div>
                 </div>
 
+                {/* Error alert */}
                 {checkOutError && (
                     <Alert variant="destructive">
                         <AlertCircle className="h-4 w-4" />
@@ -215,18 +224,20 @@ export default function CheckOutModal({
                     </Alert>
                 )}
 
-                <div className="flex justify-end gap-3 pt-2">
+                {/* Action buttons */}
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-1">
                     <Button
                         variant="outline"
                         onClick={onClose}
                         disabled={isCheckingOut}
+                        className="w-full sm:w-auto"
                     >
                         {t(translationKeys.checkIn.cancel)}
                     </Button>
                     <Button
                         onClick={handleCheckOut}
                         disabled={isCheckingOut}
-                        className="min-w-[140px]"
+                        className="w-full sm:w-auto sm:min-w-[140px]"
                     >
                         {isCheckingOut ? (
                             <>

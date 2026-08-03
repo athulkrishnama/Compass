@@ -55,6 +55,9 @@ const notificationSlice = createSlice({
         closePanel(state) {
             state.isOpen = false;
         },
+        setPanelOpen(state, action: PayloadAction<boolean>) {
+            state.isOpen = action.payload;
+        },
     },
 });
 
@@ -66,6 +69,7 @@ export const {
     markAllAsRead,
     togglePanel,
     closePanel,
+    setPanelOpen,
 } = notificationSlice.actions;
 
 export default notificationSlice.reducer;

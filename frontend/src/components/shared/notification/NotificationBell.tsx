@@ -5,17 +5,13 @@ import { NotificationPanel } from "./NotificationPanel";
 import { useQuery } from "@tanstack/react-query";
 import { notificationQueryOptions } from "../../../queryOptions/notificationQueryOptions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    setUnreadCount,
-    togglePanel,
-    closePanel,
-} from "../../../store/slices/notificationSlice";
+import { setUnreadCount } from "../../../store/slices/notificationSlice";
 import { type RootState } from "../../../store/store";
 import { cn } from "@/lib/utils";
 
 export const NotificationBell: React.FC = () => {
     const dispatch = useDispatch();
-    const { unreadCount, isOpen } = useSelector(
+    const { unreadCount } = useSelector(
         (state: RootState) => state.notification
     );
 
@@ -31,13 +27,9 @@ export const NotificationBell: React.FC = () => {
     }, [data, dispatch]);
 
     return (
-        <Popover.Root
-            open={isOpen}
-            onOpenChange={(open) => !open && dispatch(closePanel())}
-        >
+        <Popover.Root>
             <Popover.Trigger asChild>
                 <button
-                    onClick={() => dispatch(togglePanel())}
                     className="relative p-2 rounded-full hover:bg-gray-100 transition-all active:scale-95 group focus:outline-none"
                     aria-label="Notifications"
                 >

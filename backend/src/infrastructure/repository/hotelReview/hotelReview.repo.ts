@@ -24,8 +24,9 @@ export class HotelReviewRepo
       bookingId: doc.bookingId,
       hotelId: doc.hotelId,
       reviewerId: doc.reviewerId,
-      rating: doc.rating,
-      review: doc.review,
+      ratings: doc.ratings,
+      comment: doc.comment,
+      overallRating: doc.overallRating,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };
@@ -64,8 +65,9 @@ export class HotelReviewRepo
           hotelId: 1,
           reviewerId: 1,
           reviewerName: { $ifNull: ["$reviewer.full_name", "Guest"] },
-          rating: 1,
-          review: 1,
+          ratings: 1,
+          comment: 1,
+          overallRating: 1,
           createdAt: 1,
           updatedAt: 1,
         },
@@ -115,7 +117,15 @@ export class HotelReviewRepo
     const skip = (page - 1) * limit;
     const query: RootFilterQuery<IHotelReviewDocument> = {};
 
-    if (filters.rating) query.rating = filters.rating;
+    if (filters.minRating !== undefined || filters.maxRating !== undefined) {
+      query.overallRating = {};
+      if (filters.minRating !== undefined)
+        (query.overallRating as Record<string, number>).$gte =
+          filters.minRating;
+      if (filters.maxRating !== undefined)
+        (query.overallRating as Record<string, number>).$lte =
+          filters.maxRating;
+    }
     if (filters.hotelId) query.hotelId = filters.hotelId;
     if (filters.reviewerId) query.reviewerId = filters.reviewerId;
     if (filters.fromDate || filters.toDate) {
@@ -126,7 +136,7 @@ export class HotelReviewRepo
         (query.createdAt as Record<string, Date>).$lte = filters.toDate;
     }
     if (filters.search) {
-      query.review = { $regex: filters.search, $options: "i" };
+      query.comment = { $regex: filters.search, $options: "i" };
     }
 
     const [reviews, total] = await Promise.all([

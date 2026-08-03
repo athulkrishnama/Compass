@@ -39,7 +39,8 @@
     "tripOverview": "பயண மேலோட்டம்",
     "totalFare": "மொத்த கட்டணம்",
     "commission10": "கம்மிஷன் (10%)",
-    "yourEarnings": "உங்கள் வருவாய்"
+    "yourEarnings": "உங்கள் வருவாய்",
+    "markAsPaidInCash": "பணமாக செலுத்தப்பட்டதாக குறிக்கவும்"
   },
   "activities": {
     "BIRD_WATCHING": "பறவை பார்த்தல்",

@@ -125,7 +125,7 @@ export default function HotelDashboard() {
     ];
 
     return (
-        <div className="p-6 space-y-8 max-w-7xl mx-auto">
+        <div className="p-3 sm:p-6 space-y-6 sm:space-y-8 w-full">
             <div className="flex items-center gap-4">
                 <button
                     onClick={() => navigate({ to: "/hotel" })}
