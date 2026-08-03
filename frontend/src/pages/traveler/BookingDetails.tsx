@@ -74,9 +74,13 @@ export default function BookingDetails() {
                     paymentIntendId={booking.paymentIntendId}
                     bookingStatus={booking.bookingStatus}
                     checkInDate={booking.checkInDate}
+                    checkOutDate={booking.checkOutDate}
                     bookingId={bookingId}
                     refundAmount={booking.refundAmount}
                     refundStatus={booking.refundStatus}
+                    hotelName={booking.hotel.name}
+                    hotelCity={booking.hotel.city}
+                    hotelCoverImage={booking.hotel.coverImage}
                 />
             </div>
         </div>

@@ -10,7 +10,10 @@ import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import { Messages } from "@domain/enums/messages";
 import { HTTP_STATUS_CODE } from "@domain/enums/statusCodes";
 import { HTTPResponseBuilder } from "@presentation/utils/httpResponseBuilder";
-import { createHotelReviewValidationSchema } from "@presentation/validationSchemas/hotelReviewValidation";
+import {
+  createHotelReviewValidationSchema,
+  getHotelReviewsQueryValidationSchema,
+} from "../../validationSchemas/hotelReviewValidation";
 
 @injectable()
 export class HotelReviewController {
@@ -120,19 +123,27 @@ export class HotelReviewController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
-      const { rating, hotelId, reviewerId, search, fromDate, toDate } =
-        req.query;
+      const {
+        page,
+        limit,
+        minRating,
+        maxRating,
+        hotelId,
+        reviewerId,
+        search,
+        fromDate,
+        toDate,
+      } = getHotelReviewsQueryValidationSchema.parse(req.query);
 
       const result = await this._getAllHotelReviewsUseCase.execute(
         {
-          rating: rating ? parseInt(rating as string) : undefined,
-          hotelId: hotelId as string | undefined,
-          reviewerId: reviewerId as string | undefined,
-          search: search as string | undefined,
-          fromDate: fromDate ? new Date(fromDate as string) : undefined,
-          toDate: toDate ? new Date(toDate as string) : undefined,
+          minRating,
+          maxRating,
+          hotelId,
+          reviewerId,
+          search,
+          fromDate,
+          toDate,
         },
         page,
         limit,

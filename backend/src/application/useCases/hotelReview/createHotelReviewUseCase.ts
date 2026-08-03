@@ -4,13 +4,15 @@ import { ICreateHotelReviewDTO } from "@domain/dtos/hotelReview/createHotelRevie
 import { IHotelReviewRepo } from "@application/interfaces/repository/hotelReview/hotelReview.repo.interface";
 import { IHotelBookingRepo } from "@application/interfaces/repository/hotelBooking/hotelBooking.repo.interface";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
+
+import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
+import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
 import {
   ConflictException,
   InvalidOperationException,
   ResourceNotFoundException,
 } from "@application/constants/Exceptions";
-import { BOOKING_STATUS } from "@domain/enums/bookingStatus";
-import { INTERNAL_ERROR_MESSAGES } from "@domain/enums/internalErrorMessages";
+import { computeOverallRating } from "@utils/computeOverallRating";
 
 @injectable()
 export class CreateHotelReviewUseCase implements ICreateHotelReviewUseCase {
@@ -49,19 +51,22 @@ export class CreateHotelReviewUseCase implements ICreateHotelReviewUseCase {
       );
     }
 
+    const overallRating = computeOverallRating(data.ratings);
+
     await this._hotelReviewRepo.create({
       bookingId: data.bookingId,
       hotelId: booking.hotelId,
       reviewerId: data.reviewerId,
-      rating: data.rating,
-      review: data.review,
+      ratings: data.ratings,
+      comment: data.comment,
+      overallRating,
     });
 
     const hotel = await this._hotelRepo.findById(booking.hotelId);
     const prevAvg = hotel?.averageRating ?? 0;
     const prevTotal = hotel?.totalReviews ?? 0;
     const newTotal = prevTotal + 1;
-    const newAvg = (prevAvg * prevTotal + data.rating) / newTotal;
+    const newAvg = (prevAvg * prevTotal + overallRating) / newTotal;
 
     await this._hotelRepo.updateRating(
       booking.hotelId,

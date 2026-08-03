@@ -1,6 +1,8 @@
+import { IReviewAspectRatings } from "@domain/entities/hotelReview/hotelReview.entity";
+
 export interface ICreateHotelReviewDTO {
   bookingId: string;
   reviewerId: string;
-  rating: number;
-  review: string;
+  ratings: IReviewAspectRatings;
+  comment?: string;
 }
