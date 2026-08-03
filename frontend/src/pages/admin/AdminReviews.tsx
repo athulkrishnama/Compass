@@ -86,11 +86,14 @@ const AdminReviews = () => {
                     </label>
                     <select
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-black outline-none"
-                        value={filters.rating || ""}
+                        value={filters.minRating || ""}
                         onChange={(e) => {
                             setFilters((prev) => ({
                                 ...prev,
-                                rating: e.target.value
+                                minRating: e.target.value
+                                    ? parseInt(e.target.value)
+                                    : undefined,
+                                maxRating: e.target.value
                                     ? parseInt(e.target.value)
                                     : undefined,
                             }));
