@@ -13,6 +13,15 @@ export interface IReviewAspectRatings {
     safety?: number;
 }
 
+export interface IAspectAverages {
+    hospitality?: number;
+    staffFriendliness?: number;
+    cleanliness?: number;
+    comfort?: number;
+    roomQuality?: number;
+    safety?: number;
+}
+
 export interface IReviewResponse {
     _id: string;
     ratings: IReviewAspectRatings;
@@ -51,4 +60,5 @@ export interface IHotelReviewsListResponse {
     reviews: IHotelReviewResponse[];
     total: number;
     averageRating?: number;
+    aspectAverages?: IAspectAverages;
 }

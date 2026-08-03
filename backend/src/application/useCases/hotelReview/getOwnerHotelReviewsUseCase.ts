@@ -3,6 +3,7 @@ import { IGetOwnerHotelReviewsUseCase } from "@application/interfaces/useCase/ho
 import { IGetOwnerHotelReviewsResult } from "@domain/dtos/hotelReview/getOwnerHotelReviews.dto";
 import { IHotelReviewRepo } from "@application/interfaces/repository/hotelReview/hotelReview.repo.interface";
 import { IHotelRepo } from "@application/interfaces/repository/hotel/hotel.repo.interface";
+import { computeAspectAverages } from "@utils/computeAspectAverages";
 
 @injectable()
 export class GetOwnerHotelReviewsUseCase
@@ -22,13 +23,16 @@ export class GetOwnerHotelReviewsUseCase
     const hotelIds = hotels.map((h) => h._id!);
 
     if (hotelIds.length === 0) {
-      return { reviews: [], total: 0 };
+      return { reviews: [], total: 0, aspectAverages: {} };
     }
 
-    return await this._hotelReviewRepo.findByOwnerHotelIds(
-      hotelIds,
-      page,
-      limit,
-    );
+    const [pagedResult, allResult] = await Promise.all([
+      this._hotelReviewRepo.findByOwnerHotelIds(hotelIds, page, limit),
+      this._hotelReviewRepo.findByOwnerHotelIds(hotelIds, 1, 10_000),
+    ]);
+
+    const aspectAverages = computeAspectAverages(allResult.reviews);
+
+    return { ...pagedResult, aspectAverages };
   }
 }

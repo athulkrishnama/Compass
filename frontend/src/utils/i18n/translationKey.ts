@@ -1220,7 +1220,8 @@ export default {
         hospitalityDescription: "hotelReviewModal.hospitalityDescription",
         staffFriendliness: "hotelReviewModal.staffFriendliness",
         staffFriendlinessQuestion: "hotelReviewModal.staffFriendlinessQuestion",
-        staffFriendlinessDescription: "hotelReviewModal.staffFriendlinessDescription",
+        staffFriendlinessDescription:
+            "hotelReviewModal.staffFriendlinessDescription",
         cleanliness: "hotelReviewModal.cleanliness",
         cleanlinessQuestion: "hotelReviewModal.cleanlinessQuestion",
         cleanlinessDescription: "hotelReviewModal.cleanlinessDescription",

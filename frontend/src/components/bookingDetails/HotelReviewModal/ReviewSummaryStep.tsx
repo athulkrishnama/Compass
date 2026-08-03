@@ -1,12 +1,28 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Pencil, Send } from "lucide-react";
+import {
+    ArrowLeft,
+    Pencil,
+    Send,
+    Angry,
+    Frown,
+    Meh,
+    Smile,
+    Laugh,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { IReviewAspectRatings } from "@/types/api/requests/reviewRequests";
 import { REVIEW_ASPECTS, EMOJI_LABELS_KEYS } from "./reviewAspects";
 import { useTranslation } from "react-i18next";
 import translationKey from "@/utils/i18n/translationKey";
+import type { LucideIcon } from "lucide-react";
 
-const EMOJI_COLORS = ["#FF4136", "#FF851B", "#FFDC00", "#2ECC40", "#00BCD4"];
+const MOODS: { Icon: LucideIcon; color: string; bg: string }[] = [
+    { Icon: Angry, color: "#EF4444", bg: "#FEE2E2" },
+    { Icon: Frown, color: "#F97316", bg: "#FFEDD5" },
+    { Icon: Meh, color: "#EAB308", bg: "#FEF9C3" },
+    { Icon: Smile, color: "#22C55E", bg: "#DCFCE7" },
+    { Icon: Laugh, color: "#06B6D4", bg: "#CFFAFE" },
+];
 
 interface ReviewSummaryStepProps {
     ratings: IReviewAspectRatings;
@@ -20,168 +36,19 @@ interface ReviewSummaryStepProps {
 function MiniEmoji({ score }: { score: number }) {
     const { t } = useTranslation();
     const index = score - 1;
-    const color = EMOJI_COLORS[index];
+    const { Icon, color, bg } = MOODS[index];
     const labelKey = EMOJI_LABELS_KEYS[index];
     return (
         <div className="flex items-center gap-2">
-            <div className="w-8 h-8">
-                {/* Inline mini SVG face */}
-                <svg
-                    viewBox="0 0 64 64"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <circle cx="32" cy="32" r="28" fill={color} />
-                    {score === 1 && (
-                        <>
-                            <line
-                                x1="21"
-                                y1="26"
-                                x2="26"
-                                y2="24"
-                                stroke="white"
-                                strokeWidth="3"
-                                strokeLinecap="round"
-                            />
-                            <line
-                                x1="38"
-                                y1="24"
-                                x2="43"
-                                y2="26"
-                                stroke="white"
-                                strokeWidth="3"
-                                strokeLinecap="round"
-                            />
-                            <path
-                                d="M 26 42 Q 32 34 38 42"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                        </>
-                    )}
-                    {score === 2 && (
-                        <>
-                            <ellipse
-                                cx="23"
-                                cy="27"
-                                rx="2.5"
-                                ry="2.5"
-                                fill="white"
-                            />
-                            <ellipse
-                                cx="41"
-                                cy="27"
-                                rx="2.5"
-                                ry="2.5"
-                                fill="white"
-                            />
-                            <path
-                                d="M 27 40 Q 32 36 37 40"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                        </>
-                    )}
-                    {score === 3 && (
-                        <>
-                            <ellipse
-                                cx="23"
-                                cy="27"
-                                rx="2.5"
-                                ry="2.5"
-                                fill="white"
-                            />
-                            <ellipse
-                                cx="41"
-                                cy="27"
-                                rx="2.5"
-                                ry="2.5"
-                                fill="white"
-                            />
-                            <line
-                                x1="26"
-                                y1="39"
-                                x2="38"
-                                y2="39"
-                                stroke="white"
-                                strokeWidth="3"
-                                strokeLinecap="round"
-                            />
-                        </>
-                    )}
-                    {score === 4 && (
-                        <>
-                            <path
-                                d="M 20 27 Q 23 24 26 27"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                            <path
-                                d="M 38 27 Q 41 24 44 27"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                            <path
-                                d="M 27 37 Q 32 43 37 37"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                        </>
-                    )}
-                    {score === 5 && (
-                        <>
-                            <path
-                                d="M 19 27 Q 23 23 27 27"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                            <path
-                                d="M 37 27 Q 41 23 45 27"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                            <ellipse
-                                cx="21"
-                                cy="33"
-                                rx="4"
-                                ry="2.5"
-                                fill="white"
-                                opacity="0.3"
-                            />
-                            <ellipse
-                                cx="43"
-                                cy="33"
-                                rx="4"
-                                ry="2.5"
-                                fill="white"
-                                opacity="0.3"
-                            />
-                            <path
-                                d="M 25 36 Q 32 46 39 36"
-                                stroke="white"
-                                strokeWidth="3"
-                                fill="none"
-                                strokeLinecap="round"
-                            />
-                        </>
-                    )}
-                </svg>
-            </div>
-            <span className="text-xs text-gray-500">{t(labelKey)}</span>
+            <span
+                className="inline-flex items-center justify-center rounded-full w-8 h-8 flex-shrink-0"
+                style={{ backgroundColor: bg }}
+            >
+                <Icon className="w-4 h-4" style={{ color }} />
+            </span>
+            <span className="text-xs font-semibold" style={{ color }}>
+                {t(labelKey)}
+            </span>
         </div>
     );
 }
