@@ -75,13 +75,13 @@ function RouteComponent() {
     const hideNavbar = noNavbarRoutes.includes(pathname);
 
     return (
-        <div className="h-full w-full">
+        <div className="h-full w-full overflow-x-hidden relative">
             {hideNavbar ? (
                 <Outlet />
             ) : (
                 <div className="h-full max-h-screen w-full flex flex-col">
                     <Navbar routes={routes} logoutRoute="/traveler/login" />
-                    <div className="grow overflow-y-auto hide-scroll-bar">
+                    <div className="grow overflow-y-auto overflow-x-hidden w-full hide-scroll-bar">
                         <Outlet />
                     </div>
                 </div>

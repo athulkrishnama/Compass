@@ -10,6 +10,8 @@ import translationKey from "@/utils/i18n/translationKey";
 import { createGetRoomVariantByIdQueryOptions } from "@/queryOptions/roomVariantQueryOptions";
 import { createGetHotelByIdQueryOptions } from "@/queryOptions/hotelQueryOptions";
 
+import PaymentDetailsCard from "@/components/traveler/bookingConfirmation/PaymentDetailsCard";
+
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -93,7 +95,7 @@ export default function BookingConfirmation() {
                     animate="visible"
                     className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6"
                 >
-                    <div className="lg:col-span-2 space-y-3 sm:space-y-4">
+                    <div className="lg:col-span-2 space-y-3 sm:space-y-4 min-w-0">
                         <HotelDetailsCard
                             name={hotelData.name}
                             address={hotelData.address}
@@ -113,9 +115,14 @@ export default function BookingConfirmation() {
                             nights={nights}
                             numberOfRooms={numberOfRooms}
                         />
+                        <PaymentDetailsCard
+                            amount={amount}
+                            nights={nights}
+                            numberOfRooms={numberOfRooms}
+                        />
                     </div>
 
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-2 min-w-0">
                         <PaymentSummaryCard
                             amount={amount}
                             nights={nights}
