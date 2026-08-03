@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
-import { User, CheckCircle2 } from "lucide-react";
+import { User } from "lucide-react";
 import { Angry, Frown, Meh, Smile, Laugh } from "lucide-react";
 import StarRatingDisplay from "./StarRatingDisplay";
 import type {
@@ -135,12 +135,6 @@ const ReviewCard = ({ review, showReferenceId = false }: ReviewCardProps) => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    {isHotelReview && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
-                            <CheckCircle2 className="w-3 h-3" />
-                            Verified Stay
-                        </span>
-                    )}
                     {showReferenceId && (
                         <span className="text-[10px] text-gray-400 bg-gray-50 border border-gray-100 rounded-full px-2 py-0.5">
                             #{referenceId.substring(0, 8)}
